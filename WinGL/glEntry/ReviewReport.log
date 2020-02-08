@@ -1,0 +1,19 @@
+Line 122: Class VSReport8LibCtl.VSReport of control vsr was not a loaded control class.
+Line 125: The property name _rv in vsr is invalid.
+Line 126: The property name ReportName in vsr is invalid.
+Line 136: The property name OnOpen in vsr is invalid.
+Line 137: The property name OnClose in vsr is invalid.
+Line 138: The property name OnNoData in vsr is invalid.
+Line 139: The property name OnPage in vsr is invalid.
+Line 140: The property name OnError in vsr is invalid.
+Line 141: The property name MaxPages in vsr is invalid.
+Line 142: The property name DoEvents in vsr is invalid.
+Line 157: The property name Layout in vsr is invalid.
+Line 164: The property name GroupCount in vsr is invalid.
+Line 165: The property name SectionCount in vsr is invalid.
+Line 179: The property name Section0 in vsr is invalid.
+Line 193: The property name Section1 in vsr is invalid.
+Line 207: The property name Section2 in vsr is invalid.
+Line 221: The property name Section3 in vsr is invalid.
+Line 235: The property name Section4 in vsr is invalid.
+Line 236: The property name FieldCount in vsr is invalid.

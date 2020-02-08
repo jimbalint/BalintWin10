@@ -1,0 +1,47 @@
+
+	\Balint\Data
+	
+	GLSystem.mdb
+	
+		PRCompany (employer information)
+		
+			CompanyID
+			Name 
+			Address1
+			Address2
+			City
+			State
+			ZipCode
+			
+		Users
+		
+			ID
+			LastPRCompany (CompanyID of the last company loaded)
+			
+	{Customer Name}.mdb (PRMas.mdb for sample)
+	
+		PRDepartment
+		
+			DepartmentID
+			DepartmentNumber
+			Name
+			
+		PREmployee
+		
+			EmployeeID
+			EmployeeNumber
+			LastName
+			FirstName
+			MidInit
+			Address1
+			Address2
+			City
+			State
+			ZipCode
+			SSN
+			DepartmentNumber
+			Salary (hourly amount or salary amount)
+			Salaried (Y/N)
+			Inactive (Y/N)
+			Married (Y/N)
+			

@@ -1,0 +1,39 @@
+
+    Connect
+    ============================
+      CNOpen(FileName),boo
+      CNDesOpen(FileName),boo  ----> GLSystem.mdb
+      rsInit(SQLString,connection,rs)
+
+		cGLAccount
+		==========================
+		
+			Clear()
+			DeleteAll()
+			DeleteRecord(),boo
+			Records(),long
+
+    	rs1
+    	------------------------------
+			GetRecordSets(CurrFY,PrevFY),boo		(Account Left Join Amount) rs2 PrevFY
+      xx GetAllAccounts(),boo                (Accounts only)
+			Save(booAddPut),string												
+			GetNext(),boo                  rs1 next & rs2 find
+			AssignFields()
+			GetCurrAmount(Pd1,Pd2),Currency
+			GetPrevAmount(Pd1,Pd2),Currency
+			GetBudget(Pd1,Pd2),Currency
+		  GetAccount(Acct),boo
+		  GetAcctRecSet(LoAcct,HiAcct),boo    Lo,Hi=0 --> all accts
+		  GetNextAcct(),boo
+		  
+		cGLAmount
+		============================
+		  Save(booAddPut)
+		  GetData(Acct,FY),boo
+		  Clear()
+		  GetAmount(Account,FY,Pd1,Pd2),Currency
+		  GetBudget(Account,FY<,Pd1,Pd2),Currency
+		  DeleteAll()
+		  
+		  		

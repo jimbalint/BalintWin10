@@ -1,0 +1,48 @@
+
+Public Function ClearGLAmount(ByVal StartFY As Long, _
+                              ByVal EndFY As Long, _
+                              ByVal StartPd As Byte, _
+                              ByVal EndPd As Byte, _
+                              ByVal DeleteHist As Boolean) As XArrayDB
+
+Public Function ClearGLBudget(ByVal StartFY As Long, _
+                              ByVal EndFY As Long, _
+                              ByVal StartPd As Byte, _
+                              ByVal EndPd As Byte) As XArrayDB
+
+Public Function UpdateGLAmount(ByVal StartFY As Long, _
+                               ByVal EndFY As Long, _
+                               ByVal StartPd As Byte, _
+                               ByVal EndPd As Byte, _
+                               ByVal SuspenseAcct As Long, _
+                               ByVal ID As Long) As XArrayDB
+                               
+Public Function DeleteAccts(ByVal AcctSub As String, _
+                            ByVal LoValue As Long, _
+                            ByVal HiValue As Long, _
+                            ByVal ShowGo As String, _
+                            ByVal DelHistAmt As Boolean) As XArrayDB
+
+Public Function GLFileCopy(ByVal ID As Long, _
+                           ByVal FileName As String, _
+                           ByVal ClearAmounts As Boolean) As XArrayDB
+
+Public Function GLMultDiv(ByVal LoAcct As Long, _
+                          ByVal HiAcct As Long, _
+                          ByVal MultDiv As String, _
+                          ByVal MDBy As Integer, _
+                          ByVal ShowGo As String) As XArrayDB
+   
+Public Function CopyBB(ByVal LoAcct As Long, _
+                       ByVal HiAcct As Long, _
+                       ByVal ValFrom As Long, _
+                       ByVal ValTo As Long, _
+                       ByVal MainSub As String, _
+                       ByVal SubDigits As Integer, _
+                       ByVal ShowGo As String) As XArrayDB
+                       
+Public Function MathUpdate(ByVal StartFY As Long, _
+                           ByVal EndFY As Long, _
+                           ByVal StartPd As Byte, _
+                           ByVal EndPd As Byte) As XArrayDB
+

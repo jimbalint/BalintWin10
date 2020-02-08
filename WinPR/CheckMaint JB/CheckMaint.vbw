@@ -1,0 +1,7 @@
+modStart = 220, 220, 1010, 688, 
+modDBCreate = 0, 0, 790, 468, Z
+frmTest = 110, 110, 892, 559, , 88, 88, 870, 537, C
+modNewField = 198, 198, 910, 728, 
+modGlobal = 110, 110, 839, 652, 
+clsCustomer = 88, 88, 817, 630, 
+clsClient = 132, 132, 861, 674, 

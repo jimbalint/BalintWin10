@@ -1,0 +1,54 @@
+Option Explicit
+
+Public rs As New ADODB.Recordset
+
+Private Sub Form_Load()
+    
+    ' setup temp record set
+    rs.CursorLocation = adUseClient
+    
+    rs.Fields.Append "Select", adBoolean
+    rs.Fields.Append "EmployeeNumber", adDouble
+    rs.Fields.Append "EmployeeName", adVarChar, 80, adFldIsNullable
+    rs.Fields.Append "DeptNumber", adDouble
+    rs.Fields.Append "DeptName", adVarChar, 80, adFldIsNullable
+    rs.Fields.Append "EmployeeID", adDouble
+    
+    rs.Open , , adOpenDynamic, adLockOptimistic
+    
+    ' fill the temp recordset
+    SQLString = "SELECT * FROM PREmployee ORDER BY EmployeeNumber"
+    If Not PREmployee.GetBySQL(SQLString) Then End ' ???
+    Do
+        rs.AddNew
+        rs!Select = True
+        rs!EmployeeNumber = PREmployee.EmployeeNumber
+        rs!EmployeeName = Mid(PREmployee.LFName, 1, 80)
+        
+        If Not PRDepartment.GetByID(PREmployee.DepartmentID) Then
+            rs!DeptNumber = 0
+            rs!DeptName = ""
+        Else
+            rs!DeptNumber = PRDepartment.DepartmentNumber
+            rs!DeptName = PRDepartment.Name
+        End If
+        
+        rs!EmployeeID = PREmployee.EmployeeID
+        rs.Update
+    
+        If Not PREmployee.GetNext Then Exit Do
+    Loop
+    
+    SetGrid rs, fg
+    
+End Sub
+
+Private Sub cmdOK_Click()
+    Me.Hide
+End Sub
+
+Private Sub cmdExit_Click()
+    Me.Hide
+End Sub
+
+

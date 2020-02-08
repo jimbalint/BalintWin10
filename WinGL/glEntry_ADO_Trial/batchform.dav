@@ -1,0 +1,335 @@
+VERSION 5.00
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Begin VB.Form BatchForm 
+   Caption         =   " BATCH RECORD"
+   ClientHeight    =   5295
+   ClientLeft      =   60
+   ClientTop       =   345
+   ClientWidth     =   8040
+   Icon            =   "BatchForm.frx":0000
+   KeyPreview      =   -1  'True
+   LinkTopic       =   "Form1"
+   ScaleHeight     =   5295
+   ScaleWidth      =   8040
+   StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdPrint 
+      Caption         =   "&PRINT"
+      Height          =   495
+      Left            =   4800
+      TabIndex        =   16
+      Top             =   240
+      Width           =   855
+   End
+   Begin MSComctlLib.ListView lstJournalSource 
+      Height          =   3015
+      Left            =   3360
+      TabIndex        =   5
+      Top             =   1920
+      Width           =   4335
+      _ExtentX        =   7646
+      _ExtentY        =   5318
+      LabelWrap       =   -1  'True
+      HideSelection   =   -1  'True
+      _Version        =   393217
+      ForeColor       =   -2147483640
+      BackColor       =   -2147483643
+      BorderStyle     =   1
+      Appearance      =   1
+      NumItems        =   2
+      BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Object.Width           =   706
+      EndProperty
+      BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         SubItemIndex    =   1
+         Text            =   "JOURNAL SOURCE"
+         Object.Width           =   6068
+      EndProperty
+   End
+   Begin VB.ComboBox cmbPeriod 
+      Height          =   315
+      Left            =   1680
+      TabIndex        =   4
+      Text            =   "cmbPeriod"
+      Top             =   4200
+      Width           =   1215
+   End
+   Begin VB.ComboBox cmbFiscalYear 
+      Height          =   315
+      Left            =   360
+      TabIndex        =   3
+      Text            =   "cmbFiscalYear"
+      Top             =   4200
+      Width           =   1215
+   End
+   Begin VB.TextBox txtCredits 
+      Height          =   375
+      Left            =   360
+      TabIndex        =   2
+      Top             =   3360
+      Width           =   1215
+   End
+   Begin VB.TextBox txtDebits 
+      Height          =   375
+      Left            =   360
+      TabIndex        =   1
+      Top             =   2640
+      Width           =   1215
+   End
+   Begin VB.TextBox txtRecords 
+      Height          =   375
+      Left            =   360
+      TabIndex        =   0
+      Top             =   1920
+      Width           =   1215
+   End
+   Begin VB.CommandButton cmdExit 
+      Cancel          =   -1  'True
+      Caption         =   "E&XIT"
+      Height          =   495
+      Left            =   6960
+      TabIndex        =   7
+      Top             =   240
+      Width           =   855
+   End
+   Begin VB.CommandButton cmdOK 
+      Caption         =   "&OK"
+      Default         =   -1  'True
+      Height          =   495
+      Left            =   5880
+      TabIndex        =   6
+      Top             =   240
+      Width           =   855
+   End
+   Begin VB.Label Label6 
+      Caption         =   "F6"
+      ForeColor       =   &H8000000D&
+      Height          =   255
+      Left            =   5160
+      TabIndex        =   17
+      Top             =   840
+      Width           =   255
+   End
+   Begin VB.Label Label1 
+      Caption         =   "CREDITS"
+      Height          =   495
+      Left            =   1680
+      TabIndex        =   15
+      Top             =   3480
+      Width           =   1215
+   End
+   Begin VB.Label lblUpdated 
+      Caption         =   "Update User and Date"
+      Height          =   375
+      Left            =   360
+      TabIndex        =   14
+      Top             =   1320
+      Width           =   4335
+   End
+   Begin VB.Label lblCreated 
+      Caption         =   "Created User and Date"
+      Height          =   255
+      Left            =   360
+      TabIndex        =   13
+      Top             =   960
+      Width           =   4335
+   End
+   Begin VB.Label Label5 
+      Caption         =   "DEBITS"
+      Height          =   495
+      Left            =   1680
+      TabIndex        =   12
+      Top             =   2640
+      Width           =   855
+   End
+   Begin VB.Label Label4 
+      Caption         =   "RECORDS IN BATCH"
+      Height          =   495
+      Left            =   1680
+      TabIndex        =   11
+      Top             =   1920
+      Width           =   855
+   End
+   Begin VB.Label Label3 
+      Caption         =   "FISCAL PERIOD"
+      Height          =   255
+      Left            =   1680
+      TabIndex        =   10
+      Top             =   4680
+      Width           =   1455
+   End
+   Begin VB.Label Label2 
+      Caption         =   "FISCAL YEAR"
+      Height          =   255
+      Left            =   360
+      TabIndex        =   9
+      Top             =   4680
+      Width           =   1215
+   End
+   Begin VB.Label lblBatchNumber 
+      Caption         =   "BATCH NUMBER"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   12
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   360
+      TabIndex        =   8
+      Top             =   360
+      Width           =   4335
+   End
+End
+Attribute VB_Name = "BatchForm"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+Option Explicit
+
+Public ID As Long
+Public userOK As Boolean
+
+Private BatchNumber, createUser, updateUser, nRecords  As Long
+Private createDate, updateDate As Date
+Private fiscalYear, JournalSource As Integer
+Private period As Byte
+Private debits, credits As Currency
+
+Private Sub CmdExit_Click()
+    If BatchNumber = Company(1).LastBatch Then
+        MsgBox "Batch #" & CStr(BatchNumber) & " Not Saved !!!"
+        Company(1).LastBatch = Company(1).LastBatch - 1
+        Company(1).PutRecord Company(1).ID
+    End If
+    Me.Hide
+End Sub
+
+Private Sub cmdOK_Click()
+    On Error GoTo glErr
+    Dim cc As New ccBatch
+    cc.createUser = createUser
+    cc.updateUser = updateUser
+    cc.Created = createDate
+    cc.Updated = updateDate
+    cc.BatchNumber = BatchNumber
+    cc.fiscalYear = fiscalYear
+    cc.period = period
+    cc.nRecords = CLng(txtRecords)
+    cc.fiscalYear = CInt(cmbFiscalYear)
+    cc.period = CByte(cmbPeriod)
+    cc.debits = CCur(txtDebits)
+    cc.credits = CCur(txtCredits)
+    cc.JournalSource = CInt(lstJournalSource.SelectedItem)
+    cc.PutRecord ID, FileName
+    userOK = True
+    ID = cc.BatchNumber
+    Me.Hide
+    Exit Sub
+glErr:
+    MsgBox Error(Err.Number)
+End Sub
+
+Public Sub Init()
+    userOK = False
+    If ID = 0 Then
+        Company(1).LastBatch = Company(1).LastBatch + 1
+        Company(1).PutRecord Company(1).ID
+        BatchNumber = Company(1).LastBatch
+        createUser = User(1).ID
+        createDate = Now
+        updateDate = 0
+        updateUser = 0
+        nRecords = 0
+        credits = 0
+        JournalSource = 0
+        debits = 0
+        period = Company(1).curPeriod
+        fiscalYear = Company(1).curFiscalYear
+period = 12
+fiscalYear = 2004
+    Else
+        Dim cc As New ccBatch
+        cc.GetSQL "select * from glBatch where ID=" & ID, FileName
+        BatchNumber = cc(1).BatchNumber
+        createUser = cc(1).createUser
+        createDate = cc(1).Created
+        updateDate = cc(1).Updated
+        updateUser = cc(1).updateUser
+        nRecords = cc(1).nRecords
+        debits = cc(1).debits
+        credits = cc(1).credits
+        period = cc(1).period
+        fiscalYear = cc(1).fiscalYear
+        JournalSource = cc(1).JournalSource
+    End If
+    lblBatchNumber = "Batch # " & BatchNumber
+    If createUser = User(1).ID Then
+        lblCreated = "Created by " & User(1).name & " on " & CStr(createDate)
+    Else
+        Dim use As New ccUsers
+        If 1 = use.GetSQL("SELECT * FROM Users WHERE ID=" & CStr(createUser)) Then
+            lblCreated = "Created by " & use(1).name & " on " & CStr(createDate)
+        Else
+            lblCreated = ""
+        End If
+    End If
+    lblUpdated = "Record is OPEN (Not Updated)"
+    cmbFiscalYear = CStr(fiscalYear)
+    cmbPeriod = CStr(period)
+    txtRecords = CStr(nRecords)
+'    txtDebits = gl.ShowValue(debits)
+'    txtCredits = gl.ShowValue(credits)
+    
+    Dim ndx As Integer
+'    For ndx = Company(1).curFiscalYear To Company(1).firstFiscalYear Step -1
+'        cmbFiscalYear.AddItem CStr(ndx)
+'    Next ndx
+'    For ndx = 1 To Company(1).nPeriods
+'        cmbPeriod.AddItem CStr(ndx)
+'    Next ndx
+    gl.SetListView lstJournalSource
+    Dim jou As New ccJournal
+    jou.GetSQL FileName, "select * from gljournal"
+    For ndx = 1 To jou.Records
+        lstJournalSource.ListItems.Add , , CStr(jou(ndx).JournalSource)
+        lstJournalSource.ListItems(ndx).SubItems(1) = jou(ndx).JournalName
+        If JournalSource = jou(ndx).JournalSource Then
+            lstJournalSource.SelectedItem = lstJournalSource.ListItems(ndx)
+        End If
+    Next ndx
+End Sub
+
+Private Sub cmdPrint_Click()
+    ReviewReport.BatchNumber = BatchNumber
+    ReviewReport.Show vbModal
+End Sub
+
+Private Sub Form_KeyUp(KeyCode As Integer, Shift As Integer)
+    Select Case KeyCode
+        Case vbKeyF6: OnPrint
+    End Select
+End Sub
+
+Private Sub txtdebits_GotFocus()
+    txtDebits.SelStart = 0
+    txtDebits.SelLength = Len(txtDebits)
+End Sub
+
+Private Sub txtcredits_GotFocus()
+    txtCredits.SelStart = 0
+    txtCredits.SelLength = Len(txtCredits)
+End Sub
+
+Private Sub txtRecords_GotFocus()
+    txtRecords.SelStart = 0
+    txtRecords.SelLength = Len(txtRecords)
+End Sub
+
+Private Sub OnPrint()
+    ReviewReport.BatchNumber = BatchNumber
+    ReviewReport.Show vbModal
+End Sub

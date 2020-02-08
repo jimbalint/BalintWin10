@@ -1,0 +1,6 @@
+Line 18: Property Picture in frmLists had an invalid file reference.
+Line 100: Property ItemData in cmbReportType had an invalid file reference.
+Line 102: Property List in cmbReportType had an invalid file reference.
+Line 205: Property ItemData in lstDeptSelect had an invalid file reference.
+Line 207: Property List in lstDeptSelect had an invalid file reference.
+Line 217: Property Picture in cmdExit had an invalid file reference.

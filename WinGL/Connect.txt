@@ -1,0 +1,22 @@
+Private Sub Form_Load()
+
+Dim x As String
+Dim cn As New ADODB.Connection
+Dim v As Variant
+
+
+ >>>> test if db password is applied w/ access97
+   
+   Set cn = New ADODB.Connection
+   cn.Provider = "Microsoft.Jet.OLEDB.4.0"
+   x = "c:\Asend\a97.mdb"
+   cn.ConnectionString = x
+   cn.Properties("User ID") = "jimbo"
+   cn.Properties("Password") = "jimbo"
+   cn.Properties("Jet OLEDB:System database") = "c:\Asend\Secured.mdw"
+   
+'   cn.ConnectionString = "c:\Balint\Data\luicc2.mdb"
+   cn.Open
+   End
+
+End Sub

@@ -1,0 +1,409 @@
+VERSION 5.00
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Begin VB.Form MainMenu 
+   Caption         =   " GENERAL LEDGER DATA ENTRY"
+   ClientHeight    =   5340
+   ClientLeft      =   60
+   ClientTop       =   345
+   ClientWidth     =   8220
+   Icon            =   "MainMenu.frx":0000
+   KeyPreview      =   -1  'True
+   LinkTopic       =   "Form1"
+   ScaleHeight     =   5340
+   ScaleWidth      =   8220
+   StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton Command1 
+      Caption         =   "Command1"
+      Height          =   495
+      Left            =   360
+      TabIndex        =   18
+      Top             =   840
+      Width           =   1575
+   End
+   Begin VB.CommandButton cmdPrint 
+      Caption         =   "ENTRY &JOURNAL"
+      Height          =   495
+      Left            =   5640
+      TabIndex        =   16
+      Top             =   4440
+      Width           =   1335
+   End
+   Begin VB.CommandButton cmdExit 
+      Cancel          =   -1  'True
+      Caption         =   "E&XIT"
+      Height          =   495
+      Left            =   7200
+      TabIndex        =   12
+      Top             =   4440
+      Width           =   735
+   End
+   Begin MSComctlLib.ListView BatchList 
+      Height          =   2895
+      Left            =   360
+      TabIndex        =   0
+      Top             =   1440
+      Width           =   7575
+      _ExtentX        =   13361
+      _ExtentY        =   5106
+      LabelWrap       =   -1  'True
+      HideSelection   =   -1  'True
+      _Version        =   393217
+      ForeColor       =   -2147483640
+      BackColor       =   -2147483643
+      BorderStyle     =   1
+      Appearance      =   1
+      NumItems        =   6
+      BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Text            =   "BATCH"
+         Object.Width           =   1411
+      EndProperty
+      BeginProperty ColumnHeader(2) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   2
+         SubItemIndex    =   1
+         Text            =   "UPDATE"
+         Object.Width           =   1764
+      EndProperty
+      BeginProperty ColumnHeader(3) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   2
+         SubItemIndex    =   2
+         Text            =   "PERIOD"
+         Object.Width           =   1587
+      EndProperty
+      BeginProperty ColumnHeader(4) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   1
+         SubItemIndex    =   3
+         Text            =   "DEBITS"
+         Object.Width           =   2999
+      EndProperty
+      BeginProperty ColumnHeader(5) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   1
+         SubItemIndex    =   4
+         Text            =   "CREDITS"
+         Object.Width           =   2999
+      EndProperty
+      BeginProperty ColumnHeader(6) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Alignment       =   2
+         SubItemIndex    =   5
+         Text            =   "RECORDS"
+         Object.Width           =   1764
+      EndProperty
+   End
+   Begin VB.CommandButton cmdDataEntry 
+      Caption         =   "&DATA ENTRY"
+      Height          =   495
+      Left            =   2880
+      TabIndex        =   11
+      Top             =   4440
+      Width           =   1335
+   End
+   Begin VB.CommandButton cmdEditBatch 
+      Caption         =   "&EDIT"
+      Height          =   495
+      Left            =   1680
+      TabIndex        =   10
+      Top             =   4440
+      Width           =   975
+   End
+   Begin VB.CommandButton cmdAddBatch 
+      Caption         =   "&ADD NEW"
+      Height          =   495
+      Left            =   360
+      TabIndex        =   9
+      Top             =   4440
+      Width           =   1215
+   End
+   Begin VB.Label Label7 
+      Caption         =   "F6"
+      ForeColor       =   &H8000000D&
+      Height          =   255
+      Left            =   6240
+      TabIndex        =   17
+      Top             =   5040
+      Width           =   375
+   End
+   Begin VB.Label Label6 
+      Caption         =   "F4"
+      ForeColor       =   &H8000000D&
+      Height          =   255
+      Left            =   3360
+      TabIndex        =   15
+      Top             =   5040
+      Width           =   255
+   End
+   Begin VB.Label Label5 
+      Caption         =   "F3"
+      ForeColor       =   &H8000000D&
+      Height          =   255
+      Left            =   2040
+      TabIndex        =   14
+      Top             =   5040
+      Width           =   375
+   End
+   Begin VB.Label Label4 
+      Caption         =   "F2"
+      ForeColor       =   &H8000000D&
+      Height          =   255
+      Left            =   1080
+      TabIndex        =   13
+      Top             =   5040
+      Width           =   255
+   End
+   Begin VB.Label lblUser 
+      Height          =   255
+      Left            =   1080
+      TabIndex        =   8
+      Top             =   120
+      Width           =   2895
+   End
+   Begin VB.Label Label3 
+      Caption         =   "USER:"
+      ForeColor       =   &H8000000D&
+      Height          =   255
+      Left            =   480
+      TabIndex        =   7
+      Top             =   120
+      Width           =   495
+   End
+   Begin VB.Label Label2 
+      Caption         =   "COMPANY:"
+      ForeColor       =   &H8000000D&
+      Height          =   255
+      Left            =   4200
+      TabIndex        =   6
+      Top             =   0
+      Width           =   855
+   End
+   Begin VB.Label Label1 
+      Caption         =   "FILE:"
+      ForeColor       =   &H8000000D&
+      Height          =   255
+      Left            =   600
+      TabIndex        =   5
+      Top             =   480
+      Width           =   375
+   End
+   Begin VB.Label lblCityStateZip 
+      Height          =   255
+      Left            =   4200
+      TabIndex        =   4
+      Top             =   1080
+      Width           =   3975
+   End
+   Begin VB.Label lblAddress 
+      Height          =   255
+      Left            =   4200
+      TabIndex        =   3
+      Top             =   720
+      Width           =   3855
+   End
+   Begin VB.Label lblCompanyName 
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   4200
+      TabIndex        =   2
+      Top             =   360
+      Width           =   3855
+   End
+   Begin VB.Label lblFileName 
+      Height          =   255
+      Left            =   1080
+      TabIndex        =   1
+      Top             =   480
+      Width           =   2775
+   End
+End
+Attribute VB_Name = "MainMenu"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+Option Explicit
+
+Private Sub cmdAddBatch_Click()
+    OnAdd
+End Sub
+
+Private Sub OnAdd()
+    On Error GoTo glErr
+    BatchForm.ID = 0
+    BatchForm.Init
+    BatchForm.Show vbModal
+    Unload BatchForm
+    If BatchForm.userOK = True Then
+        Dim bat As New ccBatch
+        If 1 = bat.GetSQL("SELECT * FROM glBatch WHERE BatchNumber=" & CStr(BatchForm.ID), FileName) Then
+            BatchList.ListItems.Add 1, , bat(1).BatchNumber
+            BatchList.ListItems(1).SubItems(1) = Format(bat(1).Updated, "mm/dd/yy")
+            BatchList.ListItems(1).SubItems(2) = CStr(bat(1).fiscalYear) & "-" & CStr(bat(1).period)
+            BatchList.ListItems(1).SubItems(3) = gl.ShowValue(bat(1).debits)
+            BatchList.ListItems(1).SubItems(4) = gl.ShowValue(bat(1).credits)
+            BatchList.ListItems(1).SubItems(5) = CStr(bat(1).nRecords)
+        End If
+    End If
+    BatchList.SelectedItem = BatchList.ListItems(1)
+    BatchList.SetFocus
+    Exit Sub
+glErr:
+    MsgBox Error(Err.Number)
+End Sub
+
+Private Sub cmdDataEntry_Click()
+    OnDataEntry
+End Sub
+
+Private Sub OnDataEntry()
+    On Error GoTo glErr
+    Dim bat As New ccBatch
+    If 1 = bat.GetSQL("select * from glBatch where BatchNumber=" & BatchList.SelectedItem.Text, FileName) Then
+        DataEntry.ID = bat(1).ID
+        DataEntry.Init
+        DataEntry.Show vbModal
+        Unload DataEntry
+        bat.GetSQL "select * from glBatch where BatchNumber=" & BatchList.SelectedItem.Text, FileName
+        BatchList.SelectedItem.SubItems(1) = Format(bat(1).Updated, "mm/dd/yy")
+        BatchList.SelectedItem.SubItems(2) = CStr(bat(1).fiscalYear) & "-" & CStr(bat(1).period)
+        BatchList.SelectedItem.SubItems(3) = gl.ShowValue(bat(1).debits)
+        BatchList.SelectedItem.SubItems(4) = gl.ShowValue(bat(1).credits)
+        BatchList.SelectedItem.SubItems(5) = CStr(bat(1).nRecords)
+    End If
+    BatchList.SetFocus
+    Exit Sub
+glErr:
+    MsgBox Error(Err.Number)
+End Sub
+
+Private Sub cmdEditBatch_Click()
+    OnEdit
+End Sub
+
+Private Sub OnEdit()
+    On Error GoTo glErr
+    Dim bat As New ccBatch
+    If 1 = bat.GetSQL("select * from glBatch where BatchNumber=" & BatchList.SelectedItem.Text, FileName) Then
+        BatchForm.ID = bat(1).ID
+        BatchForm.Init
+        BatchForm.Show vbModal
+        Unload BatchForm
+        If BatchForm.userOK = True Then
+            bat.GetSQL "select * from glBatch where BatchNumber=" & BatchList.SelectedItem.Text, FileName
+            BatchList.SelectedItem.SubItems(1) = Format(bat(1).Updated, "mm/dd/yy")
+            BatchList.SelectedItem.SubItems(2) = CStr(bat(1).fiscalYear) & "-" & CStr(bat(1).period)
+            BatchList.SelectedItem.SubItems(3) = gl.ShowValue(bat(1).debits)
+            BatchList.SelectedItem.SubItems(4) = gl.ShowValue(bat(1).credits)
+            BatchList.SelectedItem.SubItems(5) = CStr(bat(1).nRecords)
+        End If
+    End If
+    BatchList.SetFocus
+    Exit Sub
+glErr:
+    MsgBox Error(Err.Number)
+End Sub
+
+Private Sub CmdExit_Click()
+    Unload Me
+End Sub
+
+Private Sub Sort(ByRef cc As Collection)
+
+    Dim I, j, n, temp, x() As Integer
+    n = cc.Count
+    ReDim x(1 To n)
+    For I = n To 1 Step -1
+        x(I) = CInt(cc(I))
+        cc.Remove I
+    Next I
+    For I = 1 To n - 1
+        For j = I + 1 To n
+            If x(I) > x(j) Then
+                temp = x(I)
+                x(I) = x(j)
+                x(j) = temp
+            End If
+        Next j
+    Next I
+    For I = 1 To n
+        cc.Add CStr(x(I))
+    Next I
+End Sub
+
+Private Sub cmdPrint_Click()
+    OnPrint
+    BatchList.SetFocus
+End Sub
+
+Private Sub Command1_Click()
+'    GetDate.Prompt = "Hello-Pick a Date"
+'    GetDate.Show vbModal
+'    MsgBox GetDate.Calendar.Value
+    GetAccount.Init
+    GetAccount.Show vbModal
+  '  If GetAccount.Selected = True Then MsgBox GetAccount.AccountNumber.SelectedItem
+End Sub
+
+Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
+    Select Case KeyCode
+        Case vbKeyF2: OnAdd
+        Case vbKeyF3: OnEdit
+        Case vbKeyF4: OnDataEntry
+        Case vbKeyF6: OnPrint
+    End Select
+End Sub
+
+Private Sub Form_Load()
+    On Error GoTo glErr
+    Dim cmdLine As String
+    cmdLine = Command()
+    If IsNumeric(cmdLine) Then
+        curUser = CLng(cmdLine)
+    Else
+        curUser = 1     ' debugging/default if not passed
+    End If
+    User.GetSQL "select * from users where ID=" & curUser
+    If User.Records > 0 Then
+        lblUser = User(1).name
+    End If
+    Dim com As New rCompany
+    curCompany = User(1).LastCompany
+    If com.GetRecord(curCompany) Then
+        lblFileName = com.FileName
+        FileName = com.FileName
+        lblCompanyName = com.name
+        lblAddress = com.address1
+        lblCityStateZip = com.city
+        If Not com.city = "" Then lblCityStateZip = lblCityStateZip & " " & com.state
+        If com.zipcode > 0 Then lblCityStateZip = lblCityStateZip & " " & CStr(com.zipcode)
+    End If
+    gl.SetListView BatchList
+    LoadBatchList
+    Exit Sub
+glErr:
+    MsgBox Error(Err.Number)
+End Sub
+
+Private Sub LoadBatchList()
+    Dim ndx As Long
+    Dim cc As New ccBatch
+    BatchList.ListItems.Clear
+    cc.GetSQL "select * from glBatch order by -Updated", FileName
+    For ndx = 1 To cc.Records
+        BatchList.ListItems.Add , , cc(ndx).BatchNumber
+        BatchList.ListItems(ndx).SubItems(1) = Format(cc(ndx).Updated, "mm/dd/yy")
+        BatchList.ListItems(ndx).SubItems(2) = CStr(cc(ndx).fiscalYear) & "-" & CStr(cc(ndx).period)
+        BatchList.ListItems(ndx).SubItems(3) = gl.ShowValue(cc(ndx).debits)
+        BatchList.ListItems(ndx).SubItems(4) = gl.ShowValue(cc(ndx).credits)
+        BatchList.ListItems(ndx).SubItems(5) = CStr(cc(ndx).nRecords)
+    Next ndx
+End Sub
+
+Private Sub OnPrint()
+    MsgBox "Under Construction"
+End Sub
+

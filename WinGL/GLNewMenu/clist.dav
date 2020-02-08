@@ -1,0 +1,121 @@
+VERSION 5.00
+Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
+Begin VB.Form CompanyList 
+   Caption         =   "Company Records"
+   ClientHeight    =   5385
+   ClientLeft      =   60
+   ClientTop       =   345
+   ClientWidth     =   5355
+   Icon            =   "CompanyList.frx":0000
+   LinkTopic       =   "Form1"
+   ScaleHeight     =   5385
+   ScaleWidth      =   5355
+   StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdSelect 
+      Caption         =   "&SELECT"
+      Default         =   -1  'True
+      Height          =   495
+      Left            =   360
+      TabIndex        =   1
+      Top             =   4560
+      Width           =   975
+   End
+   Begin MSComctlLib.ListView List1 
+      Height          =   3855
+      Left            =   360
+      TabIndex        =   0
+      Top             =   360
+      Width           =   4575
+      _ExtentX        =   8070
+      _ExtentY        =   6800
+      LabelWrap       =   -1  'True
+      HideSelection   =   -1  'True
+      _Version        =   393217
+      ForeColor       =   -2147483640
+      BackColor       =   -2147483643
+      BorderStyle     =   1
+      Appearance      =   1
+      NumItems        =   1
+      BeginProperty ColumnHeader(1) {BDD1F052-858B-11D1-B16A-00C0F0283628} 
+         Text            =   "COMPANY NAME"
+         Object.Width           =   8819
+      EndProperty
+   End
+   Begin VB.CommandButton cmdExit 
+      Cancel          =   -1  'True
+      Caption         =   "E&XIT"
+      Height          =   495
+      Left            =   3960
+      TabIndex        =   4
+      Top             =   4560
+      Width           =   975
+   End
+   Begin VB.CommandButton cmdEdit 
+      Caption         =   "&EDIT"
+      Height          =   495
+      Left            =   1560
+      TabIndex        =   2
+      Top             =   4560
+      Width           =   975
+   End
+   Begin VB.CommandButton cmdAdd 
+      Caption         =   "&ADD"
+      Height          =   495
+      Left            =   2760
+      TabIndex        =   3
+      Top             =   4560
+      Width           =   975
+   End
+End
+Attribute VB_Name = "CompanyList"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+Dim cc As New ccCompany
+
+Private Sub cmdAdd_Click()
+    On Error GoTo glErr
+    CompanyForm.ID = 0
+    CompanyForm.Init
+    CompanyForm.Show vbModal
+    Unload CompanyForm
+    List1.SetFocus
+    Exit Sub
+glErr:
+    MsgBox Error(Err.Number)
+End Sub
+
+Private Sub cmdEdit_Click()
+    On Error GoTo glErr
+    CompanyForm.ID = cc(List1.SelectedItem.index).ID
+    CompanyForm.Init
+    CompanyForm.Show vbModal
+    Unload CompanyForm
+    List1.SetFocus
+    Exit Sub
+glErr:
+    MsgBox Error(Err.Number)
+End Sub
+
+Private Sub cmdExit_Click()
+    Unload Me
+End Sub
+
+Private Sub cmdSelect_Click()
+    MainMenu.SetCompany (cc(List1.SelectedItem.index).ID)
+    Unload Me
+End Sub
+
+Private Sub Form_Load()
+    On Error GoTo glErr
+    gl.SetListView List1
+    Dim ndx As Long
+    cc.GetSQL ("select * from GLCompany order by Name")
+    For ndx = 1 To cc.Records
+        List1.ListItems.Add ndx, , cc(ndx).name
+    Next ndx
+    Exit Sub
+glErr:
+    MsgBox Error(Err.Number)
+End Sub
