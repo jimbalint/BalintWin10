@@ -36,19 +36,210 @@ Dim frs As New ADODB.Recordset
 Dim x, y, z As String
 Dim i, j, k As Long
 
+Dim rsNewSchema As ADODB.Recordset
+
 Private Sub Form_Load()
     
+    ' ==================
     SQLConnect
-    GetSchema
-    ' CopySchema
-    ' GetTables
+    ' ==================
     
+    CopyData
+    
+    ' ==================
     cnOld.Close
     cnNew.Close
     MsgBox ("OK..")
     End
+    ' ==================
+    
+    InitSchemaRS
+    PopSchemaRS
+    CreateTables
+    CreateFields
     
     
+    GetSchema
+    
+    
+    
+    ' GetConstraints
+    ' CopySchema
+    ' GetTables
+    
+    End
+    
+    
+End Sub
+
+Private Sub CopyData()
+    Dim fld As ADODB.Field
+    strSQL = "select * from Users"
+    Set rs = New ADODB.Recordset
+    rs.Source = strSQL
+    rs.LockType = adLockOptimistic
+    rs.CursorType = adOpenKeyset
+    rs.CursorLocation = adUseServer
+    Set rs.ActiveConnection = cnOld
+    rs.Open
+    Do While Not rs.EOF
+        strSQL = "insert into Users ("
+        For Each fld In rs.Fields
+            strSQL = strSQL & fld.Name & ", "
+        Next fld
+        strSQL = Left(strSQL, Len(strSQL) - 2)
+        strSQL = strSQL & ") values ("
+        For Each fld In rs.Fields
+            strSQL = strSQL & rs.Fields(fld.Name) & ", "
+        Next fld
+        strSQL = Left(strSQL, Len(strSQL) - 2)
+        strSQL = strSQL & ")"
+        rs.MoveNext
+    Loop
+MsgBox (strSQL)
+    
+End Sub
+
+
+Private Sub InitSchemaRS()
+
+    Set rsNewSchema = New ADODB.Recordset
+    rsNewSchema.CursorLocation = adUseClient
+    rsNewSchema.Fields.Append "TableName", adVarChar, 100, adFldIsNullable
+    rsNewSchema.Fields.Append "FieldName", adVarChar, 100, adFldIsNullable
+    rsNewSchema.Fields.Append "FieldNum", adInteger
+    rsNewSchema.Fields.Append "ConstraintName", adVarChar, 100, adFldIsNullable
+    rsNewSchema.Fields.Append "FieldType", adVarChar, 100, adFldIsNullable
+    rsNewSchema.Fields.Append "FieldType2", adVarChar, 100, adFldIsNullable
+    rsNewSchema.Fields.Append "MaxLength", adVarChar, 100, adFldIsNullable
+    rsNewSchema.Fields.Append "Precision", adVarChar, 100, adFldIsNullable
+    rsNewSchema.Fields.Append "Scale", adVarChar, 100, adFldIsNullable
+    rsNewSchema.Open , , adOpenDynamic, adLockOptimistic
+
+End Sub
+
+Private Sub PopSchemaRS()
+
+    ' constraints
+    Set frs = New ADODB.Recordset
+    frs.CursorLocation = adUseClient
+    frs.CursorType = adOpenStatic
+    frs.LockType = adLockBatchOptimistic
+    Set frs = cnOld.OpenSchema(adSchemaConstraintColumnUsage)
+    Do Until frs.EOF = True
+        If Left(frs!Table_Name, 4) <> "MSys" Then
+'            rsNewSchema.AddNew
+'            rsNewSchema!TableName = frs!Table_Name
+'            rsNewSchema!FieldName = frs!Column_Name
+'            rsNewSchema!FieldNum = 0
+'            rsNewSchema!ConstraintName = frs!Constraint_name
+'            rsNewSchema!FieldType = ""
+'            rsNewSchema!FieldType2 = "Long"
+'            rsNewSchema!MaxLength = ""
+'            rsNewSchema!Precision = ""
+'            rsNewSchema!Scale = ""
+'            rsNewSchema.Update
+        End If
+        frs.MoveNext
+    Loop
+    
+    ' fields
+    Dim FldNum As Integer
+    FldNum = 0
+    Set frs = New ADODB.Recordset
+    frs.CursorLocation = adUseClient
+    frs.CursorType = adOpenStatic
+    frs.LockType = adLockBatchOptimistic
+    Set frs = cnOld.OpenSchema(adSchemaColumns)
+    Do Until frs.EOF = True
+        If Left(frs!Table_Name, 4) <> "MSys" And frs!Table_Name <> "Paste Errors" Then
+            FldNum = FldNum + 1
+            rsNewSchema.AddNew
+            rsNewSchema!TableName = frs!Table_Name
+            rsNewSchema!FieldName = frs!Column_Name
+            rsNewSchema!FieldNum = frs!ORDINAL_POSITION
+            rsNewSchema!ConstraintName = ""
+            rsNewSchema!MaxLength = frs!CHARACTER_MAXIMUM_LENGTH
+            rsNewSchema!Precision = frs!NUMERIC_PRECISION
+            rsNewSchema!Scale = frs!NUMERIC_SCALE
+            
+            rsNewSchema!FieldType = frs!Data_Type
+            
+            x = ""
+            i = frs!Data_Type
+            Select Case i
+                Case 2: x = "Short"
+                Case 3: x = "Long"
+                Case 4: x = "Short"
+                Case 5: x = "Double"
+                Case 6: x = "Currency"
+                Case 7: x = "DateTime"
+                Case 11: x = "Byte"
+                Case 17: x = "Byte"
+                Case 130: x = "LongText"
+                    If rsNewSchema!MaxLength = 255 Then
+                        x = "LongText"
+                    Else
+                        x = "Char(" & rsNewSchema!MaxLength & ")"
+                    End If
+                Case Else
+                    MsgBox "Data Type NF: " & i
+                    End
+            End Select
+            rsNewSchema!FieldType2 = x
+            rsNewSchema.Update
+        End If
+        frs.MoveNext
+    Loop
+    
+    ' dump it
+    Dim io As Integer
+    Dim fld As ADODB.Field
+    io = FreeFile
+    Open "\\vboxsrv\vm-share\balint\Test_ADO\Balint_Schema.txt" For Output As #io
+    rsNewSchema.Sort = "TableName ASC, FieldNum ASC"
+    rsNewSchema.MoveFirst
+    Do While Not rsNewSchema.EOF
+        x = rsNewSchema!TableName & vbTab
+        x = x & rsNewSchema!FieldName & vbTab
+        x = x & rsNewSchema!FieldNum & vbTab
+        x = x & rsNewSchema!ConstraintName & vbTab
+        x = x & rsNewSchema!FieldType & vbTab
+        x = x & rsNewSchema!MaxLength & vbTab
+        x = x & rsNewSchema!Precision & vbTab
+        x = x & rsNewSchema!Scale & vbTab
+        Print #io, x
+        rsNewSchema.MoveNext
+    Loop
+    Close #io
+
+End Sub
+
+Private Sub CreateTables()
+    Set frs = New ADODB.Recordset
+    frs.CursorLocation = adUseClient
+    frs.CursorType = adOpenStatic
+    frs.LockType = adLockBatchOptimistic
+    Set frs = cnOld.OpenSchema(adSchemaPrimaryKeys)
+    Do Until frs.EOF = True
+        If Left(frs!Table_Name, 4) <> "MSys" Then
+            cnNew.Execute "create table " & frs!Table_Name
+        End If
+        frs.MoveNext
+    Loop
+End Sub
+
+Private Sub CreateFields()
+    Dim fString As String
+    rsNewSchema.Sort = "TableName ASC, FieldNum ASC"
+    rsNewSchema.MoveFirst
+    Do While Not rsNewSchema.EOF
+        fString = "ALTER TABLE " & rsNewSchema!TableName & _
+                  " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
+                  " " & rsNewSchema!FieldType2
+        cnNew.Execute fString
+        rsNewSchema.MoveNext
+    Loop
 End Sub
 
 Private Sub CopySchema()
@@ -108,6 +299,43 @@ Private Sub GetTables()
 
 End Sub
 
+Private Sub GetConstraints()
+    ' https://docs.microsoft.com/en-us/sql/relational-databases/system-information-schema-views/columns-transact-sql?view=sql-server-ver15
+    
+    Dim io As Integer
+    io = FreeFile
+    Open "\\vboxsrv\vm-share\balint\Test_ADO\Balint_Constraints.txt" For Output As #io
+    
+    Set frs = New ADODB.Recordset
+    frs.CursorLocation = adUseClient
+    frs.CursorType = adOpenStatic
+    frs.LockType = adLockBatchOptimistic
+    Set frs = cnOld.OpenSchema(adSchemaConstraintColumnUsage)
+    ' Set frs = cnOld.OpenSchema(adSchemaTableConstraints)
+    ' Set frs = cnOld.OpenSchema(adSchemaPrimaryKeys)
+    
+'    Dim fld As ADODB.Field
+'    For Each fld In frs.Fields
+'        x = fld.Name
+'        Print #io, x
+'    Next fld
+'    Close #io
+'    Exit Sub
+    
+
+    Do Until frs.EOF = True
+        x = frs!Table_Name & vbTab & _
+            frs!Column_Name & vbTab & _
+            frs!Constraint_name
+       
+        Print #io, x
+        frs.MoveNext
+    Loop
+    Close #io
+
+End Sub
+
+
 Private Sub GetSchema()
     ' https://docs.microsoft.com/en-us/sql/relational-databases/system-information-schema-views/columns-transact-sql?view=sql-server-ver15
     
@@ -123,7 +351,11 @@ Private Sub GetSchema()
     ' Set frs = cnOld.OpenSchema(adSchemaTableConstraints)
     ' Set frs = cnOld.OpenSchema(adSchemaPrimaryKeys)
     
-
+    Dim fld As ADODB.Field
+    For Each fld In frs.Fields
+        Print #io, fld.Name
+    Next fld
+    Print #io, "====================="
     Do Until frs.EOF = True
         x = frs!Table_Name & vbTab & _
             frs!Column_Name & vbTab & _
@@ -131,7 +363,9 @@ Private Sub GetSchema()
             frs!is_nullable & vbTab & _
             frs!CHARACTER_MAXIMUM_LENGTH & vbTab & _
             frs!NUMERIC_PRECISION & vbTab & _
-            frs!NUMERIC_SCALE
+            frs!NUMERIC_SCALE & vbTab & _
+            "|" & vbTab & _
+            frs!ORDINAL_POSITION
             
             
             ' frs!NUMERIC_PRECISION_RADIX
@@ -231,8 +465,8 @@ Private Sub SQLConnect()
 
     Set cnOld = New ADODB.Connection
     cnOld.Provider = "Microsoft.Jet.OLEDB.4.0"
-    ' cnOld.ConnectionString = "\\vboxsrv\vm-share\balint\Test_ADO\glSystem.mdb"
-    cnOld.ConnectionString = "\\vboxsrv\vm-share\balint\Test_ADO\A CRANO EXCAVATING INC.mdb"
+    cnOld.ConnectionString = "\\vboxsrv\vm-share\balint\Test_ADO\glSystem.mdb"
+    ' cnOld.ConnectionString = "\\vboxsrv\vm-share\balint\Test_ADO\A CRANO EXCAVATING INC.mdb"
     cnOld.Open
     
     Set cnNew = New ADODB.Connection
