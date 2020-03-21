@@ -3,6 +3,7 @@ Private Sub Main()
 
 Dim x As String
 Dim NewFlag As Boolean
+Dim FileExt As String
 
     frmSplash.Show
 
@@ -47,8 +48,9 @@ Dim NewFlag As Boolean
     
     If x = "" Then         ' set for testing
        BalintFolder = "\\vboxsrv\vm-share\Balint"
+       BalintFolder = "c:\Balint"
        dbPwd = ""
-       ProgName = UCase("QBREGISTER")
+       ProgName = UCase("EMPLOYEE")
        ' ProgName = UCase("test2")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
@@ -72,6 +74,16 @@ Dim NewFlag As Boolean
     ' non-standard folders
     If BalintFolder <> "" Then
         SysFile = Replace(BalintFolder, "^", " ") & "\Data\GLSystem.mdb"
+    End If
+    
+    ' new ADO?
+    Dim NewFile As String
+    NewFile = Replace(SysFile, ".mdb", ".accdb")
+    If Len(Dir(NewFile, vbNormal)) Then
+        SysFile = NewFile
+        FileExt = ".accdb"
+    Else
+        FileExt = ".mdb"
     End If
     
     ' =========================================================================================
@@ -147,6 +159,8 @@ Dim NewFlag As Boolean
     Else
         x = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(PRCompany.FileName)
     End If
+    
+    If FileExt = ".accdb" Then x = Replace(LCase(x), ".mdb", ".accdb")
     
     CNOpen x, dbPwd
     CompanyID = PRCompany.CompanyID

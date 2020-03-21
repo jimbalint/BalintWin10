@@ -9,7 +9,13 @@ Public Function CNOpen(ByVal FName As String, ByVal Password As String) As Boole
    On Error Resume Next
    
    Set cn = New ADODB.Connection
-   cn.Provider = "Microsoft.Jet.OLEDB.4.0"
+   
+    If Right(LCase(FName), 6) = ".accdb" Then
+        cn.Provider = "Microsoft.ACE.OLEDB.12.0"
+    Else
+        cn.Provider = "Microsoft.Jet.OLEDB.4.0"
+    End If
+   
    cn.ConnectionString = FName
    
    If Password <> "" Then
@@ -25,10 +31,10 @@ Public Function CNOpen(ByVal FName As String, ByVal Password As String) As Boole
       If Err.Description = "Not a valid password." Then
          CNOpen = False
          Do
-            X = InputBox("Enter Password:", "Open DB")
-            If X = "" Then Exit Do
+            x = InputBox("Enter Password:", "Open DB")
+            If x = "" Then Exit Do
             Err.Clear
-            cn.Properties("Jet OLEDB:Database Password") = X
+            cn.Properties("Jet OLEDB:Database Password") = x
             cn.Open
             If Err Then
                If Err.Description = "Not a valid password." Then
@@ -62,17 +68,23 @@ End Function
 
 Public Function SysOpen(ByVal FName As String) As Boolean
    
-   Set cnDes = New ADODB.Connection
-   cnDes.Provider = "Microsoft.Jet.OLEDB.4.0"
-   cnDes.ConnectionString = FName
+    Set cnDes = New ADODB.Connection
    
-   On Error Resume Next
-   cnDes.Mode = adModeReadWrite
-   On Error GoTo 0
+    If Right(LCase(FName), 6) = ".accdb" Then
+        cnDes.Provider = "Microsoft.ACE.OLEDB.12.0"
+    Else
+        cnDes.Provider = "Microsoft.Jet.OLEDB.4.0"
+    End If
    
-   cnDes.Open
-   SysOpen = True
-   UpdateCheck True, cnDes
+    cnDes.ConnectionString = FName
+   
+    On Error Resume Next
+    cnDes.Mode = adModeReadWrite
+    On Error GoTo 0
+    
+    cnDes.Open
+    SysOpen = True
+    UpdateCheck True, cnDes
 
 End Function
 
@@ -127,10 +139,10 @@ Public Function CNPRCKOpen(ByVal FName As String, ByVal Password As String) As B
       If Err.Description = "Not a valid password." Then
          CNPRCKOpen = False
          Do
-            X = InputBox("Enter Password:", "Open DB")
-            If X = "" Then Exit Do
+            x = InputBox("Enter Password:", "Open DB")
+            If x = "" Then Exit Do
             Err.Clear
-            cnPRCK.Properties("Jet OLEDB:Database Password") = X
+            cnPRCK.Properties("Jet OLEDB:Database Password") = x
             cnPRCK.Open
             If Err Then
                If Err.Description = "Not a valid password." Then

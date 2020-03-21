@@ -8,6 +8,8 @@ Dim x As String
 Dim b As Long
 Dim I, J, K As Long
 
+Dim FileExt As String
+
     Set GLCompany = New cGLCompany
     Set GLAccount = New cGLAccount
     Set GLAmount = New cGLAmount
@@ -45,13 +47,16 @@ Dim I, J, K As Long
     End If
     
     If BalintFolder = "" Then
-        If CNDesOpen("\Balint\Data\GLSystem.mdb") = False Then
-            MsgBox "error opening \Balint\Data\GLSystem.mdb", vbCritical
+        FileExt = IIf(Len(Dir("\Balint\Data\GLSystem.accdb", vbNormal)), ".accdb", ".mdb")
+        If CNDesOpen("\Balint\Data\GLSystem" & FileExt) = False Then
+            MsgBox "error opening \Balint\Data\GLSystem" & FileExt, vbCritical
             End
         End If
     Else
-        Dim SysFl As String
-        SysFl = Replace(BalintFolder, "^", " ") & "\Data\GLSystem.mdb"
+        Dim SysFile, DataDir As String
+        DataDir = Replace(BalintFolder, "^", " ") & "\Data\"
+        FileExt = IIf(Len(Dir(DataDir & "GLSystem.accdb", vbNormal)), ".accdb", ".mdb")
+        SysFl = DataDir & "GLSystem" & FileExt
         If CNDesOpen(Trim(SysFl)) = False Then
             ' eag test - 20190620
             MsgBox "*** Error opening: " & SysFl, vbCritical
@@ -60,7 +65,7 @@ Dim I, J, K As Long
     End If
     
     If x = "" Then         ' open sys file and login
-        SysFile = "\Balint\Data\GLSystem.mdb"
+        SysFile = "\Balint\Data\GLSystem" & FileExt
         OpenTab = 5
         frmLogin.Show vbModal
         If Response = False Then End
@@ -78,7 +83,7 @@ Dim I, J, K As Long
         BatchNum = GetCmd(x, "Batch", "Num")
         OpenTab = GetCmd(x, "OpenTab", "Num")
         BalintFolder = GetCmd(x, "BalintFolder", "Str")
-        SysFile = "\Balint\Data\GLSystem.mdb"
+        SysFile = "\Balint\Data\GLSystem" & FileExt
     End If
 
     ' =========================================================================================
@@ -119,6 +124,8 @@ Dim I, J, K As Long
 '        End
 '    End If
     
+    Dim dbName As String
+    dbName = ""
     If IsNull(GLUser.LastCompany) = False And GLUser.LastCompany <> 0 Then
     
         ' get the company record from the system data base
@@ -133,7 +140,7 @@ Dim I, J, K As Long
             ' open the company database
             If BalintFolder = "" Then
                 x = Mid(App.Path, 1, 2) & Mid(GLCompany.FileName, 3, Len(GLCompany.FileName) - 2)
-                DBName = x
+                dbName = x
                 
             Else
                 
@@ -150,27 +157,34 @@ Dim I, J, K As Long
                     End
                 End If
                 x = Replace(BalintFolder, "^", " ") & "\Data\" & Mid(GLCompany.FileName, I + 1, K)
-                DBName = x
+                dbName = x
             
             End If
+            
+            If FileExt = ".accdb" Then
+                dbName = LCase(dbName)
+                dbName = Replace(dbName, ".mdb", ".accdb")
+            End If
                 
-            CNOpen x, dbPwd
+            CNOpen dbName, dbPwd
             CompanyID = GLUser.LastCompany
             
             ' ??? needed for menu lblCompany after file copy ???
             GLCompany.GetData (GLUser.LastCompany)
-            frmMainMenu.lblCompanyName = GLCompany.Name
+            frmMainMenu.lblCompanyName = dbName
     
         End If
     
     Else
         
-        frmMainMenu.lblCompanyName = "No Company Loaded"
+        dbName = "No Company Loaded"
         
     End If
-        
-    frmMainMenu.Show
-    
+
+    Dim f As New frmMainMenu
+    f.dbName = dbName
+    f.lblCompanyName = GLCompany.Name
+    f.Show
     
 '    ' execute the call
 '    Select Case ProgName

@@ -1,7 +1,8 @@
 Attribute VB_Name = "modStart"
 Private Sub Main()
 
-Dim X As String
+Dim x As String
+Dim FileExt As String
 
     Set Equate = New cEquate
     Set User = New cGLUser
@@ -24,9 +25,9 @@ Dim X As String
 
     SetEquates
     OpenTab = 2
-    X = Command()
+    x = Command()
     
-    If X = "" Then         ' set for testing
+    If x = "" Then         ' set for testing
        BalintFolder = "g:"
        dbPwd = ""
        ProgName = UCase("test")
@@ -36,16 +37,16 @@ Dim X As String
        BatchNum = 0
        Period = 0         ' yyyypp
     Else
-       dbPwd = GetCmd(X, "dbPwd", "Str")
-       ProgName = UCase(GetCmd(X, "ProgName", "Str"))
+       dbPwd = GetCmd(x, "dbPwd", "Str")
+       ProgName = UCase(GetCmd(x, "ProgName", "Str"))
        ProgName = "GlobMaint"       ' only one choice !!!
-       SysFile = GetCmd(X, "SysFile", "Str")
-       UserID = GetCmd(X, "UserID", "Num")
-       BackName = GetCmd(X, "BackName", "Str")
-       BatchNum = GetCmd(X, "Batch", "Num")
-       MenuName = GetCmd(X, "MenuName", "Str")
-       Period = GetCmd(X, "Period", "Num")
-       BalintFolder = GetCmd(X, "BalintFolder", "Str")
+       SysFile = GetCmd(x, "SysFile", "Str")
+       UserID = GetCmd(x, "UserID", "Num")
+       BackName = GetCmd(x, "BackName", "Str")
+       BatchNum = GetCmd(x, "Batch", "Num")
+       MenuName = GetCmd(x, "MenuName", "Str")
+       Period = GetCmd(x, "Period", "Num")
+       BalintFolder = GetCmd(x, "BalintFolder", "Str")
     End If
     
     If SysFile = "" Then SysFile = "\Balint\Data\GLSystem.mdb"
@@ -53,6 +54,16 @@ Dim X As String
     ' non-standard folders
     If BalintFolder <> "" Then
         SysFile = Replace(BalintFolder, "^", " ") & "\Data\GLSystem.mdb"
+    End If
+    
+    ' new ADO?
+    Dim NewFile As String
+    NewFile = Replace(SysFile, ".mdb", ".accdb")
+    If Len(Dir(NewFile, vbNormal)) Then
+        SysFile = NewFile
+        FileExt = ".accdb"
+    Else
+        FileExt = ".mdb"
     End If
     
     ' =========================================================================================
@@ -99,13 +110,16 @@ Dim X As String
 
     ' open the company database
     If BalintFolder = "" Then
-        X = Mid(App.Path, 1, 2) & Mid(PRCompany.FileName, 3, Len(PRCompany.FileName) - 2)
+        x = Mid(App.Path, 1, 2) & Mid(PRCompany.FileName, 3, Len(PRCompany.FileName) - 2)
         ' 2016-04-23
-        X = "\Balint\Data\" & FNameOnly(PRCompany.FileName)
+        x = "\Balint\Data\" & FNameOnly(PRCompany.FileName)
     Else
-        X = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(PRCompany.FileName)
+        x = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(PRCompany.FileName)
     End If
-    CNOpen X, dbPwd
+    
+    If FileExt = ".accdb" Then x = Replace(LCase(x), ".mdb", ".accdb")
+    
+    CNOpen x, dbPwd
     CompanyID = PRCompany.CompanyID
     
 '    ' open the GL Company

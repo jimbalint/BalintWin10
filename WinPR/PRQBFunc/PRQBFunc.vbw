@@ -1,7 +1,7 @@
 Form1 = 220, 220, 948, 776, C, 242, 242, 978, 813, C
-modStart = 264, 264, 1000, 835, C
+modStart = 264, 264, 1000, 835, Z
 modPRGlobal = 0, 0, 736, 571, C
-modQBData = 132, 174, 929, 723, Z
+modQBData = 132, 174, 929, 723, 
 modPRConnect = 0, 0, 743, 501, C
 modDBCreate = 0, 0, 739, 567, C
 modNewField = 22, 22, 761, 589, C

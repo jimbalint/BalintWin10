@@ -8,7 +8,11 @@ Public Function CNOpen(ByVal FName As String, ByVal Password As String) As Boole
     On Error Resume Next
    
     Set cn = New ADODB.Connection
-    cn.Provider = "Microsoft.Jet.OLEDB.4.0"
+    If Right(LCase(FName), 6) = ".accdb" Then
+        cn.Provider = "Microsoft.ACE.OLEDB.12.0"
+    Else
+        cn.Provider = "Microsoft.Jet.OLEDB.4.0"
+    End If
     cn.ConnectionString = FName
    
     If Password <> "" Then
@@ -93,7 +97,12 @@ Public Function CNDesOpen(ByVal FName As String) As Boolean
     On Error GoTo 0
    
     Set cnDes = New ADODB.Connection
-    cnDes.Provider = "Microsoft.Jet.OLEDB.4.0"
+    If Right(LCase(FName), 6) = ".accdb" Then
+        cnDes.Provider = "Microsoft.ACE.OLEDB.12.0"
+    Else
+        cnDes.Provider = "Microsoft.Jet.OLEDB.4.0"
+    End If
+    
     cnDes.ConnectionString = FName
    
     On Error Resume Next

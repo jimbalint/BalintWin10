@@ -31,6 +31,7 @@ Dim cnOld As ADODB.Connection
 Dim strSQL As String
 
 Dim rs As New ADODB.Recordset
+Dim rsNew As New ADODB.Recordset
 Dim frs As New ADODB.Recordset
 
 Dim x, y, z As String
@@ -38,14 +39,63 @@ Dim i, j, k As Long
 
 Dim rsNewSchema As ADODB.Recordset
 
+' todo
+' byte/boolean ...
+' add by using ADO record set
+
 Private Sub Form_Load()
     
+    
+    x = "c:\balint\data\glsystem.accdb"
+    y = Len(Dir(x, vbNormal))
+    MsgBox (y)
+    End
+    
+    
+    
+    
+    
+    Dim dbName1, dbName2 As String
+    Dim op As Integer
+    op = 0
+    If op = 0 Then
+        dbName1 = "\\vboxsrv\vm-share\balint\Test_ADO\glSystem.mdb"
+    Else
+        dbName1 = "\\vboxsrv\vm-share\balint\Test_ADO\A CRANO EXCAVATING INC.mdb"
+    End If
+    dbName2 = "\\vboxsrv\vm-share\balint\Test_ADO\Database81.accdb"
     ' ==================
-    SQLConnect
+    SQLConnect dbName1, dbName2
     ' ==================
     
-    CopyData
+    InitSchemaRS
+    PopSchemaRS
+    CreateTables
+    CreateFields
+
+    Set frs = cnOld.OpenSchema(adSchemaTables)
+    Do Until frs.EOF = True
+        x = frs!Table_Name
+        If Left(x, 4) <> "MSys" And Left(x, 5) <> "Paste" Then
+            CopyData (x)
+        End If
+        frs.MoveNext
+    Loop
     
+    If op = 0 Then
+        strSQL = "ALTER TABLE glDescriptions" & _
+                " ADD CONSTRAINT [Number] UNIQUE ([Number])"
+        cnNew.Execute strSQL
+    Else
+        strSQL = "ALTER TABLE PRDepartment" & _
+                " ADD CONSTRAINT [dptNumberKey] UNIQUE ([DepartmentNumber])"
+        cnNew.Execute strSQL
+    
+        strSQL = "ALTER TABLE PREmployee" & _
+                " ADD CONSTRAINT [empNumberKey] UNIQUE ([EmployeeNumber])"
+        cnNew.Execute strSQL
+    End If
+   
     ' ==================
     cnOld.Close
     cnNew.Close
@@ -53,26 +103,72 @@ Private Sub Form_Load()
     End
     ' ==================
     
-    InitSchemaRS
-    PopSchemaRS
-    CreateTables
-    CreateFields
-    
-    
     GetSchema
+    GetTables
+    GetConstraints
     
-    
-    
-    ' GetConstraints
     ' CopySchema
-    ' GetTables
     
     End
     
     
 End Sub
 
-Private Sub CopyData()
+Private Sub CopyData(ByVal TblName As String)
+
+    Dim io As Integer
+    io = FreeFile
+    ' Open "\\vboxsrv\vm-share\balint\Test_ADO\Balint_SQL.txt" For Output As #io
+    
+    strSQL = "delete * from " & TblName
+    cnNew.Execute strSQL
+    
+    Dim fld As ADODB.Field
+    strSQL = "select * from " & TblName
+    
+    Set rs = New ADODB.Recordset
+    rs.Source = strSQL
+    rs.LockType = adLockOptimistic
+    rs.CursorType = adOpenKeyset
+    rs.CursorLocation = adUseServer
+    Set rs.ActiveConnection = cnOld
+    rs.Open
+    
+    Set rsNew = New ADODB.Recordset
+    rsNew.Source = strSQL
+    rsNew.LockType = adLockOptimistic
+    rsNew.CursorType = adOpenKeyset
+    rsNew.CursorLocation = adUseServer
+    Set rsNew.ActiveConnection = cnNew
+    rsNew.Open
+    
+    Do While Not rs.EOF
+        rsNew.AddNew
+        For Each fld In rs.Fields
+            x = fld.Name & vbTab & rs.Fields(fld.Name)
+            ' MsgBox (x)
+            y = rs.Fields(fld.Name)
+            Select Case y
+                Case "True": rsNew.Fields(fld.Name) = 1
+                Case "False": rsNew.Fields(fld.Name) = 0
+                Case Else: rsNew.Fields(fld.Name) = rs.Fields(fld.Name)
+            End Select
+        Next fld
+        rsNew.Update
+        rs.MoveNext
+    Loop
+    rs.Close
+    rsNew.Close
+    
+End Sub
+
+
+Private Sub CopyData2()
+    
+    Dim io As Integer
+    io = FreeFile
+    Open "\\vboxsrv\vm-share\balint\Test_ADO\Balint_SQL.txt" For Output As #io
+    
     Dim fld As ADODB.Field
     strSQL = "select * from Users"
     Set rs = New ADODB.Recordset
@@ -90,16 +186,32 @@ Private Sub CopyData()
         strSQL = Left(strSQL, Len(strSQL) - 2)
         strSQL = strSQL & ") values ("
         For Each fld In rs.Fields
-            strSQL = strSQL & rs.Fields(fld.Name) & ", "
+            strSQL = strSQL & SQLFormat("", fld.Name, rs.Fields(fld.Name)) & ", "
         Next fld
         strSQL = Left(strSQL, Len(strSQL) - 2)
         strSQL = strSQL & ")"
+    Print #io, strSQL
+    ' MsgBox (strSQL)
+        cnNew.Execute strSQL
         rs.MoveNext
     Loop
-MsgBox (strSQL)
+    Close #io
     
 End Sub
 
+Function SQLFormat(ByVal TblName As String, ByVal FldName As String, ByVal FldVal As String) As String
+
+    SQLFormat = FldVal
+    If FldName = "LoadLastCompany" Then
+        SQLFormat = "1"
+        Exit Function
+    End If
+    If FldName = "LastCompany" Or FldName = "LoadLastCompany" Or FldName = "LastPRCompany" Or FldName = "ID" Then
+        Exit Function
+    End If
+    SQLFormat = "'" & FldVal & "'"
+
+End Function
 
 Private Sub InitSchemaRS()
 
@@ -216,6 +328,22 @@ Private Sub PopSchemaRS()
 End Sub
 
 Private Sub CreateTables()
+    
+    ' clear
+    Set frs = New ADODB.Recordset
+    frs.CursorLocation = adUseClient
+    frs.CursorType = adOpenStatic
+    frs.LockType = adLockBatchOptimistic
+    Set frs = cnNew.OpenSchema(adSchemaTables)
+    Do Until frs.EOF = True
+        If Left(frs!Table_Name, 4) <> "MSys" And frs!Table_Name <> "Paste" And Left(frs!Table_Name, 1) <> "~" Then
+            cnNew.Execute "drop table " & frs!Table_Name
+        End If
+        frs.MoveNext
+    Loop
+    frs.Close
+    
+    ' add
     Set frs = New ADODB.Recordset
     frs.CursorLocation = adUseClient
     frs.CursorType = adOpenStatic
@@ -227,16 +355,28 @@ Private Sub CreateTables()
         End If
         frs.MoveNext
     Loop
+    frs.Close
+    
 End Sub
 
 Private Sub CreateFields()
     Dim fString As String
+    Dim LastTblName As String
     rsNewSchema.Sort = "TableName ASC, FieldNum ASC"
     rsNewSchema.MoveFirst
+    Dim LastTable As String
+    LastTable = ""
     Do While Not rsNewSchema.EOF
-        fString = "ALTER TABLE " & rsNewSchema!TableName & _
-                  " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
-                  " " & rsNewSchema!FieldType2
+        If LastTable = "" Or LastTable <> rsNewSchema!TableName Then
+            fString = "ALTER TABLE " & rsNewSchema!TableName & _
+                      " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
+                      " COUNTER PRIMARY KEY"
+        Else
+            fString = "ALTER TABLE " & rsNewSchema!TableName & _
+                      " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
+                      " " & rsNewSchema!FieldType2
+        End If
+        LastTable = rsNewSchema!TableName
         cnNew.Execute fString
         rsNewSchema.MoveNext
     Loop
@@ -276,13 +416,13 @@ Private Sub GetTables()
     ' Set frs = cnOld.OpenSchema(adSchemaTables)
     Set frs = cnOld.OpenSchema(adSchemaPrimaryKeys)
     
-'    Table names only
-'    Dim dc As ADODB.Field
-'    For Each dc In frs.Fields
-'        MsgBox (dc.Name)
-'    Next
-'    Exit Sub
-'
+    ' Table names only
+    Dim dc As ADODB.Field
+    For Each dc In frs.Fields
+        Print #io, (dc.Name)
+    Next
+    Exit Sub
+
     
     ' tables PK info
     Do Until frs.EOF = True
@@ -324,11 +464,13 @@ Private Sub GetConstraints()
     
 
     Do Until frs.EOF = True
-        x = frs!Table_Name & vbTab & _
-            frs!Column_Name & vbTab & _
-            frs!Constraint_name
-       
-        Print #io, x
+        If Left(frs!Table_Name, 4) <> "MSys" Then
+             x = frs!Table_Name & vbTab & _
+                 frs!Column_Name & vbTab & _
+                 frs!Constraint_name
+            
+             Print #io, x
+        End If
         frs.MoveNext
     Loop
     Close #io
@@ -350,7 +492,7 @@ Private Sub GetSchema()
     Set frs = cnOld.OpenSchema(adSchemaColumns)
     ' Set frs = cnOld.OpenSchema(adSchemaTableConstraints)
     ' Set frs = cnOld.OpenSchema(adSchemaPrimaryKeys)
-    
+    ' frs.Sort = "ORDINAL_POSITION asc"
     Dim fld As ADODB.Field
     For Each fld In frs.Fields
         Print #io, fld.Name
@@ -359,6 +501,7 @@ Private Sub GetSchema()
     Do Until frs.EOF = True
         x = frs!Table_Name & vbTab & _
             frs!Column_Name & vbTab & _
+            frs!ORDINAL_POSITION & vbTab & _
             frs!Data_Type & vbTab & _
             frs!is_nullable & vbTab & _
             frs!CHARACTER_MAXIMUM_LENGTH & vbTab & _
@@ -461,17 +604,16 @@ End Function
 
 
 
-Private Sub SQLConnect()
+Private Sub SQLConnect(ByVal dbName1 As String, ByVal dbName2 As String)
 
     Set cnOld = New ADODB.Connection
     cnOld.Provider = "Microsoft.Jet.OLEDB.4.0"
-    cnOld.ConnectionString = "\\vboxsrv\vm-share\balint\Test_ADO\glSystem.mdb"
-    ' cnOld.ConnectionString = "\\vboxsrv\vm-share\balint\Test_ADO\A CRANO EXCAVATING INC.mdb"
+    cnOld.ConnectionString = dbName1
     cnOld.Open
     
     Set cnNew = New ADODB.Connection
     cnNew.Provider = "Microsoft.ACE.OLEDB.12.0"
-    cnNew.ConnectionString = "\\vboxsrv\vm-share\balint\Test_ADO\Database81.accdb"
+    cnNew.ConnectionString = dbName2
     cnNew.Open
 
 End Sub
@@ -494,3 +636,4 @@ Private Sub Test1()
     rs.Close
     
 End Sub
+

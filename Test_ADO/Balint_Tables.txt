@@ -1,27 +1,8 @@
-Detail99	DetailID	dtlIDKey
-GLAccount	ID	glacctIDKey
-GLAmount	ID	glamtIDKey
-GLBatch	ID	glbatIDKey
-GLBranch	ID	glbraIDKey
-GLFFSched	FFSchedID	glffsIDKey
-GLHistory	ID	glhisIDKey
-GLJournal	ID	gljnlIDKey
-GLPrint	ID	glprtIDKey
-JCCustomer	CustomerID	cusIDKey
-JCJob	JobID	jobIDKey
-Notes	NoteID	nteIDKey
-Payee99	PayeeID	peeIDKey
-PRAdjust	AdjustID	PRAdjustIDKey
-PRBatch	BatchID	PRBatchIDKey
-PRDepartment	DepartmentID	dptIDKey
-PRDist	DistID	distIDKey
-PREELists	EEListsID	PREEListsIDKey
-PREmployee	EmployeeID	empIDKey
-PRGLUpd	GLUpdID	GLUpdIDKey
-PRHist	HistID	itemIDKey
-PRItem	ItemID	itemIDKey
-PRItemHist	ItemHistID	itemIDKey
-PRTimeSheet	TimeSheetID	prtIDKey
-PRW2	W2ID	prw2IDKey
-PRW2City	W2CityID	prw2cIDKey
-PRW2State	W2StateID	prw2sIDKey
+TABLE_CATALOG
+TABLE_SCHEMA
+TABLE_NAME
+COLUMN_NAME
+COLUMN_GUID
+COLUMN_PROPID
+ORDINAL
+PK_NAME

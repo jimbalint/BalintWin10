@@ -2,6 +2,7 @@ Attribute VB_Name = "modStart"
 Private Sub Main()
 
 Dim X As String
+Dim FileExt As String
 
     frmSplash.Show
 
@@ -72,6 +73,16 @@ Dim X As String
         SysFile = Replace(BalintFolder, "^", " ") & "\Data\GLSystem.mdb"
     End If
     
+    ' new ADO?
+    Dim NewFile As String
+    NewFile = Replace(SysFile, ".mdb", ".accdb")
+    If Len(Dir(NewFile, vbNormal)) Then
+        SysFile = NewFile
+        FileExt = ".accdb"
+    Else
+        FileExt = ".mdb"
+    End If
+    
     ' =========================================================================================
     ' check for required info
     If ProgName = "" Then
@@ -122,6 +133,9 @@ Dim X As String
     Else
         X = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(PRCompany.FileName)
     End If
+    
+    If FileExt = ".accdb" Then X = Replace(LCase(X), ".mdb", ".accdb")
+    
     CNOpen X, dbPwd
     CompanyID = PRCompany.CompanyID
     

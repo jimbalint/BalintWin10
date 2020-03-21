@@ -1,0 +1,1 @@
+insert into Users [ID, LogOn, Name, Password, LastCompany, LoadLastCompany, LastPRCompany] values [2, 'jim', 'Jim Balint', 'j ', 179, 1, 65]

@@ -1,8 +1,9 @@
 Attribute VB_Name = "modStart"
 Private Sub Main()
 
-Dim X As String
+Dim x As String
 Dim FName, DriveLetter As String
+Dim FileExt As String
 
     ' save "C:"
     DriveLetter = Left(App.Path, 2)
@@ -40,9 +41,9 @@ Dim FName, DriveLetter As String
     
     OpenTab = 2
     
-    X = Command()
+    x = Command()
     
-    If X = "" Or X = "prcompany" Then         ' set for testing
+    If x = "" Or x = "prcompany" Then         ' set for testing
         dbPwd = ""
         ProgName = UCase("prhist")
         ' ProgName = "x"
@@ -55,22 +56,33 @@ Dim FName, DriveLetter As String
         TextFileName = "c:\balint\data\PRH11901.txt"
         dbName = "c:\balint\data\ZBARCOSECURITY.mdb"
     Else
-        dbPwd = GetCmd(X, "dbPwd", "Str")
-        ProgName = UCase(GetCmd(X, "ProgName", "Str"))
-        SysFile = GetCmd(X, "SysFile", "Str")
-        UserID = GetCmd(X, "UserID", "Num")
-        BackName = GetCmd(X, "BackName", "Str")
-        BatchNum = GetCmd(X, "Batch", "Num")
-        MenuName = GetCmd(X, "MenuName", "Str")
-        Period = GetCmd(X, "Period", "Num")
-        TextFileName = GetCmd(X, "txtName", "Str")
-        dbName = GetCmd(X, "dbName", "Str")
+        dbPwd = GetCmd(x, "dbPwd", "Str")
+        ProgName = UCase(GetCmd(x, "ProgName", "Str"))
+        SysFile = GetCmd(x, "SysFile", "Str")
+        UserID = GetCmd(x, "UserID", "Num")
+        BackName = GetCmd(x, "BackName", "Str")
+        BatchNum = GetCmd(x, "Batch", "Num")
+        MenuName = GetCmd(x, "MenuName", "Str")
+        Period = GetCmd(x, "Period", "Num")
+        TextFileName = GetCmd(x, "txtName", "Str")
+        dbName = GetCmd(x, "dbName", "Str")
     End If
     
     ' non-standard folders
     If BalintFolder <> "" Then
         SysFile = Replace(BalintFolder, "^", " ") & "\Data\GLSystem.mdb"
     End If
+    
+    ' new ADO?
+    Dim NewFile As String
+    NewFile = Replace(SysFile, ".mdb", ".accdb")
+    If Len(Dir(NewFile, vbNormal)) Then
+        SysFile = NewFile
+        FileExt = ".accdb"
+    Else
+        FileExt = ".mdb"
+    End If
+    
     
     ' =========================================================================================
     ' check for required info
@@ -108,7 +120,7 @@ Dim FName, DriveLetter As String
     End If
         
     ' create the PRCompany table in GLSystem.MDB and exit
-    If X = "prcompany" Then
+    If x = "prcompany" Then
         GlobalCreate
         CompanyCreate
         MsgBox "PRCompany Created", vbInformation
@@ -144,6 +156,8 @@ Dim FName, DriveLetter As String
     End If
     dbName = GLCompany.FileName
     FName = DriveLetter & Mid(dbName, 3, Len(dbName) - 2)
+    
+    If FileExt = ".accdb" Then FName = Replace(LCase(FName), ".mdb", ".accdb")
     
     CNOpen FName, dbPwd
     

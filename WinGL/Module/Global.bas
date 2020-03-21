@@ -94,7 +94,7 @@ Public SupprFlag As Boolean
 Public LastH As String
 
 Public SQLString As String
-Public DBName As String
+Public dbName As String
 Public NoFieldCheck As Boolean
 Public OpenTab As Byte
 
@@ -176,13 +176,13 @@ Public Function Centered(ByVal Strg As String, _
     
 End Function
 
-Public Sub Prt(ByVal Line As Byte, ByVal Col As Byte, ByVal Str As String)
+Public Sub Prt(ByVal Line As Byte, ByVal Col As Byte, ByVal str As String)
 
 Dim pi As Integer
 
        Prvw.vsp.CurrentX = XUnits * Col + 200
        Prvw.vsp.CurrentY = YUnits * Line
-       Prvw.vsp.Text = Str
+       Prvw.vsp.Text = str
        
 '       Ln = Ln + 1
 
@@ -192,13 +192,13 @@ Dim pi As Integer
 End Sub
 
 ' col as actual twip value
-Public Sub PrtCenter(ByVal Line As Byte, ByVal Str As String)
+Public Sub PrtCenter(ByVal Line As Byte, ByVal str As String)
 
 Dim pi As Integer
 
-       Prvw.vsp.CurrentX = ((Equate.PgTwips - Prvw.vsp.TextWidth(Str)) / 2) + 200 + (TabUnit * TabValue)
+       Prvw.vsp.CurrentX = ((Equate.PgTwips - Prvw.vsp.TextWidth(str)) / 2) + 200 + (TabUnit * TabValue)
        Prvw.vsp.CurrentY = 240 * Line
-       Prvw.vsp.Text = Str
+       Prvw.vsp.Text = str
        
 '       Ln = Ln + 1
 
@@ -958,22 +958,23 @@ Dim li As Long
 
 End Sub
 
-Public Function mdbName(ByVal Str As String) As String
+Public Function mdbName(ByVal str As String) As String
 
 Dim mdbI, mdbJ, mdbK As Long
 
     mdbName = ""
-    If Str = "" Then Exit Function
-    If InStr(1, Str, "\", vbTextCompare) = 0 Then Exit Function
+    If str = "" Then Exit Function
+    If InStr(1, str, "\", vbTextCompare) = 0 Then Exit Function
     
-    mdbK = Len(Str)
+    mdbK = Len(str)
     For mdbI = mdbK To 1 Step -1
-        If Mid(Str, mdbI, 1) = "\" Then
+        If Mid(str, mdbI, 1) = "\" Then
             Exit For
         End If
     Next mdbI
     If mdbI = 0 Then Exit Function
-    mdbName = Trim(Mid(Str, mdbI + 1, mdbK))
+    mdbName = Trim(Mid(str, mdbI + 1, mdbK))
 
 End Function
+
 

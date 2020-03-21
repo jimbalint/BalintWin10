@@ -1,5 +1,5 @@
 frmStart = 132, 132, 855, 600, C, 198, 198, 988, 666, C
-modStart = 220, 220, 1010, 688, 
+modStart = 220, 220, 1010, 688, Z
 modDBCreate = 0, 0, 790, 468, C
 modPRGlobal = 22, 22, 812, 490, C
 modPRConnect = 44, 44, 834, 512, 
@@ -9,7 +9,7 @@ cPRDepartment = 110, 110, 900, 578, C
 cEquate = 66, 66, 856, 534, C
 cGLUser = 132, 132, 988, 457, C
 frmPreview = 0, 0, 0, 0, C, 154, 154, 933, 634, C
-modPRUtil = 198, 198, 988, 666, Z
+modPRUtil = 198, 198, 988, 666, 
 frmProgress = 22, 22, 812, 490, C, 44, 44, 834, 512, C
 cPRItem = 110, 110, 957, 592, C
 cPREquate = 132, 132, 979, 614, C

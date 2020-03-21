@@ -1,0 +1,12 @@
+GLCompany	ID	PrimaryKey
+glDescriptions	ID	PrimaryKey
+glDescriptions	Number	Number
+GLFFColumn	FFColumnID	colIDKey
+InvGlobal	GlobalID	glbIDKey
+PRCity	CityID	itemIDKey
+PRCompany	CompanyID	prcIDKey
+PRCounty	CountyID	ctyIDKey
+PRFWTTable	FWTTableID	FWTTableIDKey
+PRGlobal	GlobalID	PRGlobalIDKey
+PRState	StateID	itemIDKey
+Users	ID	PrimaryKey

@@ -3,6 +3,7 @@ Private Sub Main()
 
 Dim X As String
 Dim RC As Long
+Dim FileExt As String
 
     frmSplash.Show
     frmSplash.MousePointer = vbHourglass
@@ -70,6 +71,16 @@ Dim RC As Long
     ' non-standard folders
     If BalintFolder <> "" Then
         SysFile = Replace(BalintFolder, "^", " ") & "\Data\GLSystem.mdb"
+    End If
+    
+    ' new ADO?
+    Dim NewFile As String
+    NewFile = Replace(SysFile, ".mdb", ".accdb")
+    If Len(Dir(NewFile, vbNormal)) Then
+        SysFile = NewFile
+        FileExt = ".accdb"
+    Else
+        FileExt = ".mdb"
     End If
     
     ' =========================================================================================
@@ -188,6 +199,9 @@ Dim RC As Long
     Else
         X = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(PRCompany.FileName)
     End If
+    
+    If FileExt = ".accdb" Then X = Replace(LCase(X), ".mdb", ".accdb")
+
     CNOpen X, dbPwd
     CompanyID = PRCompany.CompanyID
 
