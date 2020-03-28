@@ -1,9 +1,9 @@
 Form1 = 156, 156, 1393, 806, C, 22, 29, 1020, 545, C
-modStart = 198, 261, 1223, 803, Z
-modPRGlobal = 0, 0, 1025, 542, C
+modStart = 198, 261, 1223, 803, 
+modPRGlobal = 0, 0, 1025, 542, 
 modPRConnect = 0, 0, 1330, 589, 
 cPRDepartment = 0, 0, 0, 0, C
-cPREmployee = 0, 0, 0, 0, C
+cPREmployee = 234, 234, 1523, 831, Z
 cPRCompany = 0, 0, 0, 0, C
 cPRW2Box = 0, 0, 0, 0, C
 cPRState = 0, 0, 0, 0, C
@@ -75,3 +75,4 @@ frmPWAdd = 0, 0, 0, 0, C, 176, 232, 1174, 748, C
 Form3 = 0, 0, 0, 0, C, 0, 0, 998, 516, C
 Form4 = 0, 0, 0, 0, C, 22, 29, 1020, 545, C
 frmPRPurge = 0, 0, 0, 0, C, 44, 58, 1042, 574, C
+modRC4 = 0, 0, 0, 0, C

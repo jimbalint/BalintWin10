@@ -46,6 +46,7 @@ Dim FileExt As String
 
     If X = "" Then         ' SET FOR TESTING
         BalintFolder = "\\vboxsrv\vm-share\balint"
+        BalintFolder = "c:\Balint"
         dbPwd = ""
         ProgName = UCase("Form941")
         SysFile = "e:\Balint\Data\GLSystem.mdb"

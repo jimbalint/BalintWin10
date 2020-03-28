@@ -101,6 +101,7 @@ Form=frmPWAdd.frm
 Form=form3.frm
 Form=Form4.frm
 Form=frmPRPurge.frm
+Module=modRC4; ..\Module\modRC4.bas
 Startup="Sub Main"
 HelpFile=""
 ExeName32="PRMaint.exe"

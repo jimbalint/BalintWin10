@@ -26,80 +26,161 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim cnNew As ADODB.Connection
-Dim cnOld As ADODB.Connection
+Dim cnSys As adodb.Connection
+Dim cnNew As adodb.Connection
+Dim cnOld As adodb.Connection
+
 Dim strSQL As String
 
-Dim rs As New ADODB.Recordset
-Dim rsNew As New ADODB.Recordset
-Dim frs As New ADODB.Recordset
+Dim rs As New adodb.Recordset
+Dim rsNew As New adodb.Recordset
+Dim frs As New adodb.Recordset
+Dim log As Integer
 
 Dim x, y, z As String
 Dim i, j, k As Long
 
-Dim rsNewSchema As ADODB.Recordset
+Dim rsNewSchema As adodb.Recordset
+Dim frm As New frmProgress
+
+Dim rc4Key As String
+Dim BalintFolder As String
+Dim NewFolder As String
+Dim dbBlank As String
 
 ' todo
 ' byte/boolean ...
 ' add by using ADO record set
 
 Private Sub Form_Load()
-    
-    
-    x = "c:\balint\data\glsystem.accdb"
-    y = Len(Dir(x, vbNormal))
-    MsgBox (y)
-    End
-    
-    
-    
-    
-    
-    Dim dbName1, dbName2 As String
-    Dim op As Integer
-    op = 0
-    If op = 0 Then
-        dbName1 = "\\vboxsrv\vm-share\balint\Test_ADO\glSystem.mdb"
-    Else
-        dbName1 = "\\vboxsrv\vm-share\balint\Test_ADO\A CRANO EXCAVATING INC.mdb"
-    End If
-    dbName2 = "\\vboxsrv\vm-share\balint\Test_ADO\Database81.accdb"
-    ' ==================
-    SQLConnect dbName1, dbName2
-    ' ==================
-    
-    InitSchemaRS
-    PopSchemaRS
-    CreateTables
-    CreateFields
 
-    Set frs = cnOld.OpenSchema(adSchemaTables)
-    Do Until frs.EOF = True
-        x = frs!Table_Name
-        If Left(x, 4) <> "MSys" And Left(x, 5) <> "Paste" Then
-            CopyData (x)
-        End If
-        frs.MoveNext
-    Loop
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
+
+    rc4Key = "B@lint19742101!@#$%^&*"
+    BalintFolder = "\\vboxsrv\vm-share\Balint"
+    NewFolder = BalintFolder & "\Data_New"
+    dbBlank = "C:\VM-Share\Balint\Blank\BlankAccdb.accdb"
     
-    If op = 0 Then
-        strSQL = "ALTER TABLE glDescriptions" & _
-                " ADD CONSTRAINT [Number] UNIQUE ([Number])"
-        cnNew.Execute strSQL
+    If Len(Dir(NewFolder, vbDirectory)) > 0 Then
+        MsgBox "Folder already exists: " & NewFolder, vbExclamation, "Data Conversion"
+        End
+        ' On Error Resume Next
+        Kill NewFolder & "\*.*"
+        ' On Error GoTo 0
     Else
-        strSQL = "ALTER TABLE PRDepartment" & _
-                " ADD CONSTRAINT [dptNumberKey] UNIQUE ([DepartmentNumber])"
-        cnNew.Execute strSQL
-    
-        strSQL = "ALTER TABLE PREmployee" & _
-                " ADD CONSTRAINT [empNumberKey] UNIQUE ([EmployeeNumber])"
-        cnNew.Execute strSQL
+        MkDir NewFolder
     End If
+
+    log = FreeFile
+    Open NewFolder & "\ConvertLog.txt" For Output As #log
+    
+    Set cnSys = SQLConnect(BalintFolder & "\Data\GLSystem.mdb")
+    
+    x = BalintFolder & "\Data_New\GLSystem.accdb"
+    dbBlank = BalintFolder & "\Blank\BlankAccdb.accdb"
+    If Len(Dir(dbBlank, vbNormal)) = 0 Then
+        MsgBox "Blank DB not found: " & y, vbExclamation, "Data Conversion"
+        End
+    End If
+    FileCopy dbBlank, x
+    Set cnNew = SQLConnect(x)
+
+    frm.Show
+    frm.lblMsg1 = "Now converting GLSystem.mdb"
+    frm.lblMsg2 = ""
+    frm.lblMsg3 = ""
+    frm.Refresh
+    
+    ' convert GLSystem.mdb
+    InitSchemaRS
+    PopSchemaRS cnSys
+    CreateTables cnSys, cnNew
+    CreateFields cnNew
+    CopyData cnSys, cnNew
+    strSQL = "ALTER TABLE glDescriptions" & _
+            " ADD CONSTRAINT [Number] UNIQUE ([Number])"
+    cnNew.Execute strSQL
+    cnNew.Close
+    Print #log, "GLSystem.mdb converted" & vbCrLf
+    
+    ' convert company files
+    frm.lblMsg2 = ""
+    frm.lblMsg3 = ""
+    frm.Refresh
+    
+    Dim fnm As String
+    Dim nfnm As String
+    Dim cnm As String
+    Dim rsC As New adodb.Recordset
+    
+    strSQL = "select * from GLCompany"
+    rsC.Source = strSQL
+    rsC.LockType = adLockOptimistic
+    rsC.CursorType = adOpenKeyset
+    rsC.CursorLocation = adUseServer
+    Set rsC.ActiveConnection = cnSys
+    rsC.Open
+    Do While Not rsC.EOF
+        fnm = rsC!FileName
+        cnm = rsC!Name
+        frm.lblMsg1 = "Now converting: " & cnm
+        frm.lblMsg2 = ""
+        frm.lblMsg3 = ""
+        frm.Refresh
+        If BalintFolder = "" Then
+            fnm = Mid(App.Path, 1, 2) & Mid(fnm, 3, Len(fnm) - 2)
+        Else
+            fnm = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(fnm)
+        End If
+        If Len(Dir(fnm, vbNormal)) = 0 Then
+            Print #log, fnm & " not found for: " & cnm & vbCrLf
+        Else
+            Print #log, vbCrLf & "Converting: " & fnm & " for: " & cnm
+            nfnm = NewFolder & "\" & Replace(mdbName(fnm), ".mdb", ".accdb")
+            FileCopy dbBlank, nfnm
+            
+            Set cnOld = SQLConnect(fnm)
+            Set cnNew = SQLConnect(nfnm)
+            InitSchemaRS
+            PopSchemaRS cnOld
+            CreateTables cnOld, cnNew
+            CreateFields cnNew
+            CopyData cnOld, cnNew
+            
+            strSQL = "ALTER TABLE PRDepartment" & _
+                    " ADD CONSTRAINT [dptNumberKey] UNIQUE ([DepartmentNumber])"
+            cnNew.Execute strSQL
+            strSQL = "ALTER TABLE PREmployee" & _
+                    " ADD CONSTRAINT [empNumberKey] UNIQUE ([EmployeeNumber])"
+            cnNew.Execute strSQL
+            
+            cnOld.Close
+            cnNew.Close
+            Print #log, ""
+            Print #log, ""
+        
+        End If
+        
+        ' CNOpen x, dbPwd
+        rsC.MoveNext
+    Loop
+    rsC.Close
+    
+
+'    If op = 0 Then
+'    Else
+'    End If
    
     ' ==================
-    cnOld.Close
+    On Error Resume Next
+    Close #log
+    cnSys.Close
     cnNew.Close
+    On Error GoTo 0
+    
     MsgBox ("OK..")
+    frm.Hide
     End
     ' ==================
     
@@ -109,56 +190,92 @@ Private Sub Form_Load()
     
     ' CopySchema
     
+    x = RC4Encrypt("Blaze3215", rc4Key)
+    MsgBox (x)
+    x = RC4Decrypt(x, rc4Key)
+    MsgBox (x)
+    End
+    
+    
     End
     
     
 End Sub
 
-Private Sub CopyData(ByVal TblName As String)
+Private Sub CopyData(ByVal cnFrom As adodb.Connection, ByVal cnTo As adodb.Connection)
+    Set frs = cnFrom.OpenSchema(adSchemaTables)
+    Do Until frs.EOF = True
+        x = frs!Table_Name
+        If Left(x, 4) <> "MSys" And Left(x, 5) <> "Paste" Then
+            frm.lblMsg2 = "Now converting table: " & x
+            frm.Refresh
+            CopyDataProcess x, cnFrom, cnTo
+        End If
+        frs.MoveNext
+    Loop
+End Sub
 
+
+Private Sub CopyDataProcess(ByVal TblName As String, ByVal cnFrom As adodb.Connection, ByVal cnTo As adodb.Connection)
+
+    Dim ct1, ct2 As Integer
+    
     Dim io As Integer
     io = FreeFile
     ' Open "\\vboxsrv\vm-share\balint\Test_ADO\Balint_SQL.txt" For Output As #io
     
     strSQL = "delete * from " & TblName
-    cnNew.Execute strSQL
+    cnTo.Execute strSQL
     
-    Dim fld As ADODB.Field
+    Dim fld As adodb.Field
     strSQL = "select * from " & TblName
     
-    Set rs = New ADODB.Recordset
+    Set rs = New adodb.Recordset
     rs.Source = strSQL
     rs.LockType = adLockOptimistic
     rs.CursorType = adOpenKeyset
     rs.CursorLocation = adUseServer
-    Set rs.ActiveConnection = cnOld
+    Set rs.ActiveConnection = cnFrom
     rs.Open
+    ct1 = rs.RecordCount
     
-    Set rsNew = New ADODB.Recordset
+    Set rsNew = New adodb.Recordset
     rsNew.Source = strSQL
     rsNew.LockType = adLockOptimistic
     rsNew.CursorType = adOpenKeyset
     rsNew.CursorLocation = adUseServer
-    Set rsNew.ActiveConnection = cnNew
+    Set rsNew.ActiveConnection = cnTo
     rsNew.Open
     
+    ct2 = 0
     Do While Not rs.EOF
         rsNew.AddNew
         For Each fld In rs.Fields
             x = fld.Name & vbTab & rs.Fields(fld.Name)
-            ' MsgBox (x)
-            y = rs.Fields(fld.Name)
+            If TblName = "PREmployee" And fld.Name = "SSN" Then
+                y = RC4Encrypt(rs.Fields(fld.Name), rc4Key)
+            Else
+                y = rs.Fields(fld.Name)
+            End If
             Select Case y
                 Case "True": rsNew.Fields(fld.Name) = 1
                 Case "False": rsNew.Fields(fld.Name) = 0
-                Case Else: rsNew.Fields(fld.Name) = rs.Fields(fld.Name)
+                Case Else: rsNew.Fields(fld.Name) = y
             End Select
         Next fld
         rsNew.Update
+        ct2 = ct2 + 1
+        If ct2 Mod 100 = 1 Then
+            frm.lblMsg3 = TblName & " " & ct2 & " of: " & ct1
+            frm.Refresh
+        End If
         rs.MoveNext
     Loop
     rs.Close
     rsNew.Close
+    frm.lblMsg3 = TblName & " " & ct2 & " of: " & ct1
+    frm.Refresh
+    Print #log, "--- " & TblName & " Records Converted: " & ct2
     
 End Sub
 
@@ -169,9 +286,9 @@ Private Sub CopyData2()
     io = FreeFile
     Open "\\vboxsrv\vm-share\balint\Test_ADO\Balint_SQL.txt" For Output As #io
     
-    Dim fld As ADODB.Field
+    Dim fld As adodb.Field
     strSQL = "select * from Users"
-    Set rs = New ADODB.Recordset
+    Set rs = New adodb.Recordset
     rs.Source = strSQL
     rs.LockType = adLockOptimistic
     rs.CursorType = adOpenKeyset
@@ -215,7 +332,7 @@ End Function
 
 Private Sub InitSchemaRS()
 
-    Set rsNewSchema = New ADODB.Recordset
+    Set rsNewSchema = New adodb.Recordset
     rsNewSchema.CursorLocation = adUseClient
     rsNewSchema.Fields.Append "TableName", adVarChar, 100, adFldIsNullable
     rsNewSchema.Fields.Append "FieldName", adVarChar, 100, adFldIsNullable
@@ -230,39 +347,16 @@ Private Sub InitSchemaRS()
 
 End Sub
 
-Private Sub PopSchemaRS()
-
-    ' constraints
-    Set frs = New ADODB.Recordset
-    frs.CursorLocation = adUseClient
-    frs.CursorType = adOpenStatic
-    frs.LockType = adLockBatchOptimistic
-    Set frs = cnOld.OpenSchema(adSchemaConstraintColumnUsage)
-    Do Until frs.EOF = True
-        If Left(frs!Table_Name, 4) <> "MSys" Then
-'            rsNewSchema.AddNew
-'            rsNewSchema!TableName = frs!Table_Name
-'            rsNewSchema!FieldName = frs!Column_Name
-'            rsNewSchema!FieldNum = 0
-'            rsNewSchema!ConstraintName = frs!Constraint_name
-'            rsNewSchema!FieldType = ""
-'            rsNewSchema!FieldType2 = "Long"
-'            rsNewSchema!MaxLength = ""
-'            rsNewSchema!Precision = ""
-'            rsNewSchema!Scale = ""
-'            rsNewSchema.Update
-        End If
-        frs.MoveNext
-    Loop
+Private Sub PopSchemaRS(ByVal cn As adodb.Connection)
     
     ' fields
     Dim FldNum As Integer
     FldNum = 0
-    Set frs = New ADODB.Recordset
+    Set frs = New adodb.Recordset
     frs.CursorLocation = adUseClient
     frs.CursorType = adOpenStatic
     frs.LockType = adLockBatchOptimistic
-    Set frs = cnOld.OpenSchema(adSchemaColumns)
+    Set frs = cn.OpenSchema(adSchemaColumns)
     Do Until frs.EOF = True
         If Left(frs!Table_Name, 4) <> "MSys" And frs!Table_Name <> "Paste Errors" Then
             FldNum = FldNum + 1
@@ -305,53 +399,53 @@ Private Sub PopSchemaRS()
     Loop
     
     ' dump it
-    Dim io As Integer
-    Dim fld As ADODB.Field
-    io = FreeFile
-    Open "\\vboxsrv\vm-share\balint\Test_ADO\Balint_Schema.txt" For Output As #io
-    rsNewSchema.Sort = "TableName ASC, FieldNum ASC"
-    rsNewSchema.MoveFirst
-    Do While Not rsNewSchema.EOF
-        x = rsNewSchema!TableName & vbTab
-        x = x & rsNewSchema!FieldName & vbTab
-        x = x & rsNewSchema!FieldNum & vbTab
-        x = x & rsNewSchema!ConstraintName & vbTab
-        x = x & rsNewSchema!FieldType & vbTab
-        x = x & rsNewSchema!MaxLength & vbTab
-        x = x & rsNewSchema!Precision & vbTab
-        x = x & rsNewSchema!Scale & vbTab
-        Print #io, x
-        rsNewSchema.MoveNext
-    Loop
-    Close #io
+'    Dim io As Integer
+'    Dim fld As ADODB.Field
+'    io = FreeFile
+'    Open "\\vboxsrv\vm-share\balint\Test_ADO\Balint_Schema.txt" For Output As #io
+'    rsNewSchema.Sort = "TableName ASC, FieldNum ASC"
+'    rsNewSchema.MoveFirst
+'    Do While Not rsNewSchema.EOF
+'        x = rsNewSchema!TableName & vbTab
+'        x = x & rsNewSchema!FieldName & vbTab
+'        x = x & rsNewSchema!FieldNum & vbTab
+'        x = x & rsNewSchema!ConstraintName & vbTab
+'        x = x & rsNewSchema!FieldType & vbTab
+'        x = x & rsNewSchema!MaxLength & vbTab
+'        x = x & rsNewSchema!Precision & vbTab
+'        x = x & rsNewSchema!Scale & vbTab
+'        Print #io, x
+'        rsNewSchema.MoveNext
+'    Loop
+'    Close #io
 
 End Sub
 
-Private Sub CreateTables()
+Private Sub CreateTables(ByVal cnFrom As adodb.Connection, ByVal cnTo As adodb.Connection)
     
     ' clear
-    Set frs = New ADODB.Recordset
+    Set frs = New adodb.Recordset
     frs.CursorLocation = adUseClient
     frs.CursorType = adOpenStatic
     frs.LockType = adLockBatchOptimistic
-    Set frs = cnNew.OpenSchema(adSchemaTables)
+    Set frs = cnTo.OpenSchema(adSchemaTables)
     Do Until frs.EOF = True
         If Left(frs!Table_Name, 4) <> "MSys" And frs!Table_Name <> "Paste" And Left(frs!Table_Name, 1) <> "~" Then
-            cnNew.Execute "drop table " & frs!Table_Name
+            cnTo.Execute "drop table " & frs!Table_Name
         End If
         frs.MoveNext
     Loop
     frs.Close
     
     ' add
-    Set frs = New ADODB.Recordset
+    Set frs = New adodb.Recordset
     frs.CursorLocation = adUseClient
     frs.CursorType = adOpenStatic
     frs.LockType = adLockBatchOptimistic
-    Set frs = cnOld.OpenSchema(adSchemaPrimaryKeys)
+    Set frs = cnFrom.OpenSchema(adSchemaPrimaryKeys)
     Do Until frs.EOF = True
         If Left(frs!Table_Name, 4) <> "MSys" Then
-            cnNew.Execute "create table " & frs!Table_Name
+            cnTo.Execute "create table " & frs!Table_Name
         End If
         frs.MoveNext
     Loop
@@ -359,7 +453,7 @@ Private Sub CreateTables()
     
 End Sub
 
-Private Sub CreateFields()
+Private Sub CreateFields(ByVal cn As adodb.Connection)
     Dim fString As String
     Dim LastTblName As String
     rsNewSchema.Sort = "TableName ASC, FieldNum ASC"
@@ -372,12 +466,18 @@ Private Sub CreateFields()
                       " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
                       " COUNTER PRIMARY KEY"
         Else
-            fString = "ALTER TABLE " & rsNewSchema!TableName & _
-                      " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
-                      " " & rsNewSchema!FieldType2
+            If rsNewSchema!TableName = "PREmployee" And rsNewSchema!FieldName = "SSN" Then
+                fString = "ALTER TABLE " & rsNewSchema!TableName & _
+                          " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
+                          " String"
+            Else
+                fString = "ALTER TABLE " & rsNewSchema!TableName & _
+                          " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
+                          " " & rsNewSchema!FieldType2
+            End If
         End If
         LastTable = rsNewSchema!TableName
-        cnNew.Execute fString
+        cn.Execute fString
         rsNewSchema.MoveNext
     Loop
 End Sub
@@ -385,7 +485,7 @@ End Sub
 Private Sub CopySchema()
     ' http://www.devx.com/vb2themax/Tip/19114
     
-    Set frs = New ADODB.Recordset
+    Set frs = New adodb.Recordset
     frs.CursorLocation = adUseClient
     frs.CursorType = adOpenStatic
     frs.LockType = adLockBatchOptimistic
@@ -408,7 +508,7 @@ Private Sub GetTables()
     io = FreeFile
     Open "\\vboxsrv\vm-share\balint\Test_ADO\Balint_Tables.txt" For Output As #io
     
-    Set frs = New ADODB.Recordset
+    Set frs = New adodb.Recordset
     frs.CursorLocation = adUseClient
     frs.CursorType = adOpenStatic
     frs.LockType = adLockBatchOptimistic
@@ -417,7 +517,7 @@ Private Sub GetTables()
     Set frs = cnOld.OpenSchema(adSchemaPrimaryKeys)
     
     ' Table names only
-    Dim dc As ADODB.Field
+    Dim dc As adodb.Field
     For Each dc In frs.Fields
         Print #io, (dc.Name)
     Next
@@ -446,7 +546,7 @@ Private Sub GetConstraints()
     io = FreeFile
     Open "\\vboxsrv\vm-share\balint\Test_ADO\Balint_Constraints.txt" For Output As #io
     
-    Set frs = New ADODB.Recordset
+    Set frs = New adodb.Recordset
     frs.CursorLocation = adUseClient
     frs.CursorType = adOpenStatic
     frs.LockType = adLockBatchOptimistic
@@ -485,7 +585,7 @@ Private Sub GetSchema()
     io = FreeFile
     Open "\\vboxsrv\vm-share\balint\Test_ADO\Balint_Schema.txt" For Output As #io
     
-    Set frs = New ADODB.Recordset
+    Set frs = New adodb.Recordset
     frs.CursorLocation = adUseClient
     frs.CursorType = adOpenStatic
     frs.LockType = adLockBatchOptimistic
@@ -493,7 +593,7 @@ Private Sub GetSchema()
     ' Set frs = cnOld.OpenSchema(adSchemaTableConstraints)
     ' Set frs = cnOld.OpenSchema(adSchemaPrimaryKeys)
     ' frs.Sort = "ORDINAL_POSITION asc"
-    Dim fld As ADODB.Field
+    Dim fld As adodb.Field
     For Each fld In frs.Fields
         Print #io, fld.Name
     Next fld
@@ -523,17 +623,17 @@ End Sub
 Public Function AddField(ByVal TableName As String, _
                          ByVal ColumnName As String, _
                          ByVal ColumnType As String, _
-                         ByRef adoConn As ADODB.Connection) _
+                         ByRef adoConn As adodb.Connection) _
                          As Byte
                          
-Dim cm As ADODB.Command
-Dim frs As ADODB.Recordset
+Dim cm As adodb.Command
+Dim frs As adodb.Recordset
 Dim FldFlag As Boolean
 Dim fString As String
 Dim TblExists As Boolean
                          
     ' see if the field is already in the Table
-    Set frs = New ADODB.Recordset
+    Set frs = New adodb.Recordset
     frs.CursorLocation = adUseClient
     frs.CursorType = adOpenStatic
     frs.LockType = adLockBatchOptimistic
@@ -602,21 +702,35 @@ Dim TblExists As Boolean
     
 End Function
 
-
-
-Private Sub SQLConnect(ByVal dbName1 As String, ByVal dbName2 As String)
-
-    Set cnOld = New ADODB.Connection
-    cnOld.Provider = "Microsoft.Jet.OLEDB.4.0"
-    cnOld.ConnectionString = dbName1
-    cnOld.Open
+Private Function SQLConnect(ByVal dbName As String) As adodb.Connection
+        
+    Dim pwd As String
+    Set SQLConnect = New adodb.Connection
+    If InStr(1, ".mdb", dbName) Then
+        SQLConnect.Provider = "Microsoft.Jet.OLEDB.4.0"
+    Else
+        SQLConnect.Provider = "Microsoft.ACE.OLEDB.12.0"
+    End If
+    SQLConnect.Mode = adModeReadWrite
+    SQLConnect.ConnectionString = dbName
+    On Error Resume Next
+    SQLConnect.Open
+    If Err.Number <> 0 Then
+        If Err.Description = "Not a valid password." Then
+            pwd = InputBox("Please enter the password for: " & dbName)
+            SQLConnect.Properties("Jet OLEDB:Database Password") = pwd
+            On Error GoTo 0
+            SQLConnect.Open
+        Else
+            x = "Error opening: " & dbName & vbCr & Err.Description
+            MsgBox x, vbExclamation, "Data Conversion"
+            End
+        End If
+    End If
     
-    Set cnNew = New ADODB.Connection
-    cnNew.Provider = "Microsoft.ACE.OLEDB.12.0"
-    cnNew.ConnectionString = dbName2
-    cnNew.Open
-
-End Sub
+    On Error GoTo 0
+    
+End Function
 
 Private Sub Test1()
 
@@ -636,4 +750,23 @@ Private Sub Test1()
     rs.Close
     
 End Sub
+
+Public Function mdbName(ByVal str As String) As String
+
+Dim mdbI, mdbJ, mdbK As Long
+
+    mdbName = ""
+    If str = "" Then Exit Function
+    If InStr(1, str, "\", vbTextCompare) = 0 Then Exit Function
+    
+    mdbK = Len(str)
+    For mdbI = mdbK To 1 Step -1
+        If Mid(str, mdbI, 1) = "\" Then
+            Exit For
+        End If
+    Next mdbI
+    If mdbI = 0 Then Exit Function
+    mdbName = Trim(Mid(str, mdbI + 1, mdbK))
+
+End Function
 

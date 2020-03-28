@@ -205,7 +205,9 @@ Public Function Save(ByVal booAddPut As Byte) As String
     rs.Fields("City") = UCase(City)
     rs.Fields("State") = UCase(Mid(State, 1, 2))
     rs.Fields("ZipCode") = ZipCode
-    rs.Fields("SSN") = SSN
+    
+    rs.Fields("SSN") = RC4Encrypt(CStr(SSN), rc4Key)
+    
     rs.Fields("DepartmentID") = DepartmentID
     rs.Fields("SalaryAmount") = SalaryAmount
     rs.Fields("HourlyAmount") = HourlyAmount
@@ -363,7 +365,9 @@ Public Sub AssignFields()
     City = Trim(UCase(rs!City)) & ""
     State = Trim(UCase(rs!State)) & ""
     ZipCode = nNull(rs!ZipCode)
-    SSN = nNull(rs!SSN)
+    
+    SSN = RC4Decrypt(CStr(nNull(rs!SSN)), rc4Key)
+    
     DepartmentID = nNull(rs!DepartmentID)
     SalaryAmount = nNull(rs!SalaryAmount)
     HourlyAmount = nNull(rs!HourlyAmount)
