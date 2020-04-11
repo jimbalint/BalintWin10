@@ -1,6 +1,7 @@
 Attribute VB_Name = "modPRGlobal"
 Public SQLString As String
 
+Public NewADO As Boolean
 Public rc4Key As String
 
 Public SessMgr As New QBSessionManager

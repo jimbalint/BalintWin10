@@ -61,6 +61,7 @@ Class=cPRW2State; ..\Class\cPRW2State.cls
 Class=cQBUpdate; ..\Class\cQBUpdate.cls
 Class=cQBAccount; ..\Class\cQBAccount.cls
 Class=cPRCounty; ..\Class\cPRCounty.cls
+Module=modRC4; ..\Module\modRC4.bas
 Startup="Sub Main"
 HelpFile=""
 ExeName32="PRUtil.exe"

@@ -54,6 +54,7 @@ Class=cQBAccount; ..\Class\cQBAccount.cls
 Class=cPRW2; ..\Class\cPRW2.cls
 Class=cPRW2City; ..\Class\cPRW2City.cls
 Class=cPRW2State; ..\Class\cPRW2State.cls
+Module=modRC4; ..\Module\modRC4.bas
 Startup="Sub Main"
 HelpFile=""
 ExeName32="PRGlobMaint.exe"

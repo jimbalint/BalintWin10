@@ -62,8 +62,10 @@ Dim FileExt As String
     If Len(Dir(NewFile, vbNormal)) Then
         SysFile = NewFile
         FileExt = ".accdb"
+        modPRGlobal.NewADO = True
     Else
         FileExt = ".mdb"
+        modPRGlobal.NewADO = False
     End If
     
     ' =========================================================================================

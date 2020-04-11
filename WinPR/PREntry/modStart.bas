@@ -80,9 +80,12 @@ Dim FileExt As String
     If Len(Dir(NewFile, vbNormal)) Then
         SysFile = NewFile
         FileExt = ".accdb"
+        modPRGlobal.NewADO = True
     Else
         FileExt = ".mdb"
+        modPRGlobal.NewADO = False
     End If
+   
     
     ' =========================================================================================
     ' check for required info
@@ -203,6 +206,7 @@ Dim FileExt As String
     
     If FileExt = ".accdb" Then X = Replace(LCase(X), ".mdb", ".accdb")
 
+
     CNOpen X, dbPwd
     CompanyID = PRCompany.CompanyID
 
@@ -218,7 +222,6 @@ Dim FileExt As String
             MsgBox "Hernandez: Cleveland moved to Clv Hts", vbInformation
         End If
     End If
-
     ' perform field sweeps - in NewField module
     FieldSweep
 

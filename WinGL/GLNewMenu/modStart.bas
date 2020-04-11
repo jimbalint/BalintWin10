@@ -4,6 +4,8 @@ Attribute VB_Name = "modStart"
 
 Private Sub Main()   ' *** project execution starts here ***
 
+rc4Key = "B@lint19742101!@#$%^&*"
+
 Dim x As String
 Dim b As Long
 Dim I, J, K As Long
@@ -164,6 +166,9 @@ Dim FileExt As String
             If FileExt = ".accdb" Then
                 dbName = LCase(dbName)
                 dbName = Replace(dbName, ".mdb", ".accdb")
+                NewADO = True
+            Else
+                NewADO = False
             End If
                 
             CNOpen dbName, dbPwd

@@ -87,6 +87,7 @@ Form=frmTest.frm
 Form=frm941_Jan2014.frm
 Form=frm941_Jan2013.frm
 Form=frm941_Jan2017.frm
+Module=modRC4; ..\Module\modRC4.bas
 Startup="Sub Main"
 HelpFile=""
 Title="PRGReps"

@@ -57,11 +57,17 @@ Private Sub Form_Load()
     Dim fso As Object
     Set fso = CreateObject("Scripting.FileSystemObject")
 
+    Dim fnm As String
+    Dim nfnm As String
+    Dim cnm As String
+    Dim rsC As New adodb.Recordset
+    
     rc4Key = "B@lint19742101!@#$%^&*"
+    
     BalintFolder = "\\vboxsrv\vm-share\Balint"
     NewFolder = BalintFolder & "\Data_New"
-    dbBlank = "C:\VM-Share\Balint\Blank\BlankAccdb.accdb"
     
+    dbBlank = BalintFolder & "\Blank\BlankAccdb.accdb"
     If Len(Dir(NewFolder, vbDirectory)) > 0 Then
         MsgBox "Folder already exists: " & NewFolder, vbExclamation, "Data Conversion"
         End
@@ -108,11 +114,6 @@ Private Sub Form_Load()
     frm.lblMsg2 = ""
     frm.lblMsg3 = ""
     frm.Refresh
-    
-    Dim fnm As String
-    Dim nfnm As String
-    Dim cnm As String
-    Dim rsC As New adodb.Recordset
     
     strSQL = "select * from GLCompany"
     rsC.Source = strSQL
@@ -166,7 +167,36 @@ Private Sub Form_Load()
         rsC.MoveNext
     Loop
     rsC.Close
+           
+           
+    ' Win1099.mdb
+    fnm = "Win1099.mdb"
+    If BalintFolder = "" Then
+        fnm = Mid(App.Path, 1, 2) & Mid(fnm, 3, Len(fnm) - 2)
+    Else
+        fnm = Replace(BalintFolder, "^", " ") & "\Data\" & fnm
+    End If
     
+    If Len(Dir(fnm, vbNormal)) > 0 Then
+        Print #log, vbCrLf & "Converting: " & fnm
+        nfnm = NewFolder & "\" & Replace(mdbName(fnm), ".mdb", ".accdb")
+        
+        FileCopy dbBlank, nfnm
+        
+        Set cnOld = SQLConnect(fnm)
+        Set cnNew = SQLConnect(nfnm)
+        InitSchemaRS
+        PopSchemaRS cnOld
+        CreateTables cnOld, cnNew
+        CreateFields cnNew
+        CopyData cnOld, cnNew
+        
+        cnOld.Close
+        cnNew.Close
+        Print #log, ""
+        Print #log, ""
+    End If
+           
 
 '    If op = 0 Then
 '    Else
@@ -218,7 +248,8 @@ End Sub
 
 Private Sub CopyDataProcess(ByVal TblName As String, ByVal cnFrom As adodb.Connection, ByVal cnTo As adodb.Connection)
 
-    Dim ct1, ct2 As Integer
+    Dim ct1, ct2 As Long
+    Dim eFlag As Boolean
     
     Dim io As Integer
     io = FreeFile
@@ -252,7 +283,11 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByVal cnFrom As adodb.Conne
         rsNew.AddNew
         For Each fld In rs.Fields
             x = fld.Name & vbTab & rs.Fields(fld.Name)
-            If TblName = "PREmployee" And fld.Name = "SSN" Then
+            eFlag = False
+            If TblName = "PREmployee" And fld.Name = "SSN" Then eFlag = True
+            If TblName = "Detail99" And fld.Name = "PayeeID" Then eFlag = True
+            If TblName = "Payee99" And fld.Name = "FederalID" Then eFlag = True
+            If eFlag Then
                 y = RC4Encrypt(rs.Fields(fld.Name), rc4Key)
             Else
                 y = rs.Fields(fld.Name)
@@ -456,6 +491,7 @@ End Sub
 Private Sub CreateFields(ByVal cn As adodb.Connection)
     Dim fString As String
     Dim LastTblName As String
+    Dim eFlag As Boolean
     rsNewSchema.Sort = "TableName ASC, FieldNum ASC"
     rsNewSchema.MoveFirst
     Dim LastTable As String
@@ -466,7 +502,11 @@ Private Sub CreateFields(ByVal cn As adodb.Connection)
                       " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
                       " COUNTER PRIMARY KEY"
         Else
-            If rsNewSchema!TableName = "PREmployee" And rsNewSchema!FieldName = "SSN" Then
+            eFlag = False
+            If rsNewSchema!TableName = "PREmployee" And rsNewSchema!FieldName = "SSN" Then eFlag = True
+            If rsNewSchema!TableName = "Payee99" And rsNewSchema!FieldName = "FederalID" Then eFlag = True
+            ' If rsNewSchema!TableName = "Detail99" And rsNewSchema!FieldName = "PayeeID" Then eFlag = True
+            If eFlag Then
                 fString = "ALTER TABLE " & rsNewSchema!TableName & _
                           " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
                           " String"
@@ -717,7 +757,11 @@ Private Function SQLConnect(ByVal dbName As String) As adodb.Connection
     SQLConnect.Open
     If Err.Number <> 0 Then
         If Err.Description = "Not a valid password." Then
-            pwd = InputBox("Please enter the password for: " & dbName)
+            If InStr(1, LCase(dbName), "balint") Then
+                pwd = "OLDBB35"
+            Else
+                pwd = InputBox("Please enter the password for: " & dbName)
+            End If
             SQLConnect.Properties("Jet OLEDB:Database Password") = pwd
             On Error GoTo 0
             SQLConnect.Open

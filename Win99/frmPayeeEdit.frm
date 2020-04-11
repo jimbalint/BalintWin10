@@ -572,30 +572,34 @@ Private Sub Form_Load()
         tdbTextSet .tdbCSZ, 50
         tdbTextSet .tdbFederalID, 15
         tdbTextSet .tdbAccountNumber, 50
+        .tdbComment.text = ""
     End With
 
     If ScreenMode = 1 Then
-        SQLString = "SELECT PayeeNumber FROM Payee99 ORDER BY PayeeNumber DESC"
+    
+        SQLString = "SELECT top 1 PayeeNumber FROM Payee99 ORDER BY PayeeNumber DESC"
         rsInit SQLString, cn, rs
         If rs.RecordCount = 0 Then
             PayeeNumber = 101
         Else
             PayeeNumber = rs!PayeeNumber + 1
         End If
+
         rs.Close
         
         Payee99.OpenRS
         Payee99.Clear
         Payee99.PayeeNumber = PayeeNumber
+        Payee99.FederalID = ""
         Payee99.Save (Equate.RecAdd)
 
-        ' get it bakc
+        ' get it back
         SQLString = "SELECT * FROM Payee99 WHERE PayeeNumber = " & PayeeNumber
         If Payee99.GetBySQL(SQLString) = False Then
             MsgBox "Payee99 Not Found! " & PayeeNumber
             GoBack
         End If
-        
+
         PayeeID = Payee99.PayeeID
 
     End If
@@ -640,10 +644,20 @@ Private Sub cmdSaveExit_Click()
 End Sub
 
 Private Sub SaveForm()
-
+    
     ' if payeenumber changed .....
     PayeeNumber = Val(Me.tdbPayeeNumber)
-    If CheckPayeeNumber = False Then Exit Sub
+    
+    Dim rsp As ADODB.Recordset
+    SQLString = "select count(1) as pcount" & _
+                " from Payee99 " & _
+                " where PayeeNumber = " & Me.tdbPayeeNumber & _
+                " and PayeeID <> " & Payee99.PayeeID
+    rsInit SQLString, cn, rsp
+    If CInt(rsp!pcount) <> 0 Then
+        MsgBox "This Payee Number already exists: " & Me.tdbPayeeNumber, vbExclamation, "1099 Payee Edit"
+        Exit Sub
+    End If
 
     With Me
         Payee99.PayeeNumber = .tdbPayeeNumber
@@ -651,7 +665,10 @@ Private Sub SaveForm()
         Payee99.Address = Trim(.tdbAddress)
         Payee99.CSZ = Trim(.tdbCSZ)
         Payee99.AccountNumber = Trim(.tdbAccountNumber)
+        
         Payee99.FederalID = Trim(.tdbFederalID)
+        
+        Payee99.Comment = Trim(.tdbComment)
         If Me.chkInactive Then
             Payee99.Inactive = 1
         Else
@@ -665,7 +682,6 @@ Private Sub SaveForm()
 End Sub
 
 Private Sub DisplayForm()
-
     With Me
         .tdbPayeeNumber = Payee99.PayeeNumber
         .tdbPayeeName = Trim(Payee99.PayeeName)
@@ -674,6 +690,7 @@ Private Sub DisplayForm()
         .tdbAccountNumber = Payee99.AccountNumber
         .tdbFederalID = Payee99.FederalID
         .chkInactive = Payee99.Inactive
+        .tdbComment = Payee99.Comment
     End With
 
     Me.Refresh

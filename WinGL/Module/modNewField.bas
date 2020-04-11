@@ -879,7 +879,7 @@ Public Function AddField(ByVal TableName As String, _
 Dim cm As ADODB.Command
 Dim frs As ADODB.Recordset
 Dim FldFlag As Boolean
-Dim FString As String
+Dim fString As String
 Dim TblExists As Boolean
                          
     ' see if the field is already in the Table
@@ -923,10 +923,10 @@ Dim TblExists As Boolean
         
         On Error Resume Next
         
-        FString = "ALTER TABLE " & TableName & _
+        fString = "ALTER TABLE " & TableName & _
                   " ADD COLUMN [" & ColumnName & "]" & _
                   " " & ColumnType
-        adoConn.Execute FString
+        adoConn.Execute fString
         
         If Err.Number = 0 Then
             AddField = 1

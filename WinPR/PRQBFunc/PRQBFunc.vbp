@@ -62,6 +62,7 @@ Form=..\Form\frmSplash.frm
 Form=frmTaxPay.frm
 Form=..\PRReport\frmDateRange.frm
 Form=..\PRMaint\frmQBAccts.frm
+Module=modRC4; ..\Module\modRC4.bas
 Startup="Sub Main"
 HelpFile=""
 ExeName32="PRQBFunc.exe"

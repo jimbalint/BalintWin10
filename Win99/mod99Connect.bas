@@ -10,7 +10,13 @@ Public Function CNOpen(ByVal FName As String, ByVal Password As String) As Boole
    On Error Resume Next
    
    Set cn = New ADODB.Connection
-   cn.Provider = "Microsoft.Jet.OLEDB.4.0"
+   
+    If Right(LCase(FName), 6) = ".accdb" Then
+        cn.Provider = "Microsoft.ACE.OLEDB.12.0"
+    Else
+        cn.Provider = "Microsoft.Jet.OLEDB.4.0"
+    End If
+   
    cn.ConnectionString = FName
    
    If Password <> "" Then
@@ -62,25 +68,37 @@ Public Function CNOpen(ByVal FName As String, ByVal Password As String) As Boole
 End Function
 
 Public Function SysOpen(ByVal FName As String) As Boolean
+
+    Set cnDes = New ADODB.Connection
    
-   Set cnDes = New ADODB.Connection
-   cnDes.Provider = "Microsoft.Jet.OLEDB.4.0"
-   cnDes.ConnectionString = FName
+    If Right(LCase(FName), 6) = ".accdb" Then
+        cnDes.Provider = "Microsoft.ACE.OLEDB.12.0"
+    Else
+        cnDes.Provider = "Microsoft.Jet.OLEDB.4.0"
+    End If
    
-   On Error Resume Next
-   cnDes.Mode = adModeReadWrite
-   On Error GoTo 0
+    cnDes.ConnectionString = FName
    
-   cnDes.Open
-   SysOpen = True
-   UpdateCheck True, cnDes
+    On Error Resume Next
+    cnDes.Mode = adModeReadWrite
+    On Error GoTo 0
+    
+    cnDes.Open
+    SysOpen = True
+    UpdateCheck True, cnDes
 
 End Function
 
 Public Function CN99Open(ByVal FName As String) As Boolean
    
    Set cn99 = New ADODB.Connection
-   cn99.Provider = "Microsoft.Jet.OLEDB.4.0"
+   
+    If Right(LCase(FName), 6) = ".accdb" Then
+        cn99.Provider = "Microsoft.ACE.OLEDB.12.0"
+    Else
+        cn99.Provider = "Microsoft.Jet.OLEDB.4.0"
+    End If
+   
    cn99.ConnectionString = FName
    
    On Error Resume Next
@@ -113,7 +131,7 @@ Public Sub rsInit(ByVal SQLString As String, _
         rsi.CursorType = adOpenKeyset
         rsi.LockType = adLockOptimistic
     End If
-   
+
     rsi.Open
 
     If DisConn Then

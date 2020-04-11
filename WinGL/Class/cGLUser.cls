@@ -32,7 +32,11 @@ Public Sub Save(ByVal booAddPut As Boolean)
     rs.Fields("Logon") = Logon & ""
     rs.Fields("Name") = Name & ""
     rs.Fields("Password") = Password & " "
-    rs.Fields("LoadLastCompany") = nNull(LoadLastCompany)
+    If IsNull(LoadLastCompany) Then
+        rs.Fields("LoadLastCompany") = False
+    Else
+        rs.Fields("LoadLastCompany") = LoadLastCompany
+    End If
     
     rs.Update
     

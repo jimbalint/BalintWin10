@@ -2,6 +2,8 @@ Attribute VB_Name = "Global"
 Option Explicit
 
 Public HAdj As Single
+Public NewADO As Boolean
+Public rc4Key As String
 
 Public Equate As cEquate
 Public GLAccount As cGLAccount
@@ -182,7 +184,7 @@ Dim pi As Integer
 
        Prvw.vsp.CurrentX = XUnits * Col + 200
        Prvw.vsp.CurrentY = YUnits * Line
-       Prvw.vsp.Text = str
+       Prvw.vsp.text = str
        
 '       Ln = Ln + 1
 
@@ -198,7 +200,7 @@ Dim pi As Integer
 
        Prvw.vsp.CurrentX = ((Equate.PgTwips - Prvw.vsp.TextWidth(str)) / 2) + 200 + (TabUnit * TabValue)
        Prvw.vsp.CurrentY = 240 * Line
-       Prvw.vsp.Text = str
+       Prvw.vsp.text = str
        
 '       Ln = Ln + 1
 
@@ -645,7 +647,7 @@ Dim TxtX As String
     ' include tab parameter
    Prvw.vsp.CurrentX = XUnits * 2 + (TabUnit * TabValue)
    
-   Prvw.vsp.Text = PrintString
+   Prvw.vsp.text = PrintString
        
    ' clear the print values
    For pi = 1 To 30

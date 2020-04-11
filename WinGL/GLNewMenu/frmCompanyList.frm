@@ -204,6 +204,10 @@ Dim FName As String
     Else
         FName = BalintFolder & "\Data\" & mdbName(rsCompany!FileName)
     End If
+    If NewADO Then
+        FName = Replace(FName, ".mdb", ".accdb")
+    End If
+    
     CNOpen FName, ""
 
     ' get the GLCompany record

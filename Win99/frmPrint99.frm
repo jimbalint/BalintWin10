@@ -385,7 +385,7 @@ Private Sub fg_AfterEdit(ByVal Row As Long, ByVal Col As Long)
         If Col = 1 Then     ' set select off? - delete all detail99 records for the payee
             If .TextMatrix(Row, 1) = False Then
                 SQLString = " DELETE * FROM Detail99 WHERE PayeeID = " & .TextMatrix(Row, 0) & _
-                            " AND TaxYear = " & Me.cmbTaxYear.Text & _
+                            " AND TaxYear = " & Me.cmbTaxYear.text & _
                             " AND FormType = '" & GetFormType() & "'"
                 cn.Execute SQLString
                 For I = 5 To .Cols - 1
@@ -406,8 +406,8 @@ Private Sub cmdPrint_Click()
     VertNudge = Me.tdbVertical.Value
     
     With Me
-        X = Mid(.cmbForm.Text, 6)
-        I = Me.cmbTaxYear.Text
+        X = Mid(.cmbForm.text, 6)
+        I = Me.cmbTaxYear.text
         PrintForm99 X, I, False
     End With
 
@@ -436,10 +436,10 @@ Dim ColCt As Integer
         .Editable = flexEDKbdMouse
 
         ' get the form
-        SQLString = " SELECT * FROM Form99 WHERE TaxYear = " & Me.cmbTaxYear.Text & " " & _
+        SQLString = " SELECT * FROM Form99 WHERE TaxYear = " & Me.cmbTaxYear.text & " " & _
                     " AND FormType = '" & GetFormType() & "'"
         If Form99.GetBySQL(SQLString) = False Then
-            MsgBox "Form NF: " & Me.cmbTaxYear.Text & " 1099-" & Me.cmbForm.Text, vbExclamation
+            MsgBox "Form NF: " & Me.cmbTaxYear.text & " 1099-" & Me.cmbForm.text, vbExclamation
             GoBack
         End If
         
@@ -478,11 +478,11 @@ Dim ColCt As Integer
         ' get the fields of the form
         ' put to header line of grid
         ' coldata is boxname
-        SQLString = " SELECT * FROM Field99 WHERE TaxYear = " & Me.cmbTaxYear.Text & _
+        SQLString = " SELECT * FROM Field99 WHERE TaxYear = " & Me.cmbTaxYear.text & _
                     " AND FormType = '" & GetFormType() & "'" & _
                     " AND QuickEntry > 0 ORDER BY QuickEntry"
         If Field99.GetBySQL(SQLString) = False Then
-            MsgBox "Fields NF: " & Me.cmbTaxYear.Text & " 1099-" & Me.cmbForm.Text, vbExclamation
+            MsgBox "Fields NF: " & Me.cmbTaxYear.text & " 1099-" & Me.cmbForm.text, vbExclamation
             GoBack
         End If
         
@@ -506,7 +506,7 @@ Dim ColCt As Integer
             If Field99.GetNext = False Then Exit Do
         
         Loop
-    
+
         ' load the payee data
         SQLString = " SELECT * FROM Payee99 ORDER BY PayeeNumber"
         If Payee99.GetBySQL(SQLString) = False Then
@@ -515,7 +515,7 @@ Dim ColCt As Integer
         End If
         
         Rw = 0
-        
+
         Do
             With Me.fg
                 
@@ -523,7 +523,7 @@ Dim ColCt As Integer
                 If Payee99.Inactive = 1 Then
                     SQLString = " SELECT * FROM Detail99 WHERE PayeeID = " & Payee99.PayeeID & _
                                 " AND FormType = '" & GetFormType() & "'" & _
-                                " AND TaxYear = " & Me.cmbTaxYear.Text
+                                " AND TaxYear = " & Me.cmbTaxYear.text
                     If Detail99.GetBySQL(SQLString) = False Then
                         GoTo NextPayee
                     End If
@@ -542,8 +542,9 @@ Dim ColCt As Integer
                 ' load the detail data
                 SQLString = " SELECT * FROM Detail99 WHERE PayeeID = " & Payee99.PayeeID & _
                             " AND FormType = '" & GetFormType() & "'" & _
-                            " AND TaxYear = " & Me.cmbTaxYear.Text
+                            " AND TaxYear = " & Me.cmbTaxYear.text
                 If Detail99.GetBySQL(SQLString) = True Then
+
                     Do
                         For J = 5 To .Cols - 1
                             If .ColData(J) = Detail99.BoxName Then
@@ -569,12 +570,12 @@ NextPayee:
         .AutoSize 0, .Cols - 1
         .TabBehavior = flexTabCells
     End With
-
+    
     ' load nudge
     PRGlobalID = 0
     With Me
         SQLString = " SELECT * FROM PRGlobal WHERE UserID = " & User.ID & _
-                    " AND Description = '" & Me.cmbForm.Text & "'"
+                    " AND Description = '" & Me.cmbForm.text & "'"
         If PRGlobal.GetBySQL(SQLString) = False Then
             .tdbHorz.Value = 0
             .tdbVertical.Value = 0
@@ -592,7 +593,7 @@ Private Sub SaveNudge()
     If PRGlobalID = 0 Then
         PRGlobal.Clear
         PRGlobal.UserID = User.ID
-        PRGlobal.Description = Me.cmbForm.Text
+        PRGlobal.Description = Me.cmbForm.text
         PRGlobal.Save (Equate.RecAdd)
     End If
     
@@ -612,7 +613,7 @@ Private Sub cmdSave_Click()
             SQLString = " UPDATE Detail99 SET FieldValue = 'JimBo' WHERE " & _
                         " PayeeID = " & .TextMatrix(Rw, 0) & _
                         " AND FormType = '" & GetFormType() & "'" & _
-                        " AND TaxYear = " & Me.cmbTaxYear.Text
+                        " AND TaxYear = " & Me.cmbTaxYear.text
             cn.Execute SQLString
     
             For J = 5 To .Cols - 1
@@ -622,21 +623,21 @@ Private Sub cmdSave_Click()
                     ' see if the detail record already exists
                     SQLString = " SELECT * FROM Detail99 WHERE PayeeID = " & .TextMatrix(Rw, 0) & _
                                 " AND FormType = '" & GetFormType() & "'" & _
-                                " AND TaxYear = " & Me.cmbTaxYear.Text & _
+                                " AND TaxYear = " & Me.cmbTaxYear.text & _
                                 " AND BoxName = '" & .ColData(J) & "'"
                                 
                     If Detail99.GetBySQL(SQLString) = True Then
                         SQLString = " UPDATE Detail99 SET FieldValue = '" & X & "' " & _
                                     " WHERE PayeeID = " & .TextMatrix(Rw, 0) & _
                                     " AND FormType = '" & GetFormType() & "'" & _
-                                    " AND TaxYear = " & Me.cmbTaxYear.Text & _
+                                    " AND TaxYear = " & Me.cmbTaxYear.text & _
                                     " AND BoxName = '" & .ColData(J) & "'"
                         cn.Execute SQLString
                     Else
                         Detail99.Clear
                         Detail99.PayeeID = .TextMatrix(Rw, 0)
                         Detail99.FormType = GetFormType
-                        Detail99.TaxYear = Me.cmbTaxYear.Text
+                        Detail99.TaxYear = Me.cmbTaxYear.text
                         Detail99.BoxName = .ColData(J)
                         Detail99.FieldValue = X
                         Detail99.Save (Equate.RecAdd)
@@ -649,7 +650,7 @@ Private Sub cmdSave_Click()
             SQLString = " DELETE * FROM Detail99 WHERE " & _
                         " PayeeID = " & .TextMatrix(Rw, 0) & _
                         " AND FormType = '" & GetFormType() & "' " & _
-                        " AND TaxYear = " & Me.cmbTaxYear.Text & _
+                        " AND TaxYear = " & Me.cmbTaxYear.text & _
                         " AND FieldValue = 'JimBo'"
             cn.Execute SQLString
         

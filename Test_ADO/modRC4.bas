@@ -1,5 +1,5 @@
 Attribute VB_Name = "modRC4"
-Public Function RC4Encrypt(text As String, encryptkey As String)
+Public Function RC4Encrypt(ByVal text As String, ByVal encryptkey As String)
     Dim sbox(256)
     Dim Key(256)
     Dim Temp As Integer
@@ -29,7 +29,7 @@ Public Function RC4Encrypt(text As String, encryptkey As String)
     RC4Encrypt = cipher
 End Function
 
- Public Function RC4Decrypt(text, encryptkey)
+ Public Function RC4Decrypt(ByVal text As String, ByVal encryptkey As String)
     Dim sbox(256) As Integer
     Dim Key(256) As Integer
     Dim Text2 As String

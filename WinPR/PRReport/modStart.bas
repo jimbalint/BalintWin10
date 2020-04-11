@@ -43,12 +43,12 @@ Dim FileExt As String
     X = Command()
     
     If X = "" Then         ' set for testing
-       BalintFolder = "\\vboxsrv\vm-share\Balint"
+       BalintFolder = "c:\Balint"
        dbPwd = ""
        PRBatchID = 0
        BatchNum = PRBatchID
        BatchNumber = PRBatchID
-       ProgName = UCase("QTRRPTS")                  ''''''  Select from cases below
+       ProgName = UCase("CHECKREG")                  ''''''  Select from cases below
        SysFile = "s:\Balint\Data\GLSystem.mdb"
        UserID = 2
        BackName = ""
@@ -79,8 +79,10 @@ Dim FileExt As String
     If Len(Dir(NewFile, vbNormal)) Then
         SysFile = NewFile
         FileExt = ".accdb"
+        modPRGlobal.NewADO = True
     Else
         FileExt = ".mdb"
+        modPRGlobal.NewADO = False
     End If
     
     ' =========================================================================================

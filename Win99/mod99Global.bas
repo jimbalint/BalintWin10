@@ -3,6 +3,8 @@ Option Explicit
 
 Public FormCount As Long
 Public PageCount As Long
+Public NewADO As Boolean
+Public rc4Key As String
 
 ' ------- 1096 variables -------
 Public Form96_NumForms As Long
@@ -155,12 +157,14 @@ Public ii As Long
 Public jj As Long
 Public kk As Long
 Public xx As String
-Public W, X, Y, Z As Variant
+Public w, X, Y, Z As Variant
 Public Pg As Long
 
 Public Count99 As Long
 
 Public Sub SetEquates()
+   
+    rc4Key = "B@lint19742101!@#$%^&*"
    
     ' format for record count progress displays
     CountFormat = "#,###,##0"
@@ -254,7 +258,7 @@ Dim pi As Integer
        Prvw.vsp.CurrentX = (XUnits * Col) + 200 + (Nudge * HorzNudge)
        Prvw.vsp.CurrentY = (YUnits * Line) + (Nudge * VertNudge)
        
-       Prvw.vsp.Text = Str
+       Prvw.vsp.text = Str
        
 '       Ln = Ln + 1
 
@@ -714,7 +718,7 @@ Dim CommaFlag As Boolean
    Prvw.vsp.CurrentY = (Ln * YUnits) + (Nudge * VertNudge)
    Prvw.vsp.CurrentX = (XUnits * 2) + (Nudge * HorzNudge)
    
-   Prvw.vsp.Text = PrintString
+   Prvw.vsp.text = PrintString
        
    ' clear the print values
    For pi = 1 To 40
@@ -732,7 +736,7 @@ Public Sub PosPrint(ByVal CurrX As Long, ByVal CurrY As Long, ByVal PrintString 
     Prvw.vsp.CurrentX = CurrX + HorzNudge * Nudge
     Prvw.vsp.CurrentY = CurrY + VertNudge * Nudge
     
-    Prvw.vsp.Text = PrintString
+    Prvw.vsp.text = PrintString
 End Sub
 Public Function PadRight(ByVal InString As String, ByVal Length As Long) As String
     If InString = "" Then
@@ -858,7 +862,7 @@ Public Sub tdbTextSet(ByRef tdbTXT As TDBText, Optional tdbLen As Integer)
     tdbTXT.Key.Clear = ""       ' no key to clear field
     tdbTXT.FormatMode = dbiIncludeFormat
     tdbTXT.Format = "A9#@"
-    tdbTXT.Text = ""
+    tdbTXT.text = ""
     tdbTXT.Key.Clear = "{F2}"
     If tdbLen <> 0 Then tdbTXT.MaxLength = tdbLen
     
@@ -897,11 +901,11 @@ Public Sub tdbDateSet(ByRef tdbDate As tdbDate, ByVal DateValue As Date)
     tdbDate.DropDown.Visible = dbiShowAlways
     tdbDate.DropDown.Position = dbiDropPosInside
 
-    tdbDate.Text = ""
+    tdbDate.text = ""
     If IsNull(DateValue) Then
-        tdbDate.Text = ""
+        tdbDate.text = ""
     ElseIf DateValue = 0 Then
-        tdbDate.Text = ""
+        tdbDate.text = ""
     Else
         On Error Resume Next
         tdbDate.Value = DateValue
@@ -1436,7 +1440,7 @@ Dim I, J, K As Integer
         J = cmbYr.ListCount
         For I = 0 To J - 1
             cmbYr.ListIndex = I
-            If cmbYr.Text = Int(yrs!YearMonth / 100) Then
+            If cmbYr.text = Int(yrs!YearMonth / 100) Then
                 K = 1
                 Exit For
             End If
@@ -1585,26 +1589,26 @@ Dim HdrName As String
            
     If LandSw = 1 Then
         I = ((Columns - Len(X)) / 2) - 29           ' i = 49
-        W = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss") & _
+        w = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss") & _
             Space(I) & X
-        I = Columns - Len(W) - 30
-        W = W & Space(I) & "Page: " & Format(Pg, "###0")
+        I = Columns - Len(w) - 30
+        w = w & Space(I) & "Page: " & Format(Pg, "###0")
     Else
         I = ((Columns - Len(X)) / 2) - 19
-        W = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss") & _
+        w = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss") & _
             Space(I) & X
-        I = Columns - Len(W) - 10
-        W = W & Space(I) & "Page: " & Format(Pg, "###0")
+        I = Columns - Len(w) - 10
+        w = w & Space(I) & "Page: " & Format(Pg, "###0")
 
     End If
     
     SideCols = (Columns - Len(X)) / 2
     
-    W = "  " & Format(Now(), "mm/dd/yy") & " " & Format(Now(), "hh:mm:ss")
-    W = Trim(W) & Space(SideCols - 19) & Trim(X)
-    W = Trim(W) & Space(SideCols - 10) & "Page: " & Format(Pg, "###0")
+    w = "  " & Format(Now(), "mm/dd/yy") & " " & Format(Now(), "hh:mm:ss")
+    w = Trim(w) & Space(SideCols - 19) & Trim(X)
+    w = Trim(w) & Space(SideCols - 10) & "Page: " & Format(Pg, "###0")
     
-    PrintValue(1) = W
+    PrintValue(1) = w
     FormatString(1) = "a" & Columns
     
     PrintValue(2) = " "

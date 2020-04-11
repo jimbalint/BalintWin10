@@ -119,7 +119,13 @@ Public Function Save(ByVal booAddPut As Boolean) As String
     rs.Fields("PayeeNumber") = Trim(PayeeNumber)
     rs.Fields("Address") = Trim(Address)
     rs.Fields("CSZ") = Trim(CSZ)
-    rs.Fields("FederalID") = Trim(FederalID)
+    
+    If mod99Global.NewADO Then
+        rs.Fields("FederalID") = RC4Encrypt(Trim(FederalID), rc4Key)
+    Else
+        rs.Fields("FederalID") = Trim(FederalID)
+    End If
+    
     rs.Fields("AccountNumber") = Trim(AccountNumber)
     rs.Fields("Comment") = Trim(Comment)
     rs.Fields("Inactive") = nNull(Inactive)
@@ -157,7 +163,17 @@ Public Sub AssignFields()
     PayeeNumber = nNull(rs!PayeeNumber)
     Address = Trim(rs!Address & "")
     CSZ = Trim(rs!CSZ & "")
-    FederalID = Trim(rs!FederalID & "")
+
+    If mod99Global.NewADO Then
+        If rs!FederalID = "" Then
+            FederalID = ""
+        Else
+            FederalID = RC4Decrypt(nNull(rs!FederalID), rc4Key)
+        End If
+    Else
+        FederalID = nNull(rs!FederalID)
+    End If
+    
     AccountNumber = Trim(rs!AccountNumber & "")
     Comment = Trim(rs!Comment & "")
     Inactive = nNull(rs!Inactive)

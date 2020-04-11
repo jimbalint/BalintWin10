@@ -197,7 +197,7 @@ Dim X, Y, Z As String
 Dim boo As Boolean
 
 Dim dbFileName As String
-Dim dbFields(4) As String
+Dim dbFields(3) As String
 Dim dbSortDesc As Boolean
 Dim dbSortCol As Byte
 Dim SelID As Long
@@ -318,13 +318,21 @@ Private Sub GetPayeeData()
     dbFields(0) = "PayeeID"
     dbFields(1) = "PayeeNumber"
     dbFields(2) = "PayeeName"
-    dbFields(3) = "FederalID"
-    dbFields(4) = "Inactive"
+    dbFields(3) = "Inactive"
     dbSortCol = 1
 
     X = GetSQLString
     
     rsInit X, cn, rs
+    
+'    If mod99Global.NewADO Then
+'        rs.MoveFirst
+'        Do While Not rs.EOF
+'            rs!FederalID = RC4Decrypt(rs!FederalID, rc4Key)
+'            rs.Update
+'            rs.MoveNext
+'        Loop
+'    End If
     
     SetGrid rs, fg
     

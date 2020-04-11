@@ -3,6 +3,7 @@ Private Sub Main()
 
 Dim X As String
 Dim NewFlag As Boolean
+Dim FileExt As String
 
     frmSplash.Show
 
@@ -26,10 +27,10 @@ Dim NewFlag As Boolean
     CmdLine = X
     
     If CmdLine = "" Then         ' set for testing
-       BalintFolder = "e:\Balint"
+       BalintFolder = "c:\Balint"
         ' BalintFolder = ""
        dbPwd = ""
-       ProgName = UCase("payee")
+       ProgName = UCase("report")
        ' ProgName = UCase("test2")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
@@ -52,6 +53,18 @@ Dim NewFlag As Boolean
     ' non-standard folders
     If BalintFolder <> "" Then
         SysFile = Replace(BalintFolder, "^", " ") & "\Data\GLSystem.mdb"
+    End If
+    
+    ' new ADO?
+    Dim NewFile As String
+    NewFile = Replace(SysFile, ".mdb", ".accdb")
+    If Len(Dir(NewFile, vbNormal)) Then
+        SysFile = NewFile
+        FileExt = ".accdb"
+        mod99Global.NewADO = True
+    Else
+        FileExt = ".mdb"
+        mod99Global.NewADO = False
     End If
     
     ' =========================================================================================
@@ -102,6 +115,7 @@ Dim NewFlag As Boolean
     Else
         X = Replace(BalintFolder, "^", " ") & "\Data\Win1099.mdb"
     End If
+    If FileExt = ".accdb" Then X = Replace(LCase(X), ".mdb", ".accdb")
     CN99Open X
 
     ' open the company database
@@ -110,6 +124,8 @@ Dim NewFlag As Boolean
     Else
         X = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(GLCompany.FileName)
     End If
+    
+    If FileExt = ".accdb" Then X = Replace(LCase(X), ".mdb", ".accdb")
     
     CNOpen X, dbPwd
     CompanyID = GLCompany.ID
