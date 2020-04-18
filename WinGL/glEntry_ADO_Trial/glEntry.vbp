@@ -53,6 +53,7 @@ Form=..\Form\Preview.frm
 Module=modGLEntry_ADO; modGLEntry_ADO.bas
 Form=..\Form\EnterDBPassword.frm
 Class=cPRState; ..\..\WinPR\Class\cPRState.cls
+Module=modRC4; ..\..\WinPR\Module\modRC4.bas
 IconForm="MainMenu"
 Startup="Sub Main"
 HelpFile=""

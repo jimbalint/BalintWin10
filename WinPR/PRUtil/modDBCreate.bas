@@ -82,7 +82,13 @@ Public Sub EmployeeCreate()
     AddField "PREmployee", "City", "Char (255)", cn
     AddField "PREmployee", "State", "Char (2)", cn
     AddField "PREmployee", "ZipCode", "Long", cn
-    AddField "PREmployee", "SSN", "Long", cn
+    
+    If NewADO Then
+        AddField "PREmployee", "SSN", "Char (255)", cn
+    Else
+        AddField "PREmployee", "SSN", "Long", cn
+    End If
+    
     AddField "PREmployee", "DepartmentID", "Long", cn
     AddField "PREmployee", "SalaryAmount", "Currency", cn
     AddField "PREmployee", "HourlyAmount", "Currency", cn
@@ -138,7 +144,10 @@ Public Sub EmployeeCreate()
     AddField "PREmployee", "ShiftCode", "Long", cn
     
     AddField "PREmployee", "WorkCompNum", "Long", cn
-    AddField "PREmployee", "CheckComment", "Char (255)", cn
+    
+    ' 2020-04-16
+    ' AddField "PREmployee", "CheckComment", "Char (255)", cn
+    AddField "PREmployee", "CheckComment", "LongText", cn
 
 End Sub
 

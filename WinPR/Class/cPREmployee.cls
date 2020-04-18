@@ -371,7 +371,7 @@ Public Sub AssignFields()
     ZipCode = nNull(rs!ZipCode)
     
     If NewADO Then
-        SSN = RC4Decrypt(CStr(nNull(rs!SSN)), rc4Key)
+        SSN = RC4Decrypt(CStr(nNull(Trim(rs!SSN))), rc4Key)
     Else
         SSN = nNull(rs!SSN)
     End If

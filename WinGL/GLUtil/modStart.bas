@@ -1,9 +1,10 @@
 Attribute VB_Name = "modStart"
 
-Private Sub Main()   ' *** project execution starts here ***
+Private Sub Main()   ' *** project execution starts here ******
 
 Dim x As String
 Dim b As Long
+Dim FileExt As String
 
     Set GLCompany = New cGLCompany
     Set GLAccount = New cGLAccount
@@ -42,7 +43,7 @@ Dim b As Long
     If x = "" Then         ' set for testing
        BalintFolder = "c:\Balint"
        dbPwd = ""
-       ProgName = UCase("updateb")
+       ProgName = UCase("CLEARGLAMOUNT")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
        BackName = ""
@@ -90,6 +91,18 @@ Dim b As Long
     End If
     ' =========================================================================================
 
+    ' new ADO?
+    Dim NewFile As String
+    NewFile = Replace(SysFile, ".mdb", ".accdb")
+    If Len(Dir(NewFile, vbNormal)) Then
+        SysFile = NewFile
+        FileExt = ".accdb"
+        NewADO = True
+    Else
+        FileExt = ".mdb"
+        NewADO = False
+    End If
+
     ' connect to the system data base
     If Not CNDesOpen(SysFile) Then
        MsgBox "Error connecting to: " & SysFile, vbCritical, "GL Utilities"
@@ -132,6 +145,13 @@ Dim b As Long
         Else
             x = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(GLCompany.FileName)
         End If
+        
+        If NewADO Then
+            x = Replace(x, ".mdb", ".accdb")
+        Else
+            x = Replace(x, ".accdb", ".mdb")
+        End If
+        
         CNOpen x, dbPwd
         CompanyID = GLUser.LastCompany
     End If

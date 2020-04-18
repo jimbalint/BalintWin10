@@ -57,6 +57,7 @@ Class=cGLFFSched; ..\Class\cGLFFSched.cls
 Class=cGLColumn; ..\Class\cGLColumn.cls
 Class=cGLFFColumn; ..\Class\cGLFFColumn.cls
 Form=frmAcctImport.frm
+Module=modRC4; ..\..\WinPR\Module\modRC4.bas
 IconForm="frmCopy"
 Startup="Sub Main"
 HelpFile=""

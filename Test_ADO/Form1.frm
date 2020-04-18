@@ -53,6 +53,44 @@ Dim dbBlank As String
 ' add by using ADO record set
 
 Private Sub Form_Load()
+' https://stackoverflow.com/questions/9408245/is-it-possible-to-use-vba-to-change-the-current-accdb-e-database-password
+Dim strAlterPassword As String
+' new / old
+strAlterPassword = "ALTER DATABASE PASSWORD [abc123] [abc1234];"
+
+Dim ADO_Cnnct
+Set ADO_Cnnct = New adodb.Connection
+With ADO_Cnnct
+    .Mode = adModeShareExclusive
+
+    .Provider = "Microsoft.ACE.OLEDB.12.0"
+    '  Use old password to establish connection
+    .Properties("Jet OLEDB:Database Password") = "abc1234"
+
+    'name  current DB
+
+    ' DBPath = [CurrentProject].[FullName]  <- this does not work: get a file already in use error
+
+    .Open "Data Source= " & "c:\Balint\Data\NewDB3.accdb" & ";"
+    ' Execute the SQL statement to change the password.
+    .Execute (strAlterPassword)
+End With
+
+'Clean up objects.
+ADO_Cnnct.Close
+Set ADO_Cnnct = Nothing
+
+End
+
+
+'Dim cn As New ADODB.Connection
+'Set cn = SQLConnect("c:\Balint\Data\NewDB3.accdb")
+'cn.Execute "alter database password null abc123"
+'MsgBox ("OK")
+'End
+
+
+
 
     Dim fso As Object
     Set fso = CreateObject("Scripting.FileSystemObject")
@@ -285,7 +323,7 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByVal cnFrom As adodb.Conne
             x = fld.Name & vbTab & rs.Fields(fld.Name)
             eFlag = False
             If TblName = "PREmployee" And fld.Name = "SSN" Then eFlag = True
-            If TblName = "Detail99" And fld.Name = "PayeeID" Then eFlag = True
+            ' If TblName = "Detail99" And fld.Name = "PayeeID" Then eFlag = True
             If TblName = "Payee99" And fld.Name = "FederalID" Then eFlag = True
             If eFlag Then
                 y = RC4Encrypt(rs.Fields(fld.Name), rc4Key)
@@ -415,7 +453,7 @@ Private Sub PopSchemaRS(ByVal cn As adodb.Connection)
                 Case 5: x = "Double"
                 Case 6: x = "Currency"
                 Case 7: x = "DateTime"
-                Case 11: x = "Byte"
+                Case 11: x = "Logical"
                 Case 17: x = "Byte"
                 Case 130: x = "LongText"
                     If rsNewSchema!MaxLength = 255 Then

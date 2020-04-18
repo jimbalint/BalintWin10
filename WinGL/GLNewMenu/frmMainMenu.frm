@@ -25,7 +25,7 @@ Begin VB.Form frmMainMenu
       Caption         =   "FEDERAL 940"
       Height          =   615
       Left            =   3360
-      TabIndex        =   126
+      TabIndex        =   125
       Top             =   9240
       Width           =   2175
    End
@@ -114,62 +114,46 @@ Begin VB.Form frmMainMenu
       Tab(1).Control(3)=   "Frame6"
       Tab(1).Control(4)=   "Frame7"
       Tab(1).Control(5)=   "cmdFreeFormat"
-      Tab(1).Control(6)=   "cmdADO_Entry"
-      Tab(1).ControlCount=   7
+      Tab(1).ControlCount=   6
       TabCaption(2)   =   "PAYROLL"
       TabPicture(2)   =   "frmMainMenu.frx":135E
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Frame3"
-      Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "Frame2"
-      Tab(2).Control(1).Enabled=   0   'False
+      Tab(2).Control(0)=   "cmdPR1099"
+      Tab(2).Control(1)=   "cmdPREntry"
       Tab(2).Control(2)=   "Frame1"
-      Tab(2).Control(2).Enabled=   0   'False
-      Tab(2).Control(3)=   "cmdPREntry"
-      Tab(2).Control(3).Enabled=   0   'False
-      Tab(2).Control(4)=   "cmdPR1099"
-      Tab(2).Control(4).Enabled=   0   'False
+      Tab(2).Control(3)=   "Frame2"
+      Tab(2).Control(4)=   "Frame3"
       Tab(2).ControlCount=   5
       TabCaption(3)   =   "JOB COST"
       TabPicture(3)   =   "frmMainMenu.frx":137A
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "cmdJCMaint"
-      Tab(3).Control(1)=   "cmdJCWageRpt"
-      Tab(3).Control(2)=   "cmdJCJobMaint"
+      Tab(3).Control(0)=   "cmdQBTaxPay"
+      Tab(3).Control(1)=   "cmdPWMaint"
+      Tab(3).Control(2)=   "cmdJCTSReport"
       Tab(3).Control(3)=   "cmdTimeSheetEntry"
-      Tab(3).Control(4)=   "cmdJCTSReport"
-      Tab(3).Control(5)=   "cmdPWMaint"
-      Tab(3).Control(6)=   "cmdQBTaxPay"
+      Tab(3).Control(4)=   "cmdJCJobMaint"
+      Tab(3).Control(5)=   "cmdJCWageRpt"
+      Tab(3).Control(6)=   "cmdJCMaint"
       Tab(3).ControlCount=   7
       TabCaption(4)   =   "INVOICING"
       TabPicture(4)   =   "frmMainMenu.frx":1396
       Tab(4).ControlEnabled=   0   'False
-      Tab(4).Control(0)=   "cmdKPInvProcess"
-      Tab(4).Control(1)=   "cmdKPInvStockMaint"
-      Tab(4).Control(2)=   "cmdKPInvGlobalMaint"
-      Tab(4).Control(3)=   "cmdInvCustMsg"
-      Tab(4).Control(4)=   "cmdInvQBJob"
-      Tab(4).Control(5)=   "cmdInvGlobal"
+      Tab(4).Control(0)=   "cmdInvGlobal"
+      Tab(4).Control(1)=   "cmdInvQBJob"
+      Tab(4).Control(2)=   "cmdInvCustMsg"
+      Tab(4).Control(3)=   "cmdKPInvGlobalMaint"
+      Tab(4).Control(4)=   "cmdKPInvStockMaint"
+      Tab(4).Control(5)=   "cmdKPInvProcess"
       Tab(4).ControlCount=   6
       TabCaption(5)   =   "1099 Processing"
       TabPicture(5)   =   "frmMainMenu.frx":13B2
       Tab(5).ControlEnabled=   0   'False
-      Tab(5).Control(0)=   "cmdPA_Report"
-      Tab(5).Control(1)=   "cmdPA_Import"
+      Tab(5).Control(0)=   "cmdPA_Payee"
+      Tab(5).Control(1)=   "cmdPA_PayerMaint"
       Tab(5).Control(2)=   "cmdPA_Print"
-      Tab(5).Control(3)=   "cmdPA_PayerMaint"
-      Tab(5).Control(4)=   "cmdPA_Payee"
+      Tab(5).Control(3)=   "cmdPA_Import"
+      Tab(5).Control(4)=   "cmdPA_Report"
       Tab(5).ControlCount=   5
-      Begin VB.CommandButton cmdADO_Entry 
-         Caption         =   "ADO DA&TA ENTRY"
-         Height          =   1215
-         Left            =   -71640
-         Picture         =   "frmMainMenu.frx":13CE
-         Style           =   1  'Graphical
-         TabIndex        =   123
-         Top             =   6360
-         Width           =   1935
-      End
       Begin VB.CommandButton cmdPA_Report 
          Caption         =   "REPORT"
          Height          =   855
@@ -270,7 +254,7 @@ Begin VB.Form frmMainMenu
          Caption         =   "FREE FORMAT STATEMENTS"
          Height          =   1215
          Left            =   -74640
-         Picture         =   "frmMainMenu.frx":16D8
+         Picture         =   "frmMainMenu.frx":13CE
          Style           =   1  'Graphical
          TabIndex        =   106
          Top             =   4560
@@ -408,7 +392,7 @@ Begin VB.Form frmMainMenu
          Caption         =   "D A T A   E N T R Y"
          Height          =   975
          Left            =   -74160
-         Picture         =   "frmMainMenu.frx":19E2
+         Picture         =   "frmMainMenu.frx":16D8
          Style           =   1  'Graphical
          TabIndex        =   71
          Top             =   840
@@ -665,7 +649,7 @@ Begin VB.Form frmMainMenu
       End
       Begin VB.CommandButton cmdFIOpen 
          Caption         =   "&OPEN"
-         DragIcon        =   "frmMainMenu.frx":1CEC
+         DragIcon        =   "frmMainMenu.frx":19E2
          Height          =   615
          Left            =   960
          TabIndex        =   35
@@ -708,7 +692,7 @@ Begin VB.Form frmMainMenu
          Caption         =   "&DA&TA ENTRY"
          Height          =   1215
          Left            =   -74640
-         Picture         =   "frmMainMenu.frx":1FF6
+         Picture         =   "frmMainMenu.frx":1CEC
          Style           =   1  'Graphical
          TabIndex        =   30
          Top             =   960
@@ -718,7 +702,7 @@ Begin VB.Form frmMainMenu
          Caption         =   "&STATEMENTS"
          Height          =   1215
          Left            =   -74640
-         Picture         =   "frmMainMenu.frx":2300
+         Picture         =   "frmMainMenu.frx":1FF6
          Style           =   1  'Graphical
          TabIndex        =   29
          Top             =   2760
@@ -978,7 +962,7 @@ Begin VB.Form frmMainMenu
             Caption         =   "HISTORY PURGE"
             Height          =   615
             Left            =   240
-            TabIndex        =   125
+            TabIndex        =   124
             Top             =   4320
             Width           =   2175
          End
@@ -1236,7 +1220,7 @@ Begin VB.Form frmMainMenu
       ForeColor       =   &H00808000&
       Height          =   255
       Left            =   7680
-      TabIndex        =   124
+      TabIndex        =   123
       Top             =   10440
       Width           =   4575
    End
@@ -1363,9 +1347,6 @@ Dim TaskID As Long
 Dim LoadFlag As Boolean
 Public dbName As String
 
-Private Sub cmdADO_Entry_Click()
-    NewCall "GLEntryADO", "Entry"
-End Sub
 
 Private Sub Form_Load()
     
@@ -1543,14 +1524,32 @@ Private Sub cmdFiPSSWD_Click()
     cn.Close
     On Error GoTo 0
     
-    frmSetDBPassword.lblCompanyName = Me.lblCompanyName
-    frmSetDBPassword.lblFileName = Mid(App.Path, 1, 2) & Mid(GLCompany.FileName, 3, Len(GLCompany.FileName) - 2)
-    frmSetDBPassword.Show vbModal
-
     ' RE-open the company database
-    x = Mid(App.Path, 1, 2) & Mid(GLCompany.FileName, 3, Len(GLCompany.FileName) - 2)
-    dbName = x
-    CNOpen x, frmSetDBPassword.tdbNewPassword
+    Dim gfnm As String
+    gfnm = Mid(App.Path, 1, 2) & Mid(GLCompany.FileName, 3, Len(GLCompany.FileName) - 2)
+    
+     ' open the company database
+    If BalintFolder = "" Then
+        gfnm = Mid(App.Path, 1, 2) & Mid(GLCompany.FileName, 3, Len(GLCompany.FileName) - 2)
+    Else
+        gfnm = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(GLCompany.FileName)
+    End If
+    
+    If NewADO Then
+        gfnm = Replace(gfnm, ".mdb", ".accdb")
+    Else
+        gfnm = Replace(gfnm, ".accdb", ".mdb")
+    End If
+    
+    frmSetDBPassword.lblCompanyName = Me.lblCompanyName
+    
+    'frmSetDBPassword.lblFileName = Mid(App.Path, 1, 2) & Mid(GLCompany.FileName, 3, Len(GLCompany.FileName) - 2)
+    frmSetDBPassword.lblFileName = gfnm
+    
+    frmSetDBPassword.Show vbModal
+    
+    dbName = gfnm
+    CNOpen gfnm, frmSetDBPassword.tdbNewPassword
     dbPwd = frmSetDBPassword.tdbNewPassword
 
 End Sub
@@ -1606,7 +1605,7 @@ Private Sub cmdFIOpen_Click()
 End Sub
 
 Private Sub cmdGLDataEntry_Click()
-    NewCall "GLEntry", "Entry"
+    NewCall "GLEntryADO", "Entry"
 End Sub
 
 Private Sub cmdGLMaintComp_Click()
@@ -2067,7 +2066,8 @@ End Sub
 Private Sub ShowCompanyID()
     Me.lblGLCompanyID = "GL CompanyID: " & GLCompany.ID
     Me.lblFileName = GLCompany.FileName
-    Me.lblFileName = dbName
+    ' Me.lblFileName = dbName
+    Me.lblCompanyName = GLCompany.Name
     
     Me.lblPRCompanyID = ""
     If TableExists("PRCompany", cnDes) = True Then

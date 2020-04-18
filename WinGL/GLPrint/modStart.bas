@@ -83,7 +83,20 @@ Dim bProgName As String
        End
     End If
     ' =========================================================================================
-
+    ' new ADO?
+    
+    Dim NewFile As String
+    Dim FileExt As String
+    NewFile = Replace(SysFile, ".mdb", ".accdb")
+    If Len(Dir(NewFile, vbNormal)) Then
+        SysFile = NewFile
+        FileExt = ".accdb"
+        NewADO = True
+    Else
+        FileExt = ".mdb"
+        NewADO = False
+    End If
+    
     ' connect to the system data base
     If Not CNDesOpen(SysFile) Then
        MsgBox "Error connecting to: " & SysFile, vbCritical, "GL Utilities"
@@ -114,6 +127,13 @@ Dim bProgName As String
     Else
         X = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(GLCompany.FileName)
     End If
+    
+    If NewADO Then
+        X = Replace(X, ".mdb", ".accdb")
+    Else
+        X = Replace(X, ".accdb", ".mdb")
+    End If
+    
     CNOpen X, dbPwd
 
     CompanyID = GLUser.LastCompany

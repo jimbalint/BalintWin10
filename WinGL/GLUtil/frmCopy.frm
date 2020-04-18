@@ -160,8 +160,9 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Dim x As String
-Dim i As Integer
+Dim I As Integer
 Public FName As String
+Dim FileExt As String
     
 Private Sub Form_Load()
 
@@ -188,16 +189,22 @@ Private Sub cmdOK_Click()
 Dim GName, FromName As String
 Dim Pos As Integer
     
+    If NewADO Then
+        FileExt = ".accdb"
+    Else
+        FileExt = ".mdb"
+    End If
+    
     If Me.chkCopyGL = 0 And Me.chkCopyPR = 0 Then
         MsgBox "No Action Selected", vbInformation, "GL File Copy"
         GoBack
     End If
     
     If BalintFolder = "" Then
-        x = Left(App.Path, 1) & ":\Balint\Data\" & frmCopy.txtFileName & ".mdb"
+        x = Left(App.Path, 1) & ":\Balint\Data\" & frmCopy.txtFileName & FileExt
         FromName = Left(App.Path, 1) & Mid(GLCompany.FileName, 2, Len(GLCompany.FileName) - 1)
     Else
-        x = BalintFolder & "\Data\" & frmCopy.txtFileName & ".mdb"
+        x = BalintFolder & "\Data\" & frmCopy.txtFileName & FileExt
         ' get the string to the right of the last back slash
         GName = Trim(GLCompany.FileName)
         FromName = ""
@@ -212,11 +219,11 @@ Dim Pos As Integer
     FName = x
             
     ' confirm before copy
-    i = MsgBox("Copy " & FromName & vbCr & _
+    I = MsgBox("Copy " & FromName & vbCr & _
                " to: " & x & " ?", _
                 vbQuestion + vbYesNo + vbDefaultButton2, "GL File Copy")
             
-    If i = vbNo Then GoBack
+    If I = vbNo Then GoBack
             
     GLFileCopy FromName, x
             

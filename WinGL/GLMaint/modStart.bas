@@ -6,6 +6,7 @@ Private Sub Main()   ' *** project execution starts here ***
 
 Dim x As String
 Dim b As Long
+Dim FileExt As String
 
     Set GLCompany = New cGLCompany
     Set GLAccount = New cGLAccount
@@ -24,16 +25,16 @@ Dim b As Long
     Set GLFFColumn = New cGLFFColumn
 
     SetEquates
-
+    
     x = Command()
     
     ' go back to GL tab
     OpenTab = 1
     
     If x = "" Then         ' set for testing
-       BalintFolder = "g:"
+       BalintFolder = ""
        dbPwd = ""
-       ProgName = UCase("FFSCHEDULE")
+       ProgName = UCase("account")
        ' ProgName = UCase("ffschedule")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
@@ -75,6 +76,18 @@ Dim b As Long
     End If
     ' =========================================================================================
 
+    ' new ADO?
+    Dim NewFile As String
+    NewFile = Replace(SysFile, ".mdb", ".accdb")
+    If Len(Dir(NewFile, vbNormal)) Then
+        SysFile = NewFile
+        FileExt = ".accdb"
+        NewADO = True
+    Else
+        FileExt = ".mdb"
+        NewADO = False
+    End If
+
     ' connect to the system data base
     If Not CNDesOpen(SysFile) Then
        MsgBox "Error connecting to: " & SysFile, vbCritical, "GL Utilities"
@@ -104,10 +117,19 @@ Dim b As Long
         ' open the company database
         If BalintFolder = "" Then
             x = Mid(App.Path, 1, 2) & Mid(GLCompany.FileName, 3, Len(GLCompany.FileName) - 2)
+            ' 2016-04-23
+            x = "\Balint\Data\" & mdbName(GLCompany.FileName)
         Else
             x = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(GLCompany.FileName)
         End If
-        DBName = x
+        
+        If NewADO Then
+            x = Replace(x, ".mdb", ".accdb")
+        Else
+            x = Replace(x, ".accdb", ".mdb")
+        End If
+        
+        dbName = x
         CNOpen x, dbPwd
         CompanyID = GLUser.LastCompany
     

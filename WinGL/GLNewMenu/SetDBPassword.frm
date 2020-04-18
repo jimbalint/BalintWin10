@@ -276,7 +276,6 @@ Private Sub cmdOK_Click()
     ' confirm old password
     On Error Resume Next
     
-    SysName = "\balint\data\glsystem.mdb"
     SysName = Me.lblFileName
     
     If Me.tdbOldPassword = "" Then

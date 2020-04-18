@@ -335,8 +335,16 @@ Dim txtTitle As String
 Dim GlCoID As Long
 Dim OvwFlag As Boolean
 Dim FName, PRC, GLC As String
+Dim FileExt As String
     
 Dim PRCompany As New cPRCompany
+    
+    ' 2020-04-16 - NewADO
+    If NewADO Then
+        FileExt = ".accdb"
+    Else
+        FileExt = ".mdb"
+    End If
     
     ' 2015-05-27
     ' copied from SDImport
@@ -345,13 +353,16 @@ Dim PRCompany As New cPRCompany
     
     ' store drive letter and colon
     DriveLetter = Left(App.Path, 2)
-    
+    Dim SysFile As String
     If BalintFolder = "" Then
-        CNDesOpen (DriveLetter & "\balint\data\GLSystem.mdb")
+        SysFile = DriveLetter & "\balint\data\GLSystem.mdb"
     Else
-        x = Replace(BalintFolder, "^", " ") & "\Data\GLSystem.mdb"
-        CNDesOpen (x)
+        SysFile = Replace(BalintFolder, "^", " ") & "\Data\GLSystem.mdb"
     End If
+    
+    If NewADO Then SysFile = Replace(SysFile, ".mdb", ".accdb")
+    
+    CNDesOpen (SysFile)
     
     ' ImportType
     '    = "New"    - new GL client from blank          IType = 1
@@ -392,6 +403,8 @@ Dim PRCompany As New cPRCompany
             GLFName = Replace(BalintFolder, "^", " ") & "\Data\" & x & ".mdb"
         End If
         
+        If NewADO Then GLFName = Replace(GLFName, ".mdb", ".accdb")
+        
         InputFName = x
         
         If GLCopy(GLFName) Then Exit Do    ' successful - move on
@@ -416,8 +429,8 @@ Dim PRCompany As New cPRCompany
             GLCompany.FileName = GLFName
             FindName = GLFName
         Else
-            GLCompany.FileName = "X:\Balint\Data\" & InputFName & ".mdb"
-            FindName = Replace(BalintFolder, "^", " ") & "\Data\" & InputFName & ".mdb"
+            GLCompany.FileName = "X:\Balint\Data\" & InputFName & FileExt
+            FindName = Replace(BalintFolder, "^", " ") & "\Data\" & InputFName & FileExt
         End If
         
         If Not GLCompany.Save(Equate.RecAdd) Then
@@ -443,7 +456,7 @@ Dim PRCompany As New cPRCompany
         If BalintFolder = "" Then
             PRCompany.FileName = GLFName
         Else
-            PRCompany.FileName = "X:\Balint\Data\" & InputFName & ".mdb"
+            PRCompany.FileName = "X:\Balint\Data\" & InputFName & FileExt
         End If
         
         PRCompany.GLCompanyID = GLCompany.ID
@@ -1366,6 +1379,8 @@ Dim Opt As Long
     Else
         BlankName = BalintFolder & "\Blank\Blank.mdb"
     End If
+    
+    If NewADO Then BlankName = Replace(BlankName, "Blank.mdb", "BlankAccdb.accdb")
     
     On Error Resume Next
     FileCopy BlankName, FName
