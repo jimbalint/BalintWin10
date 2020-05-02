@@ -21,14 +21,6 @@ Begin VB.Form frmMainMenu
    ScaleHeight     =   10815
    ScaleWidth      =   14580
    StartUpPosition =   3  'Windows Default
-   Begin VB.CommandButton cmdFUTA940 
-      Caption         =   "FEDERAL 940"
-      Height          =   615
-      Left            =   3360
-      TabIndex        =   125
-      Top             =   9240
-      Width           =   2175
-   End
    Begin VB.PictureBox Picture1 
       Height          =   735
       Left            =   600
@@ -104,46 +96,72 @@ Begin VB.Form frmMainMenu
       Tab(0).Control(19).Enabled=   0   'False
       Tab(0).Control(20)=   "cmdSDGLFFImport"
       Tab(0).Control(20).Enabled=   0   'False
-      Tab(0).ControlCount=   21
+      Tab(0).Control(21)=   "cmdNewADO"
+      Tab(0).Control(21).Enabled=   0   'False
+      Tab(0).ControlCount=   22
       TabCaption(1)   =   "GENERAL LEDGER"
       TabPicture(1)   =   "frmMainMenu.frx":1342
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "cmdGLMtStatements"
-      Tab(1).Control(1)=   "cmdGLDataEntry"
-      Tab(1).Control(2)=   "Frame5"
-      Tab(1).Control(3)=   "Frame6"
-      Tab(1).Control(4)=   "Frame7"
-      Tab(1).Control(5)=   "cmdFreeFormat"
+      Tab(1).Control(0)=   "cmdFreeFormat"
+      Tab(1).Control(0).Enabled=   0   'False
+      Tab(1).Control(1)=   "Frame7"
+      Tab(1).Control(1).Enabled=   0   'False
+      Tab(1).Control(2)=   "Frame6"
+      Tab(1).Control(2).Enabled=   0   'False
+      Tab(1).Control(3)=   "Frame5"
+      Tab(1).Control(3).Enabled=   0   'False
+      Tab(1).Control(4)=   "cmdGLDataEntry"
+      Tab(1).Control(4).Enabled=   0   'False
+      Tab(1).Control(5)=   "cmdGLMtStatements"
+      Tab(1).Control(5).Enabled=   0   'False
       Tab(1).ControlCount=   6
       TabCaption(2)   =   "PAYROLL"
       TabPicture(2)   =   "frmMainMenu.frx":135E
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "cmdPR1099"
-      Tab(2).Control(1)=   "cmdPREntry"
+      Tab(2).Control(0)=   "Frame3"
+      Tab(2).Control(0).Enabled=   0   'False
+      Tab(2).Control(1)=   "Frame2"
+      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "Frame1"
-      Tab(2).Control(3)=   "Frame2"
-      Tab(2).Control(4)=   "Frame3"
+      Tab(2).Control(2).Enabled=   0   'False
+      Tab(2).Control(3)=   "cmdPREntry"
+      Tab(2).Control(3).Enabled=   0   'False
+      Tab(2).Control(4)=   "cmdPR1099"
+      Tab(2).Control(4).Enabled=   0   'False
       Tab(2).ControlCount=   5
       TabCaption(3)   =   "JOB COST"
       TabPicture(3)   =   "frmMainMenu.frx":137A
       Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "cmdQBTaxPay"
+      Tab(3).Control(0).Enabled=   0   'False
       Tab(3).Control(1)=   "cmdPWMaint"
+      Tab(3).Control(1).Enabled=   0   'False
       Tab(3).Control(2)=   "cmdJCTSReport"
+      Tab(3).Control(2).Enabled=   0   'False
       Tab(3).Control(3)=   "cmdTimeSheetEntry"
+      Tab(3).Control(3).Enabled=   0   'False
       Tab(3).Control(4)=   "cmdJCJobMaint"
+      Tab(3).Control(4).Enabled=   0   'False
       Tab(3).Control(5)=   "cmdJCWageRpt"
+      Tab(3).Control(5).Enabled=   0   'False
       Tab(3).Control(6)=   "cmdJCMaint"
+      Tab(3).Control(6).Enabled=   0   'False
       Tab(3).ControlCount=   7
       TabCaption(4)   =   "INVOICING"
       TabPicture(4)   =   "frmMainMenu.frx":1396
       Tab(4).ControlEnabled=   0   'False
       Tab(4).Control(0)=   "cmdInvGlobal"
+      Tab(4).Control(0).Enabled=   0   'False
       Tab(4).Control(1)=   "cmdInvQBJob"
+      Tab(4).Control(1).Enabled=   0   'False
       Tab(4).Control(2)=   "cmdInvCustMsg"
+      Tab(4).Control(2).Enabled=   0   'False
       Tab(4).Control(3)=   "cmdKPInvGlobalMaint"
+      Tab(4).Control(3).Enabled=   0   'False
       Tab(4).Control(4)=   "cmdKPInvStockMaint"
+      Tab(4).Control(4).Enabled=   0   'False
       Tab(4).Control(5)=   "cmdKPInvProcess"
+      Tab(4).Control(5).Enabled=   0   'False
       Tab(4).ControlCount=   6
       TabCaption(5)   =   "1099 Processing"
       TabPicture(5)   =   "frmMainMenu.frx":13B2
@@ -154,6 +172,14 @@ Begin VB.Form frmMainMenu
       Tab(5).Control(3)=   "cmdPA_Import"
       Tab(5).Control(4)=   "cmdPA_Report"
       Tab(5).ControlCount=   5
+      Begin VB.CommandButton cmdNewADO 
+         Caption         =   "DATABASE CONVERT"
+         Height          =   615
+         Left            =   8040
+         TabIndex        =   126
+         Top             =   6840
+         Width           =   2535
+      End
       Begin VB.CommandButton cmdPA_Report 
          Caption         =   "REPORT"
          Height          =   855
@@ -714,6 +740,14 @@ Begin VB.Form frmMainMenu
          TabIndex        =   10
          Top             =   2040
          Width           =   7575
+         Begin VB.CommandButton cmdFUTA940 
+            Caption         =   "FEDERAL 940"
+            Height          =   615
+            Left            =   2760
+            TabIndex        =   125
+            Top             =   6240
+            Width           =   2175
+         End
          Begin VB.CommandButton cmdDptDist 
             Caption         =   "DEPT DISTRIBUTION"
             Height          =   615
@@ -1348,6 +1382,12 @@ Dim LoadFlag As Boolean
 Public dbName As String
 
 
+
+
+Private Sub cmdNewADO_Click()
+    ConvertNewADO
+End Sub
+
 Private Sub Form_Load()
     
     ' *** for testing - dumb ass !!!
@@ -1542,17 +1582,17 @@ Private Sub cmdFiPSSWD_Click()
     End If
     
     frmSetDBPassword.lblCompanyName = Me.lblCompanyName
-    
-    'frmSetDBPassword.lblFileName = Mid(App.Path, 1, 2) & Mid(GLCompany.FileName, 3, Len(GLCompany.FileName) - 2)
     frmSetDBPassword.lblFileName = gfnm
-    
     frmSetDBPassword.Show vbModal
     
     dbName = gfnm
     CNOpen gfnm, frmSetDBPassword.tdbNewPassword
     dbPwd = frmSetDBPassword.tdbNewPassword
+    
 
 End Sub
+
+
 Private Sub cmdFIUserMt_Click()
     NewCall "GLMaint", "User"
 End Sub
@@ -1890,6 +1930,7 @@ End Sub
 Private Sub cmdPRPurge_Click()
     NewCall "PRMaint", "PURGE"
 End Sub
+
 Private Sub cmdFUTA940_Click()
     NewCall "PRReport", "FUTA940"
 End Sub

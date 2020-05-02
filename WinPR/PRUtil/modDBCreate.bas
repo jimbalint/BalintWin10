@@ -932,3 +932,30 @@ Public Sub GLFFSchedCreate()
     AddField "GLFFSched", "ReportID", "Byte", cn
 
 End Sub
+
+Public Sub ConvertNewADO()
+    Dim NewFolder As String
+    Dim resp As Integer
+    ' rename the data dir after conversion?
+    If NewADO Then
+        NewFolder = BalintFolder & "\Data_New"
+        If Len(Dir(NewFolder, vbDirectory)) > 0 Then
+            resp = MsgBox("OK to rename the Data Conversion folder?", vbQuestion + vbYesNo)
+            If resp = vbNo Then
+                ' continue w/ old data
+                Exit Sub
+            End If
+            cn.Close
+            Name BalintFolder & "\Data" As BalintFolder & "\Data_Old"
+            Name BalintFolder & "\Data_New" As BalintFolder & "\Data"
+            MsgBox "Data folder rename complete", vbInformation
+            End
+        End If
+    End If
+        
+    resp = MsgBox("OK to convert to NewADO?", vbQuestion + vbYesNo)
+    If resp = vbNo Then Exit Sub
+    
+    ' >>>>> NewADO conversion code <<<<<
+    
+End Sub

@@ -47,6 +47,7 @@ Dim FileExt As String
     Else
         BalintFolder = ""
     End If
+    On Error GoTo 0
     
     If BalintFolder = "" Then
         FileExt = IIf(Len(Dir("\Balint\Data\GLSystem.accdb", vbNormal)), ".accdb", ".mdb")
@@ -176,20 +177,31 @@ Dim FileExt As String
             
             ' ??? needed for menu lblCompany after file copy ???
             GLCompany.GetData (GLUser.LastCompany)
-            frmMainMenu.lblCompanyName = dbName
+            frmMainMenu.lblCompanyName = GLCompany.Name
     
         End If
     
     Else
         
         dbName = "No Company Loaded"
+        frmMainMenu.lblCompanyName = dbName
         
     End If
 
-    Dim f As New frmMainMenu
-    f.dbName = dbName
-    f.lblCompanyName = GLCompany.Name
-    f.Show
+    ' show conversion button?
+    Dim NewFolder As String
+    Dim resp As Integer
+    NewFolder = BalintFolder & "\Data_New"
+    If NewADO And Len(Dir(NewFolder, vbDirectory)) = 0 Then
+        frmMainMenu.cmdNewADO.Visible = False
+    End If
+
+'    Dim f As New frmMainMenu
+'    f.dbName = dbName
+'    f.lblCompanyName = GLCompany.Name
+'    f.Show
+
+    frmMainMenu.Show
     
 '    ' execute the call
 '    Select Case ProgName

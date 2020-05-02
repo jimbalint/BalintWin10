@@ -53,44 +53,6 @@ Dim dbBlank As String
 ' add by using ADO record set
 
 Private Sub Form_Load()
-' https://stackoverflow.com/questions/9408245/is-it-possible-to-use-vba-to-change-the-current-accdb-e-database-password
-Dim strAlterPassword As String
-' new / old
-strAlterPassword = "ALTER DATABASE PASSWORD [abc123] [abc1234];"
-
-Dim ADO_Cnnct
-Set ADO_Cnnct = New adodb.Connection
-With ADO_Cnnct
-    .Mode = adModeShareExclusive
-
-    .Provider = "Microsoft.ACE.OLEDB.12.0"
-    '  Use old password to establish connection
-    .Properties("Jet OLEDB:Database Password") = "abc1234"
-
-    'name  current DB
-
-    ' DBPath = [CurrentProject].[FullName]  <- this does not work: get a file already in use error
-
-    .Open "Data Source= " & "c:\Balint\Data\NewDB3.accdb" & ";"
-    ' Execute the SQL statement to change the password.
-    .Execute (strAlterPassword)
-End With
-
-'Clean up objects.
-ADO_Cnnct.Close
-Set ADO_Cnnct = Nothing
-
-End
-
-
-'Dim cn As New ADODB.Connection
-'Set cn = SQLConnect("c:\Balint\Data\NewDB3.accdb")
-'cn.Execute "alter database password null abc123"
-'MsgBox ("OK")
-'End
-
-
-
 
     Dim fso As Object
     Set fso = CreateObject("Scripting.FileSystemObject")
@@ -103,12 +65,12 @@ End
     rc4Key = "B@lint19742101!@#$%^&*"
     
     BalintFolder = "\\vboxsrv\vm-share\Balint"
+    BalintFolder = "c:\Balint"
     NewFolder = BalintFolder & "\Data_New"
     
     dbBlank = BalintFolder & "\Blank\BlankAccdb.accdb"
     If Len(Dir(NewFolder, vbDirectory)) > 0 Then
         MsgBox "Folder already exists: " & NewFolder, vbExclamation, "Data Conversion"
-        End
         ' On Error Resume Next
         Kill NewFolder & "\*.*"
         ' On Error GoTo 0
@@ -206,9 +168,12 @@ End
     Loop
     rsC.Close
            
-           
     ' Win1099.mdb
     fnm = "Win1099.mdb"
+    frm.lblMsg1 = "Now converting: 1099 Data"
+    frm.lblMsg2 = ""
+    frm.lblMsg3 = ""
+    frm.Refresh
     If BalintFolder = "" Then
         fnm = Mid(App.Path, 1, 2) & Mid(fnm, 3, Len(fnm) - 2)
     Else
@@ -235,20 +200,31 @@ End
         Print #log, ""
     End If
            
-
 '    If op = 0 Then
 '    Else
 '    End If
    
     ' ==================
     On Error Resume Next
-    Close #log
     cnSys.Close
+    Set cnSys = Nothing
     cnNew.Close
+    Set cnNew = Nothing
+    cnOld.Close
+    Set cnOld = Nothing
     On Error GoTo 0
     
-    MsgBox ("OK..")
+    Close #log
     frm.Hide
+    Set frm = Nothing
+    
+    ' =======================================================
+    MsgBox ("Ready ...")
+    Name BalintFolder & "\Data" As BalintFolder & "\Data_Old"
+    Name BalintFolder & "\Data_New" As BalintFolder & "\Data"
+    ' =======================================================
+    
+    MsgBox ("OK..")
     End
     ' ==================
     
@@ -270,7 +246,7 @@ End
     
 End Sub
 
-Private Sub CopyData(ByVal cnFrom As adodb.Connection, ByVal cnTo As adodb.Connection)
+Private Sub CopyData(ByRef cnFrom As adodb.Connection, ByRef cnTo As adodb.Connection)
     Set frs = cnFrom.OpenSchema(adSchemaTables)
     Do Until frs.EOF = True
         x = frs!Table_Name
@@ -284,7 +260,7 @@ Private Sub CopyData(ByVal cnFrom As adodb.Connection, ByVal cnTo As adodb.Conne
 End Sub
 
 
-Private Sub CopyDataProcess(ByVal TblName As String, ByVal cnFrom As adodb.Connection, ByVal cnTo As adodb.Connection)
+Private Sub CopyDataProcess(ByVal TblName As String, ByRef cnFrom As adodb.Connection, ByRef cnTo As adodb.Connection)
 
     Dim ct1, ct2 As Long
     Dim eFlag As Boolean
@@ -420,7 +396,7 @@ Private Sub InitSchemaRS()
 
 End Sub
 
-Private Sub PopSchemaRS(ByVal cn As adodb.Connection)
+Private Sub PopSchemaRS(ByRef cn As adodb.Connection)
     
     ' fields
     Dim FldNum As Integer
@@ -494,7 +470,7 @@ Private Sub PopSchemaRS(ByVal cn As adodb.Connection)
 
 End Sub
 
-Private Sub CreateTables(ByVal cnFrom As adodb.Connection, ByVal cnTo As adodb.Connection)
+Private Sub CreateTables(ByRef cnFrom As adodb.Connection, ByRef cnTo As adodb.Connection)
     
     ' clear
     Set frs = New adodb.Recordset
@@ -526,7 +502,7 @@ Private Sub CreateTables(ByVal cnFrom As adodb.Connection, ByVal cnTo As adodb.C
     
 End Sub
 
-Private Sub CreateFields(ByVal cn As adodb.Connection)
+Private Sub CreateFields(ByRef cn As adodb.Connection)
     Dim fString As String
     Dim LastTblName As String
     Dim eFlag As Boolean
@@ -761,6 +737,7 @@ Dim TblExists As Boolean
             Exit Do
         Else
             If InStr(1, LCase(Err.Description), "could not lock", vbTextCompare) Then
+                Dim MsgResponse As Integer
                 MsgResponse = MsgBox("Database update not complete" & vbCr & _
                               "ALL other users must exit to proceed!", vbRetryCancel + vbExclamation)
                 If MsgResponse = vbCancel Then

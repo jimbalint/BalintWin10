@@ -1,4 +1,4 @@
-frmBatchList = 89, 89, 899, 573, C, 22, 22, 828, 508, C
+frmBatchList = 89, 89, 899, 573, Z, 22, 22, 828, 508, C
 modPRConnect = 154, 154, 1022, 597, 
 modPRGlobal = 111, 111, 755, 595, C
 cPRAdjust = 132, 132, 956, 618, C
@@ -16,7 +16,7 @@ cPRItem = 154, 154, 978, 640, C
 cPRItemHist = 220, 220, 1044, 706, C
 cPRState = 110, 110, 934, 596, C
 cPREquate = 44, 44, 856, 530, C
-modStart = 89, 89, 733, 573, Z
+modStart = 89, 89, 733, 573, 
 cEquate = 154, 154, 873, 716, C
 cGLUser = 154, 154, 968, 630, C
 frmPreview = 0, 0, 0, 0, C, 0, 0, 846, 476, C

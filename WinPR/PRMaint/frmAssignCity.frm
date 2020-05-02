@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{A49CE0E0-C0F9-11D2-B0EA-00A024695830}#1.0#0"; "tidate8.ocx"
 Object = "{BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0"; "vsflex8.ocx"
 Begin VB.Form frmAssignCity 
-   Caption         =   "&H80000009&"
+   Caption         =   "Assign City/Dept"
    ClientHeight    =   10485
    ClientLeft      =   60
    ClientTop       =   450
@@ -666,7 +666,7 @@ Public RSEmp As New ADODB.Recordset
 Public RSCty As New ADODB.Recordset
 Public RSDist As New ADODB.Recordset
 Dim rsDept As New ADODB.Recordset
-Public i, ChangeCount As Long
+Public I, ChangeCount As Long
 Dim StateDrop As String
 Dim LoadFlag As Boolean
 
@@ -679,8 +679,22 @@ Private Sub Form_Load()
     Me.optCity = True
     Me.optDpt = False
     
+    Dim frm As New frmProgress
+    frm.Show
+    frm.lblMsg1 = PRCompany.Name
+    frm.lblMsg2 = "Change City/Dept"
+    frm.lblMsg3 = "Loading Employee Data ..."
+    frm.Refresh
+    
     Load_Emp_Grid
+    
+    frm.lblMsg3 = "Loading City Data ..."
+    frm.Refresh
+    
     Load_City_Grid
+    
+    frm.Hide
+    Set frm = Nothing
     
     Me.cmbEYear.ListIndex = 0
     fgCity.Row = 1
@@ -751,13 +765,13 @@ Private Sub Load_Emp_Grid()
     
     Do
         YearFlag = False
-        For i = 1 To Me.cmbSYear.ListCount
-            Me.cmbSYear.ListIndex = i - 1
+        For I = 1 To Me.cmbSYear.ListCount
+            Me.cmbSYear.ListIndex = I - 1
             If RSDist!YearMonth = Me.cmbSYear Then
                 YearFlag = True
-                i = Me.cmbSYear.ListCount + 1
+                I = Me.cmbSYear.ListCount + 1
             End If
-        Next i
+        Next I
         If YearFlag = False Then
             Me.cmbSYear.AddItem RSDist!YearMonth
         End If
@@ -769,13 +783,13 @@ Private Sub Load_Emp_Grid()
     RSDist.MoveFirst
     Do
         YearFlag = False
-        For i = 1 To Me.cmbEYear.ListCount
-            Me.cmbEYear.ListIndex = i - 1
+        For I = 1 To Me.cmbEYear.ListCount
+            Me.cmbEYear.ListIndex = I - 1
             If RSDist!YearMonth = Me.cmbEYear Then
                 YearFlag = True
-                i = Me.cmbEYear.ListCount + 1
+                I = Me.cmbEYear.ListCount + 1
             End If
-        Next i
+        Next I
         If YearFlag = False Then
             Me.cmbEYear.AddItem RSDist!YearMonth
         End If

@@ -273,6 +273,21 @@ Private Sub cmdOK_Click()
        Exit Sub
     End If
     
+    If NewADO Then
+        ADO_Pwd
+    Else
+        DAO_Pwd
+    End If
+    
+    'MainMenu.Password = Me.tdbNewPassword
+    dbPwd = Me.tdbNewPassword
+    
+    Me.Hide
+
+End Sub
+
+Sub DAO_Pwd()
+    
     ' confirm old password
     On Error Resume Next
     
@@ -309,9 +324,32 @@ Private Sub cmdOK_Click()
        MsgBox "The Password has been changed.", vbInformation + vbOKOnly, "Set DataBase Password"
        
     End If
-    
-    MainMenu.Password = Me.tdbNewPassword
-    
-    Me.Hide
 
+End Sub
+
+Sub ADO_Pwd()
+    
+    ' https://stackoverflow.com/questions/9408245/is-it-possible-to-use-vba-to-change-the-current-accdb-e-database-password
+    Dim strAlterPassword As String
+    ' new / old
+    strAlterPassword = "ALTER DATABASE PASSWORD [" & Me.tdbNewPassword & "] [" & Me.tdbOldPassword & "];"
+    
+    Dim ADO_Cnnct
+    Set ADO_Cnnct = New adodb.Connection
+    With ADO_Cnnct
+        .Mode = adModeShareExclusive
+        .Provider = "Microsoft.ACE.OLEDB.12.0"
+        If Me.tdbOldPassword <> "" Then
+            .Properties("Jet OLEDB:Database Password") = Me.tdbOldPassword
+        End If
+        .Open "Data Source= " & Me.lblFileName & ";"
+        .Execute (strAlterPassword)
+    End With
+    
+    'Clean up objects.
+    ADO_Cnnct.Close
+    Set ADO_Cnnct = Nothing
+
+    MsgBox "The Password has been changed.", vbInformation + vbOKOnly, "Set DataBase Password"
+    
 End Sub
