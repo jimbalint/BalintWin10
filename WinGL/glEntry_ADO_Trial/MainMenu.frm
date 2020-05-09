@@ -560,7 +560,7 @@ Dim TaskID As Double
 Dim CompanyID As Long
 Dim xDB As New XArrayDB
 Dim SortBy(7) As Byte
-Dim I, j, k As Long
+Dim I, J, K As Long
 Dim HeadString(7) As String
 Dim SortType(7) As Variant
 Dim x As String
@@ -569,7 +569,7 @@ Dim FileName As String
 
 Private Sub Form_Load()
     
-Dim I, j As Long
+Dim I, J As Long
 Dim x As String
     
     On Error GoTo glErr
@@ -663,8 +663,8 @@ Dim x As String
     BatchList.AllowColSelect = False
     
     ' JS column adjust - show if budget - js > 100
-    j = xDB.UpperBound(1)
-    For I = 1 To j
+    J = xDB.UpperBound(1)
+    For I = 1 To J
         If CLng(xDB(I, 6)) > 100 Then
            xDB(I, 6) = "BUDG " & CLng(xDB(I, 6)) - 100
         End If
@@ -684,7 +684,7 @@ Private Sub BatchList_HeadClick(ByVal ColIndex As Integer)
 
 Dim SortOrder As Byte
 
-    j = xDB.UpperBound(1)
+    J = xDB.UpperBound(1)
 
     For I = 0 To 7
         
@@ -715,7 +715,7 @@ Dim SortOrder As Byte
     Next I
         
     ' sort it
-    xDB.QuickSort 1, j, ColIndex, SortOrder, SortType(ColIndex)
+    xDB.QuickSort 1, J, ColIndex, SortOrder, SortType(ColIndex)
 
     Set BatchList.Array = xDB
     BatchList.ReBind
@@ -998,16 +998,17 @@ Private Sub CmdExit_Click()
     
 Dim x As String
     
-    If TestMode Then
-        End
-    End If
+'    If TestMode Then
+'        End
+'    End If
+'
+'    MenuName = "GLMenu.exe"
+'    If BalintFolder = "" Then
+'        BackName = "\Balint\" & MenuName
+'    Else
+'        BackName = BalintFolder & "\" & MenuName
+'    End If
     
-    MenuName = "GLMenu.exe"
-    If BalintFolder = "" Then
-        BackName = "\Balint\" & MenuName
-    Else
-        BackName = BalintFolder & "\" & MenuName
-    End If
     GoBack
     
 '    If BackName <> "" Then
@@ -1026,7 +1027,7 @@ End Sub
 
 Private Sub Sort(ByRef cc As Collection)
 
-    Dim I, j, n, temp, x() As Integer
+    Dim I, J, n, Temp, x() As Integer
     n = cc.Count
     ReDim x(1 To n)
     For I = n To 1 Step -1
@@ -1034,13 +1035,13 @@ Private Sub Sort(ByRef cc As Collection)
         cc.Remove I
     Next I
     For I = 1 To n - 1
-        For j = I + 1 To n
-            If x(I) > x(j) Then
-                temp = x(I)
-                x(I) = x(j)
-                x(j) = temp
+        For J = I + 1 To n
+            If x(I) > x(J) Then
+                Temp = x(I)
+                x(I) = x(J)
+                x(J) = Temp
             End If
-        Next j
+        Next J
     Next I
     For I = 1 To n
         cc.Add CStr(x(I))
@@ -1101,15 +1102,15 @@ End Sub
 
 Private Sub SetUserNames()
 
-Dim I, j, k As Long
+Dim I, J, K As Long
 
     Dim uid As Integer
     uid = GLUser.ID
 
-    j = xDB.UpperBound(1)
-    For I = 1 To j
-        k = CLng(xDB.Value(I, 7))
-        If GLUser.GetByID(k) = True Then
+    J = xDB.UpperBound(1)
+    For I = 1 To J
+        K = CLng(xDB.Value(I, 7))
+        If GLUser.GetByID(K) = True Then
             xDB.Value(I, 7) = GLUser.Name
         Else
             xDB.Value(I, 7) = "Not Found"

@@ -44,7 +44,7 @@ Dim NewFlag As Boolean
 '        X = "1=Process / 2=Stock / 3=Global / 4=GlobalQB"
 '        Sel = InputBox(X)
         
-        Sel = 4
+        Sel = 3
         
         Select Case Sel
             Case 0:     End
@@ -98,6 +98,18 @@ Dim NewFlag As Boolean
     End If
     ' =========================================================================================
 
+    ' new ADO?
+    Dim NewFile As String
+    NewFile = Replace(SysFile, ".mdb", ".accdb")
+    If Len(Dir(NewFile, vbNormal)) Then
+        SysFile = NewFile
+        FileExt = ".accdb"
+        NewADO = True
+    Else
+        FileExt = ".mdb"
+        NewADO = False
+    End If
+
     ' connect to the system data base
     If Not SysOpen(SysFile) Then
        MsgBox "Error connecting to: " & SysFile, vbExclamation, "PR Maintenance"
@@ -149,6 +161,13 @@ Dim NewFlag As Boolean
     Else
         X = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(PRCompany.FileName)
     End If
+    
+    If NewADO Then
+        X = Replace(X, ".mdb", ".accdb")
+    Else
+        X = Replace(X, ".accdb", ".mdb")
+    End If
+    
     
     CNOpen X, dbPwd
     CompanyID = PRCompany.CompanyID

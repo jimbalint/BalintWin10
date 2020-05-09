@@ -384,16 +384,12 @@ Private Sub cmbGlobalType_Click()
             fg.ColWidth(1) = 3000
             fg.ColComboList(2) = QBItemDrop
             fg.ColWidth(2) = 3000
-        
         ElseIf GType = InvEquate.GlobalTypeInvPrinter Then
         
             On Error Resume Next
             rs.Close
             rsQB.Close
             On Error GoTo 0
-            rs.CursorLocation = adUseClient
-            rs.Fields.Append "PrinterName", adVarChar, 60, adFldIsNullable
-            rs.Open , , adOpenDynamic, adLockOptimistic
             
             SQLString = "SELECT * FROM InvGlobal WHERE CompanyID = " & PRCompany.CompanyID & _
                         " AND TypeCode = " & InvEquate.GlobalTypeInvPrinter
@@ -404,14 +400,26 @@ Private Sub cmbGlobalType_Click()
                 InvGlobal.rsAdd
             End If
             
-            rs.AddNew
-            rs!PrinterName = Mid(InvGlobal.Var1, 1, 60)
-            rs.Update
+            SQLString = "SELECT GlobalID, CompanyID, TypeCode, Var1 FROM InvGlobal WHERE CompanyID = " & PRCompany.CompanyID & _
+                        " AND TypeCode = " & InvEquate.GlobalTypeInvPrinter
+            rsInit SQLString, cnDes, rs
+            
+'            rs.CursorLocation = adUseClient
+'            rs.Fields.Append "PrinterName", adVarChar, 60, adFldIsNullable
+'            rs.Open , , adOpenDynamic, adLockOptimistic
+'
+'            rs.AddNew
+'            rs!PrinterName = Mid(InvGlobal.Var1, 1, 60)
+'            rs.Update
             
             SetGrid rs, fg
             
-            fg.ColWidth(0) = 9000
-            fg.ColComboList(0) = PrinterDrop
+            fg.ColWidth(0) = 0
+            fg.ColWidth(1) = 0
+            fg.ColWidth(2) = 0
+            fg.ColComboList(3) = PrinterDrop
+            fg.ColWidth(3) = 9000
+            fg.TextMatrix(0, 3) = "Printer"
         
         ElseIf GType = InvEquate.GlobalTypeVAdj Then
         
@@ -430,15 +438,25 @@ Private Sub cmbGlobalType_Click()
                 InvGlobal.rsAdd
             End If
         
-            rs.CursorLocation = adUseClient
-            rs.Fields.Append "PrinterAdjustment", adInteger
-            rs.Open , , adOpenDynamic, adLockOptimistic
-            
-            rs.AddNew
-            rs!PrinterAdjustment = InvGlobal.Byte1
-            rs.Update
+            SQLString = "SELECT GlobalID, CompanyID, TypeCode, Var1 FROM InvGlobal WHERE CompanyID = " & PRCompany.CompanyID & _
+                        " AND TypeCode = " & InvEquate.GlobalTypeVAdj
+            rsInit SQLString, cnDes, rs
+        
+'            rs.CursorLocation = adUseClient
+'            rs.Fields.Append "PrinterAdjustment", adInteger
+'            rs.Open , , adOpenDynamic, adLockOptimistic
+'
+'            rs.AddNew
+'            rs!PrinterAdjustment = InvGlobal.Byte1
+'            rs.Update
             
             SetGrid rs, fg
+            
+            fg.ColWidth(0) = 0
+            fg.ColWidth(1) = 0
+            fg.ColWidth(2) = 0
+            fg.ColWidth(3) = 5000
+            fg.TextMatrix(0, 3) = "Vertical Adjustment"
             
         Else        ' truck / trailer / driver
         
@@ -508,6 +526,7 @@ End Sub
 Private Sub cmdAdd_Click()
     If Me.cmbGlobalType.ListIndex = -1 Then Exit Sub
     rs.AddNew
+    rs!CompanyID = PRCompany.CompanyID
     rs!TypeCode = GType
     rs.Update
     fg.DataRefresh

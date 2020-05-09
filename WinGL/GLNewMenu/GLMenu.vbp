@@ -51,6 +51,7 @@ Class=cPRDist; ..\..\WinPR\Class\cPRDist.cls
 Class=cGLFFColumn; ..\Class\cGLFFColumn.cls
 Class=cGLFFSched; ..\Class\cGLFFSched.cls
 Module=modRC4; ..\..\WinPR\Module\modRC4.bas
+Module=modConvertADO; ..\Module\modConvertADO.bas
 IconForm="frmMainMenu"
 Startup="Sub Main"
 HelpFile=""

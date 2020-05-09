@@ -559,7 +559,7 @@ End Sub
 Private Sub AddField(ByVal TableName As String, _
                      ByVal FieldName As String, _
                      ByVal FieldType As String, _
-                     ByVal acn As ADODB.Connection)
+                     ByVal acn As adodb.Connection)
                      
     SQLString = "ALTER TABLE " & TableName & _
               " ADD COLUMN [" & FieldName & "]   " & FieldType
@@ -570,18 +570,18 @@ End Sub
 
 
 Public Sub DropTable(ByVal TableName As String, _
-                      ByVal adoCn As ADODB.Connection)
+                      ByVal adoCn As adodb.Connection)
 
 ' *** Drop a table if it exists ***
 
-Dim cm As ADODB.Command
-Dim frs As ADODB.Recordset
+Dim cm As adodb.Command
+Dim frs As adodb.Recordset
 Dim TableFlag As Boolean
 Dim FString As String
                          
                          
     ' see if the field is already in the Table
-    Set frs = New ADODB.Recordset
+    Set frs = New adodb.Recordset
     frs.CursorLocation = adUseClient
     frs.CursorType = adOpenStatic
     frs.LockType = adLockBatchOptimistic
@@ -933,29 +933,3 @@ Public Sub GLFFSchedCreate()
 
 End Sub
 
-Public Sub ConvertNewADO()
-    Dim NewFolder As String
-    Dim resp As Integer
-    ' rename the data dir after conversion?
-    If NewADO Then
-        NewFolder = BalintFolder & "\Data_New"
-        If Len(Dir(NewFolder, vbDirectory)) > 0 Then
-            resp = MsgBox("OK to rename the Data Conversion folder?", vbQuestion + vbYesNo)
-            If resp = vbNo Then
-                ' continue w/ old data
-                Exit Sub
-            End If
-            cn.Close
-            Name BalintFolder & "\Data" As BalintFolder & "\Data_Old"
-            Name BalintFolder & "\Data_New" As BalintFolder & "\Data"
-            MsgBox "Data folder rename complete", vbInformation
-            End
-        End If
-    End If
-        
-    resp = MsgBox("OK to convert to NewADO?", vbQuestion + vbYesNo)
-    If resp = vbNo Then Exit Sub
-    
-    ' >>>>> NewADO conversion code <<<<<
-    
-End Sub

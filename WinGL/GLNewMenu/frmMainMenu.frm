@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
 Begin VB.Form frmMainMenu 
    Caption         =   "Balint Windows Accounting"
-   ClientHeight    =   10815
+   ClientHeight    =   10950
    ClientLeft      =   60
    ClientTop       =   345
    ClientWidth     =   14580
@@ -18,7 +18,7 @@ Begin VB.Form frmMainMenu
    ForeColor       =   &H00808000&
    Icon            =   "frmMainMenu.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   10815
+   ScaleHeight     =   10950
    ScaleWidth      =   14580
    StartUpPosition =   3  'Windows Default
    Begin VB.PictureBox Picture1 
@@ -103,65 +103,41 @@ Begin VB.Form frmMainMenu
       TabPicture(1)   =   "frmMainMenu.frx":1342
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "cmdFreeFormat"
-      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "Frame7"
-      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).Control(2)=   "Frame6"
-      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).Control(3)=   "Frame5"
-      Tab(1).Control(3).Enabled=   0   'False
       Tab(1).Control(4)=   "cmdGLDataEntry"
-      Tab(1).Control(4).Enabled=   0   'False
       Tab(1).Control(5)=   "cmdGLMtStatements"
-      Tab(1).Control(5).Enabled=   0   'False
       Tab(1).ControlCount=   6
       TabCaption(2)   =   "PAYROLL"
       TabPicture(2)   =   "frmMainMenu.frx":135E
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Frame3"
-      Tab(2).Control(0).Enabled=   0   'False
-      Tab(2).Control(1)=   "Frame2"
-      Tab(2).Control(1).Enabled=   0   'False
+      Tab(2).Control(0)=   "cmdPR1099"
+      Tab(2).Control(1)=   "cmdPREntry"
       Tab(2).Control(2)=   "Frame1"
-      Tab(2).Control(2).Enabled=   0   'False
-      Tab(2).Control(3)=   "cmdPREntry"
-      Tab(2).Control(3).Enabled=   0   'False
-      Tab(2).Control(4)=   "cmdPR1099"
-      Tab(2).Control(4).Enabled=   0   'False
+      Tab(2).Control(3)=   "Frame2"
+      Tab(2).Control(4)=   "Frame3"
       Tab(2).ControlCount=   5
       TabCaption(3)   =   "JOB COST"
       TabPicture(3)   =   "frmMainMenu.frx":137A
       Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "cmdQBTaxPay"
-      Tab(3).Control(0).Enabled=   0   'False
       Tab(3).Control(1)=   "cmdPWMaint"
-      Tab(3).Control(1).Enabled=   0   'False
       Tab(3).Control(2)=   "cmdJCTSReport"
-      Tab(3).Control(2).Enabled=   0   'False
       Tab(3).Control(3)=   "cmdTimeSheetEntry"
-      Tab(3).Control(3).Enabled=   0   'False
       Tab(3).Control(4)=   "cmdJCJobMaint"
-      Tab(3).Control(4).Enabled=   0   'False
       Tab(3).Control(5)=   "cmdJCWageRpt"
-      Tab(3).Control(5).Enabled=   0   'False
       Tab(3).Control(6)=   "cmdJCMaint"
-      Tab(3).Control(6).Enabled=   0   'False
       Tab(3).ControlCount=   7
       TabCaption(4)   =   "INVOICING"
       TabPicture(4)   =   "frmMainMenu.frx":1396
       Tab(4).ControlEnabled=   0   'False
       Tab(4).Control(0)=   "cmdInvGlobal"
-      Tab(4).Control(0).Enabled=   0   'False
       Tab(4).Control(1)=   "cmdInvQBJob"
-      Tab(4).Control(1).Enabled=   0   'False
       Tab(4).Control(2)=   "cmdInvCustMsg"
-      Tab(4).Control(2).Enabled=   0   'False
       Tab(4).Control(3)=   "cmdKPInvGlobalMaint"
-      Tab(4).Control(3).Enabled=   0   'False
       Tab(4).Control(4)=   "cmdKPInvStockMaint"
-      Tab(4).Control(4).Enabled=   0   'False
       Tab(4).Control(5)=   "cmdKPInvProcess"
-      Tab(4).Control(5).Enabled=   0   'False
       Tab(4).ControlCount=   6
       TabCaption(5)   =   "1099 Processing"
       TabPicture(5)   =   "frmMainMenu.frx":13B2
@@ -1253,13 +1229,13 @@ Begin VB.Form frmMainMenu
       EndProperty
       ForeColor       =   &H00808000&
       Height          =   255
-      Left            =   7680
+      Left            =   7920
       TabIndex        =   123
       Top             =   10440
-      Width           =   4575
+      Width           =   4335
    End
    Begin VB.Label lblVersion 
-      Caption         =   "Win10 2020 Jan 13"
+      Caption         =   "New ADO 5/9/20"
       BeginProperty Font 
          Name            =   "Arial"
          Size            =   9
@@ -1374,7 +1350,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim rs As New ADODB.Recordset
+Dim rs As New adodb.Recordset
 Dim x As String
 Dim dbPassword, DriveLetter As String
 Dim TaskID As Long
@@ -1385,7 +1361,7 @@ Public dbName As String
 
 
 Private Sub cmdNewADO_Click()
-    ConvertNewADO
+    RunADO_Conversion (BalintFolder)
 End Sub
 
 Private Sub Form_Load()
@@ -1996,16 +1972,16 @@ Private Sub cmdPRMaintComp_Click()
 End Sub
 
 Public Function TableExists(ByVal TableName As String, _
-                            ByRef adoConn As ADODB.Connection) _
+                            ByRef adoConn As adodb.Connection) _
                             As Boolean
 
-Dim cm As ADODB.Command
-Dim frs As ADODB.Recordset
+Dim cm As adodb.Command
+Dim frs As adodb.Recordset
 Dim FldFlag As Boolean
-Dim FString As String
+Dim fString As String
                          
     ' see if the field is already in the Table
-    Set frs = New ADODB.Recordset
+    Set frs = New adodb.Recordset
     frs.CursorLocation = adUseClient
     frs.CursorType = adOpenStatic
     frs.LockType = adLockBatchOptimistic

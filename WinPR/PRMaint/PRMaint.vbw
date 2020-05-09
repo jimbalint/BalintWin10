@@ -1,7 +1,7 @@
 Form1 = 156, 156, 1393, 806, C, 22, 29, 1020, 545, C
 modStart = 198, 261, 1223, 803, 
 modPRGlobal = 0, 0, 1025, 542, C
-modPRConnect = 0, 0, 1330, 589, C
+modPRConnect = 0, 0, 1330, 589, Z
 cPRDepartment = 0, 0, 0, 0, C
 cPREmployee = 234, 234, 1523, 831, C
 cPRCompany = 0, 0, 0, 0, C
@@ -42,7 +42,7 @@ frmEmployeeSelect = 0, 0, 0, 0, C, 110, 145, 1108, 661, C
 frmTaxSweep = 22, 29, 1047, 571, C, 132, 174, 1130, 690, C
 modNewField = 0, 0, 0, 0, C
 frmTaxWage = 0, 0, 0, 0, C, 154, 203, 1152, 719, C
-frmAssignCity = 78, 78, 1367, 628, Z, 176, 232, 1174, 748, C
+frmAssignCity = 78, 78, 1367, 628, , 176, 232, 1174, 748, C
 cJCCustomer = 0, 0, 0, 0, C
 cJCJob = 0, 0, 0, 0, C
 modQBData = 234, 234, 1471, 884, C
