@@ -1,4 +1,4 @@
-MainMenu = 44, 44, 430, 410, , 88, 88, 625, 454, C
+MainMenu = 44, 44, 430, 410, Z, 88, 88, 625, 454, C
 DataEntry = 22, 22, 389, 385, C, 40, 101, 407, 464, C
 ReviewReport = 132, 132, 486, 484, C, 110, 110, 464, 462, C
 BatchCopy = 132, 174, 968, 722, C, 22, 29, 795, 558, C
@@ -18,7 +18,7 @@ cGLHistory = 132, 174, 1100, 705, C
 cGLJournal = 176, 232, 940, 829, C
 cGLPrint = 0, 0, 0, 0, C
 cGLUser = 22, 29, 843, 626, C
-Global = 0, 0, 968, 531, Z
+Global = 0, 0, 968, 531, 
 glType = 0, 0, 0, 0, C
 modGLConnect = 66, 87, 1056, 560, C
 modNewFieldGL = 66, 87, 1034, 618, C

@@ -109,7 +109,7 @@ BeforeUninstall=,,,1,2,1,
 
 [CREATE_SETUP]
 OutputFolder=c:\Balint\WinGL\Setup
-SetupFilename=Balint_C_NewADO_20200509.exe
+SetupFilename=Balint_NewADO_20200511a.exe
 SetupIconPathname=
 CreateSelfExtractedSetup=Yes
 CreatePasswordProtectedSetup=No

@@ -1058,9 +1058,10 @@ Private Sub OnPrint()
     
 Dim x As String
     
+'            " SysFile=\Balint\Data\GLSystem.mdb"
+'            " SysFile=\Balint\Data\GLSystem.mdb"
     If BalintFolder = "" Then
         x = Mid(App.Path, 1, 3) & "Balint\GLPrint.exe" & _
-            " SysFile=\Balint\Data\GLSystem.mdb" & _
             " UserID=" & GLUser.ID & _
             " BackName=\Balint\GLEntryADO.exe" & _
             " Batch=" & xDB.Value(BatchList.Bookmark, 0) & _
@@ -1069,7 +1070,6 @@ Dim x As String
             " AcctDesc=" & Me.chkAcctDesc
     Else
         x = BalintFolder & "\GLPrint.exe" & _
-            " SysFile=\Balint\Data\GLSystem.mdb" & _
             " UserID=" & GLUser.ID & _
             " BackName=\Balint\GLEntryADO.exe" & _
             " Batch=" & xDB.Value(BatchList.Bookmark, 0) & _
@@ -1078,6 +1078,15 @@ Dim x As String
             " BalintFolder=" & BalintFolder & _
             " AcctDesc=" & Me.chkAcctDesc
     End If
+    
+    x = "c:\Balint\GLPrint.exe" & _
+        " UserID=" & GLUser.ID & _
+        " BackName=c:\Balint\GLEntryADO.exe" & _
+        " Batch=" & xDB.Value(BatchList.Bookmark, 0) & _
+        " ProgName=GLHistJnl " & _
+        " MenuName=" & MenuName & _
+        " BalintFolder=" & BalintFolder & _
+        " AcctDesc=" & Me.chkAcctDesc
     
      If Password <> "" Then
         x = x & " dbPwd=" & Password

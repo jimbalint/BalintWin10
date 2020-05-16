@@ -46,6 +46,7 @@ Public Sub RunADO_Conversion(ByVal BalintFolder As String)
 '    BalintFolder = "\\vboxsrv\vm-share\Balint"
 '    BalintFolder = "c:\Balint"
     
+    BalintFolder = Replace(BalintFolder, "^", " ")
     NewFolder = BalintFolder & "\Data_New"
     
     If Len(Dir(NewFolder, vbDirectory)) > 0 Then
@@ -57,8 +58,8 @@ Public Sub RunADO_Conversion(ByVal BalintFolder As String)
         MkDir NewFolder
     End If
 
-    dbBlank = "c:\Balint\Data\BlankAccdb.accdb"
-    FileCopy dbBlank, BalintFolder & "\Blank\BlankAccdb.accdb"
+    'dbBlank = "c:\Balint\Data\BlankAccdb.accdb"
+    ' FileCopy dbBlank, BalintFolder & "\Blank\BlankAccdb.accdb"
     
     log = FreeFile
     Open NewFolder & "\ConvertLog.txt" For Output As #log
@@ -204,6 +205,10 @@ Public Sub RunADO_Conversion(ByVal BalintFolder As String)
     frm.Hide
     Set frm = Nothing
     
+    ' copy the files for PR Check setup
+    Copy2 BalintFolder & "\Data", BalintFolder & "\Data_New", "PRCK*.mdb"
+    Copy2 BalintFolder & "\Data", BalintFolder & "\Data_New", "*.jpg"
+    
     ' =======================================================
     MsgBox "Conversion complete, hit OK to ReName and complete!", vbInformation
     Name BalintFolder & "\Data" As BalintFolder & "\Data_Old"
@@ -339,16 +344,17 @@ Private Sub PopSchemaRS(ByRef cn As ADODB.Connection)
             
             x = ""
             I = frs!Data_Type
+            ' *** 4 = double
             Select Case I
                 Case 2: x = "Short"
                 Case 3: x = "Long"
-                Case 4: x = "Short"
+                Case 4: x = "Double"
                 Case 5: x = "Double"
                 Case 6: x = "Currency"
                 Case 7: x = "DateTime"
                 Case 11: x = "Logical"
                 Case 17: x = "Byte"
-                Case 130: x = "LongText"
+                Case 130
                     If rsNewSchema!MaxLength = 255 Then
                         x = "LongText"
                     Else
@@ -363,6 +369,8 @@ Private Sub PopSchemaRS(ByRef cn As ADODB.Connection)
         End If
         frs.MoveNext
     Loop
+    
+    
     
     ' dump it
 '    Dim io As Integer
@@ -544,3 +552,11 @@ Private Function SQLConnect(ByVal dbName As String) As ADODB.Connection
     
 End Function
 
+Private Sub Copy2(ByVal Folder1 As String, ByVal Folder2 As String, ByVal FileSpec As String)
+    Dim fnm As String
+    fnm = Dir$(Folder1 & "\" & FileSpec)
+    While fnm <> ""
+        FileCopy Folder1 & "\" & fnm, Folder2 & "\" & fnm
+        fnm = Dir$
+    Wend
+End Sub

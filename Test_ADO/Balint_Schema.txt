@@ -1,171 +1,651 @@
-GLCompany	ID	1		3		10		
-GLCompany	Name	2		130	60			
-GLCompany	Address1	3		130	60			
-GLCompany	Address2	4		130	60			
-GLCompany	Address3	5		130	60			
-GLCompany	City	6		130	30			
-GLCompany	State	7		130	2			
-GLCompany	ZipCode	8		130	10			
-GLCompany	LastUpdate	9		3		10		
-GLCompany	LastClose	10		3		10		
-GLCompany	RetEarnAcct	11		3		10		
-GLCompany	SuspAcct	12		3		10		
-GLCompany	NetProfitAcct	13		3		10		
-GLCompany	FirstPAcct	14		3		10		
-GLCompany	PctBaseAcct	15		3		10		
-GLCompany	SubDigits	16		17		3		
-GLCompany	NumberPds	17		17		3		
-GLCompany	FirstPeriod	18		17		3		
-GLCompany	FileName	19		130	255			
-GLCompany	LastBatch	20		3		10		
-GLCompany	curFiscalYear	21		2		5		
-GLCompany	curPeriod	22		17		3		
-GLCompany	FirstFiscalYear	23		2		5		
-GLCompany	LowBranch	24		3		10		
-GLCompany	HiBranch	25		3		10		
-GLCompany	LowConsolidated	26		3		10		
-GLCompany	HiConsolidated	27		3		10		
-GLCompany	FederalID	28		130	255			
-GLCompany	SSN	29		130	255			
-glDescriptions	ID	1		3		10		
-glDescriptions	Number	2		3		10		
-glDescriptions	Description	3		130	120			
-GLFFColumn	FFColumnID	1		3		10		
-GLFFColumn	ColNum	2		17		3		
-GLFFColumn	Description	3		130	30			
-GLFFColumn	ColType	4		17		3		
-GLFFColumn	FiscalYear	5		3		10		
-GLFFColumn	StartNum	6		17		3		
-GLFFColumn	EndNum	7		17		3		
-GLFFColumn	Budget	8		17		3		
-GLFFColumn	PrintTab	9		17		3		
-GLFFColumn	NonPrint	10		17		3		
-GLFFColumn	GlobalID	11		3		10		
-InvGlobal	GlobalID	1		3		10		
-InvGlobal	CompanyID	2		3		10		
-InvGlobal	UserID	3		3		10		
-InvGlobal	TypeCode	4		17		3		
-InvGlobal	Description	5		130	255			
-InvGlobal	Byte1	6		17		3		
-InvGlobal	Byte2	7		17		3		
-InvGlobal	Byte3	8		17		3		
-InvGlobal	Byte4	9		17		3		
-InvGlobal	Byte5	10		17		3		
-InvGlobal	Byte6	11		17		3		
-InvGlobal	Byte7	12		17		3		
-InvGlobal	Byte8	13		17		3		
-InvGlobal	Byte9	14		17		3		
-InvGlobal	Byte10	15		17		3		
-InvGlobal	Var1	16		130	50			
-InvGlobal	Var2	17		130	50			
-InvGlobal	Var3	18		130	50			
-InvGlobal	Var4	19		130	50			
-InvGlobal	Var5	20		130	50			
-PRCity	CityID	1		3		10		
-PRCity	CityNumber	2		3		10		
-PRCity	CityName	3		130	255			
-PRCity	ShortName	4		130	20			
-PRCity	CityState	5		130	2			
-PRCity	CityRate	6		5		15		
-PRCity	CityRecipRate	7		5		15		
-PRCity	StateID	8		3		10		
-PRCity	CountyID	9		3		10		
-PRCompany	CompanyID	1		3		10		
-PRCompany	Name	2		130	255			
-PRCompany	Address1	3		130	255			
-PRCompany	Address2	4		130	255			
-PRCompany	City	5		130	255			
-PRCompany	AddrStateID	6		3		10		
-PRCompany	ZipCode	7		3		10		
-PRCompany	StateID	8		130	25			
-PRCompany	StateUnempPct	9		5		15		
-PRCompany	FederalID	10		130	25			
-PRCompany	FederalUnempPct	11		5		15		
-PRCompany	DfltPaysPerYear	12		3		10		
-PRCompany	DfltStateID	13		3		10		
-PRCompany	DfltMinWage	14		6		19		
-PRCompany	DfltOTRate	15		6		19		
-PRCompany	DfltRegHrs	16		6		19		
-PRCompany	FileName	17		130	255			
-PRCompany	GLAcctSS	18		3		10		
-PRCompany	GLAcctMED	19		3		10		
-PRCompany	GLAcctFWT	20		3		10		
-PRCompany	GLAcctSWT	21		3		10		
-PRCompany	GLAcctCWT	22		3		10		
-PRCompany	GLAcctGross	23		3		10		
-PRCompany	GLAcctNet	24		3		10		
-PRCompany	BankName	25		130	255			
-PRCompany	BankABA	26		130	255			
-PRCompany	BankAccount	27		130	255			
-PRCompany	BankAddr1	28		130	255			
-PRCompany	BankAddr2	29		130	255			
-PRCompany	BankFraction	30		130	255			
-PRCompany	LastCheckNum	31		3		10		
-PRCompany	DfltCityID	32		3		10		
-PRCompany	CheckDays	33		3		10		
-PRCompany	WkcPolicyNum	34		130	255			
-PRCompany	GLCompanyID	35		3		10		
-PRCompany	PhoneNumber	36		130	255			
-PRCompany	StateUnempID	37		130	255			
-PRCompany	DfltSortOrder	38		17		3		
-PRCompany	DirDepBalanced	39		17		3		
-PRCompany	TestA	40		17		3		
-PRCompany	DirDepUseAltID	41		17		3		
-PRCompany	DirDepAltID	42		3		10		
-PRCompany	DirDepID1	43		17		3		
-PRCounty	CountyID	1		3		10		
-PRCounty	CountyName	2		130	50			
-PRCounty	ShortName	3		130	10			
-PRCounty	StateID	4		3		10		
-PRCounty	SalesTaxRate	5		5		15		
-PRFWTTable	FWTTableID	1		3		10		
-PRFWTTable	StateID	2		3		10		
-PRFWTTable	TaxYear	3		3		10		
-PRFWTTable	TaxMonth	4		17		3		
-PRFWTTable	msMarried	5		17		3		
-PRFWTTable	msSingle	6		17		3		
-PRFWTTable	LowAmount	7		6		19		
-PRFWTTable	HiAmount	8		6		19		
-PRFWTTable	Amount	9		6		19		
-PRFWTTable	Percent	10		5		15		
-PRFWTTable	ExcessBase	11		6		19		
-PRGlobal	GlobalID	1		3		10		
-PRGlobal	TypeCode	2		17		3		
-PRGlobal	Description	3		130	255			
-PRGlobal	Amount	4		6		19		
-PRGlobal	Percent	5		5		15		
-PRGlobal	Flag	6		17		3		
-PRGlobal	Year	7		3		10		
-PRGlobal	Month	8		17		3		
-PRGlobal	Var1	9		130	255			
-PRGlobal	Var2	10		130	255			
-PRGlobal	Var3	11		130	255			
-PRGlobal	Var4	12		130	255			
-PRGlobal	Var5	13		130	255			
-PRGlobal	Var6	14		130	255			
-PRGlobal	Var7	15		130	255			
-PRGlobal	Var8	16		130	255			
-PRGlobal	Var9	17		130	255			
-PRGlobal	Var10	18		130	255			
-PRGlobal	UserID	19		3		10		
-PRGlobal	Byte1	20		17		3		
-PRGlobal	Byte2	21		17		3		
-PRGlobal	Byte3	22		17		3		
-PRGlobal	Byte4	23		17		3		
-PRGlobal	Byte5	24		17		3		
-PRGlobal	Byte6	25		17		3		
-PRGlobal	Byte7	26		17		3		
-PRGlobal	Byte8	27		17		3		
-PRGlobal	Byte9	28		17		3		
-PRGlobal	Byte10	29		17		3		
-PRState	StateID	1		3		10		
-PRState	StateName	2		130	255			
-PRState	StateAbbrev	3		130	2			
-PRState	UnempMax	4		6		19		
-Users	ID	1		3		10		
-Users	LogOn	2		130	50			
-Users	Name	3		130	50			
-Users	Password	4		130	50			
-Users	LastCompany	5		3		10		
-Users	LoadLastCompany	6		11	2			
-Users	LastPRCompany	7		3		10		
+TABLE_CATALOG
+TABLE_SCHEMA
+TABLE_NAME
+COLUMN_NAME
+COLUMN_GUID
+COLUMN_PROPID
+ORDINAL_POSITION
+COLUMN_HASDEFAULT
+COLUMN_DEFAULT
+COLUMN_FLAGS
+IS_NULLABLE
+DATA_TYPE
+TYPE_GUID
+CHARACTER_MAXIMUM_LENGTH
+CHARACTER_OCTET_LENGTH
+NUMERIC_PRECISION
+NUMERIC_SCALE
+DATETIME_PRECISION
+CHARACTER_SET_CATALOG
+CHARACTER_SET_SCHEMA
+CHARACTER_SET_NAME
+COLLATION_CATALOG
+COLLATION_SCHEMA
+COLLATION_NAME
+DOMAIN_CATALOG
+DOMAIN_SCHEMA
+DOMAIN_NAME
+DESCRIPTION
+=====================
+Detail99	BoxName	5	130	True	50			|	5
+Detail99	DetailID	1	3	False		10		|	1
+Detail99	FieldValue	6	130	True	20			|	6
+Detail99	FormType	4	130	True	10			|	4
+Detail99	PayeeID	2	3	True		10		|	2
+Detail99	TaxYear	3	3	True		10		|	3
+GLAccount	Account	2	3	True		10		|	2
+GLAccount	AcctType	3	130	True	1			|	3
+GLAccount	AllSchedules	11	11	False	2			|	11
+GLAccount	AllStatements	10	11	False	2			|	10
+GLAccount	BranchAcct	12	11	False	2			|	12
+GLAccount	BSColumn	9	17	True		3		|	9
+GLAccount	ConsAcct	13	11	False	2			|	13
+GLAccount	Date1	18	3	True		10		|	18
+GLAccount	Date2	19	3	True		10		|	19
+GLAccount	DescNumber	5	3	True		10		|	5
+GLAccount	Description	4	130	True	200			|	4
+GLAccount	DollarSign	15	11	False	2			|	15
+GLAccount	ID	1	3	False		10		|	1
+GLAccount	LineFeeds	8	17	True		3		|	8
+GLAccount	PrintTab	7	17	True		3		|	7
+GLAccount	SignRevSched	17	11	False	2			|	17
+GLAccount	SignRevStmt	16	11	False	2			|	16
+GLAccount	TotalLevel	6	17	True		3		|	6
+GLAccount	TotalOnLedger	14	11	False	2			|	14
+GLAmount	Account	2	3	True		10		|	2
+GLAmount	Amount01	4	6	True		19		|	4
+GLAmount	Amount02	5	6	True		19		|	5
+GLAmount	Amount03	6	6	True		19		|	6
+GLAmount	Amount04	7	6	True		19		|	7
+GLAmount	Amount05	8	6	True		19		|	8
+GLAmount	Amount06	9	6	True		19		|	9
+GLAmount	Amount07	10	6	True		19		|	10
+GLAmount	Amount08	11	6	True		19		|	11
+GLAmount	Amount09	12	6	True		19		|	12
+GLAmount	Amount10	13	6	True		19		|	13
+GLAmount	Amount11	14	6	True		19		|	14
+GLAmount	Amount12	15	6	True		19		|	15
+GLAmount	Amount13	16	6	True		19		|	16
+GLAmount	Budget01	17	6	True		19		|	17
+GLAmount	Budget02	18	6	True		19		|	18
+GLAmount	Budget03	19	6	True		19		|	19
+GLAmount	Budget04	20	6	True		19		|	20
+GLAmount	Budget05	21	6	True		19		|	21
+GLAmount	Budget06	22	6	True		19		|	22
+GLAmount	Budget07	23	6	True		19		|	23
+GLAmount	Budget08	24	6	True		19		|	24
+GLAmount	Budget09	25	6	True		19		|	25
+GLAmount	Budget10	26	6	True		19		|	26
+GLAmount	Budget11	27	6	True		19		|	27
+GLAmount	Budget12	28	6	True		19		|	28
+GLAmount	Budget13	29	6	True		19		|	29
+GLAmount	FiscalYear	3	3	True		10		|	3
+GLAmount	ID	1	3	False		10		|	1
+GLBatch	BatchNumber	4	3	True		10		|	4
+GLBatch	Created	6	7	True				|	6
+GLBatch	CreateUser	8	3	True		10		|	8
+GLBatch	Credits	11	6	True		19		|	11
+GLBatch	Debits	5	6	True		19		|	5
+GLBatch	FiscalYear	2	3	True		10		|	2
+GLBatch	ID	1	3	False		10		|	1
+GLBatch	JournalSource	12	3	True		10		|	12
+GLBatch	Period	3	17	True		3		|	3
+GLBatch	Records	10	3	True		10		|	10
+GLBatch	Updated	7	7	True				|	7
+GLBatch	UpdateUser	9	3	True		10		|	9
+GLBranch	BranchNumber	2	3	True		10		|	2
+GLBranch	ID	1	3	False		10		|	1
+GLBranch	Name	3	130	True	60			|	3
+GLFFSched	Account	3	3	True		10		|	3
+GLFFSched	AltDesc	9	130	True	50			|	9
+GLFFSched	FFSchedID	1	3	False		10		|	1
+GLFFSched	GlobalID	2	3	True		10		|	2
+GLFFSched	LineFeeds	7	17	True		3		|	7
+GLFFSched	PercentBase	5	3	True		10		|	5
+GLFFSched	PrintTab	6	17	True		3		|	6
+GLFFSched	ReportID	10	17	True		3		|	10
+GLFFSched	SignReverse	8	17	True		3		|	8
+GLFFSched	SortOrder	4	3	True		10		|	4
+GLHistory	Account	2	3	True		10		|	2
+GLHistory	Amount	6	6	True		19		|	6
+GLHistory	BatchNumber	5	3	True		10		|	5
+GLHistory	Description	8	130	True	20			|	8
+GLHistory	FiscalYear	3	3	True		10		|	3
+GLHistory	HisType	11	130	True	1			|	11
+GLHistory	ID	1	3	False		10		|	1
+GLHistory	JournalSource	10	17	True		3		|	10
+GLHistory	Period	4	17	True		3		|	4
+GLHistory	PostDate	13	7	True				|	13
+GLHistory	Reference	7	130	True	20			|	7
+GLHistory	SourceCode	9	17	True		3		|	9
+GLHistory	UpdateFlag	12	11	False	2			|	12
+GLJournal	ID	1	3	False		10		|	1
+GLJournal	JournalName	3	130	True	60			|	3
+GLJournal	JournalSource	2	3	True		10		|	2
+GLPrint	BeginDate	5	3	True		10		|	5
+GLPrint	Copies	23	3	True		10		|	23
+GLPrint	EndDate	6	3	True		10		|	6
+GLPrint	FiscalYear	4	3	True		10		|	4
+GLPrint	gOutput	22	130	True	60			|	22
+GLPrint	gUser	2	130	True	8			|	2
+GLPrint	HiAccount	9	3	True		10		|	9
+GLPrint	HiBranchAcct	19	3	True		10		|	19
+GLPrint	HiConsAcct	21	3	True		10		|	21
+GLPrint	ID	1	3	False		10		|	1
+GLPrint	LowAccount	8	3	True		10		|	8
+GLPrint	LowBranchAcct	18	3	True		10		|	18
+GLPrint	LowConsAcct	20	3	True		10		|	20
+GLPrint	LowerCaseDate	17	11	False	2			|	17
+GLPrint	PrintBIB	27	17	True		3		|	27
+GLPrint	PrtAcctNum	13	11	False	2			|	13
+GLPrint	PrtZeroBal	14	11	False	2			|	14
+GLPrint	RegBraCon	24	17	True		3		|	24
+GLPrint	RegCmp	26	17	True		3		|	26
+GLPrint	ReportDate	7	3	True		10		|	7
+GLPrint	ReportName	3	130	True	30			|	3
+GLPrint	RoundDollars	15	11	False	2			|	15
+GLPrint	SepPage	10	11	False	2			|	10
+GLPrint	StaSch	25	17	True		3		|	25
+GLPrint	SupprCP	11	11	False	2			|	11
+GLPrint	UseMathRec	12	11	False	2			|	12
+GLPrint	WidePrint	16	11	False	2			|	16
+InvBody	Amount	9	5	True		15		|	9
+InvBody	BodyID	1	3	False		10		|	1
+InvBody	Description	6	130	True	0			|	6
+InvBody	HeaderID	2	3	True		10		|	2
+InvBody	LineNum	3	3	True		10		|	3
+InvBody	Price	8	5	True		15		|	8
+InvBody	QtyOrdered	4	5	True		15		|	4
+InvBody	QtyShipped	5	5	True		15		|	5
+InvBody	StockID	7	3	True		10		|	7
+InvHeader	ApptDate	38	7	True				|	38
+InvHeader	ApptTime	39	130	True	10			|	39
+InvHeader	DriverID1	35	3	True		10		|	35
+InvHeader	DriverID2	36	3	True		10		|	36
+InvHeader	DriverID3	37	3	True		10		|	37
+InvHeader	Freight	25	6	True		19		|	25
+InvHeader	HeaderID	1	3	False		10		|	1
+InvHeader	InvoiceDate	20	7	True				|	20
+InvHeader	InvoiceNumber	17	3	True		10		|	17
+InvHeader	ItemTotal	23	6	True		19		|	23
+InvHeader	OrderDate	19	7	True				|	19
+InvHeader	PackageCount	21	3	True		10		|	21
+InvHeader	PalletCount	22	3	True		10		|	22
+InvHeader	PO1	27	130	True	50			|	27
+InvHeader	PO2	28	130	True	50			|	28
+InvHeader	QBInvoiceID	41	130	True	50			|	41
+InvHeader	SalesTax	24	6	True		19		|	24
+InvHeader	SaveFlag	18	17	True		3		|	18
+InvHeader	ShipAddr1	9	130	True	40			|	9
+InvHeader	ShipAddr2	10	130	True	40			|	10
+InvHeader	ShipAddr3	11	130	True	40			|	11
+InvHeader	ShipAddr4	12	130	True	40			|	12
+InvHeader	ShipCity	13	130	True	40			|	13
+InvHeader	ShipState	14	130	True	2			|	14
+InvHeader	ShipZip	15	130	True	10			|	15
+InvHeader	SoldAddr1	2	130	True	40			|	2
+InvHeader	SoldAddr2	3	130	True	40			|	3
+InvHeader	SoldAddr3	4	130	True	40			|	4
+InvHeader	SoldAddr4	5	130	True	40			|	5
+InvHeader	SoldCity	6	130	True	40			|	6
+InvHeader	SoldJobID	16	3	True		10		|	16
+InvHeader	SoldState	7	130	True	2			|	7
+InvHeader	SoldZip	8	130	True	10			|	8
+InvHeader	Terms	40	130	True	50			|	40
+InvHeader	TotalAmount	26	6	True		19		|	26
+InvHeader	TrailerID1	32	3	True		10		|	32
+InvHeader	TrailerID2	33	3	True		10		|	33
+InvHeader	TrailerID3	34	3	True		10		|	34
+InvHeader	TruckID1	29	3	True		10		|	29
+InvHeader	TruckID2	30	3	True		10		|	30
+InvHeader	TruckID3	31	3	True		10		|	31
+InvStock	Active	12	11	False	2			|	12
+InvStock	Cost	10	5	True		15		|	10
+InvStock	CustomerPrice	9	5	True		15		|	9
+InvStock	Description	7	130	True	0			|	7
+InvStock	InventoryItem	13	11	False	2			|	13
+InvStock	JobID	5	3	True		10		|	5
+InvStock	LastDate	11	7	True				|	11
+InvStock	MasterPrice	8	5	True		15		|	8
+InvStock	QBID	3	130	True	50			|	3
+InvStock	QBName	4	130	True	159			|	4
+InvStock	Show	6	17	True		3		|	6
+InvStock	StockID	1	3	False		10		|	1
+InvStock	StockSelect	2	11	False	2			|	2
+JCCustomer	BillAddr1	9	130	True	50			|	9
+JCCustomer	BillAddr2	10	130	True	50			|	10
+JCCustomer	BillAddr3	11	130	True	50			|	11
+JCCustomer	BillAddr4	12	130	True	50			|	12
+JCCustomer	BillCity	13	130	True	50			|	13
+JCCustomer	BillState	14	130	True	50			|	14
+JCCustomer	BillZip	15	130	True	50			|	15
+JCCustomer	CompanyName	4	130	True	0			|	4
+JCCustomer	CustomerID	1	3	False		10		|	1
+JCCustomer	FirstName	6	130	True	50			|	6
+JCCustomer	FullName	3	130	True	0			|	3
+JCCustomer	LastName	7	130	True	50			|	7
+JCCustomer	MidInit	8	130	True	50			|	8
+JCCustomer	Name	2	130	True	50			|	2
+JCCustomer	QBID	5	130	True	50			|	5
+JCCustomer	QBTaxCode	23	130	True	50			|	23
+JCCustomer	QBTaxItem	24	130	True	50			|	24
+JCCustomer	ShipAddr1	16	130	True	50			|	16
+JCCustomer	ShipAddr2	17	130	True	50			|	17
+JCCustomer	ShipAddr3	18	130	True	50			|	18
+JCCustomer	ShipAddr4	19	130	True	50			|	19
+JCCustomer	ShipCity	20	130	True	50			|	20
+JCCustomer	ShipState	21	130	True	50			|	21
+JCCustomer	ShipZip	22	130	True	50			|	22
+JCJob	Active	34	17	True		3		|	34
+JCJob	BillAddr1	12	130	True	50			|	12
+JCJob	BillAddr2	13	130	True	50			|	13
+JCJob	BillAddr3	14	130	True	50			|	14
+JCJob	BillAddr4	15	130	True	50			|	15
+JCJob	BillCity	16	130	True	50			|	16
+JCJob	BillState	17	130	True	50			|	17
+JCJob	BillZip	18	130	True	50			|	18
+JCJob	CityID	8	3	True		10		|	8
+JCJob	CompanyName	4	130	True	0			|	4
+JCJob	Description	29	130	True	50			|	29
+JCJob	EndDate	28	7	True				|	28
+JCJob	FirstName	9	130	True	50			|	9
+JCJob	FullName	3	130	True	0			|	3
+JCJob	JobID	1	3	False		10		|	1
+JCJob	JobStatus	32	17	True		3		|	32
+JCJob	LastName	10	130	True	50			|	10
+JCJob	MidInit	11	130	True	50			|	11
+JCJob	Name	2	130	True	50			|	2
+JCJob	ParentID	7	3	True		10		|	7
+JCJob	QBID	5	130	True	50			|	5
+JCJob	QBParentID	6	130	True	50			|	6
+JCJob	QBTaxCode	33	130	True	50			|	33
+JCJob	ShipAddr1	19	130	True	50			|	19
+JCJob	ShipAddr2	20	130	True	50			|	20
+JCJob	ShipAddr3	21	130	True	50			|	21
+JCJob	ShipAddr4	22	130	True	50			|	22
+JCJob	ShipCity	23	130	True	50			|	23
+JCJob	ShipState	24	130	True	50			|	24
+JCJob	ShipZip	25	130	True	50			|	25
+JCJob	StartDate	27	7	True				|	27
+JCJob	Status	26	130	True	50			|	26
+JCJob	Terms	35	130	True	50			|	35
+JCJob	TypeListID	31	130	True	50			|	31
+JCJob	TypeName	30	130	True	50			|	30
+MSysAccessStorage	DateCreate	1	7	True				|	1
+MSysAccessStorage	DateUpdate	2	7	True				|	2
+MSysAccessStorage	Id	3	3	False		10		|	3
+MSysAccessStorage	Lv	4	128	True	0			|	4
+MSysAccessStorage	Name	5	130	True	128			|	5
+MSysAccessStorage	ParentId	6	3	True		10		|	6
+MSysAccessStorage	Type	7	3	True		10		|	7
+MSysNavPaneGroupCategories	Filter	1	130	True	255			|	1
+MSysNavPaneGroupCategories	Flags	2	3	True		10		|	2
+MSysNavPaneGroupCategories	Id	3	3	False		10		|	3
+MSysNavPaneGroupCategories	Name	4	130	True	255			|	4
+MSysNavPaneGroupCategories	Position	5	3	True		10		|	5
+MSysNavPaneGroupCategories	SelectedObjectID	6	3	True		10		|	6
+MSysNavPaneGroupCategories	Type	7	3	True		10		|	7
+MSysNavPaneGroups	Flags	1	3	True		10		|	1
+MSysNavPaneGroups	GroupCategoryID	2	3	True		10		|	2
+MSysNavPaneGroups	Id	3	3	False		10		|	3
+MSysNavPaneGroups	Name	4	130	True	255			|	4
+MSysNavPaneGroups	Object Type Group	5	3	True		10		|	5
+MSysNavPaneGroups	ObjectID	6	3	True		10		|	6
+MSysNavPaneGroups	Position	7	3	True		10		|	7
+MSysNavPaneGroupToObjects	Flags	1	3	True		10		|	1
+MSysNavPaneGroupToObjects	GroupID	2	3	True		10		|	2
+MSysNavPaneGroupToObjects	Icon	3	3	True		10		|	3
+MSysNavPaneGroupToObjects	Id	4	3	False		10		|	4
+MSysNavPaneGroupToObjects	Name	5	130	True	255			|	5
+MSysNavPaneGroupToObjects	ObjectID	6	3	True		10		|	6
+MSysNavPaneGroupToObjects	Position	7	3	True		10		|	7
+MSysNavPaneObjectIDs	Id	1	3	True		10		|	1
+MSysNavPaneObjectIDs	Name	2	130	True	65			|	2
+MSysNavPaneObjectIDs	Type	3	3	True		10		|	3
+MSysResources	Data	1	130	True	0			|	1
+MSysResources	Extension	2	130	True	255			|	2
+MSysResources	Id	3	3	False		10		|	3
+MSysResources	Name	4	130	True	255			|	4
+MSysResources	Type	5	130	True	255			|	5
+Notes	DateTm	7	7	True				|	7
+Notes	Notation	8	130	True	255			|	8
+Notes	NoteCat	3	17	True		3		|	3
+Notes	NoteID	1	3	False		10		|	1
+Notes	NoteType	2	17	True		3		|	2
+Notes	RelatedID	4	3	True		10		|	4
+Notes	Subject	5	130	True	15			|	5
+Notes	User	6	130	True	8			|	6
+Payee99	AccountNumber	7	130	True	50			|	7
+Payee99	Address	4	130	True	50			|	4
+Payee99	Comment	8	130	True	50			|	8
+Payee99	CSZ	5	130	True	50			|	5
+Payee99	FederalID	6	130	True	255			|	6
+Payee99	Inactive	9	17	True		3		|	9
+Payee99	PayeeID	1	3	False		10		|	1
+Payee99	PayeeName	2	130	True	50			|	2
+Payee99	PayeeNumber	3	3	True		10		|	3
+PRAdjust	AdjAmount	5	6	True		19		|	5
+PRAdjust	AdjDate	3	7	True				|	3
+PRAdjust	AdjHours	6	5	True		15		|	6
+PRAdjust	AdjType	4	17	True		3		|	4
+PRAdjust	AdjustID	1	3	False		10		|	1
+PRAdjust	EmployeeID	2	3	True		10		|	2
+PRBatch	BatchID	1	3	False		10		|	1
+PRBatch	CheckDate	5	7	True				|	5
+PRBatch	CreateDate	3	7	True				|	3
+PRBatch	JobDist	8	17	True		3		|	8
+PRBatch	PEDate	4	7	True				|	4
+PRBatch	RecCount	6	3	True		10		|	6
+PRBatch	UserID	2	3	True		10		|	2
+PRBatch	YearMonth	7	3	True		10		|	7
+PRDepartment	DepartmentID	1	3	False		10		|	1
+PRDepartment	DepartmentNumber	2	3	True		10		|	2
+PRDepartment	Name	3	130	True	0			|	3
+PRDepartment	WkcCat	4	3	True		10		|	4
+PRDist	Amount	20	6	True		19		|	20
+PRDist	BatchID	3	3	True		10		|	3
+PRDist	BillingRate	22	6	True		19		|	22
+PRDist	CheckDate	12	7	True				|	12
+PRDist	CityID	6	3	True		10		|	6
+PRDist	CityTax	28	6	True		19		|	28
+PRDist	CityWage	27	6	True		19		|	27
+PRDist	CourtesyCityID	7	3	True		10		|	7
+PRDist	CourtesyCityTax	29	6	True		19		|	29
+PRDist	CustomerID	9	3	True		10		|	9
+PRDist	DepartmentID	10	3	True		10		|	10
+PRDist	DistID	1	3	False		10		|	1
+PRDist	DistType	14	17	True		3		|	14
+PRDist	EmployeeID	2	3	True		10		|	2
+PRDist	EmployerItemID	16	3	True		10		|	16
+PRDist	GrossWage	23	6	True		19		|	23
+PRDist	HistFlag	33	17	True		3		|	33
+PRDist	HistID	4	3	True		10		|	4
+PRDist	Hours	18	5	True		15		|	18
+PRDist	ItemID	15	3	True		10		|	15
+PRDist	ItemType	17	17	True		3		|	17
+PRDist	JobID	8	3	True		10		|	8
+PRDist	ManualAmount	21	17	True		3		|	21
+PRDist	ManualCityTax	30	17	True		3		|	30
+PRDist	ManualCourtesyCityTax	31	17	True		3		|	31
+PRDist	ManualStateTax	26	17	True		3		|	26
+PRDist	NotInNet	34	17	True		3		|	34
+PRDist	PEDate	13	7	True				|	13
+PRDist	QBInvoiceID	36	130	True	50			|	36
+PRDist	Rate	19	6	True		19		|	19
+PRDist	SDTax	35	6	True		19		|	35
+PRDist	StateID	5	3	True		10		|	5
+PRDist	StateTax	25	6	True		19		|	25
+PRDist	StateWage	24	6	True		19		|	24
+PRDist	SUNWage	32	6	True		19		|	32
+PRDist	YearMonth	11	3	True		10		|	11
+PREELists	EEListsAmount	6	6	True		19		|	6
+PREELists	EEListsID	1	3	False		10		|	1
+PREELists	EEListsLong	7	3	True		10		|	7
+PREELists	EEListsString1	4	130	True	0			|	4
+PREELists	EEListsString2	5	130	True	0			|	5
+PREELists	EEListsType	3	17	True		3		|	3
+PREELists	EmployeeID	2	3	True		10		|	2
+PREmployee	Address1	8	130	True	0			|	8
+PREmployee	Address2	9	130	True	0			|	9
+PREmployee	AltName	6	130	True	0			|	6
+PREmployee	CheckComment	61	130	True	0			|	61
+PREmployee	City	10	130	True	0			|	10
+PREmployee	CourtesyAdd	40	17	True		3		|	40
+PREmployee	CourtesyCityID	39	3	True		10		|	39
+PREmployee	DateHired	47	7	True				|	47
+PREmployee	DateLastLayoff	50	7	True				|	50
+PREmployee	DateLastPaid	46	7	True				|	46
+PREmployee	DateLastRaise	48	7	True				|	48
+PREmployee	DateLastRecall	51	7	True				|	51
+PREmployee	DateLastReview	49	7	True				|	49
+PREmployee	DateOfBirth	53	7	True				|	53
+PREmployee	DateTerminated	52	7	True				|	52
+PREmployee	DefaultCityID	37	3	True		10		|	37
+PREmployee	DefaultJobID	38	3	True		10		|	38
+PREmployee	DepartmentID	14	3	True		10		|	14
+PREmployee	EducationLevel	58	3	True		10		|	58
+PREmployee	EICType	43	17	True		3		|	43
+PREmployee	EmployeeID	1	3	False		10		|	1
+PREmployee	EmployeeNumber	2	3	True		10		|	2
+PREmployee	FirstName	4	130	True	0			|	4
+PREmployee	FWTAmount	29	6	True		19		|	29
+PREmployee	FWTBasis	28	17	True		3		|	28
+PREmployee	FWTExtraAmount	31	6	True		19		|	31
+PREmployee	FWTExtraBasis	30	17	True		3		|	30
+PREmployee	FWTMarried	27	17	True		3		|	27
+PREmployee	HourlyAmount	16	6	True		19		|	16
+PREmployee	Inactive	17	17	True		3		|	17
+PREmployee	LastName	3	130	True	0			|	3
+PREmployee	MaritalStatus	57	130	True	1			|	57
+PREmployee	MidInit	5	130	True	2			|	5
+PREmployee	NoCityTax	24	17	True		3		|	24
+PREmployee	NoFedTax	22	17	True		3		|	22
+PREmployee	NoFedUnemp	25	17	True		3		|	25
+PREmployee	NoMedTax	21	17	True		3		|	21
+PREmployee	NoSSTax	20	17	True		3		|	20
+PREmployee	NoStateTax	23	17	True		3		|	23
+PREmployee	NoStateUnemp	26	17	True		3		|	26
+PREmployee	PaysPerYear	19	17	True		3		|	19
+PREmployee	RaceCode	56	3	True		10		|	56
+PREmployee	Salaried	18	17	True		3		|	18
+PREmployee	SalaryAmount	15	6	True		19		|	15
+PREmployee	Sex	55	130	True	1			|	55
+PREmployee	ShiftCode	59	3	True		10		|	59
+PREmployee	SSN	13	130	True	255			|	13
+PREmployee	State	11	130	True	2			|	11
+PREmployee	Statutory	42	17	True		3		|	42
+PREmployee	SWTAmount	34	6	True		19		|	34
+PREmployee	SWTBasis	33	17	True		3		|	33
+PREmployee	SWTExtraAmount	36	6	True		19		|	36
+PREmployee	SWTExtraBasis	35	17	True		3		|	35
+PREmployee	SWTMarried	32	17	True		3		|	32
+PREmployee	TermReason	54	3	True		10		|	54
+PREmployee	UseAltName	7	17	True		3		|	7
+PREmployee	WkcCat	45	3	True		10		|	45
+PREmployee	WkcUseDept	44	17	True		3		|	44
+PREmployee	WorkCompNum	60	3	True		10		|	60
+PREmployee	x1099Employee	41	17	True		3		|	41
+PREmployee	ZipCode	12	3	True		10		|	12
+PRGLUpd	GLAccountNum	6	3	True		10		|	6
+PRGLUpd	GLItemType	4	17	True		3		|	4
+PRGLUpd	GLType	2	17	True		3		|	2
+PRGLUpd	GLUpdID	1	3	False		10		|	1
+PRGLUpd	ItemID	5	3	True		10		|	5
+PRGLUpd	RelatedID	3	3	True		10		|	3
+PRGLUpd	Title	7	130	True	30			|	7
+PRHist	BatchID	3	3	True		10		|	3
+PRHist	CheckDate	7	7	True				|	7
+PRHist	CheckNumber	4	3	True		10		|	4
+PRHist	CWTTax	32	6	True		19		|	32
+PRHist	CWTWage	31	6	True		19		|	31
+PRHist	Deductions	33	6	True		19		|	33
+PRHist	DepartmentID	9	3	True		10		|	9
+PRHist	DirectDeposit	34	6	True		19		|	34
+PRHist	EmployeeID	2	3	True		10		|	2
+PRHist	FUNWage	38	6	True		19		|	38
+PRHist	FUNWageBase	37	6	True		19		|	37
+PRHist	FWTTax	27	6	True		19		|	27
+PRHist	FWTWage	26	6	True		19		|	26
+PRHist	GLUpdate	41	17	True		3		|	41
+PRHist	Gross	35	6	True		19		|	35
+PRHist	HistID	1	3	False		10		|	1
+PRHist	ManualFWTTax	28	17	True		3		|	28
+PRHist	ManualMedTax	25	17	True		3		|	25
+PRHist	ManualSSTax	22	17	True		3		|	22
+PRHist	MedAddAmt	46	6	True		19		|	46
+PRHist	MedTax	24	6	True		19		|	24
+PRHist	MedWage	23	6	True		19		|	23
+PRHist	Net	36	6	True		19		|	36
+PRHist	NotInNetAmount	43	6	True		19		|	43
+PRHist	OEAmount	18	6	True		19		|	18
+PRHist	OEHours	16	5	True		15		|	16
+PRHist	OERate	17	6	True		19		|	17
+PRHist	OTAmount	15	6	True		19		|	15
+PRHist	OTHours	13	5	True		15		|	13
+PRHist	OTRate	14	6	True		19		|	14
+PRHist	PEDate	8	7	True				|	8
+PRHist	QBUpdateFlag	45	17	True		3		|	45
+PRHist	RegAmount	12	6	True		19		|	12
+PRHist	RegHours	10	5	True		15		|	10
+PRHist	RegRate	11	6	True		19		|	11
+PRHist	SDTax	44	6	True		19		|	44
+PRHist	SSTax	21	6	True		19		|	21
+PRHist	SSWage	20	6	True		19		|	20
+PRHist	SSWageBase	19	6	True		19		|	19
+PRHist	StateID	5	3	True		10		|	5
+PRHist	SUNWage	40	6	True		19		|	40
+PRHist	SUNWageBase	39	6	True		19		|	39
+PRHist	SWTTax	30	6	True		19		|	30
+PRHist	SWTWage	29	6	True		19		|	29
+PRHist	WkcAmount	42	6	True		19		|	42
+PRHist	YearMonth	6	3	True		10		|	6
+PRItem	Abbreviation	4	130	True	0			|	4
+PRItem	Active	6	17	True		3		|	6
+PRItem	AmtPct	19	6	True		19		|	19
+PRItem	Basis	15	3	True		10		|	15
+PRItem	CityID	40	3	True		10		|	40
+PRItem	Comment	36	130	True	50			|	36
+PRItem	DirDepABA	24	130	True	0			|	24
+PRItem	DirDepAccount	25	130	True	0			|	25
+PRItem	DirDepAmtPct	27	6	True		19		|	27
+PRItem	DirDepBank	23	130	True	0			|	23
+PRItem	DirDepBasis	26	17	True		3		|	26
+PRItem	DirDepRpt	37	17	True		3		|	37
+PRItem	DirDepType	22	17	True		3		|	22
+PRItem	EmployeeID	2	3	True		10		|	2
+PRItem	EmployerItemID	33	3	True		10		|	33
+PRItem	Escrow	35	17	True		3		|	35
+PRItem	GLAccount	14	3	True		10		|	14
+PRItem	ItemID	1	3	False		10		|	1
+PRItem	ItemType	5	17	True		3		|	5
+PRItem	MatchPct	16	5	True		15		|	16
+PRItem	MaxAmount	18	6	True		19		|	18
+PRItem	MaxPct	17	5	True		15		|	17
+PRItem	NoCWTTax	11	17	True		3		|	11
+PRItem	NoFUNTax	13	17	True		3		|	13
+PRItem	NoFWTTax	9	17	True		3		|	9
+PRItem	NoMedTax	8	17	True		3		|	8
+PRItem	NoSSTax	7	17	True		3		|	7
+PRItem	NoSUNTax	12	17	True		3		|	12
+PRItem	NoSWTTax	10	17	True		3		|	10
+PRItem	NotInNet	21	17	True		3		|	21
+PRItem	Pension	30	17	True		3		|	30
+PRItem	PWFringe	39	17	True		3		|	39
+PRItem	RateDifference	38	17	True		3		|	38
+PRItem	SDNumber	32	17	True		3		|	32
+PRItem	SickPay	31	17	True		3		|	31
+PRItem	Tips	20	17	True		3		|	20
+PRItem	Title	3	130	True	0			|	3
+PRItem	UseEmployer	34	17	True		3		|	34
+PRItem	W2Box12Code	28	130	True	10			|	28
+PRItem	W2Box14Code	29	130	True	10			|	29
+PRItemHist	Amount	14	6	True		19		|	14
+PRItemHist	BatchID	4	3	True		10		|	4
+PRItemHist	CheckDate	10	7	True				|	10
+PRItemHist	DepartmentID	6	3	True		10		|	6
+PRItemHist	EmployeeID	2	3	True		10		|	2
+PRItemHist	EmployerItemID	7	3	True		10		|	7
+PRItemHist	HistID	3	3	True		10		|	3
+PRItemHist	Hours	12	5	True		15		|	12
+PRItemHist	ItemHistID	1	3	False		10		|	1
+PRItemHist	ItemID	5	3	True		10		|	5
+PRItemHist	ItemType	8	17	True		3		|	8
+PRItemHist	ManualAmount	15	17	True		3		|	15
+PRItemHist	PEDate	11	7	True				|	11
+PRItemHist	Percent	16	6	True		19		|	16
+PRItemHist	Rate	13	6	True		19		|	13
+PRItemHist	WageBase	17	6	True		19		|	17
+PRItemHist	WageExcluded	18	6	True		19		|	18
+PRItemHist	YearMonth	9	3	True		10		|	9
+PRW2	Box1_Wages	22	6	True		19		|	22
+PRW2	Box10_DCBen	31	6	True		19		|	31
+PRW2	Box11_NQPlans	32	6	True		19		|	32
+PRW2	Box12A_Amount	35	6	True		19		|	35
+PRW2	Box12A_Code	34	130	True	1			|	34
+PRW2	Box12A_ID	33	3	True		10		|	33
+PRW2	Box12B_Amount	38	6	True		19		|	38
+PRW2	Box12B_Code	37	130	True	1			|	37
+PRW2	Box12B_ID	36	3	True		10		|	36
+PRW2	Box12C_Amount	41	6	True		19		|	41
+PRW2	Box12C_Code	40	130	True	1			|	40
+PRW2	Box12C_ID	39	3	True		10		|	39
+PRW2	Box12D_Amount	44	6	True		19		|	44
+PRW2	Box12D_Code	43	130	True	1			|	43
+PRW2	Box12D_ID	42	3	True		10		|	42
+PRW2	Box13_3rdParty	47	17	True		3		|	47
+PRW2	Box13_RetirePlan	46	17	True		3		|	46
+PRW2	Box13_StatEmp	45	17	True		3		|	45
+PRW2	Box14A_Amount	50	6	True		19		|	50
+PRW2	Box14A_Desc	49	130	True	10			|	49
+PRW2	Box14A_ID	48	3	True		10		|	48
+PRW2	Box14B_Amount	53	6	True		19		|	53
+PRW2	Box14B_Desc	52	130	True	10			|	52
+PRW2	Box14B_ID	51	3	True		10		|	51
+PRW2	Box14C_Amount	56	6	True		19		|	56
+PRW2	Box14C_Desc	55	130	True	10			|	55
+PRW2	Box14C_ID	54	3	True		10		|	54
+PRW2	Box14D_Amount	59	6	True		19		|	59
+PRW2	Box14D_Desc	58	130	True	10			|	58
+PRW2	Box14D_ID	57	3	True		10		|	57
+PRW2	Box15A_State	60	130	True	2			|	60
+PRW2	Box15A_StateID	61	130	True	20			|	61
+PRW2	Box15B_State	64	130	True	2			|	64
+PRW2	Box15B_StateID	65	130	True	20			|	65
+PRW2	Box16A_StateWages	62	6	True		19		|	62
+PRW2	Box16B_StateWages	66	6	True		19		|	66
+PRW2	Box17A_StateTax	63	6	True		19		|	63
+PRW2	Box17B_StateTax	67	6	True		19		|	67
+PRW2	Box2_FedTax	23	6	True		19		|	23
+PRW2	Box3_SSWages	24	6	True		19		|	24
+PRW2	Box4_SSTax	25	6	True		19		|	25
+PRW2	Box5_MedWages	26	6	True		19		|	26
+PRW2	Box6_MedTax	27	6	True		19		|	27
+PRW2	Box7_SSTips	28	6	True		19		|	28
+PRW2	Box8_AllocTips	29	6	True		19		|	29
+PRW2	Box9_EIC	30	6	True		19		|	30
+PRW2	BoxA_SSNumber	5	3	True		10		|	5
+PRW2	BoxB_FedID	6	130	True	15			|	6
+PRW2	BoxC_ERAddr1	8	130	True	50			|	8
+PRW2	BoxC_ERAddr2	9	130	True	50			|	9
+PRW2	BoxC_ERCity	10	130	True	50			|	10
+PRW2	BoxC_ERName	7	130	True	50			|	7
+PRW2	BoxC_ERState	11	130	True	2			|	11
+PRW2	BoxC_ERZip	12	130	True	10			|	12
+PRW2	BoxD_ControlNumber	13	3	True		10		|	13
+PRW2	BoxE_EEAddr1	17	130	True	50			|	17
+PRW2	BoxE_EEAddr2	18	130	True	50			|	18
+PRW2	BoxE_EECity	19	130	True	50			|	19
+PRW2	BoxE_EEFirstName	14	130	True	50			|	14
+PRW2	BoxE_EELastName	15	130	True	50			|	15
+PRW2	BoxE_EEMidInit	16	130	True	2			|	16
+PRW2	BoxE_EEState	20	130	True	2			|	20
+PRW2	BoxE_EEZip	21	130	True	10			|	21
+PRW2	EmployeeID	3	3	True		10		|	3
+PRW2	EmployeeNumber	4	3	True		10		|	4
+PRW2	Skip	69	17	True		3		|	69
+PRW2	TaxYear	2	3	True		10		|	2
+PRW2	Void	68	17	True		3		|	68
+PRW2	W2ID	1	3	False		10		|	1
+PRW2City	CityID	4	3	True		10		|	4
+PRW2City	CityName	5	130	True	20			|	5
+PRW2City	CityTax	7	6	True		19		|	7
+PRW2City	CityWage	6	6	True		19		|	6
+PRW2City	Courtesy	10	17	True		3		|	10
+PRW2City	SDTax	9	17	True		3		|	9
+PRW2City	StateID	8	3	True		10		|	8
+PRW2City	TaxYear	3	3	True		10		|	3
+PRW2City	W2CityID	1	3	False		10		|	1
+PRW2City	W2ID	2	3	True		10		|	2
+PRW2State	ERStateID	5	130	True	20			|	5
+PRW2State	StateID	4	3	True		10		|	4
+PRW2State	StateTax	7	6	True		19		|	7
+PRW2State	StateWage	6	6	True		19		|	6
+PRW2State	TaxYear	3	3	True		10		|	3
+PRW2State	W2ID	2	3	True		10		|	2
+PRW2State	W2StateID	1	3	False		10		|	1
+QBAccount	AccountNumber	5	3	True		10		|	5
+QBAccount	AccountType	4	130	True	50			|	4
+QBAccount	Description	3	130	True	0			|	3
+QBAccount	Name	2	130	True	0			|	2
+QBAccount	QBAccountID	1	3	False		10		|	1
+QBAccount	QBID	6	130	True	50			|	6

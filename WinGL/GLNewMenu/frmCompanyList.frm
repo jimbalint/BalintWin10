@@ -202,7 +202,7 @@ Dim FName As String
     If BalintFolder = "" Then
         FName = Mid(App.Path, 1, 2) & Mid(rsCompany!FileName, 3, Len(rsCompany!FileName) - 2)
     Else
-        FName = BalintFolder & "\Data\" & mdbName(rsCompany!FileName)
+        FName = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(rsCompany!FileName)
     End If
     If NewADO Then
         FName = Replace(FName, ".mdb", ".accdb")

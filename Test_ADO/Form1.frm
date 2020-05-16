@@ -62,6 +62,14 @@ Private Sub Form_Load()
     Dim cnm As String
     Dim rsC As New adodb.Recordset
     
+    
+    
+    ' -------------------------------------------
+    Set cnOld = SQLConnect("C:\Balint\Data\Form940.accdb")
+    GetSchema
+    End
+    ' -------------------------------------------
+    
     rc4Key = "B@lint19742101!@#$%^&*"
     
     BalintFolder = "\\vboxsrv\vm-share\Balint"
