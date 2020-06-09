@@ -1009,6 +1009,7 @@ Dim x As String
 '        BackName = BalintFolder & "\" & MenuName
 '    End If
     
+    BackName = "c:\Balint\GLMenu.exe"
     GoBack
     
 '    If BackName <> "" Then

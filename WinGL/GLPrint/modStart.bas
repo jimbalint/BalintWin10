@@ -39,12 +39,12 @@ Dim bProgName As String
     ' ---------------------------------------
     
     If X = "" Then         ' set for testing
-       BalintFolder = "g:"
+       BalintFolder = "c:\Balint"
        dbPwd = "golf"
-       ProgName = UCase("statement")
+       ProgName = UCase("GLHISTJNL")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
-       UserID = 10      ' mary - richlak
+       ' UserID = 10      ' mary - richlak
        BackName = ""
        BatchNum = 0
     Else

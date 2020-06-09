@@ -136,9 +136,12 @@ Public Sub RunADO_Conversion(ByVal BalintFolder As String)
             CreateFields cnNew
             CopyData cnOld, cnNew
             
+            strSQL = "DELETE * FROM PRDepartment WHERE DepartmentNumber = 0"
+            cnNew.Execute strSQL
             strSQL = "ALTER TABLE PRDepartment" & _
                     " ADD CONSTRAINT [dptNumberKey] UNIQUE ([DepartmentNumber])"
             cnNew.Execute strSQL
+            
             strSQL = "ALTER TABLE PREmployee" & _
                     " ADD CONSTRAINT [empNumberKey] UNIQUE ([EmployeeNumber])"
             cnNew.Execute strSQL
@@ -247,6 +250,11 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByRef cnFrom As ADODB.Conne
     Dim fld As ADODB.Field
     strSQL = "select * from " & TblName
     
+'    If TblName = "InvBody" Then
+'        strSQL = "select * from " & TblName & _
+'                " where BodyID <= 20480 or BodyID >= 20496"
+'    End If
+    
     Set rs = New ADODB.Recordset
     rs.Source = strSQL
     rs.LockType = adLockOptimistic
@@ -264,10 +272,19 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByRef cnFrom As ADODB.Conne
     Set rsNew.ActiveConnection = cnTo
     rsNew.Open
     
+    Dim ffield As String
+    
     Ct2 = 0
     Do While Not rs.EOF
+    
+        ' If TblName = "InvBody" And Ct2 = 20400 Then GoTo NxtRec
+    
+        ffield = ""
         rsNew.AddNew
         For Each fld In rs.Fields
+
+            If ffield = "" Then ffield = rs.Fields(fld.Name)
+        
             x = fld.Name & vbTab & rs.Fields(fld.Name)
             eFlag = False
             If TblName = "PREmployee" And fld.Name = "SSN" Then eFlag = True
@@ -281,16 +298,63 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByRef cnFrom As ADODB.Conne
             Select Case Y
                 Case "True": rsNew.Fields(fld.Name) = 1
                 Case "False": rsNew.Fields(fld.Name) = 0
-                Case Else: rsNew.Fields(fld.Name) = Y
+                Case Else: rsNew.Fields(fld.Name) = nNull(Y)
             End Select
         Next fld
+            
+        If ffield = "" Then
+            x = "Skipping " & TblName & " Rec#: " & Ct2 + 1
+            MsgBox x
+            Print #log, x
+            Print #log, "----"
+            GoTo NxtRec
+        End If
+            
+        On Error Resume Next
         rsNew.Update
-        Ct2 = Ct2 + 1
+        If Err.Number <> 0 Then
+            ' x = "Error adding: " & TblName & " " & fld.Name & " " & Y & " " & Ct2
+            x = "Error adding: " & TblName & " " & Y & " " & Ct2 & " >>>" & ffield & "<<<"
+            x = x & vbCr & ">>> " & Err.Description
+            MsgBox x
+            Print #log, x
+            Print #log, "----"
+            ' K = MsgBox("Stop???", vbExclamation + vbYesNo, "Data Conversion")
+            K = vbNo
+            If K = vbYes Then
+                rs.Close
+                rsNew.Close
+                On Error Resume Next
+                cnSys.Close
+                Set cnSys = Nothing
+                cnNew.Close
+                Set cnNew = Nothing
+                cnOld.Close
+                Set cnOld = Nothing
+                On Error GoTo 0
+                Close #log
+                frm.Hide
+                Set frm = Nothing
+                End
+            Else
+                rsNew.Cancel
+            End If
+        End If
+        On Error GoTo 0
+        
+NxtRec: Ct2 = Ct2 + 1
         If Ct2 Mod 100 = 1 Then
             frm.lblMsg3 = TblName & " " & Ct2 & " of: " & Ct1
             frm.Refresh
         End If
+        
+        On Error Resume Next
         rs.MoveNext
+        If Err.Number <> 0 Then
+            MsgBox "MoveNext err: " & Err.Description
+            End
+        End If
+        
     Loop
     rs.Close
     rsNew.Close
@@ -461,25 +525,6 @@ Private Sub CreateFields(ByRef cn As ADODB.Connection)
     Loop
 End Sub
 
-Private Sub CopySchema()
-    ' http://www.devx.com/vb2themax/Tip/19114
-    
-    Set frs = New ADODB.Recordset
-    frs.CursorLocation = adUseClient
-    frs.CursorType = adOpenStatic
-    frs.LockType = adLockBatchOptimistic
-    Set frs = cnOld.OpenSchema(adSchemaColumns)
-    Set frs = cnOld.OpenSchema(adSchemaTables)
-    
-    Do Until frs.EOF = True
-        x = frs!Table_Name
-        If Left(x, 4) <> "MSys" Then
-            MsgBox (x)
-        End If
-        frs.MoveNext
-    Loop
-
-End Sub
 
 Private Sub GetTables()
     

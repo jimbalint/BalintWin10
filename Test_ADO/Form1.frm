@@ -65,8 +65,10 @@ Private Sub Form_Load()
     
     
     ' -------------------------------------------
-    Set cnOld = SQLConnect("C:\Balint\Data\Form940.accdb")
-    GetSchema
+    fnm = InputBox("Enter DB name")
+    Set cnOld = SQLConnect(fnm)
+    'GetSchema
+    MsgBox ("OK")
     End
     ' -------------------------------------------
     
