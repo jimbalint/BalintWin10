@@ -298,7 +298,11 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByRef cnFrom As ADODB.Conne
             Select Case Y
                 Case "True": rsNew.Fields(fld.Name) = 1
                 Case "False": rsNew.Fields(fld.Name) = 0
+                
+                ' use nNull for numeric fields only!!!
+                ' PRGlobal.Var fields set to "0"
                 Case Else: rsNew.Fields(fld.Name) = nNull(Y)
+                
             End Select
         Next fld
             

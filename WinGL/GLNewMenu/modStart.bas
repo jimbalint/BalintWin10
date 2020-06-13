@@ -175,6 +175,11 @@ Dim FileExt As String
             CNOpen dbName, dbPwd
             CompanyID = GLUser.LastCompany
             
+            ' PR conversion fix
+            On Error Resume Next
+            cn.Execute "update PREmployee set CheckComment = """" where CheckComment = ""0"""
+            On Error GoTo 0
+            
             ' ??? needed for menu lblCompany after file copy ???
             GLCompany.GetData (GLUser.LastCompany)
             frmMainMenu.lblCompanyName = GLCompany.Name
@@ -201,6 +206,10 @@ Dim FileExt As String
 '    f.lblCompanyName = GLCompany.Name
 '    f.Show
 
+    If GLUser.Logon <> "jim" Then
+        frmMainMenu.cmdJimBo.Visible = False
+        frmMainMenu.cmdNewADO.Visible = False
+    End If
     frmMainMenu.Show
     
 '    ' execute the call

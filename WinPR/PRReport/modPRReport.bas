@@ -31,7 +31,7 @@ Dim ODTLineHr As Byte
 Dim ODTLineOE As Byte
 Dim ODTLineDed As Byte
 
-Dim i, j, k As Long
+Dim I, J, K As Long
 Dim ReportTitle, QtrEnding, w, X, Y, Z As String
 Dim CurrDate As Date
 Dim StartMonth, EndMonth, LandSw As Byte
@@ -188,13 +188,13 @@ Public Sub PR1099(ByVal jTaxYear As String)
         FormCount = 0
     
         ' init the box string array
-        For i = 1 To 21
-            If i = 9 Then
-                Misc1099(i) = ""
+        For I = 1 To 21
+            If I = 9 Then
+                Misc1099(I) = ""
             Else
-                Misc1099(i) = PadRight(Format(0, "##,###,##0.00"), 13)
+                Misc1099(I) = PadRight(Format(0, "##,###,##0.00"), 13)
             End If
-        Next i
+        Next I
         
         .MoveFirst
         Do
@@ -264,15 +264,15 @@ Public Sub Print1099MISC_2013()
     xPos = 1000
     
     ' print the payer info
-    For i = 1 To 5
-        If i = 1 Then X = PayerName
-        If i = 2 Then X = PayerAddr1
-        If i = 3 Then X = PayerAddr2
-        If i = 4 Then X = PayerAddr3
-        If i = 5 Then X = PayerAddr4
+    For I = 1 To 5
+        If I = 1 Then X = PayerName
+        If I = 2 Then X = PayerAddr1
+        If I = 3 Then X = PayerAddr2
+        If I = 4 Then X = PayerAddr3
+        If I = 5 Then X = PayerAddr4
         PosPrint xPos, yPos, X
         yPos = yPos + VertSp
-    Next i
+    Next I
     
     ' print the ID numbers
     yPos = yPos + 1200
@@ -344,15 +344,15 @@ Public Sub Print1099MISC()
     xPos = 1000
     
     ' print the payer info
-    For i = 1 To 5
-        If i = 1 Then X = PayerName
-        If i = 2 Then X = PayerAddr1
-        If i = 3 Then X = PayerAddr2
-        If i = 4 Then X = PayerAddr3
-        If i = 5 Then X = PayerAddr4
+    For I = 1 To 5
+        If I = 1 Then X = PayerName
+        If I = 2 Then X = PayerAddr1
+        If I = 3 Then X = PayerAddr2
+        If I = 4 Then X = PayerAddr3
+        If I = 5 Then X = PayerAddr4
         PosPrint xPos, yPos, X
         yPos = yPos + VertSp
-    Next i
+    Next I
     
     ' print the ID numbers
     yPos = yPos + 1000
@@ -1593,8 +1593,8 @@ Dim FFlag As Boolean
             HDate = PREmployee.DateHired
         End If
         
-        If frmNewHire.cmbState.Text <> "All" Then
-            If LCase(PREmployee.State) <> LCase(frmNewHire.cmbState.Text) Then
+        If frmNewHire.cmbState.text <> "All" Then
+            If LCase(PREmployee.State) <> LCase(frmNewHire.cmbState.text) Then
                 GoTo NewHireNext
             End If
         End If
@@ -1606,7 +1606,7 @@ Dim FFlag As Boolean
             
             Ln = Ln + 4
             
-            If frmNewHire.cmbState.Text = "OH" Then
+            If frmNewHire.cmbState.text = "OH" Then
                 PrintValue(1) = "STATE OF OHIO NEW HIRE REPORTING FORM 7048":       FormatString(1) = "a90"
             Else
                 PrintValue(1) = "NEW HIRE REPORT":       FormatString(1) = "a90"
@@ -2991,7 +2991,7 @@ Public Sub GLUpdate()
 
 Dim rsGL As New ADODB.Recordset
 Dim trsGL As New ADODB.Recordset
-Dim HistCount, i As Integer
+Dim HistCount, I As Integer
 Dim CompanyFlag As Boolean
 Dim GLFlag As Boolean
 Dim sGLType, sRelatedID As String
@@ -3064,43 +3064,43 @@ Dim GLMsg As String
         ' 1 = Employee
         ' 2 = Dept
         ' 3 = Company
-        i = 1
+        I = 1
         trsGL.Filter = adFilterNone
         Do
-            Select Case i
+            Select Case I
                 Case 1
-                    trsGL.Filter = "GLType = " & i & " AND RelatedID = " & PRHist.EmployeeID
+                    trsGL.Filter = "GLType = " & I & " AND RelatedID = " & PRHist.EmployeeID
                     If PREmployee.GetByID(PRHist.EmployeeID) Then
                     End If
                     sGLType = "Employee# " & PREmployee.EmployeeNumber & " " & PREmployee.LFName
                 Case 2
-                    trsGL.Filter = "GLType = " & i & " AND RelatedID = " & PRHist.DepartmentID
+                    trsGL.Filter = "GLType = " & I & " AND RelatedID = " & PRHist.DepartmentID
                     If PRDepartment.GetByID(PRHist.DepartmentID) Then
                     End If
                     sGLType = "Dept# " & " " & PRDepartment.DepartmentNumber & " " & _
                               PRDepartment.Name
                 Case 3
-                    trsGL.Filter = "GLType = " & i
+                    trsGL.Filter = "GLType = " & I
                     sGLType = "Company Record"
             End Select
             If trsGL.RecordCount > 0 Then Exit Do
             trsGL.Filter = adFilterNone
-            i = i + 1
-            If i = 4 Then
+            I = I + 1
+            If I = 4 Then
                 MsgBox "No PRGLUpd Info Found!", vbExclamation, "PR to GL Update"
                 Exit Sub
             End If
         Loop
 
         ' update the amounts from PRHist
-        For i = 1 To 10
-            Select Case i
+        For I = 1 To 10
+            Select Case I
                 Case 1
-                    j = PREquate.GLItemTypeSSTax
+                    J = PREquate.GLItemTypeSSTax
                     Amt = -PRHist.SSTax
                     GLMsg = "SS Tax"
                 Case 2
-                    j = PREquate.GLItemTypeSSMatch
+                    J = PREquate.GLItemTypeSSMatch
                     If PRHist.YearMonth >= 201101 Then  ' employer match still 6.2%
                         Amt = -Round(PRHist.SSWage * 0.062, 2)
                     Else
@@ -3108,7 +3108,7 @@ Dim GLMsg As String
                     End If
                     GLMsg = "SS Match"
                 Case 3
-                    j = PREquate.GLItemTypeSSExp
+                    J = PREquate.GLItemTypeSSExp
                     If PRHist.YearMonth >= 201101 Then  ' employer match still 6.2%
                         Amt = Round(PRHist.SSWage * 0.062, 2)
                     Else
@@ -3116,36 +3116,36 @@ Dim GLMsg As String
                     End If
                     GLMsg = "SS Expense"
                 Case 4
-                    j = PREquate.GLItemTypeMedTax
+                    J = PREquate.GLItemTypeMedTax
                     Amt = -PRHist.MedTax
                     GLMsg = "Med Tax"
                 Case 5
-                    j = PREquate.GLItemTypeMedMatch
+                    J = PREquate.GLItemTypeMedMatch
                     Amt = -PRHist.MedTax
                     GLMsg = "Med Match"
                 Case 6
-                    j = PREquate.GLItemTypeMEDExp
+                    J = PREquate.GLItemTypeMEDExp
                     Amt = PRHist.MedTax
                     GLMsg = "Med Exp"
                 Case 7
-                    j = PREquate.GLItemTypeFWTTax
+                    J = PREquate.GLItemTypeFWTTax
                     Amt = -PRHist.FWTTax
                     GLMsg = "FWT Tax"
                 Case 8
-                    j = PREquate.GLItemTypeSWTTax
+                    J = PREquate.GLItemTypeSWTTax
                     Amt = -PRHist.SWTTax
                     GLMsg = "SWT Tax"
                 Case 9
-                    j = PREquate.GLItemTypeCWTTax
+                    J = PREquate.GLItemTypeCWTTax
                     Amt = -PRHist.CWTTax
                     GLMsg = "CWT Tax"
                 Case 10
-                    j = PREquate.GLItemTypeNet
+                    J = PREquate.GLItemTypeNet
                     Amt = -PRHist.Net - PRHist.DirectDeposit
                     GLMsg = "Net Pay"
             End Select
                    
-            trsGL.Find "GLItemType = " & j, 0, adSearchForward, 1
+            trsGL.Find "GLItemType = " & J, 0, adSearchForward, 1
             If trsGL.EOF Then
                 MsgBox "GL Update Definition not found for: " & _
                        sGLType & vbCr & _
@@ -3155,33 +3155,33 @@ Dim GLMsg As String
             trsGL!Amount = trsGL!Amount + Amt
             trsGL.Update
         
-        Next i
+        Next I
             
         ' get info from PRDist
         SQLString = "SELECT * FROM PRDist WHERE HistID = " & PRHist.HistID
         If PRDist.GetBySQL(SQLString) Then
             Do
-                i = 0
+                I = 0
                 Select Case PRDist.ItemType
                     Case PREquate.ItemTypeRegPay
-                        i = PREquate.GLItemTypeRegPay
-                        j = 0
+                        I = PREquate.GLItemTypeRegPay
+                        J = 0
                     Case PREquate.ItemTypeOvtPay
-                        i = PREquate.GLItemTypeOvtPay
-                        j = 0
+                        I = PREquate.GLItemTypeOvtPay
+                        J = 0
                     Case PREquate.ItemTypeOE
-                        i = PREquate.GLItemTypeOE
-                        j = PRDist.EmployerItemID
+                        I = PREquate.GLItemTypeOE
+                        J = PRDist.EmployerItemID
                 End Select
-                If i = 0 Then
+                If I = 0 Then
                     MsgBox "PRDist Item NF: " & PRDist.ItemType, vbExclamation, "PR to GL Update"
                     Exit Sub
                 End If
                 
-                If j = 0 Then
-                    trsGL.Find "GLItemType = " & i, 0, adSearchForward, 1
+                If J = 0 Then
+                    trsGL.Find "GLItemType = " & I, 0, adSearchForward, 1
                     If trsGL.EOF Then
-                        MsgBox "PRDist Item nf: " & i, vbExclamation, "PR to GL Update"
+                        MsgBox "PRDist Item nf: " & I, vbExclamation, "PR to GL Update"
                         Exit Sub
                     End If
                     trsGL!Amount = trsGL!Amount + PRDist.Amount
@@ -3190,7 +3190,7 @@ Dim GLMsg As String
                     GLFlag = False
                     trsGL.MoveFirst
                     Do
-                        If trsGL!GLItemType = i And trsGL!ItemID = PRDist.EmployerItemID Then
+                        If trsGL!GLItemType = I And trsGL!ItemID = PRDist.EmployerItemID Then
                             trsGL!Amount = trsGL!Amount + PRDist.Amount
                             trsGL.Update
                             GLFlag = True
@@ -3270,10 +3270,10 @@ Dim GLMsg As String
     SQLString = "SELECT BatchNumber FROM GLBatch ORDER BY BatchNumber DESC"
     rsInit SQLString, cn, rsGL
     If rsGL.BOF And rsGL.EOF Then
-        i = 1
+        I = 1
     Else
         rsGL.MoveFirst
-        i = rsGL!BatchNumber + 1
+        I = rsGL!BatchNumber + 1
     End If
     rsGL.Close
     
@@ -3281,9 +3281,9 @@ Dim GLMsg As String
     GLHistory.OpenRS
     
     GLBatch.Clear
-    GLBatch.FiscalYear = frmGLUpdate.cmbFiscalYear.Text
+    GLBatch.FiscalYear = frmGLUpdate.cmbFiscalYear.text
     GLBatch.Period = frmGLUpdate.cmbFiscalPeriod.ListIndex + 1
-    GLBatch.BatchNumber = i
+    GLBatch.BatchNumber = I
     GLBatch.Debits = 0
     GLBatch.Credits = 0
     GLBatch.Created = Now()
@@ -3313,7 +3313,7 @@ Dim GLMsg As String
                 GLHistory.Reference = "COMPANY"
             End If
             
-            GLHistory.Description = Mid(frmGLUpdate.txtDescription.Text, 1, 20)
+            GLHistory.Description = Mid(frmGLUpdate.txtDescription.text, 1, 20)
          '   GLHistory.Description = trsGL!GLItemType & " " & trsGL!ItemID
             
             GLHistory.SourceCode = 0
@@ -3382,7 +3382,7 @@ Dim tFlag As Boolean
 Dim DedString As String
 Dim TotHours, TotTaxes As Currency
 Dim Lines As Byte
-Dim i As Long
+Dim I As Long
 Dim jbCount As Long
 Dim rsState As New ADODB.Recordset
 
@@ -3484,9 +3484,9 @@ Dim rsState As New ADODB.Recordset
     If frmCheckReg.chkOEHrs Or frmCheckReg.chkOEAmt Or frmCheckReg.chkDed Then
         ODTFlag = True
         ChkRegGetHeaderData
-        i = Int(Round(OECount / ItemMax, 1) + 0.9)
-        If frmCheckReg.chkOEHrs Then LineCount = LineCount + i
-        If frmCheckReg.chkOEAmt Then LineCount = LineCount + i
+        I = Int(Round(OECount / ItemMax, 1) + 0.9)
+        If frmCheckReg.chkOEHrs Then LineCount = LineCount + I
+        If frmCheckReg.chkOEAmt Then LineCount = LineCount + I
         If frmCheckReg.chkDed Then LineCount = LineCount + Int(Round(DEDCount / ItemMax, 1) + 0.9)
     End If
     
@@ -4342,7 +4342,7 @@ Private Sub ChkRegPrintODT(ByVal TotalType As Integer, _
     
     LastLine = 0
     ItemCount = 0
-    i = 1
+    I = 1
     PrintValue(1) = " ":        FormatString(1) = "a1"
                             
     ' print the body of the report data
@@ -4364,23 +4364,23 @@ Private Sub ChkRegPrintODT(ByVal TotalType As Integer, _
             If frmCheckReg.chkOEAmt And LastLine = 2 Then PrintFlag = True
             If frmCheckReg.chkDed And LastLine = 3 Then PrintFlag = True
             If PrintFlag = True Then
-                i = i + 1
-                PrintValue(i) = " ":            FormatString(i) = "~"
+                I = I + 1
+                PrintValue(I) = " ":            FormatString(I) = "~"
                 FormatPrint
                 Ln = Ln + 1
             End If
             ' clear the values
             ItemCount = 1
-            i = 1
+            I = 1
 
             PrintValue(1) = " ":                FormatString(1) = "a1"
         End If
         LastLine = trsODT!LineType
         
-        i = i + 1
-        PrintValue(i) = trsODT!Amount:          FormatString(i) = "d0"
+        I = I + 1
+        PrintValue(I) = trsODT!Amount:          FormatString(I) = "d0"
 
-        If TextFileName <> "" And TextOutput = True Then Write #TextChannel2, PrintValue(i);
+        If TextFileName <> "" And TextOutput = True Then Write #TextChannel2, PrintValue(I);
         trsODT.MoveNext
 
     Loop
@@ -4391,11 +4391,11 @@ Private Sub ChkRegPrintODT(ByVal TotalType As Integer, _
         If frmCheckReg.chkOEAmt And LastLine = 2 Then PrintFlag = True
         If frmCheckReg.chkDed And LastLine = 3 Then PrintFlag = True
         If PrintFlag = True Then
-            i = i + 1
-            PrintValue(i) = " ":        FormatString(i) = "~"
+            I = I + 1
+            PrintValue(I) = " ":        FormatString(I) = "~"
             FormatPrint
             Ln = Ln + 1
-            If TextFileName <> "" And TextOutput = True Then Write #TextChannel2, PrintValue(i);
+            If TextFileName <> "" And TextOutput = True Then Write #TextChannel2, PrintValue(I);
         End If
         X = " "
     End If
@@ -6005,9 +6005,11 @@ Dim FedID As String
         On Error GoTo 0
         
         ' special file header?
+        Dim SEH_Flag As Boolean
         If PRCompany.CompanyID = 37 And InStr(LCase(PRCompany.Name), "south east") Then
-        Else
             SEH_Flag = True
+        Else
+            SEH_Flag = False
         End If
         If SEH_Flag = True Then
             SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeDirDepFolder & _
@@ -6306,9 +6308,9 @@ Dim FedID As String
         ' 2016-11-16 - don't fill if even multiple of 10
         If WriteCt Mod 10 <> 0 Then
             X = String(94, "9")
-            For i = 1 To 10 - WriteCt Mod 10
+            For I = 1 To 10 - WriteCt Mod 10
                 Print #TChannel, X  ' Output text.
-            Next i
+            Next I
         End If
     
     End If
@@ -7058,15 +7060,15 @@ Dim xx, yy, zz As Long
                     PosPrint 690, yy, PRCompany.Name
                     
                     Dim Mth1, Mth2, Mth3 As String
-                    If .cmbQtr.Text = "1" Then
+                    If .cmbQtr.text = "1" Then
                         Mth1 = "JANUARY"
                         Mth2 = "FEBRUARY"
                         Mth3 = "MARCH"
-                    ElseIf .cmbQtr.Text = "2" Then
+                    ElseIf .cmbQtr.text = "2" Then
                         Mth1 = "APRIL"
                         Mth2 = "MAY"
                         Mth3 = "JUNE"
-                    ElseIf .cmbQtr.Text = "3" Then
+                    ElseIf .cmbQtr.text = "3" Then
                         Mth1 = "JULY"
                         Mth2 = "AUGUST"
                         Mth3 = "SEPTEMBER"

@@ -98,25 +98,40 @@ Begin VB.Form frmMainMenu
       Tab(0).Control(20).Enabled=   0   'False
       Tab(0).Control(21)=   "cmdNewADO"
       Tab(0).Control(21).Enabled=   0   'False
-      Tab(0).ControlCount=   22
+      Tab(0).Control(22)=   "cmdJimBo"
+      Tab(0).Control(22).Enabled=   0   'False
+      Tab(0).Control(23)=   "cmdBackUp"
+      Tab(0).Control(23).Enabled=   0   'False
+      Tab(0).ControlCount=   24
       TabCaption(1)   =   "GENERAL LEDGER"
       TabPicture(1)   =   "frmMainMenu.frx":1342
       Tab(1).ControlEnabled=   0   'False
       Tab(1).Control(0)=   "cmdGLMtStatements"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "cmdGLDataEntry"
+      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).Control(2)=   "Frame5"
+      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).Control(3)=   "Frame6"
+      Tab(1).Control(3).Enabled=   0   'False
       Tab(1).Control(4)=   "Frame7"
+      Tab(1).Control(4).Enabled=   0   'False
       Tab(1).Control(5)=   "cmdFreeFormat"
+      Tab(1).Control(5).Enabled=   0   'False
       Tab(1).ControlCount=   6
       TabCaption(2)   =   "PAYROLL"
       TabPicture(2)   =   "frmMainMenu.frx":135E
       Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "Frame3"
+      Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "Frame2"
+      Tab(2).Control(1).Enabled=   0   'False
       Tab(2).Control(2)=   "Frame1"
+      Tab(2).Control(2).Enabled=   0   'False
       Tab(2).Control(3)=   "cmdPREntry"
+      Tab(2).Control(3).Enabled=   0   'False
       Tab(2).Control(4)=   "cmdPR1099"
+      Tab(2).Control(4).Enabled=   0   'False
       Tab(2).ControlCount=   5
       TabCaption(3)   =   "JOB COST"
       TabPicture(3)   =   "frmMainMenu.frx":137A
@@ -148,6 +163,22 @@ Begin VB.Form frmMainMenu
       Tab(5).Control(3)=   "cmdPA_PayerMaint"
       Tab(5).Control(4)=   "cmdPA_Payee"
       Tab(5).ControlCount=   5
+      Begin VB.CommandButton cmdBackUp 
+         Caption         =   "BACKUP / RESTORE"
+         Height          =   615
+         Left            =   960
+         TabIndex        =   128
+         Top             =   6600
+         Width           =   2535
+      End
+      Begin VB.CommandButton cmdJimBo 
+         Caption         =   "SQL"
+         Height          =   495
+         Left            =   11280
+         TabIndex        =   127
+         Top             =   6960
+         Width           =   1215
+      End
       Begin VB.CommandButton cmdNewADO 
          Caption         =   "DATABASE CONVERT"
          Height          =   615
@@ -1235,7 +1266,7 @@ Begin VB.Form frmMainMenu
       Width           =   4335
    End
    Begin VB.Label lblVersion 
-      Caption         =   "New ADO 6/6/20"
+      Caption         =   "New ADO 6/11/20"
       BeginProperty Font 
          Name            =   "Arial"
          Size            =   9
@@ -1359,6 +1390,12 @@ Public dbName As String
 
 
 
+
+Private Sub cmdJimBo_Click()
+    Dim frmj As New frmJimBo
+    frmj.lblHdr.Caption = GLCompany.Name
+    frmj.Show
+End Sub
 
 Private Sub cmdNewADO_Click()
     RunADO_Conversion (BalintFolder)
@@ -1618,6 +1655,10 @@ End Sub
 Private Sub cmdFIOpen_Click()
     frmCompanyList.Show vbModal
     ShowCompanyID
+    ' PR conversion fix
+    On Error Resume Next
+    cn.Execute "update PREmployee set CheckComment = """" where CheckComment = ""0"""
+    On Error GoTo 0
 End Sub
 
 Private Sub cmdGLDataEntry_Click()
