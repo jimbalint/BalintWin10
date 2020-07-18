@@ -2,7 +2,7 @@ Attribute VB_Name = "modStart"
 Private Sub Main()
 
 Dim x As String
-Dim i As Long
+Dim I As Long
 Dim FileExt As String
 
     frmSplash.Show
@@ -45,7 +45,7 @@ Dim FileExt As String
        BalintFolder = "c:\Balint"
        dbPwd = ""
        ' ProgName = UCase("ITEMDETAIL")
-       ProgName = UCase("W2")
+       ProgName = UCase("FORM941")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
        ' UserID = 15
@@ -168,7 +168,7 @@ Dim FileExt As String
     OpenTab = 2
     
     Unload frmSplash
-    
+
     Select Case ProgName
 
         Case "TEST"
@@ -178,27 +178,30 @@ Dim FileExt As String
         Case "FORM941"
             With frm941_Select
                 .Show vbModal
-                i = .Form941
+                I = .Form941
                 Unload frm941_Select
-                If i = 1 Then
+                If I = 1 Then
                     frm941Entry.Show
-                ElseIf i = 2 Then
+                ElseIf I = 2 Then
                     frm941_2010A.Show
-                ElseIf i = 3 Then
+                ElseIf I = 3 Then
                     frm941_2011A.Show
-                ElseIf i = 4 Then
+                ElseIf I = 4 Then
                     frm941_2012A.Show
-                ElseIf i = 5 Then
+                ElseIf I = 5 Then
                     frm941_2013A.Show
-                ElseIf i = 6 Then
+                ElseIf I = 6 Then
                     ' added on 2014-07-18
                     frm941_2013A2.Show
-                ElseIf i = 7 Then
+                ElseIf I = 7 Then
                     ' added on 2014-08-26
                     frm941_2014.Show
-                ElseIf i = 8 Then
+                ElseIf I = 8 Then
                     ' added on 2017-04-08
                     frm941_2017.Show
+                ElseIf I = 9 Then
+                    ' added on 2020-07-15
+                    frm941_2020_June.Show
                 Else
                     GoBack
                 End If
