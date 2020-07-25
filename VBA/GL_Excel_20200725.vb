@@ -1,7 +1,8 @@
 Option Explicit
 
 ' Balint - Windows GL VBA code
-' 2020-03-07 Usd ADO recordset instead of XArrayDB
+' 2020-03-07 Used ADO recordset instead of XArrayDB
+' 2020-07-25 Fixed GetChartOfAccounts - descr field length
 
 Dim strProvider As String
 
@@ -436,7 +437,10 @@ Private Sub GetChartOfAccounts()
     Set rsAccount = New ADODB.Recordset
     rsAccount.CursorLocation = adUseClient
     rsAccount.Fields.Append "Account", adVarChar, 100, adFldIsNullable
-    rsAccount.Fields.Append "Description", adVarChar, 100, adFldIsNullable
+    
+    ' 2020-07-25 - change to adLongVarChar
+    rsAccount.Fields.Append "Description", adLongVarChar, adFldIsNullable
+    
     rsAccount.Open , , adOpenDynamic, adLockOptimistic
    
     ErrMsg = "GLAccount Get"
@@ -462,7 +466,7 @@ Private Sub GetChartOfAccounts()
         rsAccount!Account = CStr(rsAcct!Account)
         If rsAcct!DescNumber = 0 Or IsNull(rsAcct!DescNumber) Then
            rsAccount!Description = rsAcct!Description
-        ElseIf rsAccount!DescNumber = 1 Then
+        ElseIf rsAcct!DescNumber = 1 Then
            rsAccount!Description = CStr(rsCompany!Name)
         Else
            rsAccount!Description = rsAcct!Description & GetGLDesc(rsAcct!DescNumber)
@@ -554,6 +558,8 @@ Private Function NoExt(ByVal fnm As String) As String
         NoExt = Left(fnm, Len(fnm) - ccnt)
     End If
 End Function
+
+
 
 
 
