@@ -1266,7 +1266,7 @@ Begin VB.Form frmMainMenu
       Width           =   4335
    End
    Begin VB.Label lblVersion 
-      Caption         =   "New ADO 6/11/20"
+      Caption         =   "7/28/2020"
       BeginProperty Font 
          Name            =   "Arial"
          Size            =   9
@@ -1386,7 +1386,7 @@ Dim x As String
 Dim dbPassword, DriveLetter As String
 Dim TaskID As Long
 Dim LoadFlag As Boolean
-Public dbName As String
+Public DBName As String
 
 
 
@@ -1598,7 +1598,7 @@ Private Sub cmdFiPSSWD_Click()
     frmSetDBPassword.lblFileName = gfnm
     frmSetDBPassword.Show vbModal
     
-    dbName = gfnm
+    DBName = gfnm
     CNOpen gfnm, frmSetDBPassword.tdbNewPassword
     dbPwd = frmSetDBPassword.tdbNewPassword
     

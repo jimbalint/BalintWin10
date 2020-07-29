@@ -301,7 +301,8 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByRef cnFrom As ADODB.Conne
                 
                 ' use nNull for numeric fields only!!!
                 ' PRGlobal.Var fields set to "0"
-                Case Else: rsNew.Fields(fld.Name) = nNull(Y)
+                ' Case Else: rsNew.Fields(fld.Name) = nNull(Y)
+                Case Else: rsNew.Fields(fld.Name) = Y
                 
             End Select
         Next fld

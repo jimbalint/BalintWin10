@@ -624,7 +624,7 @@ Private LastAccount, nRecords, nAutoNum As Long
 Private createDate, updateDate As Date
 Private FiscalYear As Integer
 Private Period As Byte
-Private Debits, Credits As Currency
+Private debits, credits As Currency
 
 Private HashTotal As Long
 
@@ -644,7 +644,7 @@ Dim LastRef As String
 
 Dim HRecs As Long
 Dim Btch As Long
-Dim I, j, k As Integer
+Dim I, J, K As Integer
 
 Private Sub Form_Load()
         
@@ -663,10 +663,8 @@ Private Sub Form_Load()
        End
     End If
     
-    CreateUser = GLBatch.CreateUser
-    createDate = GLBatch.Created
-    updateDate = GLBatch.Updated
-    UpdateUser = GLBatch.UpdateUser
+    updateDate = Now
+    UpdateUser = GLUser.ID
     nRecords = GLBatch.RecCt
     
     Period = GLBatch.Period
@@ -683,7 +681,7 @@ Private Sub Form_Load()
     End If
     
     lblBatchNumber = "Batch # " & BatchNumber & ":" & GLCompany.MonthName(Period, FiscalYear)
-    lblCreated = "Created by " & GLUser.Name & " on " & CStr(createDate)
+    lblCreated = "Created by " & GLUser.Name & " on " & CStr(GLBatch.Created)
     lblUpdated = "Record is OPEN (Not Updated)"
     
     ' load the account drop down array with posting accts - type = "0"
@@ -698,7 +696,11 @@ Private Sub Form_Load()
     Do
         I = I + 1
         AcctArray(I, 0) = GLAccount.Account
-        AcctArray(I, 1) = GLAccount.Description
+        
+        ' 2020-07-29
+        ' AcctArray(I, 1) = GLAccount.Description
+        AcctArray(I, 1) = GLAccount.FullDesc
+        
         If GLAccount.GetNext = False Then Exit Do
     Loop
     
@@ -741,13 +743,13 @@ Private Sub Form_Load()
     
     EntryLog.AlternatingRowStyle = True
     
-    Dim ndx, temp As Long
+    Dim ndx, Temp As Long
     nAutoNum = 0
     ShowBalance
     For ndx = 1 To nRecords
         If IsNumeric(xDB.Value(ndx, 2)) Then
-            temp = CLng(xDB.Value(ndx, 2))
-            If temp > nAutoNum Then nAutoNum = temp
+            Temp = CLng(xDB.Value(ndx, 2))
+            If Temp > nAutoNum Then nAutoNum = Temp
         End If
     Next ndx
     
@@ -937,25 +939,25 @@ End Sub
 
 Private Sub ShowBalance()
     Dim ndx As Long
-    Dim temp As Currency
+    Dim Temp As Currency
     nRecords = xDB.UpperBound(1)
-    Debits = 0
-    Credits = 0
+    debits = 0
+    credits = 0
     HashTotal = 0
     For ndx = 1 To nRecords
-        temp = CCur(xDB.Value(ndx, 4))
-        If temp > 0 Then
-            Debits = Debits + temp
+        Temp = CCur(xDB.Value(ndx, 4))
+        If Temp > 0 Then
+            debits = debits + Temp
         Else
-            Credits = Credits + temp
+            credits = credits + Temp
         End If
         HashTotal = (CLng(xDB.Value(ndx, 0)) + HashTotal) Mod 10 ^ 9
     Next ndx
     txtRecords = CStr(nRecords) & " Records"
-    txtDebits = "Debits = " & ShowValue(Debits)
-    txtCredits = "Credits = " & ShowValue(Credits)
+    txtDebits = "Debits = " & ShowValue(debits)
+    txtCredits = "Credits = " & ShowValue(credits)
     txtHashTotal = "Hash Total = " & Format(HashTotal, "########0")
-    Balance = Round(Debits + Credits, 2)
+    Balance = Round(debits + credits, 2)
     If Balance = 0# Then
         txtBalance = ""
     Else
@@ -1003,7 +1005,7 @@ Dim x As String
 Dim Y As String
 
 Dim I As Integer
-Dim j As Integer
+Dim J As Integer
     
 Dim l As Double
     
@@ -1066,10 +1068,10 @@ Dim DecEntered As Boolean
            
            x = xDB.Value(EntryLog.Bookmark, 4)
            Y = ""
-           j = Len(x)
+           J = Len(x)
            NegVal = False
            DecEntered = False
-           For I = 1 To j
+           For I = 1 To J
               If Mid(x, I, 1) = "-" Then
                  NegVal = True
               Else
@@ -1147,6 +1149,7 @@ Private Sub AcctDescription()
             AcctFind = "NOT FOUND"
         Else
             AcctFind = GLAccount.Description
+            AcctFind = GLAccount.FullDesc
         End If
         
         If GLAccount.AcctType <> "0" And AcctFind <> "NOT FOUND" Then ' must be a type 0
@@ -1262,8 +1265,8 @@ NextHist:
     ' GLBatch.nRecords = ndx
     Btch = GLBatch.BatchNumber
     GLBatch.Records = HRecs
-    GLBatch.Debits = Debits
-    GLBatch.Credits = Credits
+    GLBatch.debits = debits
+    GLBatch.credits = credits
     GLBatch.Save (Equate.RecPut)
     
     ' reget the batch

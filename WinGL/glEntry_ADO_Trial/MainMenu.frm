@@ -752,7 +752,14 @@ Dim BatchFrom As Long
     
     GLBatch.FiscalYear = GLCompany.CurFiscalYear
     GLBatch.Period = GLCompany.CurPeriod
+    
+    ' 2020-07-28
     GLBatch.Updated = Now
+    GLBatch.UpdateUser = GLUser.ID
+    
+    GLBatch.Created = Now
+    GLBatch.CreateUser = GLUser.ID
+    
     GLBatch.Save (Equate.RecPut)
     
     ' reget the batch - save closes it

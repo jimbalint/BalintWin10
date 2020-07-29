@@ -1,8 +1,8 @@
 Attribute VB_Name = "modGLPrint"
 Option Explicit
 
-Dim w, X, y, z As String
-Dim i, j, k As Integer
+Dim w, X, Y, Z As String
+Dim I, J, K As Integer
 Dim c As Currency
 Dim SString As String
 
@@ -267,8 +267,8 @@ End Sub
 
 
 Public Sub PrintGLAccount(ByVal FiscalYear As Integer, _
-                          ByVal StartPd As Integer, _
-                          ByVal EndPD As Integer, _
+                          ByVal StartPD As Integer, _
+                          ByVal EndPd As Integer, _
                           ByVal LoAcct As Long, _
                           ByVal HiAcct As Long, _
                           ByVal LoMain As Long, _
@@ -311,7 +311,7 @@ Public Sub PrintGLAccount(ByVal FiscalYear As Integer, _
          If GLAccount.Account Mod 10 ^ Digits > HiBranch Then GoTo GCycle
       End If
    
-      If Ln = 0 Or Ln > MaxLines Then GLAcctHdr FiscalYear, StartPd, EndPD
+      If Ln = 0 Or Ln > MaxLines Then GLAcctHdr FiscalYear, StartPD, EndPd
          
       Ln = Ln + 1
    
@@ -388,7 +388,7 @@ Public Sub PrintGLAccount(ByVal FiscalYear As Integer, _
       
       PrintValue(19) = GLAccount.Date2
    
-      PrintValue(21) = GLAmount.GetAmount(GLAccount.Account, FiscalYear, StartPd, EndPD)
+      PrintValue(21) = GLAmount.GetAmount(GLAccount.Account, FiscalYear, StartPD, EndPd)
       FormatString(21) = "d14"
    
       PrintValue(22) = " "
@@ -404,12 +404,12 @@ GCycle:
 End Sub
 
 
-Private Sub GLAcctHdr(ByVal FiscalYear As Integer, ByVal StartPd As Byte, ByVal EndPD As Byte)
+Private Sub GLAcctHdr(ByVal FiscalYear As Integer, ByVal StartPD As Byte, ByVal EndPd As Byte)
          
       If Ln Then FormFeed
       
       PageHeader "GLAccount File Listing", "Amounts For:", _
-                 "Year: " & FiscalYear & " Periods: " & StartPd & " to: " & EndPD, ""
+                 "Year: " & FiscalYear & " Periods: " & StartPD & " to: " & EndPd, ""
    
       ' data header
       Ln = Ln + 1
@@ -627,8 +627,8 @@ End Sub
 
 Public Sub DetailGL(ByVal RegBraCon As String, _
                     ByVal FiscalYear As Integer, _
-                    ByVal StartPd As Integer, _
-                    ByVal EndPD As Integer, _
+                    ByVal StartPD As Integer, _
+                    ByVal EndPd As Integer, _
                     ByVal LoAcct As Long, _
                     ByVal HiAcct As Long, _
                     ByVal LoCons As Long, _
@@ -682,23 +682,23 @@ Public Sub DetailGL(ByVal RegBraCon As String, _
    ' header strings
    GetDates (CompanyID)
    glMsg(1) = "Fiscal Year: " & FiscalYear & " " & _
-              " Period #: " & StartPd & " To: # " & EndPD & "   -   " & _
+              " Period #: " & StartPD & " To: # " & EndPd & "   -   " & _
               Format(CurrYrCurrPdBeg, "mm/dd/yyyy") & " To: " & _
               Format(CurrYrPdEnd, "mm/dd/yyyy")
-   i = 2
+   I = 2
    
    If LoAcct <> 0 Then
       glMsg(2) = "Account Number From: " & LoAcct & " To: " & HiAcct
-      i = 3
+      I = 3
    End If
    
    If RegBraCon <> "Reg" Then
-      glMsg(i) = ""
+      glMsg(I) = ""
       If LoCons <> 0 Then
-         glMsg(i) = "Cons From: " & LoCons & " To: " & HiCons
+         glMsg(I) = "Cons From: " & LoCons & " To: " & HiCons
       End If
       If LoBranch <> 0 Then
-         glMsg(i) = glMsg(i) & "  Branch From: " & LoBranch & " To: " & HiBranch
+         glMsg(I) = glMsg(I) & "  Branch From: " & LoBranch & " To: " & HiBranch
       End If
    End If
    
@@ -711,7 +711,7 @@ Public Sub DetailGL(ByVal RegBraCon As String, _
    frmProgress.Refresh
    
    SString = "SELECT * FROM GLHistory WHERE FiscalYear = " & FiscalYear & _
-               " AND Period >= " & StartPd & " AND Period <= " & EndPD & " AND HisType <> 'B'"
+               " AND Period >= " & StartPD & " AND Period <= " & EndPd & " AND HisType <> 'B'"
    
    If Not GLHistory.GetByString(SString) Then
       MsgBox "No History Found !!!", vbOKOnly + vbCritical, "Detail GL Print"
@@ -858,7 +858,7 @@ NextBranch:
       GB = GLAccount.Date1
       GE = GLAccount.Date2
       
-      CY1 = GLAccount.GetCurrAmount(StartPd, StartPd)
+      CY1 = GLAccount.GetCurrAmount(StartPD, StartPD)
       LastAcct = GLAccount.Account
       
       ' 1910 ....
@@ -878,8 +878,8 @@ NextBranch:
       End If
       
       ' 2120 prev bal
-      If StartPd <> 1 Then
-         PB = GLAccount.GetCurrAmount(1, StartPd - 1)
+      If StartPD <> 1 Then
+         PB = GLAccount.GetCurrAmount(1, StartPD - 1)
       End If
       
       ' 2160
@@ -888,7 +888,7 @@ NextBranch:
       Amount(10) = PB
       
       ' 2170 YTD Bal
-      YB = GLAccount.GetCurrAmount(1, EndPD)
+      YB = GLAccount.GetCurrAmount(1, EndPd)
       
       ' ~ 2220
 FirstSort:
@@ -945,7 +945,7 @@ FirstSort:
       If RegBraCon <> "Con" Then jFlg = False
       If GLAccount.AcctType = "N" Then jFlg = False
       If PB <> 0 Then jFlg = False
-      If GLAccount.GetCurrAmount(StartPd, StartPd) <> 0 Then jFlg = False
+      If GLAccount.GetCurrAmount(StartPD, StartPD) <> 0 Then jFlg = False
       If HFlg = True Then jFlg = False
       If GE >= GLAccount.Date1 Then jFlg = False
       
@@ -1005,14 +1005,14 @@ FirstSort:
       If GLAccount.AcctType = "N" Then
          
          ' 2550
-         If Ln > MaxLines - 3 - EndPD + StartPd Then DtlGLHeader
+         If Ln > MaxLines - 3 - EndPd + StartPD Then DtlGLHeader
          
          ' 2560
-         For i = StartPd To EndPD
+         For I = StartPD To EndPd
          
              ' convert to mm/yyyy
-             Mo = ((GLCompany.FirstPeriod + i - 1) Mod GLCompany.NumberPds)
-             If i <= GLCompany.NumberPds - GLCompany.FirstPeriod + 1 Then
+             Mo = ((GLCompany.FirstPeriod + I - 1) Mod GLCompany.NumberPds)
+             If I <= GLCompany.NumberPds - GLCompany.FirstPeriod + 1 Then
                 Yr = FiscalYear
              Else
                 Yr = FiscalYear - 1
@@ -1020,7 +1020,7 @@ FirstSort:
              X = Format(Mo, "0#") & "/" & Format(Yr, "####")
     
              ' 2580
-             c = GLAccount.GetCurrAmount(i, i)
+             c = GLAccount.GetCurrAmount(I, I)
              If c >= 0 Then
                 Amount(4) = Amount(4) + c
              Else
@@ -1059,7 +1059,7 @@ FirstSort:
              
              FormatPrint
              Ln = Ln + 1
-         Next i
+         Next I
          
          DtlGLTotal
          
@@ -1100,14 +1100,14 @@ FirstSort:
          GLHJS = trs!JS
           
          ' update totals 2830
-         For i = 1 To 3
+         For I = 1 To 3
              If GLHAmt >= 0 Then
-                Amount(i * 3 - 2) = Amount(i * 3 - 2) + GLHAmt
+                Amount(I * 3 - 2) = Amount(I * 3 - 2) + GLHAmt
              Else
-                Amount(i * 3 - 1) = Amount(i * 3 - 1) + GLHAmt
+                Amount(I * 3 - 1) = Amount(I * 3 - 1) + GLHAmt
              End If
-             Amount(i * 3) = Amount(i * 3) + GLHAmt
-         Next i
+             Amount(I * 3) = Amount(I * 3) + GLHAmt
+         Next I
          
          ' >>>>>>>> set up print line from variables
          
@@ -1163,15 +1163,15 @@ FirstSort:
             
          End If
          
-         i = 7
+         I = 7
          
          trs.MoveNext
          
          ' print the current line and exit if at end of temp rec set
          If trs.EOF Then
-            i = i + 1
-            PrintValue(i) = " "
-            FormatString(i) = "~"
+            I = I + 1
+            PrintValue(I) = " "
+            FormatString(I) = "~"
             FormatPrint
             Ln = Ln + 1
             Exit Do
@@ -1180,19 +1180,19 @@ FirstSort:
          ' >>>>>>>> if break in period add mth subtl to format line
          If trs!Period <> GLHPd Then
             
-            i = i + 1
-            PrintValue(i) = " "
-            FormatString(i) = "a3"
+            I = I + 1
+            PrintValue(I) = " "
+            FormatString(I) = "a3"
             
-            i = i + 1
-            PrintValue(i) = Amount(3)
-            FormatString(i) = "d14"
+            I = I + 1
+            PrintValue(I) = Amount(3)
+            FormatString(I) = "d14"
          
          End If
          
-         i = i + 1
-         PrintValue(i) = " "
-         FormatString(i) = "~"
+         I = I + 1
+         PrintValue(I) = " "
+         FormatString(I) = "~"
          
          FormatPrint
          Ln = Ln + 1
@@ -1237,15 +1237,15 @@ Cycle:
    PrintValue(2) = "Detail Total "
    FormatString(2) = "a21"
    
-   For i = 1 To 3
+   For I = 1 To 3
        
-       PrintValue(i * 2 + 1) = Abs(Amount(i + 6))
-       FormatString(i * 2 + 1) = "d14"
+       PrintValue(I * 2 + 1) = Abs(Amount(I + 6))
+       FormatString(I * 2 + 1) = "d14"
    
-       PrintValue(i * 2 + 2) = " "
-       FormatString(i * 2 + 2) = "a2"
+       PrintValue(I * 2 + 2) = " "
+       FormatString(I * 2 + 2) = "a2"
    
-   Next i
+   Next I
 
    PrintValue(9) = " "
    FormatString(9) = "~"
@@ -1327,10 +1327,10 @@ Dim BalFlg As Boolean
     ' 3020 - balance check
     If RBC <> "Bra" And Amount(4) + Amount(5) + Amount(10) <> YB Then
        BalFlg = False
-       y = " ERROR"
+       Y = " ERROR"
     Else
        BalFlg = True
-       y = " "
+       Y = " "
     End If
     
     ' 3030 - 3040
@@ -1362,7 +1362,7 @@ Dim BalFlg As Boolean
     PrintValue(7) = Amount(6)
     FormatString(7) = "d14"
     
-    PrintValue(8) = y
+    PrintValue(8) = Y
     FormatString(8) = "a6"
         
     PrintValue(9) = " "
@@ -1510,8 +1510,8 @@ End Sub
 
 
 Public Sub GLHistJnl(ByVal FiscalYear As Long, _
-                     ByVal StartPd As Integer, _
-                     ByVal EndPD As Integer, _
+                     ByVal StartPD As Integer, _
+                     ByVal EndPd As Integer, _
                      ByVal JS As Integer, _
                      ByVal Batch As Long, _
                      ByVal IncludeAcctDesc As Boolean)
@@ -1553,24 +1553,28 @@ Dim EntryCount As Long
       End If
          
       FiscalYear = GLBatch.FiscalYear
-      StartPd = GLBatch.Period
-      EndPD = GLBatch.Period
+      StartPD = GLBatch.Period
+      EndPd = GLBatch.Period
       JS = GLBatch.JournalSource
    
    End If
    
-   glMsg(1) = "Fiscal Year: " & FiscalYear & " For Period #: " & StartPd
-   If StartPd <> EndPD Then
-      glMsg(1) = glMsg(1) & " To: " & EndPD
+   glMsg(1) = "Fiscal Year: " & FiscalYear & " For Period #: " & StartPD
+   If StartPD <> EndPd Then
+      glMsg(1) = glMsg(1) & " To: " & EndPd
    End If
    
    EMsg = "03"
     
    ' set up the SQL string for History
+   ' 2020-07-29 - order change
    If Batch <> 0 Then
       
       SString = "SELECT * FROM GLHistory WHERE BatchNumber = " & Batch & _
                 " ORDER BY JournalSource, PostDate"
+      
+      SString = "SELECT * FROM GLHistory WHERE BatchNumber = " & Batch & _
+                " ORDER BY JournalSource, ID"
    Else
       
       If JS = 0 Then    ' all journal sources
@@ -1578,17 +1582,29 @@ Dim EntryCount As Long
          If frmGLPrint.chkBudget = 0 Then
          
             SString = "SELECT * FROM GLHistory WHERE FiscalYear = " & FiscalYear & _
-                      " AND Period >= " & StartPd & _
-                      " AND Period <= " & EndPD & _
+                      " AND Period >= " & StartPD & _
+                      " AND Period <= " & EndPd & _
                       " AND HisType <> 'B'" & _
                       " ORDER BY JournalSource, PostDate"
+            
+            SString = "SELECT * FROM GLHistory WHERE FiscalYear = " & FiscalYear & _
+                      " AND Period >= " & StartPD & _
+                      " AND Period <= " & EndPd & _
+                      " AND HisType <> 'B'" & _
+                      " ORDER BY JournalSource, ID"
          Else
             
             SString = "SELECT * FROM GLHistory WHERE FiscalYear = " & FiscalYear & _
-                      " AND Period >= " & StartPd & _
-                      " AND Period <= " & EndPD & _
+                      " AND Period >= " & StartPD & _
+                      " AND Period <= " & EndPd & _
                       " AND HisType = 'B'" & _
                       " ORDER BY JournalSource, PostDate"
+      
+            SString = "SELECT * FROM GLHistory WHERE FiscalYear = " & FiscalYear & _
+                      " AND Period >= " & StartPD & _
+                      " AND Period <= " & EndPd & _
+                      " AND HisType = 'B'" & _
+                      " ORDER BY JournalSource, ID"
       
          End If
       
@@ -1597,19 +1613,26 @@ Dim EntryCount As Long
          If frmGLPrint.chkBudget = 0 Then
             
             SString = "SELECT * FROM GLHistory WHERE FiscalYear = " & FiscalYear & _
-                      " AND Period >= " & StartPd & _
-                      " AND Period <= " & EndPD & _
+                      " AND Period >= " & StartPD & _
+                      " AND Period <= " & EndPd & _
                       " AND JournalSource = " & JS & _
                       " AND HisType <> 'B'" & _
                       " ORDER BY PostDate"
+            
+            SString = "SELECT * FROM GLHistory WHERE FiscalYear = " & FiscalYear & _
+                      " AND Period >= " & StartPD & _
+                      " AND Period <= " & EndPd & _
+                      " AND JournalSource = " & JS & _
+                      " AND HisType <> 'B'" & _
+                      " ORDER BY ID"
          Else
             
             SString = "SELECT * FROM GLHistory WHERE FiscalYear = " & FiscalYear & _
-                      " AND Period >= " & StartPd & _
-                      " AND Period <= " & EndPD & _
+                      " AND Period >= " & StartPD & _
+                      " AND Period <= " & EndPd & _
                       " AND JournalSource = " & JS & _
                       " AND HisType = 'B'" & _
-                      " ORDER BY PostDate"
+                      " ORDER BY ID"
          
          End If
       
@@ -1651,22 +1674,22 @@ Dim EntryCount As Long
       EMsg = "07"
     
       X = CStr(GLHistory.JournalSource)
-      i = 3 - Len(X)
-      PrintValue(1) = Space(i) & X
+      I = 3 - Len(X)
+      PrintValue(1) = Space(I) & X
       FormatString(1) = "a3"
         
       EMsg = "08"
     
       X = CStr(GLHistory.SourceCode)
-      i = 3 - Len(X)
-      PrintValue(2) = Space(i) & X
+      I = 3 - Len(X)
+      PrintValue(2) = Space(I) & X
       FormatString(2) = "a3"
       
       EMsg = "09"
     
       X = GLHistory.HisType
-      i = 3 - Len(X)
-      PrintValue(3) = Space(i) & GLHistory.HisType
+      I = 3 - Len(X)
+      PrintValue(3) = Space(I) & GLHistory.HisType
       FormatString(3) = "a3"
          
       EMsg = "10"
@@ -1686,8 +1709,8 @@ Dim EntryCount As Long
       EMsg = "11"
     
       X = Format(GLHistory.Account, "########0")
-      i = 9 - Len(X) + 1
-      PrintValue(5) = Space(i) & X
+      I = 9 - Len(X) + 1
+      PrintValue(5) = Space(I) & X
       FormatString(5) = "a11"
          
       EMsg = "12"
@@ -1947,18 +1970,18 @@ Private Sub PageHeader(ByVal ReportName As String, _
    '    1             8       1   8                    10         1
    ' first line - system date & time / company name / page #
    X = GLCompany.Name
-   y = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss")
-   z = "Page: " & Format(Pg, "####")
+   Y = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss")
+   Z = "Page: " & Format(Pg, "####")
    
    If Len(X) > Columns - 29 Then
       X = Mid(GLCompany.Name, 1, Columns - 29)
    End If
    
    ' center the company name in the string
-   i = ((Columns - 29 - Len(X)) / 2) - 1
+   I = ((Columns - 29 - Len(X)) / 2) - 1
    
    Ln = 1
-   w = y & Space(i) & X & Space(i) & z
+   w = Y & Space(I) & X & Space(I) & Z
    PrtCenter Ln, w
    
    If ReportName <> "" Then

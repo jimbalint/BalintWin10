@@ -666,7 +666,7 @@ Dim nRequest As Long
 Dim index As Long
 Dim ct As Long
 
-Dim I, j, k, l As Long
+Dim I, J, K, l As Long
 Dim x, Y, z As String
 
 Dim GLHAccount As Long
@@ -812,8 +812,11 @@ Private Sub cmdOK_Click()
 '    glbatch.credits = CCur(txtCredits)
 '    glbatch.recct = CLng(txtRecords)
     
+    ' 2020-07-28
+    GLBatch.Created = Now
     GLBatch.Updated = Now
     GLBatch.UpdateUser = GLUser.ID
+    GLBatch.CreateUser = GLUser.ID
     
     BatchNumber = GLBatch.BatchNumber
     
@@ -847,9 +850,11 @@ Dim CurFY As Integer
         GoBack
     End If
     
+    Dim booUser As Boolean
+    booUser = GLUser.GetByID(GLBatch.CreateUser)
     txtCompanyName = GLCompany.Name
     lblBatchNumber = "Batch # " & GLBatch.BatchNumber
-    lblCreated = "Created by " & GLBatch.CreateUser & " on " & ShowDate(GLBatch.Created)
+    lblCreated = "Created by " & GLUser.Name & " on " & ShowDate(GLBatch.Created)
     lblUpdated = "Record is OPEN (Not Updated)"
     txtRecord = "RECORD COUNT = " & CStr(GLBatch.RecCt)
     txtDebits = "DEBITS = " & Format(GLBatch.Debits, "#.00")
@@ -1195,49 +1200,49 @@ Dim AcctNum As Long
                 Set colData = colDataList.GetAt(I)
                 If (Not colData.Value Is Nothing) Then
                    
-                   j = colData.colID.GetValue
+                   J = colData.colID.GetValue
                    Y = colData.Value.GetValue
                    
-                   If j = 2 Then    ' check number
+                   If J = 2 Then    ' check number
                       
                       GLHReference = Y
                    
-                   ElseIf j = 4 Then       ' payee
+                   ElseIf J = 4 Then       ' payee
                       
                       GLHDescription = Y
                    
-                   ElseIf j = 6 Then        ' account
+                   ElseIf J = 6 Then        ' account
                      
                       ' see if the account number is embedded
-                      k = InStr(1, Y, Chr(183), vbTextCompare)
-                      If k <> 0 Then
-                         x = Mid(Y, k + 2, Len(Y) - k + 2)
+                      K = InStr(1, Y, Chr(183), vbTextCompare)
+                      If K <> 0 Then
+                         x = Mid(Y, K + 2, Len(Y) - K + 2)
                       Else
                          x = Y
                       End If
                      
-                      k = xdbAccts.Find(1, 0, x, XORDER_ASCEND, XCOMP_EQ, XTYPE_STRING)
+                      K = xdbAccts.Find(1, 0, x, XORDER_ASCEND, XCOMP_EQ, XTYPE_STRING)
                          
-                      If k = -1 Then     ' not found - put to 0 and suspense
+                      If K = -1 Then     ' not found - put to 0 and suspense
                          
                          GLHAccount = CLng(Me.tdbSuspAcct)
                       
                       Else
                          
                          ' bank amounts totaled and written as one entry
-                         If xdbAccts(k, 3) = "Bank" Then
+                         If xdbAccts(K, 3) = "Bank" Then
                             GLHUpdateFlag = False
                          End If
                          
-                         GLHAccount = xdbAccts(k, 4)
+                         GLHAccount = xdbAccts(K, 4)
                       
                       End If
                    
-                   ElseIf j = 7 Then
+                   ElseIf J = 7 Then
                       
                       GLHAmount = CCur(Y) * (-1)
                    
-                   ElseIf j = 8 Then   ' column 8 for the banking line
+                   ElseIf J = 8 Then   ' column 8 for the banking line
                    
                       If GLHUpdateFlag = False Then GLHAmount = CCur(Y)
                    
@@ -1259,10 +1264,10 @@ Dim AcctNum As Long
             End If
     
             ' update amount totals
-            If k = -1 Then
+            If K = -1 Then
                I = 0
             Else
-               I = k
+               I = K
             End If
             xdbAccts(I, 2) = xdbAccts(I, 2) + GLHAmount
     
@@ -1307,7 +1312,7 @@ Private Sub GetAccounts()
     
     If RetList Is Nothing Then Exit Sub   ' no accounts ???
     
-    j = RetList.Count
+    J = RetList.Count
     
     ' setup the xdb array
     ' row for each account
@@ -1325,30 +1330,30 @@ Private Sub GetAccounts()
     xdbAccts(0, 2) = 0
     xdbAccts(0, 3) = ""
     
-    k = 0
+    K = 0
     
-    For I = 0 To j - 1
+    For I = 0 To J - 1
         Set ItemRet = RetList.GetAt(I)
         If (Not ItemRet Is Nothing) Then
            If (Not ItemRet.Name Is Nothing) Then
-              k = k + 1
+              K = K + 1
               xdbAccts.AppendRows (1)
-              xdbAccts(k, 0) = ItemRet.Name.GetValue
+              xdbAccts(K, 0) = ItemRet.Name.GetValue
                             
               If Not (ItemRet.Desc Is Nothing) Then
-                 xdbAccts(k, 1) = ItemRet.Desc.GetValue
+                 xdbAccts(K, 1) = ItemRet.Desc.GetValue
               Else
-                 xdbAccts(k, 1) = ""
+                 xdbAccts(K, 1) = ""
               End If
               
-              xdbAccts(k, 2) = 0
-              xdbAccts(k, 3) = ItemRet.AccountType.GetAsString
+              xdbAccts(K, 2) = 0
+              xdbAccts(K, 3) = ItemRet.AccountType.GetAsString
               
               ' assign the account number
-              xdbAccts(k, 4) = CLng(GetNumber(xdbAccts(k, 1)))    ' from the QB account description
+              xdbAccts(K, 4) = CLng(GetNumber(xdbAccts(K, 1)))    ' from the QB account description
               
               If Not (ItemRet.AccountNumber Is Nothing) Then
-                 xdbAccts(k, 4) = CLng(ItemRet.AccountNumber.GetValue)
+                 xdbAccts(K, 4) = CLng(ItemRet.AccountNumber.GetValue)
               End If
               
            End If
