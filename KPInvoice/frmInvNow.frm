@@ -172,14 +172,16 @@ Private Sub cmdPrint_Click()
     InvHeader.InvoiceDate = Me.tdbInvDate.Value
     InvHeader.rsPut
     
-    SQLString = "SELECT * FROM InvGlobal WHERE CompanyID = " & PRCompany.CompanyID & _
-                " AND TypeCode = " & InvEquate.GlobalTypeInvPrinter
+    SQLString = "select * from InvGlobal where CompanyID = " & PRCompany.CompanyID & _
+            " and TypeCode = " & InvEquate.GlobalTypeInvPrinter2 & _
+            " and Var1 = '" & Environ("computername") & "'"
+    
     If InvGlobal.GetBySQL(SQLString) = False Then
-        MsgBox "Use Global Maintenance to select the invoice printer!", vbExclamation
+        MsgBox "Use Chg Prtr button to set the invoice printer!", vbExclamation
         Exit Sub
     End If
     
-    KP_PrintInvoice frmInvProcess.tdbnumInvNum, InvGlobal.Var1
+    KP_PrintInvoice frmInvProcess.tdbnumInvNum, InvGlobal.Var2
     
 End Sub
 

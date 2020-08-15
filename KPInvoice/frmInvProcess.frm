@@ -24,6 +24,14 @@ Begin VB.Form frmInvProcess
    ScaleHeight     =   11565
    ScaleWidth      =   14610
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdChgPrinter 
+      Caption         =   "Chg Prtr"
+      Height          =   615
+      Left            =   13560
+      TabIndex        =   56
+      Top             =   9840
+      Width           =   735
+   End
    Begin VB.CommandButton cndNew2 
       Caption         =   "&NEW"
       Height          =   495
@@ -2017,7 +2025,7 @@ Begin VB.Form frmInvProcess
          Strikethrough   =   0   'False
       EndProperty
       ForeColor       =   &H00008000&
-      Height          =   255
+      Height          =   375
       Left            =   11640
       TabIndex        =   55
       Top             =   5280
@@ -2214,7 +2222,15 @@ Dim fgVals(100, 10) As String
 ' variables for update to QB
 Dim QBIDAR, QBIDTpl, QBIDFreight, QBIDMisc As String
 
+
+Private Sub cmdChgPrinter_Click()
+    frmInvChangePrinter.Show vbModal
+    GetSelectedPrinter
+End Sub
+
 Private Sub Form_Load()
+
+    GetSelectedPrinter
 
     ' new fields ...
     If AddField("InvHeader", "ApptDate", "String", cn) Then
@@ -2475,7 +2491,7 @@ Dim QBItemID As String
     Me.lblCompanyName.Caption = "QB Update G ..."
     Me.Refresh
     
-    invoiceAdd.PONumber.SetValue Trim(Me.tdbtxtPO1.Text)
+    invoiceAdd.PONumber.SetValue Trim(Me.tdbtxtPO1.text)
     
     Me.lblCompanyName.Caption = "QB Update G2 ..."
     Me.Refresh
@@ -2883,7 +2899,7 @@ Private Sub cmdNew_Click()
     InvGlobal.rsPut
     Me.tdbnumInvNum.Value = InvGlobal.UserID
     
-    InvHeader.InvoiceNumber = Me.tdbnumInvNum.Text
+    InvHeader.InvoiceNumber = Me.tdbnumInvNum.text
     
     FormEnabled True
 
@@ -3260,8 +3276,8 @@ Private Sub cmdSave_Click()
             InvHeader.OrderDate = 0
         End If
         
-        InvHeader.PO1 = .tdbtxtPO1.Text
-        InvHeader.PO2 = .tdbtxtPO2.Text
+        InvHeader.PO1 = .tdbtxtPO1.text
+        InvHeader.PO2 = .tdbtxtPO2.text
         
         ' trans info
         I = 0
@@ -3537,24 +3553,24 @@ Private Sub Init()
 
     With Me
     
-        .tdbSoldAddr1.Text = ""
-        .tdbSoldAddr2.Text = ""
-        .tdbSoldAddr3.Text = ""
-        .tdbSoldAddr4.Text = ""
-        .tdbSoldCity.Text = ""
-        .tdbSoldState.Text = ""
-        .tdbSoldZip.Text = ""
+        .tdbSoldAddr1.text = ""
+        .tdbSoldAddr2.text = ""
+        .tdbSoldAddr3.text = ""
+        .tdbSoldAddr4.text = ""
+        .tdbSoldCity.text = ""
+        .tdbSoldState.text = ""
+        .tdbSoldZip.text = ""
         
-        .tdbShipAddr1.Text = ""
-        .tdbShipAddr2.Text = ""
-        .tdbShipAddr3.Text = ""
-        .tdbShipAddr4.Text = ""
-        .tdbShipCity.Text = ""
-        .tdbShipState.Text = ""
-        .tdbShipZip.Text = ""
+        .tdbShipAddr1.text = ""
+        .tdbShipAddr2.text = ""
+        .tdbShipAddr3.text = ""
+        .tdbShipAddr4.text = ""
+        .tdbShipCity.text = ""
+        .tdbShipState.text = ""
+        .tdbShipZip.text = ""
         
-        .tdbtxtPO1.Text = ""
-        .tdbtxtPO2.Text = ""
+        .tdbtxtPO1.text = ""
+        .tdbtxtPO2.text = ""
         
         tdbAmountSet .tdbItemTotal
         tdbAmountSet .tdbFreight
@@ -3793,7 +3809,7 @@ End Sub
 Private Sub tdbcmbSoldTo_LostFocus()
 
     ' fill the sold/ship text boxes
-    If Me.tdbcmbSoldTo.Text = "" Then Exit Sub
+    If Me.tdbcmbSoldTo.text = "" Then Exit Sub
     If Me.tdbcmbSoldTo.SelectedItem = 0 Then Exit Sub
     
     boo = JCJob.GetByID(xdbJob.Value(Me.tdbcmbSoldTo.SelectedItem, 2))
@@ -3949,24 +3965,24 @@ Private Sub cmdClear_Click()
         .lblQBUpd = ""
         .tdbOrderDate.Value = Now()
         
-        .tdbSoldAddr1.Text = ""
-        .tdbSoldAddr2.Text = ""
-        .tdbSoldAddr3.Text = ""
-        .tdbSoldAddr4.Text = ""
-        .tdbSoldCity.Text = ""
-        .tdbSoldState.Text = ""
-        .tdbSoldZip.Text = ""
+        .tdbSoldAddr1.text = ""
+        .tdbSoldAddr2.text = ""
+        .tdbSoldAddr3.text = ""
+        .tdbSoldAddr4.text = ""
+        .tdbSoldCity.text = ""
+        .tdbSoldState.text = ""
+        .tdbSoldZip.text = ""
         
-        .tdbShipAddr1.Text = ""
-        .tdbShipAddr2.Text = ""
-        .tdbShipAddr3.Text = ""
-        .tdbShipAddr4.Text = ""
-        .tdbShipCity.Text = ""
-        .tdbShipState.Text = ""
-        .tdbShipZip.Text = ""
+        .tdbShipAddr1.text = ""
+        .tdbShipAddr2.text = ""
+        .tdbShipAddr3.text = ""
+        .tdbShipAddr4.text = ""
+        .tdbShipCity.text = ""
+        .tdbShipState.text = ""
+        .tdbShipZip.text = ""
         
-        .tdbtxtPO1.Text = ""
-        .tdbtxtPO2.Text = ""
+        .tdbtxtPO1.text = ""
+        .tdbtxtPO2.text = ""
         
         rsTrans.MoveFirst
         Do
@@ -4096,12 +4112,17 @@ Private Sub cmdPrint_Click()
     
     SQLString = "SELECT * FROM InvGlobal WHERE CompanyID = " & PRCompany.CompanyID & _
                 " AND TypeCode = " & InvEquate.GlobalTypeInvPrinter
+    
+    SQLString = "select * from InvGlobal where CompanyID = " & PRCompany.CompanyID & _
+            " and TypeCode = " & InvEquate.GlobalTypeInvPrinter2 & _
+            " and Var1 = '" & Environ("computername") & "'"
+    
     If InvGlobal.GetBySQL(SQLString) = False Then
-        MsgBox "Use Global Maintenance to select the invoice printer!", vbExclamation
+        MsgBox "Use Chg Prtr button to set the invoice printer!", vbExclamation
         Exit Sub
     End If
     
-    KP_PrintInvoice Me.tdbnumInvNum, InvGlobal.Var1
+    KP_PrintInvoice Me.tdbnumInvNum, InvGlobal.Var2
 
 End Sub
 
@@ -4131,40 +4152,40 @@ Private Sub LoadScreenVals()
     With Me
             
         ScreenVals(1) = .tdbcmbSoldTo.SelectedItem
-        ScreenVals(2) = .tdbnumInvNum.Text
-        ScreenVals(3) = .tdbOrderDate.Text
-        ScreenVals(4) = .tdbOrderDate.Text
+        ScreenVals(2) = .tdbnumInvNum.text
+        ScreenVals(3) = .tdbOrderDate.text
+        ScreenVals(4) = .tdbOrderDate.text
         ScreenVals(5) = .lblInvDate.Caption
-        ScreenVals(6) = .tdbItemTotal.Text
-        ScreenVals(7) = .tdbFreight.Text
-        ScreenVals(8) = .tdbSalesTax.Text
-        ScreenVals(9) = .tdbInvTotal.Text
+        ScreenVals(6) = .tdbItemTotal.text
+        ScreenVals(7) = .tdbFreight.text
+        ScreenVals(8) = .tdbSalesTax.text
+        ScreenVals(9) = .tdbInvTotal.text
         
-        ScreenVals(10) = .tdbSoldAddr1.Text
-        ScreenVals(11) = .tdbSoldAddr2.Text
-        ScreenVals(12) = .tdbSoldAddr3.Text
-        ScreenVals(13) = .tdbSoldAddr4.Text
+        ScreenVals(10) = .tdbSoldAddr1.text
+        ScreenVals(11) = .tdbSoldAddr2.text
+        ScreenVals(12) = .tdbSoldAddr3.text
+        ScreenVals(13) = .tdbSoldAddr4.text
             
-        ScreenVals(14) = .tdbSoldCity.Text
-        ScreenVals(15) = .tdbSoldState.Text
-        ScreenVals(16) = .tdbSoldZip.Text
+        ScreenVals(14) = .tdbSoldCity.text
+        ScreenVals(15) = .tdbSoldState.text
+        ScreenVals(16) = .tdbSoldZip.text
         
-        ScreenVals(17) = .tdbShipAddr1.Text
-        ScreenVals(18) = .tdbShipAddr2.Text
-        ScreenVals(19) = .tdbShipAddr3.Text
-        ScreenVals(20) = .tdbShipAddr4.Text
+        ScreenVals(17) = .tdbShipAddr1.text
+        ScreenVals(18) = .tdbShipAddr2.text
+        ScreenVals(19) = .tdbShipAddr3.text
+        ScreenVals(20) = .tdbShipAddr4.text
             
-        ScreenVals(21) = .tdbShipCity.Text
-        ScreenVals(22) = .tdbShipState.Text
-        ScreenVals(23) = .tdbShipZip.Text
+        ScreenVals(21) = .tdbShipCity.text
+        ScreenVals(22) = .tdbShipState.text
+        ScreenVals(23) = .tdbShipZip.text
             
-        ScreenVals(24) = .tdbtxtPO1.Text
-        ScreenVals(25) = .tdbtxtPO2.Text
+        ScreenVals(24) = .tdbtxtPO1.text
+        ScreenVals(25) = .tdbtxtPO2.text
             
-        ScreenVals(26) = .tdbApptDate.Text
-        ScreenVals(27) = .txtApptTime.Text
-        ScreenVals(28) = .tdbPkgCount.Text
-        ScreenVals(29) = .tdbPalletCount.Text
+        ScreenVals(26) = .tdbApptDate.text
+        ScreenVals(27) = .txtApptTime.text
+        ScreenVals(28) = .tdbPkgCount.text
+        ScreenVals(29) = .tdbPalletCount.text
         
         With .fgTrans
             For I = 1 To .Rows - 1
@@ -4192,7 +4213,7 @@ Private Function CheckForChange() As Boolean
 Dim ChangeFlag As Boolean
 
     ' blank screen - don't check
-    If Me.tdbnumInvNum.Text = "" Then
+    If Me.tdbnumInvNum.text = "" Then
         CheckForChange = True
         Exit Function
     End If
@@ -4205,40 +4226,40 @@ Dim ChangeFlag As Boolean
 
             If I = 1 Then X = .tdbcmbSoldTo.SelectedItem
             
-            If I = 2 Then X = .tdbnumInvNum.Text
-            If I = 3 Then X = .tdbOrderDate.Text
-            If I = 4 Then X = .tdbOrderDate.Text
+            If I = 2 Then X = .tdbnumInvNum.text
+            If I = 3 Then X = .tdbOrderDate.text
+            If I = 4 Then X = .tdbOrderDate.text
             If I = 5 Then X = .lblInvDate.Caption
-            If I = 6 Then X = .tdbItemTotal.Text
-            If I = 7 Then X = .tdbFreight.Text
-            If I = 8 Then X = .tdbSalesTax.Text
-            If I = 9 Then X = .tdbInvTotal.Text
+            If I = 6 Then X = .tdbItemTotal.text
+            If I = 7 Then X = .tdbFreight.text
+            If I = 8 Then X = .tdbSalesTax.text
+            If I = 9 Then X = .tdbInvTotal.text
             
-            If I = 10 Then X = .tdbSoldAddr1.Text
-            If I = 11 Then X = .tdbSoldAddr2.Text
-            If I = 12 Then X = .tdbSoldAddr3.Text
-            If I = 13 Then X = .tdbSoldAddr4.Text
+            If I = 10 Then X = .tdbSoldAddr1.text
+            If I = 11 Then X = .tdbSoldAddr2.text
+            If I = 12 Then X = .tdbSoldAddr3.text
+            If I = 13 Then X = .tdbSoldAddr4.text
                 
-            If I = 14 Then X = .tdbSoldCity.Text
-            If I = 15 Then X = .tdbSoldState.Text
-            If I = 16 Then X = .tdbSoldZip.Text
+            If I = 14 Then X = .tdbSoldCity.text
+            If I = 15 Then X = .tdbSoldState.text
+            If I = 16 Then X = .tdbSoldZip.text
             
-            If I = 17 Then X = .tdbShipAddr1.Text
-            If I = 18 Then X = .tdbShipAddr2.Text
-            If I = 19 Then X = .tdbShipAddr3.Text
-            If I = 20 Then X = .tdbShipAddr4.Text
+            If I = 17 Then X = .tdbShipAddr1.text
+            If I = 18 Then X = .tdbShipAddr2.text
+            If I = 19 Then X = .tdbShipAddr3.text
+            If I = 20 Then X = .tdbShipAddr4.text
                 
-            If I = 21 Then X = .tdbShipCity.Text
-            If I = 22 Then X = .tdbShipState.Text
-            If I = 23 Then X = .tdbShipZip.Text
+            If I = 21 Then X = .tdbShipCity.text
+            If I = 22 Then X = .tdbShipState.text
+            If I = 23 Then X = .tdbShipZip.text
                 
-            If I = 24 Then X = .tdbtxtPO1.Text
-            If I = 25 Then X = .tdbtxtPO2.Text
+            If I = 24 Then X = .tdbtxtPO1.text
+            If I = 25 Then X = .tdbtxtPO2.text
                 
-            If I = 26 Then X = .tdbApptDate.Text
-            If I = 27 Then X = .txtApptTime.Text
-            If I = 28 Then X = .tdbPkgCount.Text
-            If I = 29 Then X = .tdbPalletCount.Text
+            If I = 26 Then X = .tdbApptDate.text
+            If I = 27 Then X = .txtApptTime.text
+            If I = 28 Then X = .tdbPkgCount.text
+            If I = 29 Then X = .tdbPalletCount.text
             
             If X <> ScreenVals(I) Then
                 'MsgBox I & vbCr & X & vbCr & ScreenVals(I)
@@ -4288,7 +4309,7 @@ Dim preferencesQuery As IPreferencesQuery
 Dim preferencesRet As IPreferencesRet
     
     ' save the selected job is there is one
-    If Me.tdbcmbSoldTo.Text <> "" Then
+    If Me.tdbcmbSoldTo.text <> "" Then
         JobID = xdbJob.Value(Me.tdbcmbSoldTo.SelectedItem, 2)
     Else
         JobID = 0
@@ -4386,7 +4407,7 @@ Private Sub tdbnumInvNum_LostFocus()
             If rsInvH.RecordCount > 0 Then
                 MsgBox "This inv/order number already exists!", vbExclamation
                 .Value = InvHeader.InvoiceNumber
-                .Text = InvHeader.InvoiceNumber
+                .text = InvHeader.InvoiceNumber
             End If
         End If
     End With
@@ -4425,3 +4446,14 @@ Private Sub CalcSalesTaxPct()
     End If
 
 End Sub
+
+Private Sub GetSelectedPrinter()
+    SQLString = "select * from InvGlobal where CompanyID = " & PRCompany.CompanyID & _
+            " and TypeCode = " & InvEquate.GlobalTypeInvPrinter2 & _
+            " and Var1 = '" & Environ("computername") & "'"
+    If InvGlobal.GetBySQL(SQLString) = True Then
+        Me.cmdPrint.ToolTipText = InvGlobal.Var2
+    End If
+End Sub
+
+

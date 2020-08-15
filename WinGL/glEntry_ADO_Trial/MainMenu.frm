@@ -826,7 +826,7 @@ Dim BatchFrom As Long
         GLBatch.DeleteBatch BatchNum
         BatchList.ReBind
     End If
-        
+    
     BatchList.SetFocus
     Exit Sub
 glErr:
@@ -849,6 +849,13 @@ Dim x As String
     If IsNull(BMark) Then Exit Sub
     
     BatchNum = CLng(xDB.Value(BMark, 0))
+
+    If GLBatch.GetByString("select * from GLBatch where BatchNumber = " & BatchNum) Then
+        If GLBatch.Records = 0 Then
+            MsgBox "Not able to copy - this is an empty batch!", vbExclamation, "Copy GL Batch"
+            Exit Sub
+        End If
+    End If
     
     I = MsgBox("Are you SURE you want to copy this Batch # " & BatchNum, _
         vbQuestion + vbYesNo + vbDefaultButton2, "Windows GL Entry")
@@ -856,7 +863,7 @@ Dim x As String
     If I = vbNo Then Exit Sub
     
     OnAdd (True)
-    
+
 End Sub
 
 Private Sub cmdDataEntry_Click()
@@ -929,7 +936,11 @@ Dim DriveLetter As String
     Fnm = Mid(App.Path, 1, 2) & Mid(FileName, 3, Len(FileName) - 2)
     
     ' store the period yyyymm from the batch record
-' 107   I = Mid(xDB(BMark, 2), 1, 4) * 100 + Mid(xDB(BMark, 2), 6, 2)
+    ' .... if period not assigned - continue
+    I = 0
+    On Error Resume Next
+    I = Mid(xDB(BMark, 2), 1, 4) * 100 + Mid(xDB(BMark, 2), 6, 2)
+    On Error GoTo 0
  
     ' delete from GLHistory
     GLBatch.DeleteBatch (BatchNum)
@@ -944,15 +955,23 @@ Dim DriveLetter As String
 '        " Period=" & I
 
 
-    DriveLetter = Left(BalintFolder, 1)
+    DriveLetter = Left(BalintFolder, 2)
+
+    Dim ext As String
+    If NewADO Then
+        ext = "accdb"
+    Else
+        ext = "mdb"
+    End If
+
     x = "\Balint\GLUtil.exe" & _
         " ProgName=ClearGLAmount " & _
-        " SysFile=" & DriveLetter & "\Balint\Data\GLSystem.mdb" & _
+        " SysFile=" & DriveLetter & "\Balint\Data\GLSystem." & ext & _
         " UserID=" & GLUser.ID & _
         " MenuName=" & MenuName & _
-        " BackName=" & DriveLetter & "\Balint\GLEntry.exe" & _
+        " BackName=" & "c:\Balint\GLEntryADO.exe" & _
         " Period=" & I
-    
+
     ' database password if required
     If Password <> "" Then
        x = x & " dbPWd=" & Password

@@ -193,8 +193,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim I, J, K As Long
-Dim X, Y, Z As String
+Dim i, j, k As Long
+Dim x, y, z As String
 
 Dim rs As New ADODB.Recordset
 Dim rsQB As New ADODB.Recordset
@@ -212,21 +212,21 @@ Private Sub Form_Load()
     LoadFlag = True
     
     With Me.cmbGlobalType
-        For I = 1 To 11
-            X = ""
-            If I = 1 Then J = InvEquate.GlobalTypeTruck:        X = "Truck"
-            If I = 2 Then J = InvEquate.GlobalTypeTrailer:      X = "Trailer"
-            If I = 3 Then J = InvEquate.GlobalTypeDriver:       X = "Driver"
+        For i = 1 To 11
+            x = ""
+            If i = 1 Then j = InvEquate.GlobalTypeTruck:        x = "Truck"
+            If i = 2 Then j = InvEquate.GlobalTypeTrailer:      x = "Trailer"
+            If i = 3 Then j = InvEquate.GlobalTypeDriver:       x = "Driver"
             'If i = 4 Then j = InvEquate.GlobalTypeTerms:    X = "Terms"
-            If I = 5 Then J = InvEquate.GlobalTypeComment:      X = "Comments"
+            If i = 5 Then j = InvEquate.GlobalTypeComment:      x = "Comments"
             'If I = 7 Then J = InvEquate.GlobalTypeQBSetup:      X = "QB Setup"
-            If I = 8 Then J = InvEquate.GlobalTypeInvPrinter:   X = "Invoice Printer"
-            If I = 11 Then J = InvEquate.GlobalTypeVAdj:        X = "Printer Adjustment"
-            If X <> "" Then
-                .AddItem (X)
-                .ItemData(.NewIndex) = I
+            ' If i = 8 Then j = InvEquate.GlobalTypeInvPrinter:   x = "Invoice Printer"
+            If i = 11 Then j = InvEquate.GlobalTypeVAdj:        x = "Printer Adjustment"
+            If x <> "" Then
+                .AddItem (x)
+                .ItemData(.NewIndex) = i
             End If
-        Next I
+        Next i
     End With
 
     LoadPrinters
@@ -265,11 +265,11 @@ Private Sub LoadPrinters()
     rsPrinters.Open , , adOpenDynamic, adLockOptimistic
     
     Set Prvw = New frmPreview
-    For I = 0 To Prvw.vsp.NDevices - 1
+    For i = 0 To Prvw.vsp.NDevices - 1
         rsPrinters.AddNew
-        rsPrinters!PrinterName = Prvw.vsp.Devices(I)
+        rsPrinters!PrinterName = Prvw.vsp.Devices(i)
         rsPrinters.Update
-    Next I
+    Next i
     
     If rsPrinters.RecordCount = 0 Then Exit Sub
     
@@ -488,14 +488,14 @@ Private Sub cmbGlobalType_Click()
         
             With fg
                     
-                For I = 0 To .Cols - 1
-                    .ColKey(I) = .TextMatrix(0, I)
-                    If .TextMatrix(0, I) <> "Description" Then
-                        .ColHidden(I) = True
+                For i = 0 To .Cols - 1
+                    .ColKey(i) = .TextMatrix(0, i)
+                    If .TextMatrix(0, i) <> "Description" Then
+                        .ColHidden(i) = True
                     Else
-                        .ColWidth(I) = fg.Width - 200
+                        .ColWidth(i) = fg.Width - 200
                     End If
-                Next I
+                Next i
                 
                 If GType = InvEquate.GlobalTypeTruck Then .TextMatrix(0, .ColIndex("Description")) = "No. - Truck - Lic."
                 If GType = InvEquate.GlobalTypeTrailer Then .TextMatrix(0, .ColIndex("Description")) = "No. - Trailer - Lic."

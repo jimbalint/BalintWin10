@@ -136,6 +136,7 @@ Public Sub RunADO_Conversion(ByVal BalintFolder As String)
             CreateFields cnNew
             CopyData cnOld, cnNew
             
+            On Error Resume Next
             strSQL = "DELETE * FROM PRDepartment WHERE DepartmentNumber = 0"
             cnNew.Execute strSQL
             strSQL = "ALTER TABLE PRDepartment" & _
@@ -145,6 +146,7 @@ Public Sub RunADO_Conversion(ByVal BalintFolder As String)
             strSQL = "ALTER TABLE PREmployee" & _
                     " ADD CONSTRAINT [empNumberKey] UNIQUE ([EmployeeNumber])"
             cnNew.Execute strSQL
+            On Error GoTo 0
             
             cnOld.Close
             cnNew.Close

@@ -59,7 +59,7 @@ Public ii As Long
 Public jj As Long
 Public kk As Long
 Public xx As String
-Public X As Variant
+Public x As Variant
 
 Public CurrYrPdEnd As String              ' g[1]
 Public CurrYrCurrPdBeg As String          ' g[2]
@@ -500,20 +500,20 @@ Dim TxtX As String
             Loop
             DWidth = DWidth + CCount       ' add in the comma count
                
-            X = Format(Abs(PrintValue(pi)), "##,###,##0.00")
+            x = Format(Abs(PrintValue(pi)), "##,###,##0.00")
             If PrintValue(pi) < 0 Then
-               X = X & "-"
+               x = x & "-"
                TxtX = "-" & Format(Abs(PrintValue(pi)), "##,###,##0.00")    ' leading minus sign for text output
             Else
-               X = X & Space(1)
-               TxtX = X
+               x = x & Space(1)
+               TxtX = x
             End If
                
             If DWidth <= 14 Then
-                PrintString = PrintString & Space(14 - DWidth) & X
+                PrintString = PrintString & Space(14 - DWidth) & x
                 TextString = TextString & Quote & Space(14 - DWidth) & TxtX & Quote & Comma
             Else
-                PrintString = PrintString & X
+                PrintString = PrintString & x
                 TextString = TextString & Quote & TxtX & Quote & Comma
             End If
          
@@ -529,21 +529,21 @@ Dim TxtX As String
                DWidth = DWidth + 1
             Loop
             
-            X = Format(Abs(PrintValue(pi)), "##0.0")
+            x = Format(Abs(PrintValue(pi)), "##0.0")
 
             If PrintValue(pi) < 0 Then
-               X = X & "-"
+               x = x & "-"
                TxtX = "-" & Format(Abs(PrintValue(pi)), "##0.0")
             Else
-               X = X & Space(1)
-               TxtX = X
+               x = x & Space(1)
+               TxtX = x
             End If
             
             If DWidth <= 6 Then
-               PrintString = PrintString & Space(6 - DWidth) & X
+               PrintString = PrintString & Space(6 - DWidth) & x
                TextString = TextString & Quote & Space(6 - DWidth) & TxtX & Quote & Comma
             Else
-               PrintString = PrintString & X
+               PrintString = PrintString & x
                TextString = TextString & Quote & TxtX & Quote & Comma
             End If
             
@@ -553,17 +553,17 @@ Dim TxtX As String
                
             If PrintValue(pi) <> 0 Then
             
-                X = Format(Abs(PrintValue(pi)), "##0.0")
+                x = Format(Abs(PrintValue(pi)), "##0.0")
 
                 If PrintValue(pi) < 0 Then
-                   X = X & "-"
+                   x = x & "-"
                    TxtX = "-" & Format(Abs(PrintValue(pi)), "##0.0")
                 Else
-                   X = X & Space(1)
-                   TxtX = X
+                   x = x & Space(1)
+                   TxtX = x
                 End If
             
-                X = Format(Abs(PrintValue(pi)), "##0.0")
+                x = Format(Abs(PrintValue(pi)), "##0.0")
             
                 DWidth = 4  ' 0.0-
                 DExp = 1
@@ -573,7 +573,7 @@ Dim TxtX As String
                   DWidth = DWidth + 1
                 Loop
             
-                PrintString = PrintString & Space(6 - DWidth) & X
+                PrintString = PrintString & Space(6 - DWidth) & x
                 
                 TextString = TextString & Quote & Space(6 - DWidth) & TxtX & Quote & Comma
             
@@ -597,26 +597,26 @@ Dim TxtX As String
             Loop
             DWidth = DWidth + CCount       ' add in the comma count
                
-            X = Format(Abs(PrintValue(pi)), "##,###,##0")
+            x = Format(Abs(PrintValue(pi)), "##,###,##0")
 
             If PrintValue(pi) < 0 Then
-               X = X & "-"
+               x = x & "-"
                TxtX = "-" & Format(Abs(PrintValue(pi)), "##,###,##0")
             Else
-               X = X & Space(1)
-               TxtX = X
+               x = x & Space(1)
+               TxtX = x
             End If
             
-            PrintString = PrintString & Space(14 - DWidth) & X
+            PrintString = PrintString & Space(14 - DWidth) & x
             
             TextString = TextString & Comma & Space(14 - DWidth) & TxtX & Quote & Comma
             
          Case "n"
                
-            X = Format(Abs(PrintValue(pi)), "########0")
+            x = Format(Abs(PrintValue(pi)), "########0")
                         
-            PrintString = PrintString & Space(FValue - Len(X)) & X
-            TextString = TextString & Quote & Space(FValue - Len(X)) & X & Quote & Comma
+            PrintString = PrintString & Space(FValue - Len(x)) & x
+            TextString = TextString & Quote & Space(FValue - Len(x)) & x & Quote & Comma
             
          Case Else
             
@@ -661,7 +661,7 @@ Dim TxtX As String
 
 End Sub
 
-Public Function cmdline(ByVal X As String, _
+Public Function cmdline(ByVal x As String, _
                         ByRef ID As Long, _
                         ByRef Password As String, _
                         ByRef Prog As String, _
@@ -688,20 +688,20 @@ Dim Y As String
     I = 0
     Do
         Posn = Posn + 1
-        If Posn > Len(X) Then Exit Do
-        If Mid(X, Posn, 1) = "/" Then
+        If Posn > Len(x) Then Exit Do
+        If Mid(x, Posn, 1) = "/" Then
            If ItemCount = 1 Then ID = Y
            If ItemCount = 2 Then Password = Y
            If ItemCount = 3 Then Prog = Y
            If ItemCount = 4 Then SysFile = Y
            If ItemCount = 5 Then User = Y
            ItemCount = ItemCount + 1
-           If Mid(X, Posn + 1, 1) <> "/" Then
+           If Mid(x, Posn + 1, 1) <> "/" Then
               Posn = Posn + 1
            End If
            Y = ""
         End If
-        Y = Y & Mid(X, Posn, 1)
+        Y = Y & Mid(x, Posn, 1)
     Loop
     
     If ItemCount = 5 Then User = Y
@@ -804,19 +804,19 @@ Public Sub GoBack()
     ' return call if given
     If BackName <> "" Then
                 
-        X = BackName & " UserID=" & UserID & _
+        x = BackName & " UserID=" & UserID & _
             " dbPwd=" & dbPwd & _
             " OpenTab=" & OpenTab & _
             " MenuName=" & MenuName
             
         If BalintFolder <> "" Then
-            X = X & " BalintFolder=" & BalintFolder
+            x = x & " BalintFolder=" & BalintFolder
         End If
 
         If InStr(1, LCase(BackName), "glmenu.exe") > 0 Then
-            TaskID = Shell(X, vbMaximizedFocus)
+            TaskID = Shell(x, vbMaximizedFocus)
         Else
-            TaskID = Shell(X, vbNormalFocus)
+            TaskID = Shell(x, vbNormalFocus)
         End If
     
     End If
@@ -829,15 +829,15 @@ Public Sub gGoBack()
    
    ' return call if given
    If BackName <> "" Then
-      X = BackName & " UserID=" & UserID & " OpenTab=" & OpenTab
+      x = BackName & " UserID=" & UserID & " OpenTab=" & OpenTab
       If BalintFolder <> "" Then
-          X = X & " BalintFolder=" & BalintFolder
+          x = x & " BalintFolder=" & BalintFolder
       End If
       If dbPwd <> "" Then
-          X = Trim(X) & " dbPwd=" & dbPwd
+          x = Trim(x) & " dbPwd=" & dbPwd
       End If
       
-      TaskID = Shell(X, vbMaximizedFocus)
+      TaskID = Shell(x, vbMaximizedFocus)
    End If
 
    End

@@ -318,7 +318,7 @@ Dim nRequest As Long
 Dim index As Long
 Dim ct As Long
 
-Dim I, j, k, l As Long
+Dim I, J, K, l As Long
 Dim x, Y, z As String
 
 Dim GLHAccount As Long
@@ -515,7 +515,7 @@ Dim glJS As Byte
     x = "\Balint\GLUtil.exe " & _
         "SysFile=\Balint\Data\GLSystem.mdb " & _
         "UserID=" & GLUser.ID & " " & _
-        "BackName=\Balint\GLEntry.exe " & _
+        "BackName=\Balint\GLEntryADO.exe " & _
         "ProgName=UpdateB " & _
         "MenuName=" & MenuName & _
         "Batch=" & BatchNumberC

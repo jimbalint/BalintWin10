@@ -2,7 +2,7 @@ VERSION 5.00
 Object = "{A49CE0E0-C0F9-11D2-B0EA-00A024695830}#1.0#0"; "tidate8.ocx"
 Object = "{49CBFCC0-1337-11D2-9BBF-00A024695830}#1.0#0"; "tinumb8.ocx"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
-Begin VB.Form BatchForm 
+Begin VB.Form BatchFormNew 
    Caption         =   " BATCH RECORD"
    ClientHeight    =   9585
    ClientLeft      =   60
@@ -17,29 +17,13 @@ Begin VB.Form BatchForm
       Italic          =   0   'False
       Strikethrough   =   0   'False
    EndProperty
-   Icon            =   "BatchForm.frx":0000
+   Icon            =   "BatchFormNew.frx":0000
    KeyPreview      =   -1  'True
    LinkTopic       =   "Form1"
    ScaleHeight     =   5855.564
    ScaleMode       =   0  'User
    ScaleWidth      =   11130
    StartUpPosition =   2  'CenterScreen
-   Begin VB.CheckBox chkCustomQB 
-      Caption         =   "Custom QB"
-      Height          =   375
-      Left            =   480
-      TabIndex        =   45
-      Top             =   9000
-      Width           =   1695
-   End
-   Begin VB.TextBox txtOutputFile 
-      Height          =   375
-      Left            =   7320
-      TabIndex        =   44
-      ToolTipText     =   "Output QB detail to ..."
-      Top             =   9000
-      Width           =   3375
-   End
    Begin VB.Frame fraQBBasis 
       Caption         =   "  Basis  "
       Height          =   735
@@ -79,8 +63,8 @@ Begin VB.Form BatchForm
          _Version        =   65536
          _ExtentX        =   4683
          _ExtentY        =   661
-         Calculator      =   "BatchForm.frx":030A
-         Caption         =   "BatchForm.frx":032A
+         Calculator      =   "BatchFormNew.frx":030A
+         Caption         =   "BatchFormNew.frx":032A
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "MS Sans Serif"
             Size            =   9.75
@@ -90,9 +74,9 @@ Begin VB.Form BatchForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "BatchForm.frx":0392
-         Keys            =   "BatchForm.frx":03B0
-         Spin            =   "BatchForm.frx":03FA
+         DropDown        =   "BatchFormNew.frx":0392
+         Keys            =   "BatchFormNew.frx":03B0
+         Spin            =   "BatchFormNew.frx":03FA
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -227,7 +211,7 @@ Begin VB.Form BatchForm
    Begin VB.CommandButton cmdFileOpen 
       Height          =   375
       Left            =   7800
-      Picture         =   "BatchForm.frx":0422
+      Picture         =   "BatchFormNew.frx":0422
       Style           =   1  'Graphical
       TabIndex        =   13
       Top             =   6240
@@ -264,8 +248,8 @@ Begin VB.Form BatchForm
       _Version        =   65536
       _ExtentX        =   2566
       _ExtentY        =   661
-      Calendar        =   "BatchForm.frx":072C
-      Caption         =   "BatchForm.frx":0844
+      Calendar        =   "BatchFormNew.frx":072C
+      Caption         =   "BatchFormNew.frx":0844
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   9.75
@@ -275,9 +259,9 @@ Begin VB.Form BatchForm
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      DropDown        =   "BatchForm.frx":08B0
-      Keys            =   "BatchForm.frx":08CE
-      Spin            =   "BatchForm.frx":092C
+      DropDown        =   "BatchFormNew.frx":08B0
+      Keys            =   "BatchFormNew.frx":08CE
+      Spin            =   "BatchFormNew.frx":092C
       AlignHorizontal =   0
       AlignVertical   =   0
       Appearance      =   1
@@ -438,8 +422,8 @@ Begin VB.Form BatchForm
       _Version        =   65536
       _ExtentX        =   2566
       _ExtentY        =   661
-      Calendar        =   "BatchForm.frx":0954
-      Caption         =   "BatchForm.frx":0A6C
+      Calendar        =   "BatchFormNew.frx":0954
+      Caption         =   "BatchFormNew.frx":0A6C
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "MS Sans Serif"
          Size            =   9.75
@@ -449,9 +433,9 @@ Begin VB.Form BatchForm
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      DropDown        =   "BatchForm.frx":0AD8
-      Keys            =   "BatchForm.frx":0AF6
-      Spin            =   "BatchForm.frx":0B54
+      DropDown        =   "BatchFormNew.frx":0AD8
+      Keys            =   "BatchFormNew.frx":0AF6
+      Spin            =   "BatchFormNew.frx":0B54
       AlignHorizontal =   0
       AlignVertical   =   0
       Appearance      =   1
@@ -691,7 +675,7 @@ Begin VB.Form BatchForm
       Width           =   5775
    End
 End
-Attribute VB_Name = "BatchForm"
+Attribute VB_Name = "BatchFormNew"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -702,10 +686,9 @@ Dim PRGlobalID As Long
 Dim SQLStr As String
 
 Public BatchNumber As Long
-' Dim bat As New rBatch
+Dim bat As New rBatch
 Public userOK As Boolean
 Dim jou As New XArrayDB
-
 Dim xdbGLAccount As New XArrayDB
 
 ' Dim qbXMLCOM As QBXMLRP2Lib.RequestProcessor2
@@ -733,8 +716,8 @@ Dim nRequest As Long
 Dim index As Long
 Dim ct As Long
 
-Dim I, J, K, l, m As Long
-Dim x, Y, z As String
+Dim i, j, k, l, m As Long
+Dim x, y, z As String
 
 Dim GLHAccount As Long
 Dim GLHFiscalYear As Integer
@@ -758,7 +741,6 @@ Dim TotalCredits As Currency
 Dim RecordCount As Long
 
 Dim IconType As Integer
-Dim rs As New ADODB.Recordset
 
 Dim rsAcctSum As New ADODB.Recordset
 
@@ -792,30 +774,8 @@ Dim xRow, AcctLen As Long
     
     Response = False
     
-' =================================================================================
     ' *** moved from init to here so default selection works ***
-    ' Set xdbGLAccount = xFactory.GetAccounts(FileName, "0")
-    
-    ' load the account drop down array with posting accts - type = "0"
-    ' GLAccount.OpenRS
-    If GLAccount.GetAcctsByType("0") = False Then
-        MsgBox "No type 0 accounts found!", vbExclamation
-        GoBack
-    End If
-    
-    xdbGLAccount.ReDim 0, GLAccount.RecCt, 0, 1
-    I = 0
-    Do
-        xdbGLAccount(I, 0) = GLAccount.Account
-        
-        ' 2020-07-29
-        ' AcctArray(I, 1) = GLAccount.Description
-        xdbGLAccount(I, 1) = GLAccount.FullDesc
-        I = I + 1
-        
-        If GLAccount.GetNext = False Then Exit Do
-    Loop
-    
+    Set xdbGLAccount = xFactory.GetAccounts(FileName, "0")
     With Me.cmbSuspAcct
         .AddItem ""
         .ItemData(.NewIndex) = 0
@@ -839,6 +799,44 @@ Dim xRow, AcctLen As Long
         Next xRow
         .ListIndex = 0
     End With
+    
+'    With Me.tdbcmbSuspAcct
+'        .Array = xdbGLAccount
+'        .ScrollBars = dblVertical
+'        .ColumnHeaders = False
+'        .Caption = "Department Name/#"
+'        .AutoCompletion = True
+'        .AutoDropDown = True
+'        .LimitToList = True
+'        .Columns(0).Width = 1200
+'        .Columns(1).Width = 3000
+'        .AlternatingRowStyle = True
+'        .EvenRowStyle.BackColor = &H8000000F
+'    End With
+'    ' set to default?
+'    If Not IsNull(com.SuspAcct) Then
+'        If com.SuspAcct <> 0 Then
+'            j = xdbGLAccount.Find(0, 0, com.SuspAcct, XORDER_ASCEND, XCOMP_EQ, XTYPE_LONG)
+'            If j >= 0 Then
+'                Me.tdbcmbSuspAcct.SelectedItem = j
+'            End If
+'        End If
+'    End If
+'
+'    ' use for the checking acct field also
+'    With Me.tdbcmbCheckingAcct
+'        .Array = xdbGLAccount
+'        .ScrollBars = dblVertical
+'        .ColumnHeaders = False
+'        .Caption = "Department Name/#"
+'        .AutoCompletion = True
+'        .AutoDropDown = True
+'        .LimitToList = True
+'        .Columns(0).Width = 1200
+'        .Columns(1).Width = 3000
+'        .AlternatingRowStyle = True
+'        .EvenRowStyle.BackColor = &H8000000F
+'    End With
     
     ' hide the QuickBook fields by default
     QBShow False
@@ -879,25 +877,25 @@ End Sub
 
 Private Sub cmbFiscalYear_Click()
     
-Dim I As Integer
+Dim i As Integer
 Dim v As Variant
-Dim FY As Integer
+Dim fy As Integer
 
     Me.cmbPeriod.Clear
-    FY = CInt(cmbFiscalYear)
+    fy = CInt(cmbFiscalYear)
       
-    If GLCompany.FirstPeriod = 1 Then
-       v = DateSerial(FY, GLCompany.FirstPeriod, 1)
+    If com.FirstPeriod = 1 Then
+       v = DateSerial(fy, com.FirstPeriod, 1)
     Else
-       v = DateSerial(FY - 1, GLCompany.FirstPeriod, 1)
+       v = DateSerial(fy - 1, com.FirstPeriod, 1)
     End If
 
     cmbPeriod.AddItem "Pd. #:1" & " - " & Format(v, "mmmm-yyyy")
     
-    For I = 1 To 11
+    For i = 1 To 11
         v = DateSerial(Year(v), Month(v) + 1, 1)
-        cmbPeriod.AddItem "Pd. #:" & I + 1 & " - " & Format(v, "mmmm-yyyy")
-    Next I
+        cmbPeriod.AddItem "Pd. #:" & i + 1 & " - " & Format(v, "mmmm-yyyy")
+    Next i
     
     cmbPeriod.ListIndex = 0
     
@@ -906,10 +904,10 @@ Dim FY As Integer
 '    Dim ndx, fy As Integer
 '
 '    fy = CInt(cmbFiscalYear)
-'    For ndx = 1 To glcompany.NumberPds
-'        cmbPeriod.AddItem glcompany.MonthName(ndx, fy)
+'    For ndx = 1 To com.NumberPds
+'        cmbPeriod.AddItem com.MonthName(ndx, fy)
 '    Next ndx
-'    cmbPeriod.ListIndex = glbatch.period - 1
+'    cmbPeriod.ListIndex = bat.period - 1
 
 End Sub
 
@@ -990,45 +988,21 @@ Private Sub cmdOK_Click()
     End If
     
     userOK = True
-'    bat.FiscalYear = CLng(cmbFiscalYear)
-'    bat.Period = cmbPeriod.ListIndex + 1
-'    bat.JournalSource = jou.Value(cmbJournal.ListIndex + 1, 0)
-    ' add 100 to the journal source number if budget entry
-'    If chkBudget Then bat.JournalSource = bat.JournalSource + 100
-    
-    GLBatch.FiscalYear = CLng(cmbFiscalYear)
-    GLBatch.Period = cmbPeriod.ListIndex + 1
-'    GLBatch.JournalSource = jou.Value(cmbJournal.ListIndex + 1, 0)
-    GLBatch.JournalSource = Me.cmbJournal.ItemData(cmbJournal.ListIndex)
+    bat.fiscalYear = CLng(cmbFiscalYear)
+    bat.period = cmbPeriod.ListIndex + 1
+    bat.JournalSource = jou.Value(cmbJournal.ListIndex + 1, 0)
     
     ' add 100 to the journal source number if budget entry
-    If chkBudget Then GLBatch.JournalSource = GLBatch.JournalSource + 100
-    
-    ' 2020-07-28
-    GLBatch.Created = Now
-    GLBatch.Updated = Now
-    GLBatch.UpdateUser = GLUser.ID
-    GLBatch.CreateUser = GLUser.ID
-    
-    BatchNumber = GLBatch.BatchNumber
-    
-    GLBatch.Save (Equate.RecPut)
+    If chkBudget Then bat.JournalSource = bat.JournalSource + 100
     
 '    bat.debits = CCur(txtDebits)
 '    bat.credits = CCur(txtCredits)
 '    bat.nRecords = CLng(txtRecords)
-'
-'    bat.Updated = Now
-'    bat.UpdateUser = curUser
-'    bat.PutRecord bat.BatchNumber, FileName
     
+    bat.Updated = Now
+    bat.updateUser = curUser
+    bat.PutRecord bat.BatchNumber, FileName
     Response = True
-    
-    ' re-get the batch
-    If GLBatch.GetBatch(BatchNumber) = False Then
-        MsgBox "GL Batch error: " & BatchNumber, vbExclamation
-        GoBack
-    End If
     
     Me.Hide
     
@@ -1045,21 +1019,14 @@ Dim ndx As Long
 Dim CurFY As Integer
     
     userOK = False
-    
-    If GLBatch.GetBatch(BatchNumber) = False Then
-        MsgBox "Batch not found?: ", vbExclamation
-        GoBack
-    End If
-    
-    Dim booUser As Boolean
-    booUser = GLUser.GetByID(GLBatch.CreateUser)
-    txtCompanyName = GLCompany.Name
-    lblBatchNumber = "Batch # " & GLBatch.BatchNumber
-    lblCreated = "Created by " & GLUser.Name & " on " & ShowDate(GLBatch.Created)
+    bat.GetBatch BatchNumber, FileName
+    txtCompanyName = com.Name
+    lblBatchNumber = "Batch # " & bat.BatchNumber
+    lblCreated = "Created by " & UserName(bat.createUser) & " on " & ShowDate(bat.Created)
     lblUpdated = "Record is OPEN (Not Updated)"
-    txtRecord = "RECORD COUNT = " & CStr(GLBatch.RecCt)
-    txtDebits = "DEBITS = " & Format(GLBatch.Debits, "#.00")
-    txtCredits = "CREDITS = " & Format(GLBatch.Credits, "#.00")
+    txtRecord = "RECORD COUNT = " & CStr(bat.nRecords)
+    txtDebits = "DEBITS = " & Format(bat.debits, "#.00")
+    txtCredits = "CREDITS = " & Format(bat.credits, "#.00")
     
     
 '    For ndx = com.FirstFiscalYear To Year(Now) + 1
@@ -1069,9 +1036,9 @@ Dim CurFY As Integer
 '    'if bat.fiscalYear=0 then
 '    cmbFiscalYear = bat.fiscalYear
     
-    CurFY = Int(GLCompany.LastClose / 10 ^ 4)
-    If Int(GLCompany.LastClose / 100) Mod 100 <> 1 Then CurFY = CurFY + 1
-    If CurFY < 1990 Or CurFY > 2040 Then CurFY = Year(Now())
+    CurFY = Int(com.LastClose / 10 ^ 4)
+    If Int(com.LastClose / 100) Mod 100 <> 1 Then CurFY = CurFY + 1
+    If CurFY < 1990 Or CurFY > 2020 Then CurFY = Year(Now())
     
     For ndx = CurFY + 1 To CurFY - 5 Step -1
         cmbFiscalYear.AddItem ndx
@@ -1085,22 +1052,14 @@ Dim CurFY As Integer
 ''    cmbPeriod.ListIndex = bat.period - 1
 '    cmbPeriod.ListIndex = 0
     
-    SQLString = " SELECT * FROM GLJournal ORDER BY JournalSource "
-    If GLJournal.GetBySQL(SQLString) = False Then
-        MsgBox "No GLJournal records found?: ", vbExclamation
-        GoBack
-    End If
+    Set jou = xFactory.GetJournals(FileName)
     
-    ndx = 0
-    Do
-        ndx = ndx + 1
-        cmbJournal.AddItem (CStr(GLJournal.JournalSource) & "-" & GLJournal.JournalName)
-        cmbJournal.ItemData(cmbJournal.NewIndex) = GLJournal.JournalSource
-'        If jou.Value(ndx, 0) = GLBatch.JournalSource Then
-'            cmbJournal.ListIndex = ndx - 1
-'        End If
-        If GLJournal.GetNext = 0 Then Exit Do
-    Loop
+    For ndx = 1 To jou.UpperBound(1)
+        cmbJournal.AddItem (CStr(jou.Value(ndx, 0)) & "-" & jou.Value(ndx, 1))
+        If jou.Value(ndx, 0) = bat.JournalSource Then
+            cmbJournal.ListIndex = ndx - 1
+        End If
+    Next ndx
 
     Response = False
 
@@ -1177,21 +1136,21 @@ Dim yr As Integer
        
         If Me.cmbFiscalYear.ListIndex <> -1 And Me.cmbPeriod.ListIndex <> -1 Then
               
-          If GLCompany.FirstPeriod = 1 Then        ' Jan is the first period
-             Mo = Me.cmbPeriod.ListIndex + 1
-             Me.TDBDate1 = DateSerial(Me.cmbFiscalYear, Mo, 1)
-             Me.TDBDate2 = LastDay(Me.cmbFiscalYear, Mo)
-          Else
-             Mo = Me.cmbPeriod.ListIndex + GLCompany.FirstPeriod    ' the list index is zero based
-             If Mo <= 12 Then
-                yr = Me.cmbFiscalYear - 1
-             Else
-                yr = Me.cmbFiscalYear
-                Mo = Me.cmbPeriod.ListIndex - 12 + GLCompany.FirstPeriod
-             End If
-             Me.TDBDate1 = DateSerial(yr, Mo, 1)
-             Me.TDBDate2 = LastDay(yr, Mo)
-          End If
+            If com.FirstPeriod = 1 Then        ' Jan is the first period
+                Mo = Me.cmbPeriod.ListIndex + 1
+                Me.TDBDate1 = DateSerial(Me.cmbFiscalYear, Mo, 1)
+                Me.TDBDate2 = LastDay(Me.cmbFiscalYear, Mo)
+            Else
+                Mo = Me.cmbPeriod.ListIndex + com.FirstPeriod    ' the list index is zero based
+                If Mo <= 12 Then
+                    yr = Me.cmbFiscalYear - 1
+                Else
+                    yr = Me.cmbFiscalYear
+                    Mo = Me.cmbPeriod.ListIndex - 12 + com.FirstPeriod
+                End If
+                Me.TDBDate1 = DateSerial(yr, Mo, 1)
+                Me.TDBDate2 = LastDay(yr, Mo)
+            End If
        
         End If
         
@@ -1260,27 +1219,25 @@ Private Sub QBInit()
     Me.Hide
     MainMenu.Hide
 
-    ' frmProgress.lblMsg1 = GLCompany.Name
-    frmProgress.lblMsg1 = GLCompany.Name
+    frmProgress.lblMsg1 = com.Name
     frmProgress.lblMsg2 = "Now loading QuickBooks Data ..."
     frmProgress.Show
     
     ' connect to the data base with ADO
     ' x = Mid(App.Path, 1, 2) & Mid(com.FileName, 3, Len(com.FileName) - 2)
     ' open the company database
-    ' 2020-08-13 - already connected
-'    If BalintFolder = "" Then
-'        x = Mid(App.Path, 1, 2) & Mid(GLCompany.FileName, 3, Len(GLCompany.FileName) - 2)
-'    Else
-'        x = BalintFolder & "\Data\" & mdbName(GLCompany.FileName)
-'    End If
-'    CNOpen x, Password
+    If BalintFolder = "" Then
+        x = Mid(App.Path, 1, 2) & Mid(com.FileName, 3, Len(com.FileName) - 2)
+    Else
+        x = BalintFolder & "\Data\" & mdbName(com.FileName)
+    End If
+    CNOpen x, Password
 
     ' open a record set to the GLHistory file
-    rsInit "SELECT * FROM GLHistory", cn, rs
+    rsInit "SELECT * FROM GLHistory", Cn, rs
     
     frmProgress.Caption = "Opening QB Session"
-    frmProgress.lblMsg1 = GLCompany.Name
+    frmProgress.lblMsg1 = com.Name
     frmProgress.lblMsg2 = "Now opening QuickBooks Session .... "
     frmProgress.Show
     
@@ -1292,7 +1249,7 @@ Private Sub QBInit()
 'MsgBox "a"
 
     frmProgress.Caption = "Begin QB Session"
-    frmProgress.lblMsg1 = GLCompany.Name
+    frmProgress.lblMsg1 = com.Name
     frmProgress.lblMsg2 = "Now Beginning QuickBooks Session .... "
     frmProgress.Show
     
@@ -1303,14 +1260,14 @@ Private Sub QBInit()
 '    strTicket = SessMgr.BeginSession("", openMode)
     
     frmProgress.Caption = "Get QB Chart of Accounts"
-    frmProgress.lblMsg1 = GLCompany.Name
+    frmProgress.lblMsg1 = com.Name
     frmProgress.lblMsg2 = "Now Getting QB Chart of Accounts"
     frmProgress.Show
 
     QBGetAccounts
     
     frmProgress.Caption = "Gather QB Detail Data"
-    frmProgress.lblMsg1 = GLCompany.Name
+    frmProgress.lblMsg1 = com.Name
     frmProgress.lblMsg2 = "Now GatheringQB Detail Data"
     frmProgress.Show
     
@@ -1334,10 +1291,14 @@ End Sub
 Private Sub QBLoadGLData()
 
     ' ***** create dump text file
-    If Me.txtOutputFile.text <> "" Then
-        TextChannel = FreeFile
-        Open Me.txtOutputFile.text For Output As #TextChannel
-    End If
+'    If BalintFolder = "" Then
+'        x = Mid(App.Path, 1, 2) & "\Balint\Data\qbgl.txt"
+'    Else
+'        x = BalintFolder & "\Data\qbgl.txt"
+'    End If
+'    TextChannel = FreeFile
+'
+'    Open x For Output As #TextChannel
     
     Quote = """"
     Comma = ","
@@ -1418,12 +1379,10 @@ Private Sub QBLoadGLData()
                     If (Not colTitle8.Value Is Nothing) Then
                         Dim Value10 As String
                         Value10 = colTitle8.Value.GetValue
-                                            
-                        If Me.txtOutputFile.text <> "" Then
-                            TextLine = Quote & index & Quote & Comma & Quote
-                            TextLine = TextLine & Value10 & Quote
-                            Print #TextChannel, TextLine
-                        End If
+                    
+'                        TextLine = Quote & index & Quote & Comma & Quote
+'                        TextLine = TextLine & Value10 & Quote
+'                        Print #TextChannel, TextLine
                         
                         ' MsgBox Value10 & vbCr & index
                         
@@ -1444,10 +1403,10 @@ Private Sub QBLoadGLData()
     End If
     
     ' update the batch record
-    GLBatch.Debits = TotalDebits
-    GLBatch.Credits = TotalCredits
-    GLBatch.RecCt = RecordCount
-    GLBatch.Save (Equate.RecPut)
+    bat.debits = TotalDebits
+    bat.credits = TotalCredits
+    bat.nRecords = RecordCount
+    bat.PutRecord bat.BatchNumber, FileName
     
     ' update to GLH if summary option was chosen
     If Me.optQBSummary And rsAcctSum.RecordCount > 0 Then
@@ -1465,15 +1424,13 @@ Private Sub QBLoadGLData()
     ' close the ADO record set and connection
     rs.Close
     Set rs = Nothing
-'    cn.Close
-'    Set cn = Nothing
+    Cn.Close
+    Set Cn = Nothing
 
     rsAcctSum.Close
     Set rsAcctSum = Nothing
 
-    If Me.txtOutputFile.text <> "" Then
-        Close #TextChannel
-    End If
+'    Close #TextChannel
 
 End Sub
 
@@ -1481,7 +1438,7 @@ Private Sub QBProcessGLLine(orReportData As QBFC13Lib.IORReportData)
     
 Dim colDataList As QBFC13Lib.IColDataList
 Dim colData As QBFC13Lib.IColData
-Dim ColType As QBFC13Lib.IColDataList
+Dim colType As QBFC13Lib.IColDataList
 
 Dim ndxEmp As Integer
 Dim SSN As String
@@ -1499,10 +1456,10 @@ Dim ii, jj As Long
     
     ' init the GLH variables
     GLHFiscalYear = Me.cmbFiscalYear
-    GLHPeriod = GLBatch.Period
-    GLHBatchNumber = GLBatch.BatchNumber
+    GLHPeriod = bat.period
+    GLHBatchNumber = bat.BatchNumber
     GLHSourceCode = 0
-    GLHJournalSource = GLBatch.JournalSource
+    GLHJournalSource = bat.JournalSource
     GLHHistType = "A"
     GLHUpdateFlag = True
     GLHReference = ""
@@ -1533,66 +1490,61 @@ Dim ii, jj As Long
             If colData.Value Is Nothing Then Exit Sub
 '            If colData.Value.GetValue() = "Checking" Then Exit Sub
                 
-            For I = 0 To colDataList.Count - 1
-                Set colData = colDataList.GetAt(I)
+            For i = 0 To colDataList.Count - 1
+                Set colData = colDataList.GetAt(i)
                 If (Not colData.Value Is Nothing) Then
                        
-                    J = colData.colID.GetValue
-                    Y = Trim(colData.Value.GetValue)
+                    j = colData.colID.GetValue
+                    y = Trim(colData.Value.GetValue)
                            
                     ' *************************************************
                     ' translation for Richlak
                     ' xxxxx If j = 8 Then j = 1     ' account number xxxxx
 
-                    If Me.chkCustomQB Then
-                        If J = 9 Then       ' DEBIT amount
-                            J = 8
-                            DrCr = "Dr"
-                        End If
-    
-                        If J = 10 Then      ' CREDIT amount
-                            J = 8
-                            DrCr = "Cr"
-                        End If
-    
-                        If J = 11 Then J = 9    ' balance - last field
+                    If j = 9 Then       ' DEBIT amount
+                        j = 8
+                        DrCr = "Dr"
                     End If
-                    
+
+                    If j = 10 Then      ' CREDIT amount
+                        j = 8
+                        DrCr = "Cr"
+                    End If
+
+                    If j = 11 Then j = 9    ' balance - last field
                     ' *************************************************
                     
 '                    ' jb
-                    If Me.txtOutputFile.text <> "" Then
-                        TextLine = Quote & I & Quote & Comma & Quote
-                        TextLine = TextLine & J & Quote & Comma & Quote
-                        TextLine = TextLine & Y & Quote & Comma & Quote
-                        TextLine = TextLine & x & Quote
-                        Print #TextChannel, TextLine
-                    End If
+'                    TextLine = Quote & i & Quote & Comma & Quote
+'                    TextLine = TextLine & j & Quote & Comma & Quote
+'                    TextLine = TextLine & y & Quote & Comma & Quote
+'                    TextLine = TextLine & x & Quote
+'                    Print #TextChannel, TextLine
                    
                     ' 11/29/10 - addl message tracking
-                    frmProgress.lblMsg3 = "QB Status: " & I & "/" & J & "/" & Y
+                    frmProgress.lblMsg3 = "QB Status: " & i & "/" & j & "/" & y
                     frmProgress.Refresh
-
-                    If J = 1 Then           ' start of a new account
+                   
+                    If j = 1 Then           ' start of a new account
                         
                         ' look for first space in string
                         x = ""
                         ii = 1
                         Do
-                            If Mid(Y, ii, 1) = " " Then Exit Do
-                            x = Trim(x) & Mid(Y, ii, 1)
+                            If Mid(y, ii, 1) = " " Then Exit Do
+                            x = Trim(x) & Mid(y, ii, 1)
                             ii = ii + 1
-                            If ii > Len(Trim(Y)) Then Exit Do
+                            If ii > Len(Trim(y)) Then Exit Do
                             
                         Loop
                                                                         
                         If IsNumeric(x) Then        ' QB uses accounts numbers
-                            K = xdbAccts.Find(1, 4, x, XORDER_ASCEND, XCOMP_EQ, XTYPE_STRING)
+                            k = xdbAccts.Find(1, 4, x, XORDER_ASCEND, XCOMP_EQ, XTYPE_STRING)
                         Else                        ' find by unique QB account name - acct# in description
-                            K = xdbAccts.Find(1, 0, x, XORDER_ASCEND, XCOMP_EQ, XTYPE_STRING)
+                            k = xdbAccts.Find(1, 0, x, XORDER_ASCEND, XCOMP_EQ, XTYPE_STRING)
                         End If
                         
-                        If K = -1 Then     ' not found in QB COA ???
+                        If k = -1 Then     ' not found in QB COA ???
                             If Me.cmbSuspAcct.ListIndex = 0 Then
                                 GLHAccount = 0
                             Else
@@ -1600,7 +1552,7 @@ Dim ii, jj As Long
                             End If
                         Else
                             
-                            l = xdbAccts.Value(K, 4)
+                            l = xdbAccts.Value(k, 4)
                             
                             ' acct number translation if selected
                             If Me.chkAcctTranslate And Me.tdbAcctTranslateValue.Value > 0 Then
@@ -1615,8 +1567,12 @@ Dim ii, jj As Long
                             m = xdbGLAccount.Find(0, 0, l, XORDER_ASCEND, XCOMP_EQ, XTYPE_LONG)
                             
                             If m >= 0 Then
+                                
+                            
                                 GLHAccount = l
+                            
                             Else
+                                
                                 If Me.cmbSuspAcct.ListIndex = 0 Then
                                     GLHAccount = 0
                                 Else
@@ -1625,23 +1581,23 @@ Dim ii, jj As Long
                             End If
                         End If
                     
-                    ElseIf J = 2 Then       ' type
-                    ElseIf J = 3 Then       ' date
-                    ElseIf J = 4 Then       ' check/inv num
-                        GLHReference = Y
-                    ElseIf J = 5 Then       ' name
-                        GLHDescription = Y
-                    ElseIf J = 6 Then       ' memo
+                    ElseIf j = 2 Then       ' type
+                    ElseIf j = 3 Then       ' date
+                    ElseIf j = 4 Then       ' check/inv num
+                        GLHReference = y
+                    ElseIf j = 5 Then       ' name
+                        GLHDescription = y
+                    ElseIf j = 6 Then       ' memo
                         ' use it if the name is not assigned
                         If GLHDescription = "" Then
-                            GLHDescription = Y
+                            GLHDescription = y
                         End If
-                    ElseIf J = 7 Then       ' split
-                    ElseIf J = 8 Then       ' amount
-                        If IsNumeric(Y) Then
-                            GLHAmount = CCur(Y)
+                    ElseIf j = 7 Then       ' split
+                    ElseIf j = 8 Then       ' amount
+                        If IsNumeric(y) Then
+                            GLHAmount = CCur(y)
                         End If
-                    ElseIf J = 9 Then       ' balance
+                    ElseIf j = 9 Then       ' balance
                         If GLHAmount <> 0 Then
                             
 '                            ' richlak - compare the balance to determing dr or cr
@@ -1674,15 +1630,15 @@ Dim ii, jj As Long
                         End If
                         
                         ' store the run bal for next time
-                        If IsNumeric(Y) Then
-                            RunBal = CCur(Y)
+                        If IsNumeric(y) Then
+                            RunBal = CCur(y)
                         End If
                         
                         GLHAmount = 0
                     End If
                 
                 End If
-            Next I
+            Next i
             
     End Select
         
@@ -1757,9 +1713,9 @@ Private Sub QBLoadCheckData()
     ' create the offset entry
     If Me.chkQBChecking Then                ' use the bank accounts from QB
         
-        For I = 1 To xdbAccts.UpperBound(1)
-            If xdbAccts(I, 3) = "Bank" Then
-               GLHAccount = xdbAccts(I, 4)
+        For i = 1 To xdbAccts.UpperBound(1)
+            If xdbAccts(i, 3) = "Bank" Then
+               GLHAccount = xdbAccts(i, 4)
                
                 ' acct number translation if selected
                 If Me.chkAcctTranslate And Me.tdbAcctTranslateValue.Value > 0 Then
@@ -1770,13 +1726,13 @@ Private Sub QBLoadCheckData()
                     End If
                 End If
                
-               GLHAmount = xdbAccts(I, 2)
-               GLHReference = xdbAccts(I, 0)
+               GLHAmount = xdbAccts(i, 2)
+               GLHReference = xdbAccts(i, 0)
                GLHDescription = "QB " & Format(Now(), "mm/dd/yyyy")
                GLHUpdateFlag = True
                QBAddGLH
             End If
-        Next I
+        Next i
     
     Else            ' total amount to the account specified
         
@@ -1795,16 +1751,16 @@ Private Sub QBLoadCheckData()
     End If
         
     ' update the batch record
-    GLBatch.Debits = TotalDebits
-    GLBatch.Credits = TotalCredits
-    GLBatch.RecCt = RecordCount
-    GLBatch.Save (Equate.RecPut)
+    bat.debits = TotalDebits
+    bat.credits = TotalCredits
+    bat.nRecords = RecordCount
+    bat.PutRecord bat.BatchNumber, FileName
     
     ' close the ADO record set and connection
     rs.Close
     Set rs = Nothing
-'    cn.Close
-'    Set cn = Nothing
+    Cn.Close
+    Set Cn = Nothing
 
 End Sub
 
@@ -1813,7 +1769,7 @@ Private Sub QBProcessCheckLine(orReportData As QBFC13Lib.IORReportData)
     
 Dim colDataList As QBFC13Lib.IColDataList
 Dim colData As QBFC13Lib.IColData
-Dim ColType As QBFC13Lib.IColDataList
+Dim colType As QBFC13Lib.IColDataList
 
 Dim ndxEmp As Integer
 Dim SSN As String
@@ -1828,10 +1784,10 @@ Dim AcctNum As Long
     
     ' init the GLH variables
     GLHFiscalYear = Me.cmbFiscalYear
-    GLHPeriod = GLBatch.Period
-    GLHBatchNumber = GLBatch.BatchNumber
+    GLHPeriod = bat.period
+    GLHBatchNumber = bat.BatchNumber
     GLHSourceCode = 0
-    GLHJournalSource = GLBatch.JournalSource
+    GLHJournalSource = bat.JournalSource
     GLHHistType = "A"
     GLHUpdateFlag = True
     GLHReference = ""
@@ -1857,46 +1813,46 @@ Dim AcctNum As Long
             If colData.Value Is Nothing Then Exit Sub
 '            If colData.Value.GetValue() = "Checking" Then Exit Sub
 
-            For I = 0 To colDataList.Count - 1
-                Set colData = colDataList.GetAt(I)
+            For i = 0 To colDataList.Count - 1
+                Set colData = colDataList.GetAt(i)
                 If (Not colData.Value Is Nothing) Then
                    
-                   J = colData.colID.GetValue
-                   Y = colData.Value.GetValue
+                   j = colData.colID.GetValue
+                   y = colData.Value.GetValue
                    
-                   If J = 2 Then    ' check number
+                   If j = 2 Then    ' check number
                       
-                      GLHReference = Y
+                      GLHReference = y
                    
-                   ElseIf J = 4 Then       ' payee
+                   ElseIf j = 4 Then       ' payee
                       
-                      GLHDescription = Y
+                      GLHDescription = y
                    
-                   ElseIf J = 6 Then        ' account
+                   ElseIf j = 6 Then        ' account
                      
                       ' see if the account number is embedded
-                      K = InStr(1, Y, Chr(183), vbTextCompare)
-                      If K <> 0 Then
-                         x = Mid(Y, K + 2, Len(Y) - K + 2)
+                      k = InStr(1, y, Chr(183), vbTextCompare)
+                      If k <> 0 Then
+                         x = Mid(y, k + 2, Len(y) - k + 2)
                       Else
-                         x = Y
+                         x = y
                       End If
                      
-                      K = xdbAccts.Find(1, 0, x, XORDER_ASCEND, XCOMP_EQ, XTYPE_STRING)
+                      k = xdbAccts.Find(1, 0, x, XORDER_ASCEND, XCOMP_EQ, XTYPE_STRING)
                                                  
-                      If K = -1 Then     ' not found - put to 0 and suspense - not found in QB COA
+                      If k = -1 Then     ' not found - put to 0 and suspense - not found in QB COA
                          
                             GLHAccount = Me.cmbSuspAcct.ItemData(Me.cmbSuspAcct.ListIndex)
                       
                       Else
                          
                          ' bank amounts totaled and written as one entry
-                         If xdbAccts(K, 3) = "Bank" Then
+                         If xdbAccts(k, 3) = "Bank" Then
                             GLHUpdateFlag = False
                          End If
                          
                          ' is it in the WinGL chart of accts?
-                         l = xdbAccts.Value(K, 4)
+                         l = xdbAccts.Value(k, 4)
                          ' acct number translation if selected
                          If Me.chkAcctTranslate = 1 And Me.tdbAcctTranslateValue.Value > 0 Then
                             If Me.optDivide = True Then
@@ -1914,19 +1870,19 @@ Dim AcctNum As Long
                       
                       End If
                          
-                   ElseIf J = 7 Then
+                   ElseIf j = 7 Then
                       
-                      GLHAmount = CCur(Y) * (-1)
+                      GLHAmount = CCur(y) * (-1)
                    
-                   ElseIf J = 8 Then   ' column 8 for the banking line
+                   ElseIf j = 8 Then   ' column 8 for the banking line
                    
-                      If GLHUpdateFlag = False Then GLHAmount = CCur(Y)
+                      If GLHUpdateFlag = False Then GLHAmount = CCur(y)
                    
                    End If
                 
                 End If
             
-            Next I
+            Next i
 
             ' add to the history file
             If GLHUpdateFlag Then
@@ -1940,12 +1896,12 @@ Dim AcctNum As Long
             End If
     
             ' update amount totals
-            If K = -1 Then
-               I = 0
+            If k = -1 Then
+               i = 0
             Else
-               I = K
+               i = k
             End If
-            xdbAccts(I, 2) = xdbAccts(I, 2) + GLHAmount
+            xdbAccts(i, 2) = xdbAccts(i, 2) + GLHAmount
     
     End Select
 
@@ -1988,7 +1944,7 @@ Private Sub QBGetAccounts()
     
     If RetList Is Nothing Then Exit Sub   ' no accounts ???
     
-    J = RetList.Count
+    j = RetList.Count
     
     ' setup the xdb array
     ' row for each account
@@ -2006,40 +1962,40 @@ Private Sub QBGetAccounts()
     xdbAccts(0, 2) = 0
     xdbAccts(0, 3) = ""
     
-    K = 0
+    k = 0
         
-    For I = 0 To J - 1
+    For i = 0 To j - 1
                 
-        Set ItemRet = RetList.GetAt(I)
+        Set ItemRet = RetList.GetAt(i)
         If (Not ItemRet Is Nothing) Then
             If (Not ItemRet.Name Is Nothing) Then
-                K = K + 1
+                k = k + 1
                 xdbAccts.AppendRows (1)
-                xdbAccts(K, 0) = ItemRet.Name.GetValue
+                xdbAccts(k, 0) = ItemRet.Name.GetValue
                             
                 If Not (ItemRet.Desc Is Nothing) Then
-                    xdbAccts(K, 1) = ItemRet.Desc.GetValue
+                    xdbAccts(k, 1) = ItemRet.Desc.GetValue
                 Else
-                    xdbAccts(K, 1) = ""
+                    xdbAccts(k, 1) = ""
                 End If
               
-                xdbAccts(K, 2) = 0
-                xdbAccts(K, 3) = ItemRet.AccountType.GetAsString
+                xdbAccts(k, 2) = 0
+                xdbAccts(k, 3) = ItemRet.AccountType.GetAsString
               
                 ' assign the account number
-                xdbAccts(K, 4) = CLng(GetNumber(xdbAccts(K, 1)))    ' from the QB account description
+                xdbAccts(k, 4) = CLng(GetNumber(xdbAccts(k, 1)))    ' from the QB account description
               
                 ' use the QB acct number if it is there
                 If Not (ItemRet.AccountNumber Is Nothing) Then
                     x = ItemRet.AccountNumber.GetValue
                     If IsNumeric(x) Then
-                        xdbAccts(K, 4) = CLng(ItemRet.AccountNumber.GetValue)
+                        xdbAccts(k, 4) = CLng(ItemRet.AccountNumber.GetValue)
                     End If
                 End If
             
             End If
         End If
-    Next I
+    Next i
 
     Set ItemRet = Nothing
     Set RetList = Nothing
@@ -2054,19 +2010,19 @@ Private Function GetNumber(ByVal InString As String) As Long
 ' return a long from the digits at the beginning of a string
 
 Dim x1, x2 As String
-Dim Ln, i1, i2 As Long
+Dim ln, i1, i2 As Long
 
     GetNumber = 0
     If IsNull(InString) Then Exit Function
        
     x2 = ""
-    Ln = Len(InString)
-    If Ln = 0 Then Exit Function
+    ln = Len(InString)
+    If ln = 0 Then Exit Function
     i1 = 0
     
     Do
        i1 = i1 + 1
-       If i1 > Ln Then Exit Do
+       If i1 > ln Then Exit Do
        x1 = Mid(InString, i1, 1)
        If InStr(1, "0123456789", x1, vbTextCompare) = 0 Then Exit Do
        x2 = x2 & Mid(InString, i1, 1)

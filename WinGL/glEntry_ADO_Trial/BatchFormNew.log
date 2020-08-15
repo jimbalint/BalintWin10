@@ -1,0 +1,17 @@
+Line 20: Property Icon in BatchFormNew had an invalid file reference.
+Line 66: Property Calculator in tdbAcctTranslateValue had an invalid file reference.
+Line 67: Property Caption in tdbAcctTranslateValue had an invalid file reference.
+Line 77: Property DropDown in tdbAcctTranslateValue had an invalid file reference.
+Line 78: Property Keys in tdbAcctTranslateValue had an invalid file reference.
+Line 79: Property Spin in tdbAcctTranslateValue had an invalid file reference.
+Line 214: Property Picture in cmdFileOpen had an invalid file reference.
+Line 251: Property Calendar in TDBDate1 had an invalid file reference.
+Line 252: Property Caption in TDBDate1 had an invalid file reference.
+Line 262: Property DropDown in TDBDate1 had an invalid file reference.
+Line 263: Property Keys in TDBDate1 had an invalid file reference.
+Line 264: Property Spin in TDBDate1 had an invalid file reference.
+Line 425: Property Calendar in TDBDate2 had an invalid file reference.
+Line 426: Property Caption in TDBDate2 had an invalid file reference.
+Line 436: Property DropDown in TDBDate2 had an invalid file reference.
+Line 437: Property Keys in TDBDate2 had an invalid file reference.
+Line 438: Property Spin in TDBDate2 had an invalid file reference.

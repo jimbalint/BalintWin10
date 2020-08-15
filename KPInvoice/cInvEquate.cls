@@ -24,6 +24,7 @@ Public GlobalTypeInvPrinter As Byte
 Public GlobalTypeInvMessage As Byte
 Public GlobalTypeSalesTax As Byte       ' does this QB company have sales tax?
 Public GlobalTypeVAdj As Byte
+Public GlobalTypeInvPrinter2 As Byte
 
 Public IBMCPI10 As String
 Public IBMCPI12 As String

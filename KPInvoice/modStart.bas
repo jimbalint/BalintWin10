@@ -44,7 +44,7 @@ Dim NewFlag As Boolean
 '        X = "1=Process / 2=Stock / 3=Global / 4=GlobalQB"
 '        Sel = InputBox(X)
         
-        Sel = 3
+        Sel = 1
         
         Select Case Sel
             Case 0:     End

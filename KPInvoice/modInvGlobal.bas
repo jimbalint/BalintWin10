@@ -15,6 +15,15 @@ Public VertAdj As Integer
 
 ' ------------------------------------------------------------------------------
 ' *** Direct Print Definitions ***
+
+' ********************************************************************************************
+' ********************************************************************************************
+' ********************************************************************************************
+' *** Advanced Printer Settings - PRINT DIRECT TO PRINTER - NO PRINT SPOOLER ***
+' ********************************************************************************************
+' ********************************************************************************************
+' ********************************************************************************************
+
 Public Type DOCINFO
     pDocName As String
     pOutputFile As String
@@ -75,6 +84,7 @@ Public Sub InvSetEquates()
     InvEquate.GlobalTypeInvMessage = 9
     InvEquate.GlobalTypeSalesTax = 10
     InvEquate.GlobalTypeVAdj = 11
+    InvEquate.GlobalTypeInvPrinter2 = 12
     
     InvEquate.IBMCPI10 = Chr(18)
     InvEquate.IBMCPI12 = Chr(27) & Chr(58)
