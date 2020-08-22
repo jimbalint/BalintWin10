@@ -786,6 +786,8 @@ Private Sub Form_Load()
      
 Dim xRow, AcctLen As Long
      
+    If GLUser.Name <> "jim" Then Me.chkCustomQB.Visible = False
+     
     PRGlobalID = 0
     Me.tdbAcctTranslateValue.Format = "#####0"
     Me.tdbAcctTranslateValue.DisplayFormat = "#####0"
@@ -1058,8 +1060,8 @@ Dim CurFY As Integer
     lblCreated = "Created by " & GLUser.Name & " on " & ShowDate(GLBatch.Created)
     lblUpdated = "Record is OPEN (Not Updated)"
     txtRecord = "RECORD COUNT = " & CStr(GLBatch.RecCt)
-    txtDebits = "DEBITS = " & Format(GLBatch.Debits, "#.00")
-    txtCredits = "CREDITS = " & Format(GLBatch.Credits, "#.00")
+    txtDebits = "DEBITS = " & Format(GLBatch.debits, "#.00")
+    txtCredits = "CREDITS = " & Format(GLBatch.credits, "#.00")
     
     
 '    For ndx = com.FirstFiscalYear To Year(Now) + 1
@@ -1444,8 +1446,8 @@ Private Sub QBLoadGLData()
     End If
     
     ' update the batch record
-    GLBatch.Debits = TotalDebits
-    GLBatch.Credits = TotalCredits
+    GLBatch.debits = TotalDebits
+    GLBatch.credits = TotalCredits
     GLBatch.RecCt = RecordCount
     GLBatch.Save (Equate.RecPut)
     
@@ -1544,7 +1546,8 @@ Dim ii, jj As Long
                     ' translation for Richlak
                     ' xxxxx If j = 8 Then j = 1     ' account number xxxxx
 
-                    If Me.chkCustomQB Then
+                    ' If Me.chkCustomQB Then
+                    If True Then
                         If J = 9 Then       ' DEBIT amount
                             J = 8
                             DrCr = "Dr"
@@ -1795,8 +1798,8 @@ Private Sub QBLoadCheckData()
     End If
         
     ' update the batch record
-    GLBatch.Debits = TotalDebits
-    GLBatch.Credits = TotalCredits
+    GLBatch.debits = TotalDebits
+    GLBatch.credits = TotalCredits
     GLBatch.RecCt = RecordCount
     GLBatch.Save (Equate.RecPut)
     

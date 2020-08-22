@@ -1,5 +1,5 @@
 aMain = 23, 23, 525, 376, C, 44, 44, 552, 392, C
-modGLConnect = 111, 111, 534, 464, C
+modGLConnect = 111, 111, 534, 464, Z
 cEquate = 89, 89, 591, 442, C
 cGLAccount = 1, 1, 503, 354, C
 cGLAmount = 133, 133, 635, 486, C
@@ -7,7 +7,7 @@ cGLCompany = 198, 198, 1088, 678, C
 cGLDescription = 111, 111, 613, 464, C
 cGLHistory = 23, 23, 525, 376, 
 cGLPrint = 155, 155, 657, 508, C
-modGLPrint = 88, 88, 592, 436, Z
+modGLPrint = 88, 88, 592, 436, 
 Global = 45, 59, 955, 546, C
 frmPreview = 0, 0, 822, 480, C, 44, 44, 644, 492, C
 cGLBranch = 198, 198, 994, 678, C

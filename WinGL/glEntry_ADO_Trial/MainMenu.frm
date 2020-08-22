@@ -964,10 +964,12 @@ Dim DriveLetter As String
         ext = "mdb"
     End If
 
+    ' 2020-08-22
     x = "\Balint\GLUtil.exe" & _
         " ProgName=ClearGLAmount " & _
-        " SysFile=" & DriveLetter & "\Balint\Data\GLSystem." & ext & _
+        " SysFile=" & BalintFolder & "\Data\GLSystem." & ext & _
         " UserID=" & GLUser.ID & _
+        " BalintFolder=" & BalintFolder & _
         " MenuName=" & MenuName & _
         " BackName=" & "c:\Balint\GLEntryADO.exe" & _
         " Period=" & I

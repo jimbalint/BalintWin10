@@ -102,7 +102,7 @@ Dim FileExt As String
         FileExt = ".mdb"
         NewADO = False
     End If
-
+    
     ' connect to the system data base
     If Not CNDesOpen(SysFile) Then
        MsgBox "Error connecting to: " & SysFile, vbCritical, "GL Utilities"

@@ -512,18 +512,31 @@ Dim glJS As Byte
     ' ******** update the batch record
     
     ' update GLAmount
+    ' 2020-08-22
+    Dim ext As String
+    If NewADO Then
+        ext = "accdb"
+    Else
+        ext = "mdb"
+    End If
+    
+    MsgBox "Hit enter to continue - GL Update", vbInformation, "Copy GL Batch"
+    
     x = "\Balint\GLUtil.exe " & _
-        "SysFile=\Balint\Data\GLSystem.mdb " & _
-        "UserID=" & GLUser.ID & " " & _
-        "BackName=\Balint\GLEntryADO.exe " & _
-        "ProgName=UpdateB " & _
-        "MenuName=" & MenuName & _
-        "Batch=" & BatchNumberC
+        " SysFile=" & BalintFolder & "\Data\GLSystem." & ext & _
+        " UserID=" & GLUser.ID & _
+        " BackName=c:\Balint\GLEntryADO.exe" & _
+        " BalintFolder=" & BalintFolder & _
+        " ProgName=UpdateB" & _
+        " MenuName=GLMenu.exe" & _
+        " Batch=" & BatchNumberC
 
     ' database password if required
     If Password <> "" Then
        x = x & " dbPWd=" & Password
     End If
+        
+    Me.Hide
         
     If Not TestMode Then TID = Shell(x, vbMaximizedFocus)
 
