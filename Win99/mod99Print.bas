@@ -95,6 +95,7 @@ Public Sub PrintForm99(ByVal FormType As String, ByVal TaxYear As Long, ByVal Te
             Form96_Date = "DATE"
             Form96_Type = 1
             Form96_TaxYear = 2011
+            Form96_NECX = "NNN"
             Form96_MiscX = "MMM"
             Form96_RX = "RRR"
             Form96_IntX = "III"
@@ -231,6 +232,8 @@ Dim Form1096 As Boolean
                     X = Form96_Title
                 Case "Date"
                     X = Form96_Date
+                Case "NECX"
+                    X = Form96_NECX
                 Case "MiscX"
                     X = Form96_MiscX
                 Case "RX"

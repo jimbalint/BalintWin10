@@ -15,6 +15,7 @@ Public Form96_Title As String
 Public Form96_Date As String
 Public Form96_Type As Byte
 Public Form96_TaxYear As Long
+Public Form96_NECX As String
 Public Form96_MiscX As String
 Public Form96_RX As String
 Public Form96_IntX As String
@@ -2029,6 +2030,82 @@ Public Sub CopyForms(ByVal cTaxYear As Integer)
     Loop
     
     MsgBox "1099 forms set for the year: " & CStr(cTaxYear)
+
+End Sub
+
+Public Sub NewForm(ByVal cTaxYear As Integer, ByVal cFormTypeFrom As String, ByVal cFormTypeTo As String)
+    
+    ' hey .... ahole ....
+    ' this points to \Balint\Data\Win1099.mdb
+    ' make changes there
+    ' copy to c:\Balint\Data_1099 when done for installs
+
+    Dim fld As ADODB.Field
+    Dim FldName As String
+    Dim rs99 As New ADODB.Recordset
+    Dim rs992 As New ADODB.Recordset
+    
+    ' can't run it if records already exist for new year
+    SQLString = " SELECT * FROM Form99 WHERE TaxYear = " & cTaxYear & " AND FormType = '" & cFormTypeTo & "'"
+    rsInit SQLString, cn99, rs99
+    If rs99.RecordCount <> 0 Then
+        MsgBox "1099 form records already exist for that year! " & cFormTypeTo
+        Exit Sub
+    End If
+    
+    SQLString = " SELECT * FROM Form99 WHERE TaxYear = " & cTaxYear & " AND FormType = '" & cFormTypeFrom & "'"
+MsgBox SQLString
+    rsInit SQLString, cn99, rs99
+
+MsgBox rs99.RecordCount
+
+    SQLString = " SELECT * FROM Form99 WHERE TaxYear = 9999"
+    rsInit SQLString, cn99, rs992
+
+    Do
+        rs992.AddNew
+        For Each fld In rs99.Fields
+            FldName = fld.Name
+            If FldName = "FormID" Then
+                ' don't assign
+            ElseIf FldName = "FormType" Then
+                rs992.Fields("FormType") = cFormTypeTo
+            Else
+                rs992.Fields(FldName) = fld.Value
+            End If
+        Next fld
+        rs992.Update
+        rs99.MoveNext
+        If rs99.EOF Then Exit Do
+    Loop
+
+    rs99.Close
+    rs992.Close
+
+    SQLString = " SELECT * FROM Field99 WHERE TaxYear = " & cTaxYear & " AND FormType = '" & cFormTypeFrom & "'"
+    rsInit SQLString, cn99, rs99
+
+    SQLString = " SELECT * FROM Field99 WHERE TaxYear = 9999"
+    rsInit SQLString, cn99, rs992
+
+    Do
+        rs992.AddNew
+        For Each fld In rs99.Fields
+            FldName = fld.Name
+            If FldName = "FieldID" Then
+                ' don't assign
+            ElseIf FldName = "FormType" Then
+                rs992.Fields("FormType") = cFormTypeTo
+            Else
+                rs992.Fields(FldName) = fld.Value
+            End If
+        Next fld
+        rs992.Update
+        rs99.MoveNext
+        If rs99.EOF Then Exit Do
+    Loop
+    
+    MsgBox "NEW form created from " & cFormTypeFrom & " " & cTaxYear & " => " & cFormTypeTo
 
 End Sub
 

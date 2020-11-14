@@ -362,6 +362,7 @@ Private Sub Form_Load()
 
     With Me
         
+        .cmbForm.AddItem "1099-NEC"
         .cmbForm.AddItem "1099-MISC"
         .cmbForm.AddItem "1099-R"
         .cmbForm.AddItem "1099-INT"
@@ -684,9 +685,10 @@ Dim ii As Integer
 
     ii = Me.cmbForm.ListIndex
     GetFormType = ""
-    If ii = 0 Then GetFormType = "MISC"
-    If ii = 1 Then GetFormType = "R"
-    If ii = 2 Then GetFormType = "INT"
-    If ii = 3 Then GetFormType = "DIV"
+    If ii = 0 Then GetFormType = "NEC"
+    If ii = 1 Then GetFormType = "MISC"
+    If ii = 2 Then GetFormType = "R"
+    If ii = 3 Then GetFormType = "INT"
+    If ii = 4 Then GetFormType = "DIV"
 
 End Function

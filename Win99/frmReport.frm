@@ -130,6 +130,7 @@ Private Sub Form_Load()
     With Me
         
         .cmbForm.AddItem "ALL"
+        .cmbForm.AddItem "1099-NEC"
         .cmbForm.AddItem "1099-MISC"
         .cmbForm.AddItem "1099-R"
         .cmbForm.AddItem "1099-INT"
@@ -150,7 +151,7 @@ Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
 End Sub
 Private Sub cmdPrint_Click()
     
-    TaxYear = Me.cmbTaxYear.Text
+    TaxYear = Me.cmbTaxYear.text
     PrtInit ("Port")    ' "Port" = Portrait
     SetFont 9, Equate.Portrait
     
@@ -159,12 +160,13 @@ Private Sub cmdPrint_Click()
     With Me
         
         If .cmbForm.ListIndex = 0 Then
+            PrintReport "1099-NEC"
             PrintReport "1099-MISC"
             PrintReport "1099-R"
             PrintReport "1099-INT"
             PrintReport "1099-DIV"
         Else
-            PrintReport .cmbForm.Text
+            PrintReport .cmbForm.text
         End If
     
     End With
@@ -187,7 +189,7 @@ Private Sub PrintReport(ByVal FormTitle As String)
     ' does any data exist?
     With Me
     
-        SQLString = " SELECT * FROM Detail99 WHERE TaxYear = " & .cmbTaxYear.Text & _
+        SQLString = " SELECT * FROM Detail99 WHERE TaxYear = " & .cmbTaxYear.text & _
                     " AND FormType = '" & FormType & "'"
         If Detail99.GetBySQL(SQLString) = False Then Exit Sub
                 
@@ -373,7 +375,7 @@ Next99:
     FormatPrint
     Ln = Ln + 1
     
-    If Me.cmbForm.Text = "ALL" Then FormFeed
+    If Me.cmbForm.text = "ALL" Then FormFeed
 
     rs99.Close
     rsBox.Close
@@ -383,7 +385,7 @@ End Sub
 Private Sub ReportHeader(ByVal FormTitle As String)
 
     Columns = 105
-    Y = "Tax Year: " & Me.cmbTaxYear.Text & " Form: " & FormTitle
+    Y = "Tax Year: " & Me.cmbTaxYear.text & " Form: " & FormTitle
     PageHeader GLCompany.Name, Y, "", "", 1
     Ln = Ln + 1
     

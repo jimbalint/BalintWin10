@@ -148,8 +148,32 @@ Dim FileExt As String
     ' parameter is the copy TO year
     ' creates in \balint\data
     ' copy to \Balint\Data_1099 for the install
-    ' CopyForms 2016
+    ' CopyForms 2020
     ' End
+    
+    
+'    SQLString = "select * from Form99 order by TaxYear desc"
+'    If Form99.GetBySQL(SQLString) Then
+'        Do
+'            MsgBox Form99.FormType & " " & Form99.TaxYear
+'            If Not Form99.GetNext Then Exit Do
+'        Loop
+'    End If
+'    End
+    
+'    SQLString = "select * from Field99 where FormType = 'NEC'"
+'    If Field99.GetBySQL(SQLString) Then
+'        Do
+'            MsgBox Field99.FormType & " " & Field99.TaxYear & " " & Field99.FieldTitle
+'            If Not Field99.GetNext Then Exit Do
+'        Loop
+'    End If
+'    End
+    
+    
+'    NewForm 2019, "MISC", "NEC"
+'    End
+  
     
 '    End
 ' =========================================================
@@ -169,8 +193,8 @@ Dim FileExt As String
 'If CmdLine = "" Then
 '    HorzNudge = 4
 '    VertNudge = 4
-'    Create2016Forms "1096"
-'    PrintForm99 "1096", 2016, True
+'    Create2020Forms "1096"
+'    PrintForm99 "1096", 2020, True
 '    End
 'End If
 

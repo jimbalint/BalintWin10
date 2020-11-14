@@ -1249,6 +1249,7 @@ Private Sub Form_Load()
 
     With Me
         
+        .cmbForm.AddItem "1099-NEC"
         .cmbForm.AddItem "1099-MISC"
         .cmbForm.AddItem "1099-R"
         .cmbForm.AddItem "1099-INT"
@@ -1288,13 +1289,13 @@ Private Sub Form_Load()
         .txtZip.MaxLength = 10
         .txtFedID.MaxLength = 15
         
-        .txtName.Text = GLCompany.Name
-        .txtAddr1.Text = GLCompany.Address1
-        .txtAddr2.Text = GLCompany.Address2
-        .txtCity.Text = GLCompany.City
-        .txtState.Text = GLCompany.State
-        .txtZip.Text = GLCompany.ZipCode
-        .txtFedID.Text = GLCompany.FederalID
+        .txtName.text = GLCompany.Name
+        .txtAddr1.text = GLCompany.Address1
+        .txtAddr2.text = GLCompany.Address2
+        .txtCity.text = GLCompany.City
+        .txtState.text = GLCompany.State
+        .txtZip.text = GLCompany.ZipCode
+        .txtFedID.text = GLCompany.FederalID
         .tdbSSNumber = GLCompany.SSN
     
         .tdbContactPerson.MaxLength = 30
@@ -1348,19 +1349,22 @@ Private Sub cmd1096_Click()
         Form96_TotalAmt = .tdbTotalAmount
         Form96_Title = .tdbTitle
         Form96_Type = .cmbForm.ListIndex
-        Form96_TaxYear = .cmbTaxYear.Text
-        Form96_Date = .tdbDate.Text
+        Form96_TaxYear = .cmbTaxYear.text
+        Form96_Date = .tdbDate.text
         If .chkFinal Then
             Form96_Final = "X"
         Else
             Form96_Final = ""
         End If
     
+        Form96_NECX = ""
         Form96_MiscX = ""
         Form96_RX = ""
         Form96_IntX = ""
         Form96_DivX = ""
         Select Case .cmbForm
+            Case "1099-NEC"
+                Form96_NECX = "XXX"
             Case "1099-MISC"
                 Form96_MiscX = "XXX"
             Case "1099-R"
@@ -1383,8 +1387,8 @@ End Sub
 Private Sub cmdLoadTotals_Click()
     
     ' get the formid
-    SQLString = " SELECT * FROM Form99 WHERE TaxYear = " & Me.cmbTaxYear.Text & _
-                " AND FormType = '" & Mid(Me.cmbForm.Text, 6) & "'"
+    SQLString = " SELECT * FROM Form99 WHERE TaxYear = " & Me.cmbTaxYear.text & _
+                " AND FormType = '" & Mid(Me.cmbForm.text, 6) & "'"
     If Form99.GetBySQL(SQLString) = False Then
         MsgBox "Form Not Found: " & Me.cmbTaxYear & " " & Me.cmbForm, vbExclamation
         GoBack
@@ -1394,8 +1398,8 @@ Private Sub cmdLoadTotals_Click()
     
     ' get the form count
     SQLString = " SELECT DISTINCT(PayeeID) FROM Detail99 " & _
-                " WHERE FormType = '" & Mid(Me.cmbForm.Text, 6) & "' " & _
-                " AND TaxYear = " & Me.cmbTaxYear.Text
+                " WHERE FormType = '" & Mid(Me.cmbForm.text, 6) & "' " & _
+                " AND TaxYear = " & Me.cmbTaxYear.text
     rsInit SQLString, cn, rs
     If rs.RecordCount = 0 Then Exit Sub
     rs.MoveLast
@@ -1427,8 +1431,8 @@ Private Sub cmdLoadTotals_Click()
     Amt = 0
     TotAmt = 0
     Tax = 0
-    SQLString = " SELECT * FROM Detail99 WHERE FormType = '" & Mid(Me.cmbForm.Text, 6) & "' " & _
-                " AND TaxYear = " & Me.cmbTaxYear.Text
+    SQLString = " SELECT * FROM Detail99 WHERE FormType = '" & Mid(Me.cmbForm.text, 6) & "' " & _
+                " AND TaxYear = " & Me.cmbTaxYear.text
     If Detail99.GetBySQL(SQLString) = True Then
         Do
             SQLString = " SELECT * FROM Field99 WHERE FormType = '" & Detail99.FormType & "' " & _
@@ -1462,13 +1466,13 @@ Private Sub SaveData()
 
     With Me
         
-        GLCompany.Name = .txtName.Text
-        GLCompany.Address1 = .txtAddr1.Text
-        GLCompany.Address2 = .txtAddr2.Text
-        GLCompany.City = .txtCity.Text
-        GLCompany.State = .txtState.Text
-        GLCompany.ZipCode = .txtZip.Text
-        GLCompany.FederalID = .txtFedID.Text
+        GLCompany.Name = .txtName.text
+        GLCompany.Address1 = .txtAddr1.text
+        GLCompany.Address2 = .txtAddr2.text
+        GLCompany.City = .txtCity.text
+        GLCompany.State = .txtState.text
+        GLCompany.ZipCode = .txtZip.text
+        GLCompany.FederalID = .txtFedID.text
         GLCompany.SSN = .tdbSSNumber
         GLCompany.Save (Equate.RecPut)
             
