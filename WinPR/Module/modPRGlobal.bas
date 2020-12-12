@@ -162,7 +162,7 @@ Public NumEmployees As Long
 Public ZipString As String
 Public HorzNudge, VertNudge, Nudge As Byte
 Public OptDate As String
-Public Ct, Recs As Long
+Public ct, Recs As Long
 Public RecCt As Long
 Public CountFormat As String
 
@@ -411,6 +411,8 @@ Public Sub SetEquates()
     
     PREquate.GlobalTypeOHMultiplier = 68
     
+    PREquate.GlobalTypeLastBackUp = 69
+    
     PREquate.EICTypeSingle = 1
     PREquate.EICTypeMarriedWith = 2
     PREquate.EICTypeMarriedWO = 3
@@ -482,7 +484,7 @@ Public Function GetCmd(ByVal CmdLine As String, ByVal Argument As String, ByVal 
 
 ' return xxxx - Argument=xxxx
 
-Dim i As Long
+Dim I As Long
 Dim cmd As String
 Dim C1 As String
     
@@ -510,20 +512,20 @@ Dim C1 As String
     Argument = LCase(Argument)
 
     ' search for Argument=xxxxx
-    i = InStr(1, cmd, Argument, vbTextCompare)
-    If i = 0 Then Exit Function
+    I = InStr(1, cmd, Argument, vbTextCompare)
+    If I = 0 Then Exit Function
     
     ' now look for the "=" sign
-    If Mid(CmdLine, i + Len(Argument), 1) <> "=" Then Exit Function
+    If Mid(CmdLine, I + Len(Argument), 1) <> "=" Then Exit Function
     
     ' append to make return string until a space or end of line
-    i = i + Len(Argument) + 1
+    I = I + Len(Argument) + 1
     Do
-        If i > Len(CmdLine) Then Exit Do
-        C1 = Mid(CmdLine, i, 1)
+        If I > Len(CmdLine) Then Exit Do
+        C1 = Mid(CmdLine, I, 1)
         If C1 = " " Then Exit Do
         GetCmd = GetCmd & C1
-        i = i + 1
+        I = I + 1
     Loop
 
 End Function
@@ -575,8 +577,8 @@ Dim pi As Integer
 ''       Printer.CurrentX = (Col * 120) - 240 + (hadj * 45)
 ''       Printer.CurrentY = ((Line - 1) * 240) - 960 + (vadj * 45)
             
-    i = ((Columns - Len(Str)) / 2)
-    PrintValue(1) = " ":            FormatString(1) = "a" & i
+    I = ((Columns - Len(Str)) / 2)
+    PrintValue(1) = " ":            FormatString(1) = "a" & I
     PrintValue(2) = Str:     FormatString(2) = "a" & Len(Str)
     PrintValue(3) = " ":            FormatString(3) = "~"
     FormatPrint
@@ -851,8 +853,8 @@ Dim CommaFlag As Boolean
                         End
                 End Select
             Else
-                y = String(FValue - 5, "#") & "0.00"
-                x = Format(Abs(PrintValue(pi)), y)
+                Y = String(FValue - 5, "#") & "0.00"
+                x = Format(Abs(PrintValue(pi)), Y)
             End If
                 
             If PrintValue(pi) < 0 Then
@@ -1337,7 +1339,7 @@ Dim Amt1 As Long         ' millions
 Dim Amt2 As Long         ' hundreds of thousands
 Dim Amt3 As Long         ' singles
 Dim Amt4 As Long         ' cents
-Dim MaxLen, i As Long
+Dim MaxLen, I As Long
 Dim x As String
 
     MaxLen = 77
@@ -1350,11 +1352,11 @@ Dim x As String
 
     AmountInWords = ""
     
-    i = Int(Amount)
+    I = Int(Amount)
     
-    Amt1 = Int(i / 10 ^ 6)                  ' millions
-    Amt2 = Int(i / 10 ^ 3) Mod 1000         ' hundreds of thousands
-    Amt3 = i Mod 1000                       ' singles
+    Amt1 = Int(I / 10 ^ 6)                  ' millions
+    Amt2 = Int(I / 10 ^ 3) Mod 1000         ' hundreds of thousands
+    Amt3 = I Mod 1000                       ' singles
     ' Amt4 = Amount * 100 Mod 100             ' cents
     Amt4 = (Amount - Int(Amount)) * 100
     
@@ -1718,26 +1720,26 @@ Dim Weight As Byte
     End If
     
     ' must be all numeric
-    For i = 1 To 8
+    For I = 1 To 8
         
-        If InStr("0123456789", Mid(InString, i, 1)) = 0 Then
+        If InStr("0123456789", Mid(InString, I, 1)) = 0 Then
             If Verify = 1 Then
                 MsgBox "Invalid ABA - Numbers only! " & InString, vbCritical
             End If
             Exit Function
         End If
     
-        If i = 1 Or i = 4 Or i = 7 Then
+        If I = 1 Or I = 4 Or I = 7 Then
             Weight = 3
-        ElseIf i = 2 Or i = 5 Or i = 8 Then
+        ElseIf I = 2 Or I = 5 Or I = 8 Then
             Weight = 7
         Else
             Weight = 1
         End If
         
-        CheckSum = CheckSum + Weight * CByte(Mid(InString, i, 1))
+        CheckSum = CheckSum + Weight * CByte(Mid(InString, I, 1))
         
-    Next i
+    Next I
     
     ABACheckDigit = CheckSum Mod 10
     If ABACheckDigit > 0 Then ABACheckDigit = 10 - ABACheckDigit
@@ -1810,7 +1812,7 @@ End Sub
 
 Public Function cmbYrQtrSet(ByRef cmbYr As ComboBox, ByRef cmbQtr As ComboBox) As Boolean
 Dim yrs As ADODB.Recordset
-Dim i, j, k As Integer
+Dim I, J, K As Integer
 
     SQLString = "SELECT DISTINCT YearMonth FROM PRHist ORDER BY YearMonth DESC"
     rsInit SQLString, cn, yrs
@@ -1827,16 +1829,16 @@ Dim i, j, k As Integer
     Do
         yrs.MoveNext
         If yrs.EOF Then Exit Do
-        k = 0
-        j = cmbYr.ListCount
-        For i = 0 To j - 1
-            cmbYr.ListIndex = i
+        K = 0
+        J = cmbYr.ListCount
+        For I = 0 To J - 1
+            cmbYr.ListIndex = I
             If cmbYr.text = Int(yrs!YearMonth / 100) Then
-                k = 1
+                K = 1
                 Exit For
             End If
-        Next i
-        If k = 0 Then
+        Next I
+        If K = 0 Then
             cmbYr.AddItem (Int(yrs!YearMonth / 100))
         End If
     Loop
@@ -1897,16 +1899,16 @@ Public Function SuperRound(ByVal Hrs As Currency, ByVal Rate As Currency) As Cur
 
     ' simulate SuperDOS rounding - to three places then round to two
 
-Dim p1 As Currency
+Dim P1 As Currency
 
     If Hrs = 0 Or Rate = 0 Then
         SuperRound = 0
         Exit Function
     End If
     
-    p1 = Round(Hrs * Rate, 3)
-    p1 = p1 + 0.005
-    SuperRound = (Int(p1 * 10 ^ 2)) / 10 ^ 2
+    P1 = Round(Hrs * Rate, 3)
+    P1 = P1 + 0.005
+    SuperRound = (Int(P1 * 10 ^ 2)) / 10 ^ 2
     
 End Function
 Public Function TableExists(ByVal TableName As String, _
@@ -1916,7 +1918,7 @@ Public Function TableExists(ByVal TableName As String, _
 Dim cm As ADODB.Command
 Dim frs As ADODB.Recordset
 Dim FldFlag As Boolean
-Dim fString As String
+Dim FString As String
                          
     ' see if the field is already in the Table
     Set frs = New ADODB.Recordset
@@ -1971,25 +1973,25 @@ Dim HdrName As String
     '    1             8       1   8                    10         1
     ' first line - system date & time / company name / page #
     x = Trim(HdrName)
-    y = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss")
-    z = "Page: " & Format(Pg, "####")
+    Y = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss")
+    Z = "Page: " & Format(Pg, "####")
    
     If Len(x) > Columns - 39 Then
        x = Mid(Trim(HdrName), 1, Columns - 39)
     End If
            
     If LandSw = 1 Then
-        i = ((Columns - Len(x)) / 2) - 29           ' i = 49
+        I = ((Columns - Len(x)) / 2) - 29           ' i = 49
         w = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss") & _
-            Space(i) & x
-        i = Columns - Len(w) - 30
-        w = w & Space(i) & "Page: " & Format(Pg, "###0")
+            Space(I) & x
+        I = Columns - Len(w) - 30
+        w = w & Space(I) & "Page: " & Format(Pg, "###0")
     Else
-        i = ((Columns - Len(x)) / 2) - 19
+        I = ((Columns - Len(x)) / 2) - 19
         w = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss") & _
-            Space(i) & x
-        i = Columns - Len(w) - 10
-        w = w & Space(i) & "Page: " & Format(Pg, "###0")
+            Space(I) & x
+        I = Columns - Len(w) - 10
+        w = w & Space(I) & "Page: " & Format(Pg, "###0")
 
     End If
     
@@ -2042,8 +2044,8 @@ End Sub
 Public Function ParseString(ByVal InString As String, ByVal SepString As String) As ADODB.Recordset
 
 Dim rs As New ADODB.Recordset
-Dim i, j As Long
-Dim x, y As String
+Dim I, J As Long
+Dim x, Y As String
 
     Set ParseString = New ADODB.Recordset
     ParseString.CursorLocation = adUseClient
@@ -2053,22 +2055,22 @@ Dim x, y As String
     If IsNull(InString) Then Exit Function
     If InString = "" Then Exit Function
     
-    j = Len(Trim(InString))
+    J = Len(Trim(InString))
     x = ""
-    y = ""
-    For i = 1 To j
-        If Mid(InString, i, 1) = SepString Then
+    Y = ""
+    For I = 1 To J
+        If Mid(InString, I, 1) = SepString Then
             ParseString.AddNew
             ParseString!listvalue = x
             ParseString.Update
             x = ""
-            i = i + 1
-            If i > j Then
+            I = I + 1
+            If I > J Then
                 Exit For
             End If
         End If
-        x = Trim(x) & Mid(InString, i, 1)
-    Next i
+        x = Trim(x) & Mid(InString, I, 1)
+    Next I
     If x <> "" Then
         ParseString.AddNew
         ParseString!listvalue = x
@@ -2079,26 +2081,26 @@ End Function
 
 Public Sub TestPattern()
     
-    For i = 1 To MaxLines
+    For I = 1 To MaxLines
         x = ""
-        For j = 1 To Columns
-            If i Mod 2 = 1 Then
-                x = Trim(x) & j Mod 10
+        For J = 1 To Columns
+            If I Mod 2 = 1 Then
+                x = Trim(x) & J Mod 10
             Else
-                If j Mod 10 = 0 Then
-                    x = x & Int(j / 10)
+                If J Mod 10 = 0 Then
+                    x = x & Int(J / 10)
                 Else
                     x = x & " "
                 End If
             End If
-        Next j
+        Next J
         PrintValue(1) = x
         FormatString(1) = "a" & Columns
         PrintValue(2) = " "
         FormatString(2) = "~"
         FormatPrint
         Ln = Ln + 1
-    Next i
+    Next I
 
 End Sub
 
@@ -2132,7 +2134,7 @@ End Function
 
 Public Function GetFileName(ByVal Str As String) As String
     
-Dim i, j As Long
+Dim I, J As Long
 Dim x As String
     
     GetFileName = ""
@@ -2141,11 +2143,11 @@ Dim x As String
     If Str = "" Then Exit Function
     
     x = Trim(Str)
-    j = Len(x)
-    For i = j To 1 Step -1
-        If Mid(x, i, 1) = "\" Then Exit For
-        GetFileName = Mid(x, i, 1) & GetFileName
-    Next i
+    J = Len(x)
+    For I = J To 1 Step -1
+        If Mid(x, I, 1) = "\" Then Exit For
+        GetFileName = Mid(x, I, 1) & GetFileName
+    Next I
 
 End Function
 
@@ -2218,28 +2220,28 @@ Public Function MaxLen(ByVal Str As String, ByVal Ln As Integer) As String
 
 End Function
 
-Public Function SlashSplit(ByVal SString As String, sSide As Integer) As String
+Public Function SlashSplit(ByVal sString As String, sSide As Integer) As String
     ' divide string by slash - sSide = 1 - left of slash / sSide = 2 - right of slash
 Dim sPos As Integer
 
-    If IsNull(SString) = True Or Len(Trim(SString)) <= 1 Then
+    If IsNull(sString) = True Or Len(Trim(sString)) <= 1 Then
         SlashSplit = ""
         Exit Function
     End If
 
-    sPos = InStr(1, SString, "/")
+    sPos = InStr(1, sString, "/")
     
     If sSide = 1 Then
         If sPos = 0 Then
-            SlashSplit = SString
+            SlashSplit = sString
         Else
-            SlashSplit = Mid(SString, 1, sPos - 1)
+            SlashSplit = Mid(sString, 1, sPos - 1)
         End If
     Else
         If sPos = 0 Then
             SlashSplit = ""
         Else
-            SlashSplit = Mid(SString, sPos + 1)
+            SlashSplit = Mid(sString, sPos + 1)
         End If
     End If
 

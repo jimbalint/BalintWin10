@@ -1,6 +1,9 @@
 Attribute VB_Name = "Global"
 Option Explicit
 
+Public dbCompany As String
+Public dbSystem As String
+
 Public HAdj As Single
 Public NewADO As Boolean
 Public rc4Key As String
@@ -96,7 +99,7 @@ Public SupprFlag As Boolean
 Public LastH As String
 
 Public SQLString As String
-Public DBName As String
+Public dbName As String
 Public NoFieldCheck As Boolean
 Public OpenTab As Byte
 
@@ -407,6 +410,9 @@ Public Sub SetEquates()
     PREquate.GlobalTypeGLFFSched = 59
     PREquate.GlobalTypeGLFFColumn = 61
     PREquate.GlobalTypeGLFFSetup = 62
+    
+    PREquate.GlobalTypeLastBackUp = 69
+    
 
 End Sub
 
@@ -674,8 +680,8 @@ Public Function cmdline(ByVal x As String, _
                         
 Dim ItemCount As Byte
 Dim Posn As Integer
-Dim I As Long
-Dim Y As String
+Dim i As Long
+Dim y As String
                         
     ID = 0
     Prog = ""
@@ -685,27 +691,27 @@ Dim Y As String
     BatchNum = 0
                         
     ItemCount = 1
-    I = 0
+    i = 0
     Do
         Posn = Posn + 1
         If Posn > Len(x) Then Exit Do
         If Mid(x, Posn, 1) = "/" Then
-           If ItemCount = 1 Then ID = Y
-           If ItemCount = 2 Then Password = Y
-           If ItemCount = 3 Then Prog = Y
-           If ItemCount = 4 Then SysFile = Y
-           If ItemCount = 5 Then User = Y
+           If ItemCount = 1 Then ID = y
+           If ItemCount = 2 Then Password = y
+           If ItemCount = 3 Then Prog = y
+           If ItemCount = 4 Then SysFile = y
+           If ItemCount = 5 Then User = y
            ItemCount = ItemCount + 1
            If Mid(x, Posn + 1, 1) <> "/" Then
               Posn = Posn + 1
            End If
-           Y = ""
+           y = ""
         End If
-        Y = Y & Mid(x, Posn, 1)
+        y = y & Mid(x, Posn, 1)
     Loop
     
-    If ItemCount = 5 Then User = Y
-    If ItemCount = 6 Then BatchNum = Y
+    If ItemCount = 5 Then User = y
+    If ItemCount = 6 Then BatchNum = y
                             
     cmdline = True
     If ID = 0 Then cmdline = False
@@ -719,7 +725,7 @@ Public Function GetCmd(ByVal cmdline As String, ByVal Argument As String, ByVal 
 
 ' return xxxx - Argument=xxxx
 
-Dim I As Long
+Dim i As Long
 Dim cmd As String
 
     StrNum = LCase(StrNum)
@@ -746,19 +752,19 @@ Dim cmd As String
     Argument = LCase(Argument)
 
     ' search for Argument=xxxxx
-    I = InStr(1, cmd, Argument, vbTextCompare)
-    If I = 0 Then Exit Function
+    i = InStr(1, cmd, Argument, vbTextCompare)
+    If i = 0 Then Exit Function
     
     ' now look for the "=" sign
-    If Mid(cmdline, I + Len(Argument), 1) <> "=" Then Exit Function
+    If Mid(cmdline, i + Len(Argument), 1) <> "=" Then Exit Function
     
     ' append to make return string until a space or end of line
-    I = I + Len(Argument) + 1
+    i = i + Len(Argument) + 1
     Do
-       If I > Len(cmdline) Then Exit Do
-       If Mid(cmdline, I, 1) = " " Then Exit Do
-       GetCmd = GetCmd & Mid(cmdline, I, 1)
-       I = I + 1
+       If i > Len(cmdline) Then Exit Do
+       If Mid(cmdline, i, 1) = " " Then Exit Do
+       GetCmd = GetCmd & Mid(cmdline, i, 1)
+       i = i + 1
     Loop
 
 End Function
@@ -981,6 +987,12 @@ Dim mdbI, mdbJ, mdbK As Long
     If mdbI = 0 Then Exit Function
     mdbName = Trim(Mid(str, mdbI + 1, mdbK))
 
+End Function
+
+Public Function AddBS(ByVal str As String) As String
+    str = Trim(str)
+    If Right(str, 1) <> "\" Then str = str & "\"
+    AddBS = str
 End Function
 
 

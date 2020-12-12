@@ -310,7 +310,7 @@ Private Sub Form_Load()
             End
         End If
 '        Me.lblCount = frmEmpSelect.rsEmp.RecordCount
-        Me.txtDisplay.Text = "Batch #: " & PRBatch.BatchID & _
+        Me.txtDisplay.text = "Batch #: " & PRBatch.BatchID & _
                              " PE Date: " & Format(PRBatch.PEDate, "mm/dd/yy") & _
                              " Check Date: " & Format(PRBatch.CheckDate, "mm/dd/yy")
         RangeType = PREquate.RangeTypeBatch
@@ -398,7 +398,7 @@ Dim SYear, EYear As Long
         MsgBox "Start Year and End Year MUST BE the SAME", vbExclamation, "Earnings Summary Report"
     ElseIf CLng(StartDate) = 0 And CLng(EndDate) = 0 And BatchNumbr = 0 And PEDate = 0 Then
         MsgBox "PLEASE SELECT A DATE RANGE", vbExclamation, "Earnings Summary Report"
-    ElseIf frmDateRange.OptChkPeDate = True Then
+    ElseIf frmDateRange.OptChkPeDate And frmDateRange.optPEDate Then
         MsgBox "Please Select a BATCH or CHECK DATE RANGE", vbExclamation, "Earnings Summary Report"
     Else
         InitFlag = True

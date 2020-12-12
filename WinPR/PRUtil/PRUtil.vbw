@@ -1,5 +1,5 @@
 frmStart = 132, 132, 855, 600, C, 198, 198, 988, 666, C
-modStart = 220, 220, 1010, 688, Z
+modStart = 220, 220, 1010, 688, 
 modDBCreate = 0, 0, 790, 468, C
 modPRGlobal = 22, 22, 812, 490, C
 modPRConnect = 44, 44, 834, 512, 
@@ -22,7 +22,7 @@ cPRAdjust = 154, 154, 988, 640, C
 cPRBatch = 198, 198, 1032, 684, C
 cPREELists = 88, 88, 922, 574, C
 cPRGlobal = 110, 110, 944, 596, C
-cPRDist = 154, 154, 937, 640, 
+cPRDist = 154, 154, 937, 640, Z
 frmPRCity = 198, 198, 937, 684, C, 154, 154, 960, 640, C
 cPRTotal = 0, 0, 0, 0, C
 frmTest = 110, 110, 892, 559, C, 88, 88, 870, 537, C

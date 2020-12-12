@@ -38,6 +38,6 @@ cPRDist = 88, 88, 853, 608, C
 cGLFFColumn = 0, 0, 0, 0, C
 cGLFFSched = 0, 0, 0, 0, C
 modRC4 = 0, 0, 0, 0, C
-modConvertADO = 0, 0, 1315, 536, Z
+modConvertADO = 0, 0, 1315, 536, C
 frmJimBo = 0, 0, 1315, 536, C, 234, 234, 1549, 770, C
 frmBackup = 0, 0, 1315, 536, C, 234, 234, 1549, 770, C

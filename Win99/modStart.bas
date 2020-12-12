@@ -109,13 +109,13 @@ Dim FileExt As String
        End
     End If
        
-    ' open the Win1099 DB
+    ' open the Win1099 DB - always MDB
     If BalintFolder = "" Then
         X = Mid(App.Path, 1, 2) & "\Balint\Data\Win1099.mdb"
     Else
         X = Replace(BalintFolder, "^", " ") & "\Data\Win1099.mdb"
     End If
-    If FileExt = ".accdb" Then X = Replace(LCase(X), ".mdb", ".accdb")
+    ' If FileExt = ".accdb" Then X = Replace(LCase(X), ".mdb", ".accdb")
     CN99Open X
 
     ' open the company database

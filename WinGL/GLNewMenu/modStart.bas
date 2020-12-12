@@ -49,9 +49,13 @@ Dim FileExt As String
     End If
     On Error GoTo 0
     
+' ** butest **
+'BalintFolder = "c:\Balint"
+    
     If BalintFolder = "" Then
         FileExt = IIf(Len(Dir("\Balint\Data\GLSystem.accdb", vbNormal)), ".accdb", ".mdb")
-        If CNDesOpen("\Balint\Data\GLSystem" & FileExt) = False Then
+        dbSystem = "\Balint\Data\GLSystem" & FileExt
+        If CNDesOpen(dbSystem) = False Then
             MsgBox "error opening \Balint\Data\GLSystem" & FileExt, vbCritical
             End
         End If
@@ -59,10 +63,11 @@ Dim FileExt As String
         Dim SysFile, DataDir As String
         DataDir = Replace(BalintFolder, "^", " ") & "\Data\"
         FileExt = IIf(Len(Dir(DataDir & "GLSystem.accdb", vbNormal)), ".accdb", ".mdb")
-        SysFl = DataDir & "GLSystem" & FileExt
-        If CNDesOpen(Trim(SysFl)) = False Then
+        sysfl = DataDir & "GLSystem" & FileExt
+        dbSystem = sysfl
+        If CNDesOpen(Trim(sysfl)) = False Then
             ' eag test - 20190620
-            MsgBox "*** Error opening: " & SysFl, vbCritical
+            MsgBox "*** Error opening: " & sysfl, vbCritical
             ' >>>> End
         End If
     End If
@@ -70,8 +75,12 @@ Dim FileExt As String
     If x = "" Then         ' open sys file and login
         SysFile = "\Balint\Data\GLSystem" & FileExt
         OpenTab = 5
-        frmLogin.Show vbModal
-        If Response = False Then End
+
+' ** butest **
+frmLogin.Show vbModal
+If Response = False Then End
+' UserID = 2
+
     
 '        UserID = 2
 '        SQLString = "SELECT * FROM Users WHERE Logon = 'jim'"
@@ -142,9 +151,8 @@ Dim FileExt As String
             
             ' open the company database
             If BalintFolder = "" Then
-                x = Mid(App.Path, 1, 2) & Mid(GLCompany.FileName, 3, Len(GLCompany.FileName) - 2)
+                x = IIf(Mid(App.Path, 1, 2) = "\\", "c:", Mid(App.Path, 1, 2)) & Mid(GLCompany.FileName, 3, Len(GLCompany.FileName) - 2)
                 dbName = x
-                
             Else
                 
                 ' get the .mdb file name
@@ -174,6 +182,7 @@ Dim FileExt As String
                 
             CNOpen dbName, dbPwd
             CompanyID = GLUser.LastCompany
+            dbCompany = dbName
             
             ' PR conversion fix
             On Error Resume Next
@@ -210,6 +219,9 @@ Dim FileExt As String
         frmMainMenu.cmdJimBo.Visible = False
         frmMainMenu.cmdNewADO.Visible = False
     End If
+    
+    UserID = GLUser.ID
+    
     frmMainMenu.Show
     
 '    ' execute the call

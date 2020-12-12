@@ -746,12 +746,16 @@ Private Sub Form_Load()
     Dim ndx, Temp As Long
     nAutoNum = 0
     ShowBalance
+    
+    ' 2020-08-25 - don't err out ... funky ref#s from QB
+    On Error Resume Next
     For ndx = 1 To nRecords
         If IsNumeric(xDB.Value(ndx, 2)) Then
             Temp = CLng(xDB.Value(ndx, 2))
             If Temp > nAutoNum Then nAutoNum = Temp
         End If
     Next ndx
+    On Error GoTo 0
     
     ' GLCompany.GetRecord (curCompany)
     

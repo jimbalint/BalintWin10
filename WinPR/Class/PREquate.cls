@@ -199,6 +199,9 @@ Public GlobalTypeOtherStateID As Byte
 ' 2019-12-14 OH SWT multiplier
 Public GlobalTypeOHMultiplier As Double
 
+' 2020-12-12
+Public GlobalTypeLastBackUp As Double
+
 Public RangeTypeBatch As Byte
 Public RangeTypeMonths As Byte
 Public RangeTypePEDate As Byte

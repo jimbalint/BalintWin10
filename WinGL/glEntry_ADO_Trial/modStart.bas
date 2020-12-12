@@ -39,6 +39,7 @@ Dim AcctDesc As Byte
     
     If x = "" Then         ' set for testing
         BalintFolder = "c:\Balint"
+        BalintFolder = "\\vboxsrv\vm-share\balint"
         dbPwd = "golf"
         ProgName = UCase("statement")
         SysFile = "c:\Balint\Data\GLSystem.mdb"
