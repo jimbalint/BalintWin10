@@ -1,0 +1,9 @@
+C:\Users\Jim\OneDrive\Balint\GitHub\Win10\BalintWin10\NIHFF_1099\NIHFF_1099\bin\Debug\NIHFF_1099.exe.config
+C:\Users\Jim\OneDrive\Balint\GitHub\Win10\BalintWin10\NIHFF_1099\NIHFF_1099\bin\Debug\NIHFF_1099.exe
+C:\Users\Jim\OneDrive\Balint\GitHub\Win10\BalintWin10\NIHFF_1099\NIHFF_1099\bin\Debug\NIHFF_1099.pdb
+C:\Users\Jim\OneDrive\Balint\GitHub\Win10\BalintWin10\NIHFF_1099\NIHFF_1099\bin\Debug\NIHFF_1099.xml
+C:\Users\Jim\OneDrive\Balint\GitHub\Win10\BalintWin10\NIHFF_1099\NIHFF_1099\obj\Debug\NIHFF_1099.Resources.resources
+C:\Users\Jim\OneDrive\Balint\GitHub\Win10\BalintWin10\NIHFF_1099\NIHFF_1099\obj\Debug\NIHFF_1099.vbproj.GenerateResource.Cache
+C:\Users\Jim\OneDrive\Balint\GitHub\Win10\BalintWin10\NIHFF_1099\NIHFF_1099\obj\Debug\NIHFF_1099.exe
+C:\Users\Jim\OneDrive\Balint\GitHub\Win10\BalintWin10\NIHFF_1099\NIHFF_1099\obj\Debug\NIHFF_1099.xml
+C:\Users\Jim\OneDrive\Balint\GitHub\Win10\BalintWin10\NIHFF_1099\NIHFF_1099\obj\Debug\NIHFF_1099.pdb
