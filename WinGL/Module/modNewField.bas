@@ -336,6 +336,19 @@ Dim Ct1, Ct2, Recs As Long
     
     If GLSys = True Then
         
+        ' --- 2021 ---------------------------------------------------------------
+        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
+                    "AND Year = 2021"
+        If PRGlobal.GetBySQL(SQLString) = False Then
+            PRGlobal.Clear
+            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
+            PRGlobal.Year = 2021
+            PRGlobal.Description = "SS MAX"
+            PRGlobal.Amount = 142800#
+            PRGlobal.Save (Equate.RecAdd)
+            MsgBox "SS Max for 2021 updated to: $142,800", vbInformation
+        End If
+        
         ' --- 2020 ---------------------------------------------------------------
         ' OH SWT multiplier
         SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeOHMultiplier & " " & _
@@ -350,6 +363,7 @@ Dim Ct1, Ct2, Recs As Long
             MsgBox "OH Multiplier for 2019 updated to: 1.075", vbInformation
         End If
                     
+        ' 2021 - OH multiplier not changed
         SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeOHMultiplier & " " & _
                     "AND Year = 2020"
         If PRGlobal.GetBySQL(SQLString) = False Then
@@ -658,17 +672,20 @@ Dim Ct1, Ct2, Recs As Long
         End If
     
         ' Fed tax table update
+        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2021 AND StateID = 0"
+        If PRFWTTable.GetBySQL(SQLString) = False Then FWT2021Update
+        
         SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2020 AND StateID = 0"
         If PRFWTTable.GetBySQL(SQLString) = False Then FWT2020Update
         
-        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2019 AND StateID = 0"
-        If PRFWTTable.GetBySQL(SQLString) = False Then FWT2019Update
-        
-        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2018 AND StateID = 0"
-        If PRFWTTable.GetBySQL(SQLString) = False Then FWT2018Update
-        
-        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2017 AND StateID = 0"
-        If PRFWTTable.GetBySQL(SQLString) = False Then FWT2017Update
+'        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2019 AND StateID = 0"
+'        If PRFWTTable.GetBySQL(SQLString) = False Then FWT2019Update
+'
+'        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2018 AND StateID = 0"
+'        If PRFWTTable.GetBySQL(SQLString) = False Then FWT2018Update
+'
+'        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2017 AND StateID = 0"
+'        If PRFWTTable.GetBySQL(SQLString) = False Then FWT2017Update
         
 '        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2016 AND StateID = 0"
 '        If PRFWTTable.GetBySQL(SQLString) = False Then FWT2016Update
@@ -1057,6 +1074,74 @@ Private Sub FWT2014Update()
     Next SnglMarr
 
 End Sub
+
+Private Sub FWT2021Update()
+
+    For SnglMarr = 1 To 2     ' 1 = single / 2 = married
+
+        If SnglMarr = 1 Then
+            ' FWT SINGLE
+            FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+            FWTRange(2) = 3950: FWTAmount(2) = 0: FWTPct(2) = 10
+            FWTRange(3) = 13900: FWTAmount(3) = 995: FWTPct(3) = 12
+            FWTRange(4) = 44475: FWTAmount(4) = 4664: FWTPct(4) = 22
+            FWTRange(5) = 90325: FWTAmount(5) = 14751: FWTPct(5) = 24
+            FWTRange(6) = 168875: FWTAmount(6) = 33603: FWTPct(6) = 32
+            FWTRange(7) = 213375: FWTAmount(7) = 47843: FWTPct(7) = 35
+            FWTRange(8) = 527550: FWTAmount(8) = 157804.25: FWTPct(8) = 37
+        Else
+            ' FWT MARRIED
+            FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+            FWTRange(2) = 12200: FWTAmount(2) = 0: FWTPct(2) = 10
+            FWTRange(3) = 32100: FWTAmount(3) = 1990: FWTPct(3) = 12
+            FWTRange(4) = 93250: FWTAmount(4) = 9328: FWTPct(4) = 22
+            FWTRange(5) = 184950: FWTAmount(5) = 29502: FWTPct(5) = 24
+            FWTRange(6) = 342050: FWTAmount(6) = 67206: FWTPct(6) = 32
+            FWTRange(7) = 431050: FWTAmount(7) = 95686: FWTPct(7) = 35
+            FWTRange(8) = 640500: FWTAmount(8) = 168993.5: FWTPct(8) = 37
+        End If
+
+        For Lvl = 1 To 8
+
+            PRFWTTable.Clear
+            PRFWTTable.TaxYear = 2021
+            PRFWTTable.TaxMonth = 1
+            PRFWTTable.StateID = 0
+
+            If SnglMarr = 1 Then
+                PRFWTTable.msSingle = 1
+                PRFWTTable.msMarried = 0
+            Else
+                PRFWTTable.msSingle = 0
+                PRFWTTable.msMarried = 1
+            End If
+
+            If Lvl = 1 Then
+                PRFWTTable.LowAmount = 0
+                PRFWTTable.ExcessBase = 0
+            Else
+                PRFWTTable.LowAmount = FWTRange(Lvl) + 0.01
+                PRFWTTable.ExcessBase = FWTRange(Lvl)
+            End If
+
+            If Lvl = 8 Then
+                PRFWTTable.HiAmount = 99999999.99
+            Else
+                PRFWTTable.HiAmount = FWTRange(Lvl + 1)
+            End If
+
+            PRFWTTable.Amount = FWTAmount(Lvl)
+            PRFWTTable.Percent = FWTPct(Lvl)
+            PRFWTTable.Save (Equate.RecAdd)
+
+        Next Lvl
+
+    Next SnglMarr
+
+    MsgBox "Federal tax tables updated for 2021!", vbOKOnly + vbInformation
+
+End Sub
+
 
 Private Sub FWT2020Update()
 

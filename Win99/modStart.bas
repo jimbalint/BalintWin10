@@ -30,7 +30,7 @@ Dim FileExt As String
        BalintFolder = "c:\Balint"
         ' BalintFolder = ""
        dbPwd = ""
-       ProgName = UCase("report")
+       ProgName = UCase("payee")
        ' ProgName = UCase("test2")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
@@ -188,6 +188,7 @@ Dim FileExt As String
 '      End
     ' ============================================
     
+
 ' **********************************************************
 ' *** use for test runs ***
 'If CmdLine = "" Then

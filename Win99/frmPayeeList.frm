@@ -279,6 +279,10 @@ Private Sub cmdNewYear_Click()
     txyr = InputBox("Enter tax year to init for")
     If txyr = "" Then Exit Sub
     CopyForms CInt(txyr)
+    If txyr = "2020" Then
+        Create2020Forms ("MISC")
+        Create2020Forms ("NEC")
+    End If
 End Sub
 
 Private Sub Form_Load()

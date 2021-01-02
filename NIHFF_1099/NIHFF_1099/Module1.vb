@@ -9,14 +9,9 @@ Module Module1
 
     Dim InputFolder As String = "C:\aSend\NIHFF_20"
     Dim UploadFolder As String = InputFolder & "\UploadFiles"
+    Dim dtCompany As DataTable
     Dim dtFiles As DataTable
     Dim dtForms As DataTable
-
-    Dim ContactName As String = "Rebecca Foldi"
-    Dim ContactPhone As String = "330-849-6926"
-    Dim ContactEMail As String = "RFoldi@INVENT.ORG"
-    Dim CCode As String = "17677"
-    Dim TTIN As String = "341580038"
 
     Dim x, y, z As String
     Dim i, j, k As Integer
@@ -39,8 +34,61 @@ Module Module1
                 Console.WriteLine("1099-NEC")
             End If
 
+            x = UploadFolder & "\" & Replace(rw.Item("FileName"), ".txt", "-upl.txt")
+            Dim sw As New StreamWriter(x)
+            tRecord(sw)
+            sw.Close()
+
             Console.WriteLine("==============")
         Next
+    End Sub
+
+    Sub tRecord(ByRef sw As StreamWriter)
+
+        'Type            string(1)
+        'PayYear         string(4)
+        'PriorYear       string(1)
+        'TIN             string(9)
+        'CCode           string(5)
+        'b1              string(7)
+        'TestFile        string(1)
+        'Foreign         string(1)
+        'Name            string(40)
+        'Name2           string(40)
+        'CompName        string(40)
+        'CompName2       string(40)
+        'CompAddr        string(40)
+        'CompCity        string(40)
+        'CompState       string(2)
+        'CompZip         string(9)
+        'b2              string(15)
+        'PayeeCt         string(8)
+        'ContactName     string(40)
+        'ContactPhone    string(15)
+        'ContactEMail    string(50)
+        'Tape            string(2)
+        'MediaNum        string(6)
+        'b3              string(83)
+        'SeqNumber       string(8)
+        'b4              string(10)
+        'VendInd         string(1)
+        'VendName        string(40)
+        'VendAddr        string(40)
+        'VendCity        string(40)
+        'VendState       string(2)
+        'VendZip         string(9)
+        'VendContact     string(40)
+        'VendPhone       string(15)
+        'b5              string(35)
+        'VendForeign     string(1)
+        'b6              string(8)
+        'b7              string(2)
+
+
+        sw.Write(FixedLen("AAA", 5))
+        sw.Write(FixedLen("BBB", 10))
+        sw.Write(FixedLen("CCC", 15))
+        sw.Write(vbCrLf)
     End Sub
 
     Sub DebugOutput(ByVal fnm As String)
@@ -139,10 +187,19 @@ Module Module1
 
     End Sub
 
+    Function FixedLen(ByVal str As String, ByVal slen As Integer) As String
+        str = Trim(str)
+        If slen < Len(str) Then
+            FixedLen = Left(str, slen)
+        Else
+            FixedLen = str & StrDup(slen - Len(str), " ")
+        End If
+    End Function
 
     Sub Init()
 
         DefineDT()
+        AddCompanyInfo()
 
         x = Dir(InputFolder & "\*.*")
         Do While x > ""
@@ -164,6 +221,28 @@ Module Module1
                 x = Dir()
             Loop
         End If
+
+    End Sub
+
+    Sub AddCompanyInfo()
+
+        rw = dtCompany.NewRow
+
+        rw("ContactName") = "Rebecca Foldi"
+        rw("ContactPhone") = "330-849-6926"
+        rw("ContactEMail") = "RFoldi@INVENT.ORG"
+        rw("CCode") = "17677"
+        rw("TTIN") = "341580038"
+        rw("TName1") = "National Inventors Hall of Fame Foundation, Inc."
+        rw("TName2") = ""
+        rw("TCompName1") = "National Inventors Hall of Fame Foundation, Inc."
+        rw("TCompName2") = ""
+        rw("TCompAddr") = "221 S. Broadway"
+        rw("TCompCity") = "Akron"
+        rw("TCompState") = "OH"
+        rw("TCompZip") = "44308"
+
+        dtCompany.Rows.Add(rw)
 
     End Sub
 
@@ -197,6 +276,20 @@ Module Module1
         dtForms.Columns.Add("PayeeCity")
         dtForms.Columns.Add("PayeeState")
         dtForms.Columns.Add("PayeeZip")
+
+        dtCompany.Columns.Add("ContactName")
+        dtCompany.Columns.Add("ContactPhone")
+        dtCompany.Columns.Add("ContactEMail")
+        dtCompany.Columns.Add("CCode")
+        dtCompany.Columns.Add("TTIN")
+        dtCompany.Columns.Add("TName1")
+        dtCompany.Columns.Add("TName2")
+        dtCompany.Columns.Add("TCompName1")
+        dtCompany.Columns.Add("TCompName2")
+        dtCompany.Columns.Add("TCompAddr")
+        dtCompany.Columns.Add("TCompCity")
+        dtCompany.Columns.Add("TCompState")
+        dtCompany.Columns.Add("TCompZip")
 
     End Sub
 

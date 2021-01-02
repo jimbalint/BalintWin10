@@ -172,6 +172,14 @@ Begin VB.Form frmBackup
       Top             =   1200
       Width           =   4335
    End
+   Begin VB.Label Label1 
+      Caption         =   "Select Backup Folder"
+      Height          =   255
+      Left            =   9000
+      TabIndex        =   10
+      Top             =   1320
+      Width           =   2295
+   End
    Begin VB.Label lblMsg1 
       BeginProperty Font 
          Name            =   "Arial"
