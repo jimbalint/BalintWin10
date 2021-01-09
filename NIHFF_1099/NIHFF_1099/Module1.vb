@@ -6,12 +6,14 @@ Imports System.Text
 Module Module1
 
     Dim TaxYear As Integer = 2020
+    Dim tTest As String = "T"
 
     Dim InputFolder As String = "C:\aSend\NIHFF_20"
     Dim UploadFolder As String = InputFolder & "\UploadFiles"
-    Dim dtCompany As DataTable
+    Dim dctCompany As New Dictionary(Of String, String)
     Dim dtFiles As DataTable
     Dim dtForms As DataTable
+    Dim SeqNumber As Integer = 0
 
     Dim x, y, z As String
     Dim i, j, k As Integer
@@ -25,70 +27,147 @@ Module Module1
         Console.ReadKey()
     End Sub
 
+    Function Test1()
+        Dim d As New Dictionary(Of String, Double)
+        d.Add("a", 10)
+        d.Add("b", 20)
+        Return d
+    End Function
+
     Sub ProcessFiles()
+        Dim dct As New Dictionary(Of String, Object)
         For Each rw As DataRow In dtFiles.Rows
             Console.WriteLine(rw.Item("FileName") & vbTab & rw.Item("FormType"))
             If rw.Item("FormType") = "MISC" Then
-                ProcessMiscFile(rw)
+                dct = ProcessMiscFile(rw)
             Else
                 Console.WriteLine("1099-NEC")
             End If
 
             x = UploadFolder & "\" & Replace(rw.Item("FileName"), ".txt", "-upl.txt")
             Dim sw As New StreamWriter(x)
-            tRecord(sw)
+            tRecord(sw, dct)
             sw.Close()
 
             Console.WriteLine("==============")
         Next
     End Sub
 
-    Sub tRecord(ByRef sw As StreamWriter)
+    Sub aRecord(ByRef sw As StreamWriter, ByVal dct As Dictionary(Of String, Object))
+        'Payer           group,over(out:Record),pre(A)
+        'Type            string(1)
+        sw.Write("A")
+        'PayYear         string(4)
+        sw.Write(TaxYear)
+        'b1              string(6)
+        sw.Write(StrDup(6, " "))
+        'TIN             string(9)
+        sw.Write(dctCompany("TTIN"))
+        'NameControl     string(4)
+        sw.Write(StrDup(4, " "))
+        'LastFiling      string(1)
+        sw.Write(StrDup(1, " "))
+        'ReturnType      string(2)    ! A
+        sw.Write("A")
+        '! AmountCodes     string(14)   ! 3 = Other Income   4 = FWT
+        'AmountCodes     string(16)   ! 3 = Other Income   4 = FWT  - 2011 expanded 2 positions - 2013 - added "9"
+        '                            ! 2015 - removed "9"
+        FixedLen("12345678ABCDE", 16)
+        '! b2              string(10) - 2011 changed from 10 to 8
+        'b2              string(8)
+        'Foreign         string(1)
+        'Name1           string(40)
+        'Name2           string(40)
+        'XferAgent       string(1)
+        'ShipAddr        string(40)
+        'City            string(40)
+        'State           string(2)
+        'Zip             string(9)
+        'Phone           string(15)
+        'b3              string(260)
+        'SeqNumber       string(8)
+        'b4              string(241)
+        'b5              string(2)
+
+    End Sub
+
+    Sub tRecord(ByRef sw As StreamWriter, ByVal dct As Dictionary(Of String, Object))
 
         'Type            string(1)
+        sw.Write("T")
         'PayYear         string(4)
+        sw.Write(TaxYear)
         'PriorYear       string(1)
+        sw.Write(" ")
         'TIN             string(9)
+        sw.Write(dctCompany("TTIN"))
         'CCode           string(5)
+        sw.Write(dctCompany("CCode"))
         'b1              string(7)
+        sw.Write(StrDup(7, " "))
         'TestFile        string(1)
+        sw.Write(tTest)
         'Foreign         string(1)
+        sw.Write(" ")
         'Name            string(40)
+        sw.Write(FixedLen(dctCompany("TName1"), 40))
         'Name2           string(40)
+        sw.Write(FixedLen(dctCompany("TName2"), 40))
         'CompName        string(40)
+        sw.Write(FixedLen(dctCompany("TCompName1"), 40))
         'CompName2       string(40)
+        sw.Write(FixedLen(dctCompany("TCompName2"), 40))
         'CompAddr        string(40)
+        sw.Write(FixedLen(dctCompany("TCompAddr"), 40))
         'CompCity        string(40)
+        sw.Write(FixedLen(dctCompany("TCompCity"), 40))
         'CompState       string(2)
+        sw.Write(FixedLen(dctCompany("TCompState"), 2))
         'CompZip         string(9)
+        sw.Write(FixedLen(dctCompany("TCompZip"), 9))
         'b2              string(15)
+        sw.Write(StrDup(15, " "))
         'PayeeCt         string(8)
+        sw.Write(IntString(dct("Count"), 8))
         'ContactName     string(40)
+        sw.Write(FixedLen(dctCompany("ContactName"), 40))
         'ContactPhone    string(15)
+        sw.Write(FixedLen(dctCompany("ContactPhone"), 15))
         'ContactEMail    string(50)
+        sw.Write(FixedLen(dctCompany("ContactEMail"), 50))
         'Tape            string(2)
         'MediaNum        string(6)
         'b3              string(83)
+        sw.Write(StrDup(91, " "))
         'SeqNumber       string(8)
+        sw.Write(IntString(1, 8))
         'b4              string(10)
+        sw.Write(StrDup(10, " "))
         'VendInd         string(1)
+        sw.Write("I")
         'VendName        string(40)
+        sw.Write(StrDup(40, " "))
         'VendAddr        string(40)
+        sw.Write(StrDup(40, " "))
         'VendCity        string(40)
+        sw.Write(StrDup(40, " "))
         'VendState       string(2)
+        sw.Write(StrDup(2, " "))
         'VendZip         string(9)
+        sw.Write(StrDup(9, " "))
         'VendContact     string(40)
+        sw.Write(StrDup(40, " "))
         'VendPhone       string(15)
+        sw.Write(StrDup(15, " "))
         'b5              string(35)
+        sw.Write(StrDup(35, " "))
         'VendForeign     string(1)
+        sw.Write(StrDup(1, " "))
         'b6              string(8)
+        sw.Write(StrDup(8, " "))
         'b7              string(2)
+        sw.WriteLine(StrDup(2, " "))
 
-
-        sw.Write(FixedLen("AAA", 5))
-        sw.Write(FixedLen("BBB", 10))
-        sw.Write(FixedLen("CCC", 15))
-        sw.Write(vbCrLf)
     End Sub
 
     Sub DebugOutput(ByVal fnm As String)
@@ -104,10 +183,15 @@ Module Module1
         sw.Close()
     End Sub
 
-    Sub ProcessMiscFile(ByVal rw1 As DataRow)
+    Function ProcessMiscFile(ByVal rw1 As DataRow)
 
         i = 0
         j = 0
+
+        Dim dPay01 As Double = 0
+        Dim dPay03 As Double = 0
+        Dim dPay07 As Double = 0
+
         rw = dtForms.NewRow
         rw("FileName") = rw1("FileName")
 
@@ -132,6 +216,7 @@ Module Module1
                     rw("Payer1") = Mid(y, 6, 37)
                     If Trim(Mid(y, 43, 10)) <> "" Then
                         rw("Amount") = CDbl(Mid(y, 43, 10))
+                        dPay01 += CDbl(Mid(y, 43, 10))
                         rw("AmountLine") = 1
                         rw("Box") = "Box #1 Rents"
                     End If
@@ -149,6 +234,7 @@ Module Module1
                 Case 6
                     If Trim(Mid(y, 43, 10)) <> "" Then
                         rw("Amount") = CDbl(Mid(y, 43, 10))
+                        dPay03 += CDbl(Mid(y, 43, 10))
                         rw("AmountLine") = 6
                         rw("Box") = "Box #3 Other Income"
                     End If
@@ -162,6 +248,7 @@ Module Module1
                 Case 9
                     If Trim(Mid(y, 43, 10)) <> "" Then
                         rw("Amount") = CDbl(Mid(y, 43, 10))
+                        dPay07 += CDbl(Mid(y, 43, 10))
                         rw("AmountLine") = 9
                         rw("Box") = "Box #7 Non Emp Comp"
                     End If
@@ -178,10 +265,18 @@ Module Module1
         sr.Close()
 
         j += 1
+
         dtForms.Rows.Add(rw)
         Console.WriteLine(rw("FileName") & vbTab & j)
 
-    End Sub
+        Dim dct As New Dictionary(Of String, Object)
+        dct.Add("Count", j)
+        dct.Add("Pay01", dPay01)
+        dct.Add("Pay03", dPay03)
+        dct.Add("Pay07", dPay07)
+        Return (dct)
+
+    End Function
 
     Sub processNECFile(ByVal fnm As String)
 
@@ -196,12 +291,21 @@ Module Module1
         End If
     End Function
 
+    Function IntString(ByVal str As String, ByVal slen As Integer) As String
+        Dim iint As Integer = CInt(str)
+        IntString = iint.ToString("D" & slen)
+    End Function
+    Function AmtString(ByVal str As String, ByVal slen As Integer) As String
+        Dim dbl As Double = CDbl(str) * 100
+        AmtString = dbl.ToString("D" & slen)
+    End Function
+
     Sub Init()
 
         DefineDT()
         AddCompanyInfo()
 
-        x = Dir(InputFolder & "\*.*")
+        x = Dir(InputFolder & "\*.txt")
         Do While x > ""
             rw = dtFiles.NewRow
             rw("FileName") = x
@@ -225,25 +329,19 @@ Module Module1
     End Sub
 
     Sub AddCompanyInfo()
-
-        rw = dtCompany.NewRow
-
-        rw("ContactName") = "Rebecca Foldi"
-        rw("ContactPhone") = "330-849-6926"
-        rw("ContactEMail") = "RFoldi@INVENT.ORG"
-        rw("CCode") = "17677"
-        rw("TTIN") = "341580038"
-        rw("TName1") = "National Inventors Hall of Fame Foundation, Inc."
-        rw("TName2") = ""
-        rw("TCompName1") = "National Inventors Hall of Fame Foundation, Inc."
-        rw("TCompName2") = ""
-        rw("TCompAddr") = "221 S. Broadway"
-        rw("TCompCity") = "Akron"
-        rw("TCompState") = "OH"
-        rw("TCompZip") = "44308"
-
-        dtCompany.Rows.Add(rw)
-
+        dctCompany.Add("ContactName", "Rebecca Foldi")
+        dctCompany.Add("ContactPhone", "330-849-6926")
+        dctCompany.Add("ContactEMail", "RFoldi@INVENT.ORG")
+        dctCompany.Add("CCode", "17677")
+        dctCompany.Add("TTIN", "341580038")
+        dctCompany.Add("TName1", "National Inventors Hall of Fame Foundation, Inc.")
+        dctCompany.Add("TName2", "")
+        dctCompany.Add("TCompName1", "National Inventors Hall of Fame Foundation, Inc.")
+        dctCompany.Add("TCompName2", "")
+        dctCompany.Add("TCompAddr", "221 S. Broadway")
+        dctCompany.Add("TCompCity", "Akron")
+        dctCompany.Add("TCompState", "OH")
+        dctCompany.Add("TCompZip", "44308")
     End Sub
 
     Sub DefineDT()
@@ -276,20 +374,6 @@ Module Module1
         dtForms.Columns.Add("PayeeCity")
         dtForms.Columns.Add("PayeeState")
         dtForms.Columns.Add("PayeeZip")
-
-        dtCompany.Columns.Add("ContactName")
-        dtCompany.Columns.Add("ContactPhone")
-        dtCompany.Columns.Add("ContactEMail")
-        dtCompany.Columns.Add("CCode")
-        dtCompany.Columns.Add("TTIN")
-        dtCompany.Columns.Add("TName1")
-        dtCompany.Columns.Add("TName2")
-        dtCompany.Columns.Add("TCompName1")
-        dtCompany.Columns.Add("TCompName2")
-        dtCompany.Columns.Add("TCompAddr")
-        dtCompany.Columns.Add("TCompCity")
-        dtCompany.Columns.Add("TCompState")
-        dtCompany.Columns.Add("TCompZip")
 
     End Sub
 
