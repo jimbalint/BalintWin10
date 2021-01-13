@@ -228,6 +228,14 @@ Public Class clsExport
                 End Select
             Else
                 ' NEC
+                Select Case rw("AmountLine")
+                    Case 1
+                        pay(1) = rw("Amount")
+                        Total(1) += rw("Amount")
+                    Case Else
+                        MsgBox("Bad Amount Line: " & rw("AmountLine") & " " & "Payee: " & rw("PayeeName"))
+                        End
+                End Select
             End If
 
             For ii = 1 To 16
@@ -282,6 +290,14 @@ Public Class clsExport
                 sw.WriteLine(StrDup(2, " "))
             Else
                 ' NEC
+                ' 2nd TIN notice
+                sw.Write(" ")
+                ' blank
+                sw.Write(StrDup(3, " "))
+                ' FATCA
+                sw.Write(" ")
+                ' blank
+                sw.WriteLine(StrDup(202, " "))
             End If
 
         Next

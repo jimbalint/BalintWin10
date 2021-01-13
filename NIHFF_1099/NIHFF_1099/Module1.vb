@@ -37,6 +37,7 @@ Module Module1
 
     Sub ProcessFiles()
         Dim dct As New Dictionary(Of String, Object)
+        Dim e As New clsExcel()
 
         Dim exp As New clsExport
         exp.TaxYear = TaxYear
@@ -52,6 +53,7 @@ Module Module1
                 dct = ProcessMiscFile(rw)
                 ReturnType = "A"
             Else
+                dct = ProcessNECFile(rw)
                 ReturnType = "NE"
                 Console.WriteLine("1099-NEC")
             End If
@@ -72,9 +74,11 @@ Module Module1
 
             ' add routine to check for each line is 750 chars
 
-            Console.WriteLine("==============")
+            e.WriteTab(dtForms, rw.Item("FileName"))
 
             dtForms.Clear()
+
+            Console.WriteLine("==============")
 
         Next
     End Sub
@@ -187,9 +191,82 @@ Module Module1
 
     End Function
 
-    Sub ProcessNECFile(ByVal fnm As String)
+    Function ProcessNECFile(ByVal rw1 As DataRow)
 
-    End Sub
+        i = 0
+        j = 0
+
+        Dim dPay01 As Double = 0
+
+        rw = dtForms.NewRow
+        rw("FileName") = rw1("FileName")
+
+        z = InputFolder & "\" & rw1.Item("FileName")
+        Dim sr As New StreamReader(z)
+        Do While Not sr.EndOfStream
+            y = sr.ReadLine
+            i += 1
+            If i = 15 Then
+                j += 1
+                i = 1
+                If j Mod 10 = 1 Then Console.WriteLine(rw("FileName") & vbTab & j)
+
+                dtForms.Rows.Add(rw)
+                rw = dtForms.NewRow
+                rw("FileName") = rw1("FileName")
+
+            End If
+
+            Select Case i
+                Case 1
+                    rw("Payer1") = Mid(y, 6, 37)
+                Case 2
+                    rw("Payer2") = Mid(y, 6, 50)
+                Case 3
+                    rw("Payer3") = Mid(y, 6, 50)
+                Case 4
+                    rw("PayerCity") = Mid(y, 6, 20)
+                    rw("PayerState") = Mid(y, 27, 2)
+                    rw("PayerZip") = ZipString(Mid(y, 30, 10))
+                Case 5
+                    rw("PayerPhone") = Mid(y, 6, 50)
+                Case 6
+                    If Trim(Mid(y, 43, 10)) <> "" Then
+                        rw("Amount") = CDbl(Mid(y, 43, 10))
+                        dPay01 += CDbl(Mid(y, 43, 10))
+                        rw("AmountLine") = 1
+                        rw("Box") = "Box #1 Nonemployee compensation"
+                    End If
+                Case 7
+                    rw("FID") = Mid(y, 6, 10)
+                    rw("FID2") = DigitsOnly(rw("FID"))
+                    rw("PayeeID") = Mid(y, 23, 20)
+                    rw("PayeeID2") = DigitsOnly(rw("PayeeID"))
+                Case 8
+                    rw("PayeeName") = Mid(y, 6, 50)
+                Case 11
+                    rw("PayeeAddr") = Mid(y, 6, 50)
+                Case 12
+                    rw("PayeeCity") = Mid(y, 6, 20)
+                    rw("PayeeState") = Mid(y, 26, 2)
+                    rw("PayeeZip") = ZipString(Mid(y, 29, 10))
+
+            End Select
+
+        Loop
+        sr.Close()
+
+        j += 1
+
+        dtForms.Rows.Add(rw)
+        Console.WriteLine(rw("FileName") & vbTab & j)
+
+        Dim dct As New Dictionary(Of String, Object)
+        dct.Add("Count", j)
+        dct.Add("Pay01", dPay01)
+        Return (dct)
+
+    End Function
 
 
     Sub Init()
