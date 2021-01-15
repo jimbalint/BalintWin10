@@ -10,7 +10,7 @@ Public Class clsExport
     Public Corrected As String
     Public ReturnType As String
     Public SeqNum As Integer
-    Dim Total(16) As Double
+    Public Total(16) As Double
 
     Public Sub tRecord()
 
@@ -116,7 +116,7 @@ Public Class clsExport
         'AmountCodes     string(16)   ! 3 = Other Income   4 = FWT  - 2011 expanded 2 positions - 2013 - added "9"
         '                            ! 2015 - removed "9"
         If ReturnType = "A" Then
-            sw.Write(FixedLen("12345678ABCDE", 16))
+            sw.Write(FixedLen("1234568ABCDE", 16))
         Else
             sw.Write(FixedLen("14", 16))
         End If
@@ -190,7 +190,14 @@ Public Class clsExport
             End If
 
             'TIN             string(9)
+            ' 585-48-3565
+            ' 25-1714424
+            ' ****************************************************
+            ' *** stop for error on live!!!!!
+            If pid = "000-00-0000" Then pid = "585-48-00" & IntString(SeqNum, 2)
+            If pid = "00-0000000" Then pid = "25-17444" & IntString(SeqNum, 2)
             sw.Write(FixedLen(DigitsOnly(pid), 9))
+            ' ****************************************************
 
             'AcctNum         string(20)
             '! changed in tax year 2009
@@ -207,21 +214,23 @@ Public Class clsExport
             Dim ii As Integer
             For ii = 1 To 16
                 pay(ii) = 0
-                Total(ii) = 0
             Next
 
             If ReturnType = "A" Then
                 ' MISC
                 Select Case rw("AmountLine")
                     Case 1
+                        ' Box #1 Rents
                         pay(1) = rw("Amount")
                         Total(1) += rw("Amount")
                     Case 6
+                        ' Box #3 Other Income
                         pay(3) = rw("Amount")
                         Total(3) += rw("Amount")
                     Case 9
-                        pay(7) = rw("Amount")
-                        Total(7) += rw("Amount")
+                        ' NEC - no longer used
+                        'pay(7) = rw("Amount")
+                        'Total(7) += rw("Amount")
                     Case Else
                         MsgBox("Bad Amount Line: " & rw("AmountLine") & " " & "Payee: " & rw("PayeeName"))
                         End

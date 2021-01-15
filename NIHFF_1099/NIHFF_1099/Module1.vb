@@ -21,11 +21,12 @@ Module Module1
     Dim rw As DataRow
 
     Sub Main()
+        MsgBox("Allowing zero PIDs!!", vbExclamation)
         Init()
         ProcessFiles()
         DebugOutput("C:\aSend\NIHFF_20\Debug\NIHFF.txt")
-        Console.WriteLine("...")
-        Console.ReadKey()
+        MsgBox("All done ...", vbInformation)
+        End
     End Sub
 
     Function Test1()
@@ -64,6 +65,10 @@ Module Module1
             exp.sw = sw
             exp.dct = dct
             exp.ReturnType = ReturnType
+            Dim ii As Integer
+            For ii = 1 To 16
+                exp.Total(ii) = 0
+            Next
             exp.tRecord()
             exp.aRecord()
             exp.bRecords(dtForms)
@@ -160,6 +165,8 @@ Module Module1
                     rw("PayeeName") = Mid(y, 6, 50)
                 Case 9
                     If Trim(Mid(y, 43, 10)) <> "" Then
+                        MsgBox("Box #7 NEC on 1099-MISC???")
+                        End
                         rw("Amount") = CDbl(Mid(y, 43, 10))
                         dPay07 += CDbl(Mid(y, 43, 10))
                         rw("AmountLine") = 9

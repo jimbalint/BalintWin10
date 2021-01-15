@@ -38,8 +38,10 @@ Public Class clsExcel
         Dim colnum As Integer = 1
         Dim rownum As Integer = 1
         For Each dc As DataColumn In dt.Columns
-            ws.Cells(1, colnum).value = dc.ColumnName
-            colnum += 1
+            If dc.ColumnName <> "AmountLine" Then
+                ws.Cells(1, colnum).value = dc.ColumnName
+                colnum += 1
+            End If
         Next
 
         Dim amttl As Double = 0
@@ -47,9 +49,11 @@ Public Class clsExcel
             colnum = 1
             rownum += 1
             For Each dc As DataColumn In dt.Columns
-                If dc.ColumnName = "Amount" Then amttl += rw.Item("Amount")
-                ws.Cells(rownum, colnum).value = rw.Item(dc.ColumnName)
-                colnum += 1
+                If dc.ColumnName <> "AmountLine" Then
+                    If dc.ColumnName = "Amount" Then amttl += rw.Item("Amount")
+                    ws.Cells(rownum, colnum).value = rw.Item(dc.ColumnName)
+                    colnum += 1
+                End If
             Next
         Next
 
