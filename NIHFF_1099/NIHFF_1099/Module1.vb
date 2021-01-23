@@ -5,6 +5,7 @@ Imports System.Text
 
 Module Module1
 
+    Dim bExcel As Boolean = True
     Dim TaxYear As Integer = 2020
     Dim tTest As String = "T"
     Dim Corrected As String = " "
@@ -21,24 +22,20 @@ Module Module1
     Dim rw As DataRow
 
     Sub Main()
-        MsgBox("Allowing zero PIDs!!", vbExclamation)
+        If tTest <> "" Then
+            MsgBox("Test Mode!!", vbExclamation)
+        End If
         Init()
         ProcessFiles()
-        DebugOutput("C:\aSend\NIHFF_20\Debug\NIHFF.txt")
         MsgBox("All done ...", vbInformation)
         End
     End Sub
 
-    Function Test1()
-        Dim d As New Dictionary(Of String, Double)
-        d.Add("a", 10)
-        d.Add("b", 20)
-        Return d
-    End Function
-
     Sub ProcessFiles()
         Dim dct As New Dictionary(Of String, Object)
-        Dim e As New clsExcel()
+
+        Dim e
+        If bExcel Then e = New clsExcel
 
         Dim exp As New clsExport
         exp.TaxYear = TaxYear
@@ -79,7 +76,11 @@ Module Module1
 
             ' add routine to check for each line is 750 chars
 
-            e.WriteTab(dtForms, rw.Item("FileName"))
+            If bExcel Then
+                e.WriteTab(dtForms, rw.Item("FileName"))
+            End If
+
+            ' DebugOutput("C:\aSend\NIHFF_20\Debug\NIHFF.txt")
 
             dtForms.Clear()
 
@@ -126,30 +127,30 @@ Module Module1
                 dtForms.Rows.Add(rw)
                 rw = dtForms.NewRow
                 rw("FileName") = rw1("FileName")
+                y = sr.ReadLine
 
             End If
 
             Select Case i
                 Case 1
-                    rw("Payer1") = Mid(y, 6, 37)
                     If Trim(Mid(y, 43, 10)) <> "" Then
                         rw("Amount") = CDbl(Mid(y, 43, 10))
                         dPay01 += CDbl(Mid(y, 43, 10))
                         rw("AmountLine") = 1
                         rw("Box") = "Box #1 Rents"
                     End If
-
                 Case 2
-                    rw("Payer2") = Mid(y, 6, 50)
+                    rw("Payer1") = Mid(y, 6, 37)
                 Case 3
-                    rw("Payer3") = Mid(y, 6, 50)
+                    rw("Payer2") = Mid(y, 6, 50)
                 Case 4
+                    rw("Payer3") = Mid(y, 6, 50)
+                Case 5
                     rw("PayerCity") = Mid(y, 6, 20)
                     rw("PayerState") = Mid(y, 27, 2)
                     rw("PayerZip") = ZipString(Mid(y, 30, 10))
-                Case 5
-                    rw("PayerPhone") = Mid(y, 6, 50)
                 Case 6
+                    rw("PayerPhone") = Mid(y, 6, 50)
                     If Trim(Mid(y, 43, 10)) <> "" Then
                         rw("Amount") = CDbl(Mid(y, 43, 10))
                         dPay03 += CDbl(Mid(y, 43, 10))
@@ -157,24 +158,28 @@ Module Module1
                         rw("Box") = "Box #3 Other Income"
                     End If
                 Case 7
+                Case 8
                     rw("FID") = Mid(y, 6, 10)
                     rw("FID2") = DigitsOnly(rw("FID"))
                     rw("PayeeID") = Mid(y, 23, 20)
                     rw("PayeeID2") = DigitsOnly(rw("PayeeID"))
-                Case 8
-                    rw("PayeeName") = Mid(y, 6, 50)
                 Case 9
-                    If Trim(Mid(y, 43, 10)) <> "" Then
-                        MsgBox("Box #7 NEC on 1099-MISC???")
-                        End
-                        rw("Amount") = CDbl(Mid(y, 43, 10))
-                        dPay07 += CDbl(Mid(y, 43, 10))
-                        rw("AmountLine") = 9
-                        rw("Box") = "Box #7 Non Emp Comp"
-                    End If
+                    ' no box 7 in 2020
+                    'If Trim(Mid(y, 43, 10)) <> "" Then
+                    '    MsgBox("Box #7 NEC on 1099-MISC???")
+                    '    End
+                    '    rw("Amount") = CDbl(Mid(y, 43, 10))
+                    '    dPay07 += CDbl(Mid(y, 43, 10))
+                    '    rw("AmountLine") = 9
+                    '    rw("Box") = "Box #7 Non Emp Comp"
+                    'End If
+                Case 10
+                    rw("PayeeName") = Mid(y, 6, 50)
                 Case 11
-                    rw("PayeeAddr") = Mid(y, 6, 50)
+                    rw("PayeeName2") = Mid(y, 6, 50)
                 Case 12
+                    rw("PayeeAddr") = Mid(y, 6, 50)
+                Case 13
                     rw("PayeeCity") = Mid(y, 6, 21)
                     rw("PayeeState") = Mid(y, 27, 2)
                     rw("PayeeZip") = ZipString(Mid(y, 30, 10))
@@ -184,10 +189,7 @@ Module Module1
         Loop
         sr.Close()
 
-        j += 1
-
-        dtForms.Rows.Add(rw)
-        Console.WriteLine(rw("FileName") & vbTab & j)
+        Console.WriteLine(rw("FileName") & vbTab & j & vbTab & FormatCurrency(dPay01, 2) & vbTab & FormatCurrency(dPay03, 2) & vbTab & FormatCurrency(dPay07, 2))
 
         Dim dct As New Dictionary(Of String, Object)
         dct.Add("Count", j)
@@ -213,14 +215,16 @@ Module Module1
         Do While Not sr.EndOfStream
             y = sr.ReadLine
             i += 1
-            If i = 15 Then
+            If i = 14 Then
                 j += 1
                 i = 1
-                If j Mod 10 = 1 Then Console.WriteLine(rw("FileName") & vbTab & j)
+                If j Mod 100 = 1 Then Console.WriteLine(rw("FileName") & vbTab & j)
 
                 dtForms.Rows.Add(rw)
                 rw = dtForms.NewRow
                 rw("FileName") = rw1("FileName")
+
+                y = sr.ReadLine
 
             End If
 
@@ -233,8 +237,8 @@ Module Module1
                     rw("Payer3") = Mid(y, 6, 50)
                 Case 4
                     rw("PayerCity") = Mid(y, 6, 20)
-                    rw("PayerState") = Mid(y, 27, 2)
-                    rw("PayerZip") = ZipString(Mid(y, 30, 10))
+                    rw("PayerState") = Mid(y, 26, 2)
+                    rw("PayerZip") = ZipString(Mid(y, 29, 10))
                 Case 5
                     rw("PayerPhone") = Mid(y, 6, 50)
                 Case 6
@@ -251,6 +255,8 @@ Module Module1
                     rw("PayeeID2") = DigitsOnly(rw("PayeeID"))
                 Case 8
                     rw("PayeeName") = Mid(y, 6, 50)
+                Case 9
+                    rw("PayeeName2") = Mid(y, 6, 50)
                 Case 11
                     rw("PayeeAddr") = Mid(y, 6, 50)
                 Case 12
@@ -263,10 +269,7 @@ Module Module1
         Loop
         sr.Close()
 
-        j += 1
-
-        dtForms.Rows.Add(rw)
-        Console.WriteLine(rw("FileName") & vbTab & j)
+        Console.WriteLine(rw("FileName") & vbTab & j & vbTab & FormatCurrency(dPay01, 2))
 
         Dim dct As New Dictionary(Of String, Object)
         dct.Add("Count", j)
@@ -282,6 +285,7 @@ Module Module1
         AddCompanyInfo()
 
         x = Dir(InputFolder & "\*.txt")
+
         Do While x > ""
             rw = dtFiles.NewRow
             rw("FileName") = x
@@ -345,6 +349,7 @@ Module Module1
         dtForms.Columns.Add("AmountLine")
         dtForms.Columns.Add("Box")
         dtForms.Columns.Add("PayeeName")
+        dtForms.Columns.Add("PayeeName2")
         dtForms.Columns.Add("Amount")
         dtForms.Columns.Add("PayeeAddr")
         dtForms.Columns.Add("PayeeCity")

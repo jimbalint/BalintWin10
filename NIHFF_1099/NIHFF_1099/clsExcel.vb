@@ -34,11 +34,17 @@ Public Class clsExcel
         ws = wb.Sheets(SheetCount)
         ws.Name = fnm
 
+        Dim SkipFields(3) As String
+        SkipFields(0) = "AmountLine"
+        SkipFields(1) = "FID2"
+        SkipFields(2) = "PayeeID2"
+        SkipFields(3) = "NameID"
+
         ' header row
         Dim colnum As Integer = 1
         Dim rownum As Integer = 1
         For Each dc As DataColumn In dt.Columns
-            If dc.ColumnName <> "AmountLine" Then
+            If Not SkipFields.Contains(dc.ColumnName) Then
                 ws.Cells(1, colnum).value = dc.ColumnName
                 colnum += 1
             End If
@@ -49,7 +55,12 @@ Public Class clsExcel
             colnum = 1
             rownum += 1
             For Each dc As DataColumn In dt.Columns
-                If dc.ColumnName <> "AmountLine" Then
+                If SkipFields.Contains(dc.ColumnName) Then
+                    ' skip
+                ElseIf dc.ColumnName = "PayerZip" Or dc.ColumnName = "PayeeZip" Then
+                    ws.Cells(rownum, colnum).value = "=""" & rw.Item(dc.ColumnName) & """"
+                    colnum += 1
+                Else
                     If dc.ColumnName = "Amount" Then amttl += rw.Item("Amount")
                     ws.Cells(rownum, colnum).value = rw.Item(dc.ColumnName)
                     colnum += 1

@@ -27,7 +27,7 @@ Public Class clsExport
         'b1              string(7)
         sw.Write(StrDup(7, " "))
         'TestFile        string(1)
-        If tTest <> "T" Then
+        If tTest = "T" Then
             sw.Write(tTest)
         Else
             sw.Write(" ")
@@ -194,8 +194,18 @@ Public Class clsExport
             ' 25-1714424
             ' ****************************************************
             ' *** stop for error on live!!!!!
-            If pid = "000-00-0000" Then pid = "585-48-00" & IntString(SeqNum, 2)
-            If pid = "00-0000000" Then pid = "25-17444" & IntString(SeqNum, 2)
+            'If pid = "000-00-0000" Then pid = "585-48-00" & IntString(SeqNum, 2)
+            'If pid = "00-0000000" Then pid = "25-17444" & IntString(SeqNum, 2)
+
+            If pid = "000-00-0000" Then
+                MsgBox("Blank SSN PID: " & SeqNum, vbExclamation)
+                End
+            End If
+            If pid = "00-0000000" Then
+                MsgBox("Blank Fed ID: " & SeqNum, vbExclamation)
+                End
+            End If
+
             sw.Write(FixedLen(DigitsOnly(pid), 9))
             ' ****************************************************
 
@@ -256,7 +266,7 @@ Public Class clsExport
             'Name1           string(40)
             sw.Write(FixedLen(rw("PayeeName"), 40))
             'Name2           string(40)
-            sw.Write(StrDup(40, " "))
+            sw.Write(FixedLen(rw("PayeeName2"), 40))
             'b3              string(40)
             sw.Write(StrDup(40, " "))
             'Addr1           string(40)
