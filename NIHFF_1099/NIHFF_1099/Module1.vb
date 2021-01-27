@@ -7,7 +7,7 @@ Module Module1
 
     Dim bExcel As Boolean = True
     Dim TaxYear As Integer = 2020
-    Dim tTest As String = "T"
+    Dim tTest As String = ""
     Dim Corrected As String = " "
 
     Dim InputFolder As String = "C:\aSend\NIHFF_20"
@@ -80,7 +80,7 @@ Module Module1
                 e.WriteTab(dtForms, rw.Item("FileName"))
             End If
 
-            ' DebugOutput("C:\aSend\NIHFF_20\Debug\NIHFF.txt")
+            DebugOutput("C:\aSend\NIHFF_20\Debug\NIHFF.txt")
 
             dtForms.Clear()
 
@@ -111,6 +111,10 @@ Module Module1
         Dim dPay03 As Double = 0
         Dim dPay07 As Double = 0
 
+        Dim Payee1 As String
+        Dim Payee2 As String
+        Dim Payee3 As String
+
         rw = dtForms.NewRow
         rw("FileName") = rw1("FileName")
 
@@ -123,6 +127,16 @@ Module Module1
                 j += 1
                 i = 1
                 If j Mod 10 = 1 Then Console.WriteLine(rw("FileName") & vbTab & j)
+
+                If rw("Box") = "Box #1 Rents" Then
+                    rw("PayeeName") = Payee1
+                    rw("PayeeName2") = Payee2
+                    rw("PayeeAddr") = Payee3
+                Else
+                    rw("PayeeName") = Payee1
+                    rw("PayeeName2") = ""
+                    rw("PayeeAddr") = Trim(Payee2) & " " & Trim(Payee3)
+                End If
 
                 dtForms.Rows.Add(rw)
                 rw = dtForms.NewRow
@@ -150,7 +164,7 @@ Module Module1
                     rw("PayerState") = Mid(y, 27, 2)
                     rw("PayerZip") = ZipString(Mid(y, 30, 10))
                 Case 6
-                    rw("PayerPhone") = Mid(y, 6, 50)
+                    rw("PayerPhone") = Mid(y, 6, 30)
                     If Trim(Mid(y, 43, 10)) <> "" Then
                         rw("Amount") = CDbl(Mid(y, 43, 10))
                         dPay03 += CDbl(Mid(y, 43, 10))
@@ -174,11 +188,14 @@ Module Module1
                     '    rw("Box") = "Box #7 Non Emp Comp"
                     'End If
                 Case 10
-                    rw("PayeeName") = Mid(y, 6, 50)
+                    ' rw("PayeeName") = Mid(y, 6, 50)
+                    Payee1 = Mid(y, 6, 50)
                 Case 11
-                    rw("PayeeName2") = Mid(y, 6, 50)
+                    ' rw("PayeeName2") = Mid(y, 6, 50)
+                    Payee2 = Mid(y, 6, 50)
                 Case 12
-                    rw("PayeeAddr") = Mid(y, 6, 50)
+                    ' rw("PayeeAddr") = Mid(y, 6, 50)
+                    Payee3 = Mid(y, 6, 50)
                 Case 13
                     rw("PayeeCity") = Mid(y, 6, 21)
                     rw("PayeeState") = Mid(y, 27, 2)
@@ -207,6 +224,9 @@ Module Module1
 
         Dim dPay01 As Double = 0
 
+        Dim Payee1 As String
+        Dim Payee2 As String
+
         rw = dtForms.NewRow
         rw("FileName") = rw1("FileName")
 
@@ -219,6 +239,8 @@ Module Module1
                 j += 1
                 i = 1
                 If j Mod 100 = 1 Then Console.WriteLine(rw("FileName") & vbTab & j)
+
+                rw("PayeeAddr") = Trim(Payee1) & " " & Trim(Payee2)
 
                 dtForms.Rows.Add(rw)
                 rw = dtForms.NewRow
@@ -257,8 +279,10 @@ Module Module1
                     rw("PayeeName") = Mid(y, 6, 50)
                 Case 9
                     rw("PayeeName2") = Mid(y, 6, 50)
+                Case 10
+                    Payee1 = Mid(y, 6, 50)
                 Case 11
-                    rw("PayeeAddr") = Mid(y, 6, 50)
+                    Payee2 = Mid(y, 6, 50)
                 Case 12
                     rw("PayeeCity") = Mid(y, 6, 20)
                     rw("PayeeState") = Mid(y, 26, 2)
@@ -285,6 +309,7 @@ Module Module1
         AddCompanyInfo()
 
         x = Dir(InputFolder & "\*.txt")
+        ' x = Dir(InputFolder & "\NIHF 1099NEC Box 1.txt")
 
         Do While x > ""
             rw = dtFiles.NewRow
