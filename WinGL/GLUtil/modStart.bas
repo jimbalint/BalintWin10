@@ -43,14 +43,14 @@ Dim FileExt As String
     If x = "" Then         ' set for testing
        BalintFolder = "c:\Balint"
        dbPwd = ""
-       ProgName = UCase("CLEARGLAMOUNT")
+       ProgName = UCase("GLFILECOPY")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
        BackName = ""
        BatchNum = 234
        Period = 201904       ' yyyypp
        ' Period = 0
-       DBName = "c:\Balint\Data\KirtlandHills.mdb"
+       dbName = "c:\Balint\Data\KirtlandHills.mdb"
     Else
        dbPwd = GetCmd(x, "dbPwd", "Str")
        ProgName = UCase(GetCmd(x, "ProgName", "Str"))
@@ -60,7 +60,7 @@ Dim FileExt As String
        BatchNum = GetCmd(x, "Batch", "Num")
        MenuName = GetCmd(x, "MenuName", "Str")
        Period = GetCmd(x, "Period", "Num")
-       DBName = GetCmd(x, "dbName", "Str")
+       dbName = GetCmd(x, "dbName", "Str")
        BalintFolder = GetCmd(x, "BalintFolder", "Str")
     End If
 
