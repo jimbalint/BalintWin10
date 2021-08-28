@@ -1260,7 +1260,7 @@ Begin VB.Form frmMainMenu
       Width           =   4335
    End
    Begin VB.Label lblVersion 
-      Caption         =   "1/02/2021"
+      Caption         =   "8/28/2021"
       BeginProperty Font 
          Name            =   "Arial"
          Size            =   9

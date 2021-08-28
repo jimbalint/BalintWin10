@@ -15,8 +15,8 @@ Const RecPut As Boolean = False
 Dim x As String
 Dim Y As String
 
-Dim i As Long
-Dim j As Long
+Dim I As Long
+Dim J As Long
 
 Dim Acct As Long
 Dim nPlaces As Integer
@@ -480,7 +480,7 @@ Public Function DeleteAccts(ByVal AcctSub As String, _
                             ByVal DelHistAmt As Boolean) As XArrayDB
                             
 Dim GLAccount As New cGLAccount
-Dim i As Integer
+Dim I As Integer
 Dim x As String
                                
                                
@@ -609,10 +609,16 @@ Dim xCopyTo As String
     cn.Close
     cnDes.Close
    
-    FileCopy CopyFrom, CopyTo
-   
+    If NewADO Then
+        CopyFrom = Replace(CopyFrom, ".MDB", ".ACCDB")
+        CopyFrom = Replace(CopyFrom, ".mdb", ".accdb")
+        CopyTo = Replace(CopyTo, ".MDB", ".ACCDB")
+        CopyTo = Replace(CopyTo, ".mdb", ".accdb")
+    End If
+    FileCopy Trim(CopyFrom), Trim(CopyTo)
+
     If Err.Number <> 0 Then
-        MsgBox "File copy FAILED !!! " & vbCr & Err.Description & " " & Trim(x) & " " & Trim(FileName), vbExclamation
+        MsgBox "File copy FAILED !!! " & vbCr & Err.Description & " " & Trim(CopyFrom) & " " & Trim(CopyTo), vbExclamation
         Exit Sub
     Else
         On Error GoTo 0
@@ -810,9 +816,9 @@ Public Function GLMultDiv(ByVal LoAcct As Long, _
                           ByVal AcctBase As Boolean, _
                           ByVal ShowGo As String) As XArrayDB
    
-Dim i As Long
-Dim j As Long
-Dim k As Long
+Dim I As Long
+Dim J As Long
+Dim K As Long
 
 Dim SubDig As Integer
    
@@ -903,20 +909,20 @@ Dim SubDig As Integer
       
       If MultDiv = "Mult" Then
          If AcctBase = False Then
-            i = rs!Account * MDBy
+            I = rs!Account * MDBy
          Else
-            k = rs!Account Mod 10 ^ SubDig ' branch
-            j = Int(rs!Account / 10 ^ SubDig) * MDBy * 10 ^ SubDig ' base
-            i = j + k
+            K = rs!Account Mod 10 ^ SubDig ' branch
+            J = Int(rs!Account / 10 ^ SubDig) * MDBy * 10 ^ SubDig ' base
+            I = J + K
          End If
       Else
-         i = Int(rs!Account / MDBy)
+         I = Int(rs!Account / MDBy)
       End If
       
-      x = "Account #: " & rs!Account & " Move To #: " & i
+      x = "Account #: " & rs!Account & " Move To #: " & I
             
       If ShowGo = "Go" Then
-         rs.Fields("Account") = i
+         rs.Fields("Account") = I
          On Error Resume Next
          rs.Update
          If Err.Number <> 0 Then
@@ -927,7 +933,7 @@ Dim SubDig As Integer
          End If
          On Error GoTo 0
       Else
-         Y = "Account = " & i
+         Y = "Account = " & I
          rs2.Find Y, 0, adSearchForward, 1
          If Not rs2.EOF Then     ' was found - can't do !!!
             x = x & " ERROR !!! Already exists !!!"
@@ -989,17 +995,17 @@ Dim SubDig As Integer
     
           If MultDiv = "Mult" Then
              If AcctBase = False Then
-                i = rs!Account * MDBy
+                I = rs!Account * MDBy
              Else
-                k = rs!Account Mod 10 ^ SubDig ' branch
-                j = Int(rs!Account / 10 ^ SubDig) * MDBy * 10 ^ SubDig ' base
-                i = j + k
+                K = rs!Account Mod 10 ^ SubDig ' branch
+                J = Int(rs!Account / 10 ^ SubDig) * MDBy * 10 ^ SubDig ' base
+                I = J + K
              End If
           Else
-             i = rs!Account / MDBy
+             I = rs!Account / MDBy
           End If
     
-          rs.Fields("Account") = i
+          rs.Fields("Account") = I
     
           On Error Resume Next
           rs.Update
@@ -1064,17 +1070,17 @@ Dim SubDig As Integer
            
            If MultDiv = "Mult" Then
               If AcctBase = False Then
-                 i = rs!Account * MDBy
+                 I = rs!Account * MDBy
               Else
-                 k = rs!Account Mod 10 ^ SubDig ' branch
-                 j = Int(rs!Account / 10 ^ SubDig) * MDBy * 10 ^ SubDig ' base
-                 i = j + k
+                 K = rs!Account Mod 10 ^ SubDig ' branch
+                 J = Int(rs!Account / 10 ^ SubDig) * MDBy * 10 ^ SubDig ' base
+                 I = J + K
               End If
            Else
-              i = rs!Account / MDBy
+              I = rs!Account / MDBy
            End If
            
-           rs.Fields("Account") = i
+           rs.Fields("Account") = I
            
            On Error Resume Next
            rs.Update
@@ -1385,10 +1391,10 @@ Dim nVal As Double
             FirstN = 0
             FirstP = 0
             FirstL = 0
-            For i = 1 To 10
-                G(i) = 0
-                BG(i) = 0
-            Next i
+            For I = 1 To 10
+                G(I) = 0
+                BG(I) = 0
+            Next I
     
             ' loop thru the balance sheet accounts
             rs.MoveFirst
@@ -1453,10 +1459,10 @@ Dim nVal As Double
                 If rs!AcctType <> "N" And rs!AcctType <> "0" Then GoTo MCycle
                   
                 ' type 0 and N   !!!!!!!!!!!
-                For i = 1 To 5
-                    G(i) = G(i) + Amount(Mo)
-                    BG(i) = BG(i) + BudAmount(Mo)
-                Next i
+                For I = 1 To 5
+                    G(I) = G(I) + Amount(Mo)
+                    BG(I) = BG(I) + BudAmount(Mo)
+                Next I
                   
                 If rs!AcctType = "N" Then
                     G(8) = Amount(Mo)
@@ -1551,9 +1557,9 @@ MCycle:
                 ' first value is a number not an account
                 If Mid(Desc, 1, 1) = "N" Then
                     mx(0, 2) = 1
-                    i = 1
+                    I = 1
                 Else
-                    i = 0
+                    I = 0
                 End If
              
                 x = ""
@@ -1561,18 +1567,18 @@ MCycle:
                    
                 ' loop for the numbers
                 Do
-                    i = i + 1
-                    If i > Len(Desc) Then Exit Do
+                    I = I + 1
+                    If I > Len(Desc) Then Exit Do
                 
-                    If InStr(1, "-.0123456789", Mid(Desc, i, 1), vbTextCompare) = 0 Then
+                    If InStr(1, "-.0123456789", Mid(Desc, I, 1), vbTextCompare) = 0 Then
                         If ItemCount <> 0 Then mx.AppendRows (1)
                         mx(ItemCount, 1) = x
                         x = ""
                         ItemCount = ItemCount + 1
-                        If Mid(Desc, i + 1, 1) = "N" Then i = i + 1
-                        If i >= Len(Desc) Then Exit Do
+                        If Mid(Desc, I + 1, 1) = "N" Then I = I + 1
+                        If I >= Len(Desc) Then Exit Do
                     Else
-                        x = x & Mid(Desc, i, 1)
+                        x = x & Mid(Desc, I, 1)
                     End If
                 
                 Loop
@@ -1584,11 +1590,11 @@ MCycle:
                 End If
                 
                 ItemCount = 0
-                i = 1
+                I = 1
              
                 ' loop for the operators
-                Do Until i > Len(Trim(Desc))
-                    x = Mid(Desc, i, 1)
+                Do Until I > Len(Trim(Desc))
+                    x = Mid(Desc, I, 1)
                     If InStr(1, "ASMDT", x) <> 0 Or x = " " Then
                         ItemCount = ItemCount + 1
                         If x = " " Then
@@ -1597,15 +1603,15 @@ MCycle:
                             mx(ItemCount, 3) = x
                         End If
                                                         
-                        If Mid(Desc, i + 1, 1) = "N" Then
-                            i = i + 1
+                        If Mid(Desc, I + 1, 1) = "N" Then
+                            I = I + 1
                             mx(ItemCount, 2) = 1
                         Else
                             mx(ItemCount, 2) = 0
                         End If
                    
                     End If
-                    i = i + 1
+                    I = I + 1
                 Loop
              
                 ' first argument must be an acct # - find it
@@ -1618,21 +1624,21 @@ MCycle:
              
                 LastVal = mx(0, 1)
              
-                For i = 1 To mx.UpperBound(1)
+                For I = 1 To mx.UpperBound(1)
              
                     On Error Resume Next
              
-                    nVal = mx(i, 1)
+                    nVal = mx(I, 1)
                        
                     If Err.Number <> 0 Then
                     End If
                         
                     On Error GoTo 0
                        
-                    Op = mx(i, 3)
+                    Op = mx(I, 3)
                  
                     If Op = "A" Then
-                        If mx(i, 2) = 0 Then
+                        If mx(I, 2) = 0 Then
                             Amt = Amt + GetAmount(nVal, nVal, False, Mo)
                             BudAmt = BudAmt + GetAmount(nVal, nVal, False, Mo, True)
                         Else
@@ -1640,7 +1646,7 @@ MCycle:
                             BudAmt = BudAmt + nVal
                         End If
                     ElseIf Op = "S" Then
-                        If mx(i, 2) = 0 Then
+                        If mx(I, 2) = 0 Then
                             Amt = Amt - GetAmount(nVal, nVal, False, Mo)
                             BudAmt = BudAmt - GetAmount(nVal, nVal, False, Mo, True)
                         Else
@@ -1648,7 +1654,7 @@ MCycle:
                             BudAmt = BudAmt - nVal
                         End If
                     ElseIf Op = "D" Then
-                        If mx(i, 2) = 0 Then
+                        If mx(I, 2) = 0 Then
                             Amt = Div0(Amt, GetAmount(nVal, nVal, False, Mo))
                             BudAmt = Div0(BudAmt, GetAmount(nVal, nVal, False, Mo, True))
                         Else
@@ -1656,7 +1662,7 @@ MCycle:
                             BudAmt = Div0(BudAmt, CLng(nVal))
                         End If
                     ElseIf Op = "M" Then
-                        If mx(i, 2) = 0 Then
+                        If mx(I, 2) = 0 Then
                             Amt = Amt * GetAmount(nVal, nVal, False, Mo)
                             BudAmt = BudAmt * GetAmount(nVal, nVal, False, Mo, True)
                         Else
@@ -1664,7 +1670,7 @@ MCycle:
                             BudAmt = BudAmt + nVal
                         End If
                     ElseIf Op = "T" Then
-                        If mx(i, 2) = 0 Then
+                        If mx(I, 2) = 0 Then
                             Amt = Amt + GetAmount(LastVal, nVal, True, Mo)
                             BudAmt = BudAmt + GetAmount(LastVal, nVal, True, Mo, True)
                         Else
@@ -1675,7 +1681,7 @@ MCycle:
                               
                     LastVal = nVal
                               
-                Next i
+                Next I
           
                 ' go back to the BookMark and assign the amount
                 rs.Bookmark = BkMark
@@ -1869,16 +1875,16 @@ Private Sub TotalsX()             ' 1180
 End Sub
 
 Private Sub ClearTotals()        ' 1220
-   For i = 1 To rs!TotalLevel
+   For I = 1 To rs!TotalLevel
        If rs!AcctType = "C" Then
-          G(i) = 0
-          BG(i) = 0
+          G(I) = 0
+          BG(I) = 0
        End If
-       If i <> 5 Then
-          G(i) = 0
-          BG(i) = 0
+       If I <> 5 Then
+          G(I) = 0
+          BG(I) = 0
        End If
-   Next i
+   Next I
 End Sub
 
 Private Sub GrandTotals()        ' 1280
@@ -1956,9 +1962,9 @@ Private Sub GrandTotals()        ' 1280
    End If
 
    ' 1360
-   For i = 1 To 5
-       G(i) = 0
-   Next i
+   For I = 1 To 5
+       G(I) = 0
+   Next I
 
 End Sub
 Private Function GetAmount(ByVal LoAcct As Long, _
@@ -2038,9 +2044,9 @@ Sub xAddRow(ByRef xDB As XArrayDB, ByVal Msg As String)
    xDB(xDB.UpperBound(1), 0) = Msg
 End Sub
 
-Function DecPlaces(ByVal i As Integer) As Integer
-   Do Until i = 0
-      i = Int(i / 10)
+Function DecPlaces(ByVal I As Integer) As Integer
+   Do Until I = 0
+      I = Int(I / 10)
       DecPlaces = DecPlaces + 1
    Loop
 End Function

@@ -36,7 +36,10 @@ Public Function RC4Encrypt(ByVal text As String, ByVal encryptkey As String)
 End Function
 
  Public Function RC4Decrypt(ByVal text As String, ByVal encryptkey As String)
- 
+    
+    ' 2021-01-27
+    text = Trim(text)
+    
     If text = "" Then
         RC4Decrypt = ""
         Exit Function
@@ -54,7 +57,7 @@ End Function
     Dim cipherby As Integer
     Dim cipher As String
     For w = 1 To Len(text) Step 2
-        Text2 = Text2 & Chr(Dec(Mid$(text, w, 2)))
+        Text2 = Text2 & Chr(Dec(Mid(text, w, 2)))
     Next
     I = 0
     J = 0

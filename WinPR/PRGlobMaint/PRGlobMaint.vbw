@@ -1,5 +1,5 @@
-frmGlobalMaint = 132, 132, 916, 584, C, 176, 176, 960, 628, C
-modStart = 198, 198, 915, 650, Z
+frmGlobalMaint = 132, 132, 916, 584, Z, 176, 176, 960, 628, C
+modStart = 198, 198, 915, 650, 
 cPRGlobal = 198, 198, 923, 730, C
 cGLUser = 0, 0, 0, 0, C
 cPRAdjust = 0, 0, 0, 0, C

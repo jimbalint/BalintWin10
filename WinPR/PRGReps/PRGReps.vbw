@@ -1,5 +1,5 @@
 modStart = 88, 116, 1113, 658, C
-modPRGlobal = 154, 203, 1179, 745, 
+modPRGlobal = 154, 203, 1179, 745, C
 modPRConnect = 88, 116, 1086, 632, C
 cPRDepartment = 0, 0, 0, 0, C
 cPREmployee = 260, 260, 1549, 857, C
@@ -37,7 +37,7 @@ frmBatchList = 0, 0, 0, 0, C, 176, 232, 1174, 748, C
 frmItemDetail = 0, 0, 0, 0, C, 0, 0, 998, 516, C
 frmCheckDetail = 0, 0, 0, 0, C, 22, 29, 1020, 545, C
 frmLists = 0, 0, 0, 0, C, 44, 58, 1042, 574, C
-frmEarnSumm = 156, 156, 1470, 692, , 66, 87, 1064, 603, C
+frmEarnSumm = 156, 156, 1470, 692, C, 66, 87, 1064, 603, C
 cPRCheck = 0, 0, 0, 0, C
 frmW2 = 176, 232, 1584, 837, C, 88, 116, 1086, 632, C
 cJCCustomer = 208, 208, 1445, 858, C

@@ -2989,7 +2989,7 @@ Dim rsC As New ADODB.Recordset
 Dim rsState As New ADODB.Recordset
 Dim rsS As New ADODB.Recordset
 
-Dim i, j, k As Long
+Dim I, J, K As Long
 
 Dim Box12ID(4) As Long
 Dim Box14ID(4) As Long
@@ -3168,18 +3168,18 @@ Dim SelYear As Long
     SelYear = 0
     rs.Sort = "TaxYear DESC"
     rs.MoveFirst
-    i = 0
+    I = 0
     Do
         With Me.cmbTaxYear
             .AddItem rs!TaxYear
             .ItemData(.NewIndex) = rs!TaxYear
             If Month(Now) >= 10 And rs!TaxYear = Year(Now) Then
-                SelYear = i
+                SelYear = I
             ElseIf Month(Now) < 10 And rs!TaxYear = Year(Now) - 1 Then
-                SelYear = i
+                SelYear = I
             End If
         End With
-        i = i + 1
+        I = I + 1
         rs.MoveNext
     Loop Until rs.EOF
     Me.cmbTaxYear.ListIndex = SelYear
@@ -3252,7 +3252,7 @@ Dim SelYear As Long
     ' Me.TDBLineC5 = PRState.StateAbbrev        '  Get State Abbrev.
     Me.TDBLineC6 = Mid(PRCompany.ZipCode, 1, 10)
     
-    Me.Caption = "TAX YEAR: " & Me.cmbTaxYear.Text & "  -  " & PRCompany.Name
+    Me.Caption = "TAX YEAR: " & Me.cmbTaxYear.text & "  -  " & PRCompany.Name
 
     Me.optOrderName = True
 
@@ -3600,7 +3600,7 @@ Dim W2ID As Long
                 
                 If rsCity!SDTax = 0 Then
                     If PRCity.GetByID(rsCity!CityID) = False Then
-                        MsgBox "CityID not found: " & rsCity!CityID, vbExclamation
+                        MsgBox "CityID not found: " & rsCity!CityID & " EE#: " & PRW2.EmployeeNumber, vbExclamation
                         GoBack
                     End If
                     PRW2City.CityName = Left(PRCity.ShortName, 20)
@@ -3658,26 +3658,26 @@ NextEmployee:
     Loop
                
     ' create W3 data
-    For i = 1 To 4
+    For I = 1 To 4
         
-        If i = 1 Then j = PREquate.GlobalTypeW3A
-        If i = 2 Then j = PREquate.GlobalTypeW3B
-        If i = 3 Then j = PREquate.GlobalTypeW3C
-        If i = 4 Then j = PREquate.GlobalTypeW3D
+        If I = 1 Then J = PREquate.GlobalTypeW3A
+        If I = 2 Then J = PREquate.GlobalTypeW3B
+        If I = 3 Then J = PREquate.GlobalTypeW3C
+        If I = 4 Then J = PREquate.GlobalTypeW3D
         
-        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & j & " AND " & _
+        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & J & " AND " & _
                     "Year = " & TaxYear & " AND " & _
                     "UserID = " & PRCompany.CompanyID
     
         If PRGlobal.GetBySQL(SQLString) = False Then
             PRGlobal.Clear
-            PRGlobal.TypeCode = j
+            PRGlobal.TypeCode = J
             PRGlobal.Year = TaxYear
             PRGlobal.UserID = PRCompany.CompanyID
             PRGlobal.Save (Equate.RecAdd)
         End If
     
-    Next i
+    Next I
     
     SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeW3E & " AND " & _
                 "UserID = " & User.ID
@@ -3724,65 +3724,65 @@ Private Sub Box_12_14_Pop(ByVal ItemID As Long, ByVal Amount As Currency)
         If PRItem.SickPay = 1 Then PRW2.Box13_3rdParty = 1
     End If
     
-    j = 0
+    J = 0
     If PRItem.W2Box12Code <> 0 Then
-        For i = 1 To 4
-            If Trim(Box12ID(i)) = Trim(PRItem.W2Box12Code) Then
-                j = 1
+        For I = 1 To 4
+            If Trim(Box12ID(I)) = Trim(PRItem.W2Box12Code) Then
+                J = 1
                 Exit For
             End If
-            If Box12ID(i) = 0 Then
-                Box12ID(i) = PRItem.W2Box12Code
-                j = 1
+            If Box12ID(I) = 0 Then
+                Box12ID(I) = PRItem.W2Box12Code
+                J = 1
                 Exit For
             End If
-        Next i
-        If j = 0 Then
+        Next I
+        If J = 0 Then
             MsgBox "Box 12 Codes Error: " & PRItem.W2Box12Code, vbExclamation
             GoBack
         End If
-        If i = 1 Then
+        If I = 1 Then
             PRW2.Box12A_ID = PRItem.W2Box12Code
             PRW2.Box12A_Amount = PRW2.Box12A_Amount + Amount
-        ElseIf i = 2 Then
+        ElseIf I = 2 Then
             PRW2.Box12B_ID = PRItem.W2Box12Code
             PRW2.Box12B_Amount = PRW2.Box12B_Amount + Amount
-        ElseIf i = 3 Then
+        ElseIf I = 3 Then
             PRW2.Box12C_ID = PRItem.W2Box12Code
             PRW2.Box12C_Amount = PRW2.Box12C_Amount + Amount
-        ElseIf i = 4 Then
+        ElseIf I = 4 Then
             PRW2.Box12D_ID = PRItem.W2Box12Code
             PRW2.Box12D_Amount = PRW2.Box12D_Amount + Amount
         End If
     End If
     
-    j = 0
+    J = 0
     If PRItem.W2Box14Code <> 0 Then
-        For i = 1 To 4
-            If Box14ID(i) = PRItem.W2Box14Code Then
-                j = 1
+        For I = 1 To 4
+            If Box14ID(I) = PRItem.W2Box14Code Then
+                J = 1
                 Exit For
             End If
-            If Box14ID(i) = 0 Then
-                Box14ID(i) = PRItem.W2Box14Code
-                j = 1
+            If Box14ID(I) = 0 Then
+                Box14ID(I) = PRItem.W2Box14Code
+                J = 1
                 Exit For
             End If
-        Next i
-        If j = 0 Then
+        Next I
+        If J = 0 Then
             MsgBox "Box 14 Codes Error: " & PRItem.W2Box14Code & " EE#: " & PRW2.EmployeeNumber, vbExclamation
             GoBack
         End If
-        If i = 1 Then
+        If I = 1 Then
             PRW2.Box14A_ID = PRItem.W2Box14Code
             PRW2.Box14A_Amount = PRW2.Box14A_Amount + Amount
-        ElseIf i = 2 Then
+        ElseIf I = 2 Then
             PRW2.Box14B_ID = PRItem.W2Box14Code
             PRW2.Box14B_Amount = PRW2.Box14B_Amount + Amount
-        ElseIf i = 3 Then
+        ElseIf I = 3 Then
             PRW2.Box14C_ID = PRItem.W2Box14Code
             PRW2.Box14C_Amount = PRW2.Box14C_Amount + Amount
-        ElseIf i = 4 Then
+        ElseIf I = 4 Then
             PRW2.Box14D_ID = PRItem.W2Box14Code
             PRW2.Box14D_Amount = PRW2.Box14D_Amount + Amount
         End If
@@ -4059,7 +4059,7 @@ Private Sub cmdLoad_Click()
     GetData Me.cmbTaxYear
     DisplayData
     LoadFlag = False
-    Me.Caption = "TAX YEAR: " & Me.cmbTaxYear.Text & "  -  " & PRCompany.Name
+    Me.Caption = "TAX YEAR: " & Me.cmbTaxYear.text & "  -  " & PRCompany.Name
 End Sub
 
 Private Sub GetData(ByVal TaxYear As Long)
@@ -4143,7 +4143,7 @@ Private Sub DisplayChange(ByVal Action As String)
         If Action = "LAST" Then .ListIndex = .ListCount - 1
         
         SQLString = "SELECT * FROM PRW2 Where EmployeeNumber = " & .ItemData(.ListIndex) & _
-                    " AND TaxYear = " & Me.cmbTaxYear.Text
+                    " AND TaxYear = " & Me.cmbTaxYear.text
         If PRW2.GetBySQL(SQLString) = False Then
             MsgBox "PRW2 File Error: " & .ItemData(.ListIndex), vbExclamation
             GoBack

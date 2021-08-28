@@ -181,8 +181,8 @@ Dim FirstFlag As Boolean
 Dim SQLString As String
 Dim DollarFmt, PercentFmt As String
 
-Dim i, j, k As Long
-Dim X, Y, Z As String
+Dim I, J, K As Long
+Dim x, Y, Z As String
 
 Dim CompanyDrop As String
 
@@ -221,8 +221,8 @@ Private Sub Form_Load()
     dbSortDesc = False
     
     With Me.cmbGlobalType
-        For i = 1 To 21
-            Select Case i
+        For I = 1 To 21
+            Select Case I
                 
                 Case 1:     .AddItem "Company Option":      .ItemData(.NewIndex) = PREquate.GlobalTypeCompanyOption
                 Case 2:     .AddItem "Education Level":     .ItemData(.NewIndex) = PREquate.GlobalTypeEducationLevel
@@ -247,7 +247,7 @@ Private Sub Form_Load()
                 Case 21:    .AddItem "OH SWT Multiplier":   .ItemData(.NewIndex) = PREquate.GlobalTypeOHMultiplier
             End Select
         
-        Next i
+        Next I
     End With
     
     DollarFmt = "$##,###,##0.00"
@@ -387,6 +387,12 @@ Private Sub cmbGlobalType_Click()
         fg.TextMatrix(0, 8) = "Company"
         fg.ColWidth(8) = 5000
         fg.ColComboList(8) = CompanyDrop
+    
+    ElseIf GlobalType = PREquate.GlobalTypeOHMultiplier Then
+        
+        fg.TextMatrix(0, 3) = "OH SWT Multiplier"
+        fg.ColFormat(3) = "##0.000"
+        SetGridAmount
     
     Else
         SetGridAmount
@@ -531,7 +537,7 @@ Dim DelConfirm As Integer
 
 End Sub
 
-Private Sub fg_BeforeMouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single, Cancel As Boolean)
+Private Sub fg_BeforeMouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal Y As Single, Cancel As Boolean)
 
 '    ' clicking on a column header sorts based on that column
 '    If Button = 1 And Shift = 0 And fg.MouseRow = 0 Then

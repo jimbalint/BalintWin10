@@ -336,6 +336,21 @@ Dim Ct1, Ct2, Recs As Long
     
     If GLSys = True Then
         
+        ' --- 2021 Sept ---------------------------------------------------------------
+        ' OH SWT multiplier
+        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeOHMultiplier & " " & _
+                    "AND Year = 2021 and Month = 9"
+        If PRGlobal.GetBySQL(SQLString) = False Then
+            PRGlobal.Clear
+            PRGlobal.TypeCode = PREquate.GlobalTypeOHMultiplier
+            PRGlobal.Year = 2021
+            PRGlobal.Month = 9
+            PRGlobal.Description = "OH Multiplier"
+            PRGlobal.Amount = 1.001
+            PRGlobal.Save (Equate.RecAdd)
+            MsgBox "OH Multiplier for Sept 2021 updated to: 1.001", vbInformation
+        End If
+        
         ' --- 2021 ---------------------------------------------------------------
         SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
                     "AND Year = 2021"

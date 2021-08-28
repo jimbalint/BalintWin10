@@ -277,11 +277,15 @@ Dim rsYM, YM As Long
         
         If StateID = 36 And TaxYear >= 2019 Then
             ' 2019-12-21 use the OH multiplier
+            
+            ' 2021-08-28 - Month also / handle if no multiplier for the tax year
             If TaxYear >= 2019 Then
                 Dim OHMultiplier As Double
                 OHMultiplier = 1
-                SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeOHMultiplier & _
-                            " AND Year = " & TaxYear
+                SQLString = "SELECT TOP 1 * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeOHMultiplier & _
+                            " AND Year <= " & TaxYear & _
+                            " AND Month <= " & TaxMonth & _
+                            " ORDER BY Year DESC, Month DESC"
                 If PRGlobal.GetBySQL(SQLString) = True Then
                     OHMultiplier = PRGlobal.Amount
                 End If

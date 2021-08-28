@@ -45,7 +45,7 @@ Dim FileExt As String
        BalintFolder = "c:\Balint"
        dbPwd = ""
        ' ProgName = UCase("ITEMDETAIL")
-       ProgName = UCase("FORM941")
+       ProgName = UCase("w2")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
        ' UserID = 15

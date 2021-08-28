@@ -222,6 +222,7 @@ Dim FileExt As String
             MsgBox "Hernandez: Cleveland moved to Clv Hts", vbInformation
         End If
     End If
+    
     ' perform field sweeps - in NewField module
     FieldSweep
 

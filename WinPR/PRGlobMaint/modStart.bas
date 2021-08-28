@@ -28,7 +28,7 @@ Dim FileExt As String
     x = Command()
     
     If x = "" Then         ' set for testing
-       BalintFolder = "g:"
+       BalintFolder = "c:\Balint"
        dbPwd = ""
        ProgName = UCase("test")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
