@@ -154,12 +154,13 @@ Begin VB.Form frm941_2021_June
       Height          =   9315
       Left            =   120
       TabIndex        =   39
-      Top             =   480
+      Top             =   360
       Width           =   12135
       _ExtentX        =   21405
       _ExtentY        =   16431
       _Version        =   393216
       Tabs            =   4
+      Tab             =   2
       TabsPerRow      =   4
       TabHeight       =   520
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
@@ -173,86 +174,96 @@ Begin VB.Form frm941_2021_June
       EndProperty
       TabCaption(0)   =   "Form 941 Part 1/3"
       TabPicture(0)   =   "frm941_Jun2021.frx":0000
-      Tab(0).ControlEnabled=   -1  'True
+      Tab(0).ControlEnabled=   0   'False
       Tab(0).Control(0)=   "Label33"
-      Tab(0).Control(0).Enabled=   0   'False
       Tab(0).Control(1)=   "Label38"
-      Tab(0).Control(1).Enabled=   0   'False
       Tab(0).Control(2)=   "Label5"
-      Tab(0).Control(2).Enabled=   0   'False
       Tab(0).Control(3)=   "Line15Check2"
-      Tab(0).Control(3).Enabled=   0   'False
       Tab(0).Control(4)=   "Line15Check1"
-      Tab(0).Control(4).Enabled=   0   'False
       Tab(0).Control(5)=   "Timer1"
-      Tab(0).Control(5).Enabled=   0   'False
       Tab(0).Control(6)=   "fg"
-      Tab(0).Control(6).Enabled=   0   'False
       Tab(0).Control(7)=   "chkManualFractions"
-      Tab(0).Control(7).Enabled=   0   'False
       Tab(0).Control(8)=   "cmdPmt"
-      Tab(0).Control(8).Enabled=   0   'False
       Tab(0).ControlCount=   9
       TabCaption(1)   =   "Form 941   Parts 2/3/4"
       TabPicture(1)   =   "frm941_Jun2021.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "txtTradeName"
-      Tab(1).Control(1)=   "Part4Phone"
-      Tab(1).Control(2)=   "Part4Pin"
-      Tab(1).Control(3)=   "Part4Name"
-      Tab(1).Control(4)=   "Part4CheckYes"
-      Tab(1).Control(5)=   "Line16Diff"
-      Tab(1).Control(6)=   "Line10Show"
-      Tab(1).Control(7)=   "txtName"
-      Tab(1).Control(8)=   "Line18"
-      Tab(1).Control(9)=   "Line17Date"
-      Tab(1).Control(10)=   "Line17Check"
-      Tab(1).Control(11)=   "Part4CheckNo"
-      Tab(1).Control(12)=   "Line16Check3"
-      Tab(1).Control(13)=   "Line16Check2"
-      Tab(1).Control(14)=   "Line16Check1"
-      Tab(1).Control(15)=   "txtEIN"
-      Tab(1).Control(16)=   "Line16Mo2"
-      Tab(1).Control(17)=   "Line16Mo3"
-      Tab(1).Control(18)=   "Line16Total"
+      Tab(1).Control(0)=   "Label48"
+      Tab(1).Control(1)=   "Label6"
+      Tab(1).Control(2)=   "Label17"
+      Tab(1).Control(3)=   "Label43"
+      Tab(1).Control(4)=   "Label44"
+      Tab(1).Control(5)=   "Label39"
+      Tab(1).Control(6)=   "Label40"
+      Tab(1).Control(7)=   "Label45"
+      Tab(1).Control(8)=   "Label46"
+      Tab(1).Control(9)=   "Label47"
+      Tab(1).Control(10)=   "Label49"
+      Tab(1).Control(11)=   "Label51"
+      Tab(1).Control(12)=   "Label52"
+      Tab(1).Control(13)=   "Label53"
+      Tab(1).Control(14)=   "Label54"
+      Tab(1).Control(15)=   "Label1"
+      Tab(1).Control(16)=   "Label3"
+      Tab(1).Control(17)=   "Label7"
+      Tab(1).Control(18)=   "Label8"
       Tab(1).Control(19)=   "Line16Mo1"
-      Tab(1).Control(20)=   "Label3"
-      Tab(1).Control(21)=   "Label1"
-      Tab(1).Control(22)=   "Label54"
-      Tab(1).Control(23)=   "Label53"
-      Tab(1).Control(24)=   "Label52"
-      Tab(1).Control(25)=   "Label51"
-      Tab(1).Control(26)=   "Label49"
-      Tab(1).Control(27)=   "Label47"
-      Tab(1).Control(28)=   "Label46"
-      Tab(1).Control(29)=   "Label45"
-      Tab(1).Control(30)=   "Label40"
-      Tab(1).Control(31)=   "Label39"
-      Tab(1).Control(32)=   "Label44"
-      Tab(1).Control(33)=   "Label43"
-      Tab(1).Control(34)=   "Label17"
-      Tab(1).Control(35)=   "Label6"
-      Tab(1).Control(36)=   "Label48"
-      Tab(1).ControlCount=   37
+      Tab(1).Control(20)=   "Line16Total"
+      Tab(1).Control(21)=   "Line16Mo3"
+      Tab(1).Control(22)=   "Line16Mo2"
+      Tab(1).Control(23)=   "txtEIN"
+      Tab(1).Control(24)=   "Line16Check1"
+      Tab(1).Control(25)=   "Line16Check2"
+      Tab(1).Control(26)=   "Line16Check3"
+      Tab(1).Control(27)=   "Part4CheckNo"
+      Tab(1).Control(28)=   "Line17Check"
+      Tab(1).Control(29)=   "Line17Date"
+      Tab(1).Control(30)=   "Line18a"
+      Tab(1).Control(31)=   "txtName"
+      Tab(1).Control(32)=   "Line10Show"
+      Tab(1).Control(33)=   "Line16Diff"
+      Tab(1).Control(34)=   "Part4CheckYes"
+      Tab(1).Control(35)=   "Part4Name"
+      Tab(1).Control(36)=   "Part4Pin"
+      Tab(1).Control(37)=   "Part4Phone"
+      Tab(1).Control(38)=   "txtTradeName"
+      Tab(1).Control(39)=   "Line18b"
+      Tab(1).ControlCount=   40
       TabCaption(2)   =   "Form 941   Part 5"
       TabPicture(2)   =   "frm941_Jun2021.frx":0038
-      Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "Part5Phone"
-      Tab(2).Control(1)=   "PrepAddr2"
-      Tab(2).Control(2)=   "cmbPrepName"
-      Tab(2).Control(3)=   "PrepCheck"
-      Tab(2).Control(4)=   "Part5NameTitle"
-      Tab(2).Control(5)=   "PrepFirm"
-      Tab(2).Control(6)=   "PrepAddr1"
-      Tab(2).Control(7)=   "PrepEIN"
-      Tab(2).Control(8)=   "PrepZip"
-      Tab(2).Control(9)=   "PrepDate"
-      Tab(2).Control(10)=   "PrepSSN"
-      Tab(2).Control(11)=   "Part5Date"
-      Tab(2).Control(12)=   "PrepPhone"
-      Tab(2).Control(13)=   "Label2"
-      Tab(2).Control(14)=   "Label14"
-      Tab(2).Control(15)=   "Label56"
+      Tab(2).ControlEnabled=   -1  'True
+      Tab(2).Control(0)=   "Label56"
+      Tab(2).Control(0).Enabled=   0   'False
+      Tab(2).Control(1)=   "Label14"
+      Tab(2).Control(1).Enabled=   0   'False
+      Tab(2).Control(2)=   "Label2"
+      Tab(2).Control(2).Enabled=   0   'False
+      Tab(2).Control(3)=   "PrepPhone"
+      Tab(2).Control(3).Enabled=   0   'False
+      Tab(2).Control(4)=   "Part5Date"
+      Tab(2).Control(4).Enabled=   0   'False
+      Tab(2).Control(5)=   "PrepSSN"
+      Tab(2).Control(5).Enabled=   0   'False
+      Tab(2).Control(6)=   "PrepDate"
+      Tab(2).Control(6).Enabled=   0   'False
+      Tab(2).Control(7)=   "PrepZip"
+      Tab(2).Control(7).Enabled=   0   'False
+      Tab(2).Control(8)=   "PrepEIN"
+      Tab(2).Control(8).Enabled=   0   'False
+      Tab(2).Control(9)=   "PrepAddr1"
+      Tab(2).Control(9).Enabled=   0   'False
+      Tab(2).Control(10)=   "PrepFirm"
+      Tab(2).Control(10).Enabled=   0   'False
+      Tab(2).Control(11)=   "Part5NameTitle"
+      Tab(2).Control(11).Enabled=   0   'False
+      Tab(2).Control(12)=   "PrepCheck"
+      Tab(2).Control(12).Enabled=   0   'False
+      Tab(2).Control(13)=   "cmbPrepName"
+      Tab(2).Control(13).Enabled=   0   'False
+      Tab(2).Control(14)=   "PrepAddr2"
+      Tab(2).Control(14).Enabled=   0   'False
+      Tab(2).Control(15)=   "Part5Phone"
+      Tab(2).Control(15).Enabled=   0   'False
       Tab(2).ControlCount=   16
       TabCaption(3)   =   "Schedule B (Form 941)"
       TabPicture(3)   =   "frm941_Jun2021.frx":0054
@@ -276,10 +287,18 @@ Begin VB.Form frm941_2021_June
       Tab(3).Control(16)=   "fgMo1"
       Tab(3).Control(17)=   "tdbNumHorzNudge"
       Tab(3).ControlCount=   18
+      Begin VB.CheckBox Line18b 
+         Caption         =   "Check here"
+         Height          =   255
+         Left            =   -65280
+         TabIndex        =   95
+         Top             =   6000
+         Width           =   1335
+      End
       Begin VB.CommandButton cmdPmt 
          Caption         =   "$$"
          Height          =   375
-         Left            =   11640
+         Left            =   -63360
          TabIndex        =   90
          Top             =   5640
          Width           =   375
@@ -294,14 +313,14 @@ Begin VB.Form frm941_2021_June
       Begin VB.CheckBox chkManualFractions 
          Caption         =   "Override Fractions of cents - Line 7"
          Height          =   495
-         Left            =   600
+         Left            =   -74400
          TabIndex        =   86
          Top             =   8640
          Width           =   1815
       End
       Begin VSFlex8Ctl.VSFlexGrid fg 
          Height          =   7335
-         Left            =   360
+         Left            =   -74640
          TabIndex        =   85
          Top             =   1080
          Width           =   11055
@@ -397,7 +416,7 @@ Begin VB.Form frm941_2021_June
          AccessibleRole  =   24
       End
       Begin VB.Timer Timer1 
-         Left            =   11040
+         Left            =   -63960
          Top             =   360
       End
       Begin TDBText6Ctl.TDBText Part4Phone 
@@ -518,7 +537,7 @@ Begin VB.Form frm941_2021_June
       End
       Begin TDBText6Ctl.TDBText Part5Phone 
          Height          =   345
-         Left            =   -71040
+         Left            =   3960
          TabIndex        =   28
          Top             =   1740
          Width           =   3375
@@ -576,7 +595,7 @@ Begin VB.Form frm941_2021_June
       End
       Begin TDBText6Ctl.TDBText PrepAddr2 
          Height          =   345
-         Left            =   -74760
+         Left            =   240
          TabIndex        =   32
          Top             =   5000
          Width           =   7575
@@ -634,7 +653,7 @@ Begin VB.Form frm941_2021_June
       End
       Begin VB.ComboBox cmbPrepName 
          Height          =   315
-         Left            =   -72920
+         Left            =   2080
          TabIndex        =   29
          Top             =   3600
          Width           =   5750
@@ -925,7 +944,7 @@ Begin VB.Form frm941_2021_June
       Begin VB.CheckBox Line15Check1 
          Caption         =   "Apply to next return."
          Height          =   255
-         Left            =   9720
+         Left            =   -65280
          TabIndex        =   4
          Top             =   8640
          Width           =   1750
@@ -1039,12 +1058,12 @@ Begin VB.Form frm941_2021_June
             Strikethrough   =   0   'False
          EndProperty
          Height          =   240
-         Left            =   -72960
+         Left            =   2040
          TabIndex        =   38
          Top             =   5460
          Width           =   3495
       End
-      Begin VB.CheckBox Line18 
+      Begin VB.CheckBox Line18a 
          Caption         =   "Check here."
          Height          =   255
          Left            =   -65280
@@ -1210,7 +1229,7 @@ Begin VB.Form frm941_2021_June
       Begin VB.CheckBox Line15Check2 
          Caption         =   "Send refund check."
          Height          =   255
-         Left            =   9720
+         Left            =   -65280
          TabIndex        =   5
          Top             =   8880
          Width           =   1750
@@ -1450,7 +1469,7 @@ Begin VB.Form frm941_2021_June
       End
       Begin TDBText6Ctl.TDBText Part5NameTitle 
          Height          =   345
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   26
          Top             =   1260
          Width           =   11055
@@ -1508,7 +1527,7 @@ Begin VB.Form frm941_2021_June
       End
       Begin TDBText6Ctl.TDBText PrepFirm 
          Height          =   345
-         Left            =   -74760
+         Left            =   240
          TabIndex        =   30
          Top             =   4020
          Width           =   7575
@@ -1566,7 +1585,7 @@ Begin VB.Form frm941_2021_June
       End
       Begin TDBText6Ctl.TDBText PrepAddr1 
          Height          =   345
-         Left            =   -74760
+         Left            =   240
          TabIndex        =   31
          Top             =   4510
          Width           =   7575
@@ -1624,7 +1643,7 @@ Begin VB.Form frm941_2021_June
       End
       Begin TDBText6Ctl.TDBText PrepEIN 
          Height          =   345
-         Left            =   -66360
+         Left            =   8640
          TabIndex        =   34
          Top             =   4080
          Width           =   2415
@@ -1682,7 +1701,7 @@ Begin VB.Form frm941_2021_June
       End
       Begin TDBText6Ctl.TDBText PrepZip 
          Height          =   345
-         Left            =   -66840
+         Left            =   8160
          TabIndex        =   35
          Top             =   4560
          Width           =   2895
@@ -1740,7 +1759,7 @@ Begin VB.Form frm941_2021_June
       End
       Begin TDBDate6Ctl.TDBDate PrepDate 
          Height          =   345
-         Left            =   -66480
+         Left            =   8520
          TabIndex        =   37
          Top             =   5520
          Width           =   2175
@@ -1802,7 +1821,7 @@ Begin VB.Form frm941_2021_June
       End
       Begin TDBText6Ctl.TDBText PrepSSN 
          Height          =   345
-         Left            =   -66960
+         Left            =   8040
          TabIndex        =   36
          Top             =   5040
          Width           =   3015
@@ -1860,7 +1879,7 @@ Begin VB.Form frm941_2021_June
       End
       Begin TDBDate6Ctl.TDBDate Part5Date 
          Height          =   345
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   27
          Top             =   1740
          Width           =   3495
@@ -2528,7 +2547,7 @@ Begin VB.Form frm941_2021_June
       End
       Begin TDBText6Ctl.TDBText PrepPhone 
          Height          =   345
-         Left            =   -66600
+         Left            =   8400
          TabIndex        =   33
          Top             =   3600
          Width           =   2655
@@ -2584,8 +2603,8 @@ Begin VB.Form frm941_2021_June
          OLEDragMode     =   0
          OLEDropMode     =   0
       End
-      Begin VB.Label Label3 
-         Caption         =   "*** Lines 19 to 25 are on the first tab ***"
+      Begin VB.Label Label8 
+         Caption         =   "If you're eligible for the emp. retentrion credit because your business is a recovery startup . . . . . . . . . . . . ."
          BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   9.75
@@ -2595,10 +2614,44 @@ Begin VB.Form frm941_2021_June
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         Height          =   375
+         Height          =   255
+         Left            =   -74400
+         TabIndex        =   94
+         Top             =   6000
+         Width           =   9135
+      End
+      Begin VB.Label Label7 
+         Caption         =   "18b"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   8.25
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   -74880
+         TabIndex        =   93
+         Top             =   6000
+         Width           =   375
+      End
+      Begin VB.Label Label3 
+         Caption         =   "*** Lines 19 to 28 are on the first tab ***"
+         BeginProperty Font 
+            Name            =   "MS Sans Serif"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
          Left            =   -74160
          TabIndex        =   91
-         Top             =   6240
+         Top             =   6360
          Width           =   6615
       End
       Begin VB.Label Label2 
@@ -2613,7 +2666,7 @@ Begin VB.Form frm941_2021_June
             Strikethrough   =   0   'False
          EndProperty
          Height          =   375
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   89
          Top             =   600
          Width           =   8895
@@ -2638,7 +2691,7 @@ Begin VB.Form frm941_2021_June
             Strikethrough   =   0   'False
          EndProperty
          Height          =   495
-         Left            =   -74760
+         Left            =   240
          TabIndex        =   84
          Top             =   3600
          Width           =   1815
@@ -2697,7 +2750,7 @@ Begin VB.Form frm941_2021_June
       Begin VB.Label Label5 
          Caption         =   "One"
          Height          =   225
-         Left            =   9120
+         Left            =   -65880
          TabIndex        =   72
          Top             =   8820
          Width           =   495
@@ -2782,7 +2835,7 @@ Begin VB.Form frm941_2021_June
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   -74880
+         Left            =   120
          TabIndex        =   67
          Top             =   3000
          Width           =   4455
@@ -2869,11 +2922,11 @@ Begin VB.Form frm941_2021_June
          Height          =   255
          Left            =   -74400
          TabIndex        =   62
-         Top             =   5620
-         Width           =   9375
+         Top             =   5625
+         Width           =   9015
       End
       Begin VB.Label Label49 
-         Caption         =   "18"
+         Caption         =   "18a"
          BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   8.25
@@ -2887,7 +2940,7 @@ Begin VB.Form frm941_2021_June
          Left            =   -74880
          TabIndex        =   61
          Top             =   5640
-         Width           =   255
+         Width           =   375
       End
       Begin VB.Label Label47 
          Caption         =   $"frm941_Jun2021.frx":2406
@@ -3035,18 +3088,35 @@ Begin VB.Form frm941_2021_June
       Begin VB.Label Label38 
          Caption         =   "Check"
          Height          =   225
-         Left            =   9120
+         Left            =   -65880
          TabIndex        =   51
          Top             =   8640
          Width           =   495
       End
       Begin VB.Label Label33 
          Height          =   180
-         Left            =   1395
+         Left            =   -73605
          TabIndex        =   50
          Top             =   7230
          Width           =   7035
       End
+   End
+   Begin VB.Label Label4 
+      Caption         =   "18a"
+      BeginProperty Font 
+         Name            =   "MS Sans Serif"
+         Size            =   8.25
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   255
+      Left            =   600
+      TabIndex        =   92
+      Top             =   4320
+      Width           =   375
    End
    Begin VB.Label Label10 
       Caption         =   "QTR"
@@ -3097,7 +3167,8 @@ Public AlphaCheckLine16a As String
 Public AlphaCheckLine16b As String
 Public AlphaCheckLine16c As String
 Public AlphaCheckLine17 As String
-Public AlphaCheckLine18 As String
+Public AlphaCheckLine18a As String
+Public AlphaCheckLine18b As String
 Public AlphaCheckPart4Yes As String
 Public AlphaCheckPart4No As String
 Public AlphaCheckPart5 As String
@@ -3361,28 +3432,32 @@ Private Sub Grid941()
         AddRow "11c) Nonref. portion employee retention credit", False, False, True, False, False, True
         AddRow "11d) Nonref. sick & family leave wages after 3/31/21", False, False, True, False, False, True
         AddRow "11e) Nonref. COBRA prem. assistance", False, False, True, False, False, True
-        AddRow "11f) Number of individuals COBRA prem. asst.", False, False, True, False, True, False
+        AddRow "11f) Number of individuals COBRA prem. asst.", False, True, False, False, True, False
         AddRow "11g) Total nonrefundable credits", False, False, False, False, False, True
         
         AddRow "12 ) Total taxes after adjustments and credits ", False, False, False, False, False, True
         
         AddRow "13a) Total deposits for this quarter ", False, False, True, False, False, True
-        AddRow "13b) Deferred amount of employer share of SS tax ", False, False, True, False, False, True
-        AddRow "13c) Refundable portion of credit for sick/family leave ", False, False, True, False, False, True
+        AddRow "13c) Before 4/1/21 - Refundable portion of credit for sick/family leave ", False, False, True, False, False, True
         AddRow "13d) Refundable portion of employee retention credit ", False, False, True, False, False, True
-        AddRow "13e) Total deposits, deferrals and refundable credits ", False, False, False, False, False, True
-        AddRow "13f) Total advances received from Form(s) 7200 ", False, False, True, False, False, True
-        AddRow "13g) Total deposits, deferrals and credits less advances ", False, False, False, False, False, True
+        AddRow "13e) After 3/31/21 - Refundable portion of credit for sick/family leave  ", False, False, False, False, False, True
+        AddRow "13f) Refundable portion of COBRA premium assistance ", False, False, True, False, False, True
+        AddRow "13g) Total deposits and refundable credits ", False, False, False, False, False, True
+        AddRow "13h) Total Advances received from Form(s) 7200 for the quarter ", False, False, True, False, False, True
+        AddRow "13i) Total deposits and refundable credits less advances", False, False, False, False, False, True
         AddRow "14 ) Balance due ", False, False, False, False, False, True
         AddRow "15 ) Overpayment ", False, False, False, False, True, False
         
-        AddRow "19 ) Qualified health plan expenses to sick leave ", False, False, True, False, False, True
-        AddRow "20 ) Qualified health plan expenses to family leave ", False, False, True, False, False, True
+        AddRow "19 ) Before 4/1/21 Qualified health plan expenses to sick leave ", False, False, True, False, False, True
+        AddRow "20 ) Before 4/1/21 Qualified health plan expenses to family leave ", False, False, True, False, False, True
         AddRow "21 ) Qualified wages for employee retention credit ", False, False, True, False, False, True
-        AddRow "22 ) Qualified health plan expenses", False, False, True, False, False, True
-        AddRow "23 ) Credit from FOrm 5884-C line 11 ", False, False, True, False, False, True
-        AddRow "24 ) Qualified wages paid 3/13/20 thru 3/31/20 ", False, False, True, False, False, True
-        AddRow "25 ) Qualified health plan expenses to wages on lne 24", False, False, True, False, False, True
+        AddRow "22 ) Qualified health plan expenses for employee retention credit", False, False, True, False, False, True
+        AddRow "23 ) After 3/31/21 Qualified sick leave wages ", False, False, True, False, False, True
+        AddRow "24 ) Qualified health plan expenses on line 23 ", False, False, True, False, False, True
+        AddRow "25 ) Amounts under CBA allocable to sick leave on line 23", False, False, True, False, False, True
+        AddRow "26 ) After 3/31/21 Qualified family leave wages", False, False, True, False, False, True
+        AddRow "27 ) Qualified health plan expenses on line 26", False, False, True, False, False, True
+        AddRow "28 ) Amounts under CBA qualified family leave line 26", False, False, True, False, False, True
         
         .Rows = RowNum
     
@@ -3431,16 +3506,31 @@ Private Sub Grid941()
         Set941Val "11b)", 3, 0
         Set941Val "11c)", 3, 0
         Set941Val "11d)", 3, 0
+        Set941Val "11e)", 3, 0
+        Set941Val "11f)", 2, 0
+        Set941Val "11g)", 3, 0
         Set941Val "12 )", 3, 0
         Set941Val "13a)", 3, 0
-        Set941Val "13b)", 3, 0
         Set941Val "13c)", 3, 0
         Set941Val "13d)", 3, 0
         Set941Val "13e)", 3, 0
         Set941Val "13f)", 3, 0
         Set941Val "13g)", 3, 0
+        Set941Val "13h)", 3, 0
+        Set941Val "13i)", 3, 0
         Set941Val "14 )", 3, 0
         Set941Val "15 )", 2, 0
+        
+        Set941Val "19 )", 3, 0
+        Set941Val "20 )", 3, 0
+        Set941Val "21 )", 3, 0
+        Set941Val "22 )", 3, 0
+        Set941Val "23 )", 3, 0
+        Set941Val "24 )", 3, 0
+        Set941Val "25 )", 3, 0
+        Set941Val "26 )", 3, 0
+        Set941Val "27 )", 3, 0
+        Set941Val "28 )", 3, 0
     
     End With
 
@@ -3622,12 +3712,22 @@ Private Sub Line17Check_Click()
     End If
 End Sub
 
-Private Sub Line18_Click()
+Private Sub Line18a_Click()
     
-    If Line18 = 1 Then
-        Me.AlphaCheckLine18 = "X"
+    If Line18a = 1 Then
+        Me.AlphaCheckLine18a = "X"
     Else
-        Me.AlphaCheckLine18 = ""
+        Me.AlphaCheckLine18a = ""
+    End If
+
+End Sub
+
+Private Sub Line18b_Click()
+    
+    If Line18b = 1 Then
+        Me.AlphaCheckLine18b = "X"
+    Else
+        Me.AlphaCheckLine18b = ""
     End If
 
 End Sub
@@ -3666,6 +3766,7 @@ Private Sub cmdPrint_Click()
     SaveNudge User.ID, "941_2021June"
     
     Me.KeyPreview = True
+    
     Form941A2021Jun
         
     If Me.Line16Check3 = 1 Then
@@ -3919,31 +4020,31 @@ Dim Cur As Currency
     Cur = Get941Val(" 6 )", 3) + Get941Val(" 7 )", 3) + Get941Val(" 8 )", 3) + Get941Val(" 9 )", 3)
     Set941Val "10 )", 3, Cur
     
-    ' 11d) Total Refundable Credits
-    Cur = Get941Val("11a)", 3) + Get941Val("11b)", 3) + Get941Val("11c)", 3)
-    Set941Val "11d)", 3, Cur
+    ' 11g) Total Refundable Credits
+    Cur = Get941Val("11a)", 3) + Get941Val("11b)", 3) + Get941Val("11c)", 3) + Get941Val("11d)", 3) + Get941Val("11e)", 3)
+    Set941Val "11g)", 3, Cur
     
     ' 12) total of taxes after adjustments and credits
-    Cur = Get941Val("10 )", 3) - Get941Val("11d)", 3)
+    Cur = Get941Val("10 )", 3) - Get941Val("11g)", 3)
     Set941Val "12 )", 3, Cur
     
-    ' 13e) Total Deposits, deferrals and refundable credits
-    Cur = Get941Val("13a)", 3) + Get941Val("13b)", 3) + Get941Val("13c)", 3) + Get941Val("13d)", 3)
-    Set941Val "13e)", 3, Cur
-    
-    ' 13g) Total deposits, deferrals and refundable credits
-    Cur = Get941Val("13e)", 3) - Get941Val("13f)", 3)
+    ' 13g) Total Deposits and refundable credits
+    Cur = Get941Val("13a)", 3) + Get941Val("13c)", 3) + Get941Val("13d)", 3) + Get941Val("13e)", 3) + Get941Val("13f)", 3)
     Set941Val "13g)", 3, Cur
     
+    ' 13i) Total deposits and refundable credits less advances
+    Cur = Get941Val("13g)", 3) - Get941Val("13h)", 3)
+    Set941Val "13i)", 3, Cur
+    
     ' 14) Balance Due
-    If Get941Val("12 )", 3) > Get941Val("13g)", 3) Then
-        Cur = Get941Val("12 )", 3) - Get941Val("13g)", 3)
+    If Get941Val("12 )", 3) > Get941Val("13i)", 3) Then
+        Cur = Get941Val("12 )", 3) - Get941Val("13i)", 3)
         Set941Val "14 )", 3, Cur
         Set941Val "15 )", 2, 0
         Me.Line15Check1.Enabled = False
         Me.Line15Check2.Enabled = False
     Else        ' overpayment
-        Cur = Get941Val("13g)", 3) - Get941Val("12 )", 3)
+        Cur = Get941Val("13i)", 3) - Get941Val("12 )", 3)
         Set941Val "14 )", 3, 0
         Set941Val "15 )", 2, Cur
         Me.Line15Check1.Enabled = True
@@ -4543,36 +4644,50 @@ Dim Xincr, XXpos As Long
         '
         FormFeed
         
-        PosPrint 900, 895, PRCompany.Name
-        PosPrint 8490, 895, PRCompany.FederalID
+        PosPrint 900, 825, PRCompany.Name
+        PosPrint 8490, 825, PRCompany.FederalID
 
         VertPosn = 1600
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("11d)", 3)), 15)
+        VertPosn = VertPosn + VertSpace + 90
+        
+        PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("11e)", 3)), 15)
+        VertPosn = VertPosn + VertSpace
+        
+        PosPrint 5720, VertPosn, PadRight(Format(Get941Val("11f)", 2), "##,##0"), 6)
+        VertPosn = VertPosn + VertSpace
+        
+        PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("11g)", 3)), 15)
         VertPosn = VertPosn + VertSpace
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("12 )", 3)), 15)
         VertPosn = VertPosn + VertSpace + 90
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13a)", 3)), 15)
-        VertPosn = VertPosn + VertSpace
+        VertPosn = VertPosn + (VertSpace * 2) + 90
         
-        PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13b)", 3)), 15)
-        VertPosn = VertPosn + VertSpace
+        ' 13b reserved for future use
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13c)", 3)), 15)
         VertPosn = VertPosn + VertSpace
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13d)", 3)), 15)
-        VertPosn = VertPosn + VertSpace
+        VertPosn = VertPosn + VertSpace + 90
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13e)", 3)), 15)
-        VertPosn = VertPosn + VertSpace
+        VertPosn = VertPosn + VertSpace + 90
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13f)", 3)), 15)
         VertPosn = VertPosn + VertSpace
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13g)", 3)), 15)
+        VertPosn = VertPosn + VertSpace
+        
+        PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13h)", 3)), 15)
+        VertPosn = VertPosn + VertSpace
+        
+        PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13i)", 3)), 15)
         VertPosn = VertPosn + VertSpace
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("14 )", 3)), 15)
@@ -4614,13 +4729,13 @@ Dim Xincr, XXpos As Long
             AlphaCheckLine16c = "X"
         End If
 
-        PosPrint 2000, 7730, AlphaCheckLine16a
+        PosPrint 2000, 10430, AlphaCheckLine16a
 
-        PosPrint 2000, 8610, AlphaCheckLine16b
+        PosPrint 2000, 11310, AlphaCheckLine16b
 
         If .Line16Check2 = 1 Then
             HorzPosn = 5010
-            VertPosn = 9220
+            VertPosn = 11920
             VertSpace = 440
             PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(.Line16Mo1), 15)
             VertPosn = VertPosn + VertSpace
@@ -4631,28 +4746,31 @@ Dim Xincr, XXpos As Long
             PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(.Line16Total), 15)
         End If
 
-        PosPrint 2000, 10850, AlphaCheckLine16c
+        PosPrint 2000, 13550, AlphaCheckLine16c
         
         '   #######################  FORM 941 - PAGE 3  ####################################
         '
+        
         FormFeed
 
-        PosPrint 900, 895, PRCompany.Name
-        PosPrint 8490, 895, PRCompany.FederalID
+        PosPrint 900, 785, PRCompany.Name
+        PosPrint 8490, 785, PRCompany.FederalID
 
         ' Part 3
-        PosPrint 9390, 1580, .AlphaCheckLine17
+        PosPrint 9390, 1400, .AlphaCheckLine17
         If .Line17Check = 1 Then
             If IsNull(.Line17Date) = False Then
-                PosPrint 3960, 1990, DateSplit(.Line17Date)
+                PosPrint 3960, 1830, DateSplit(.Line17Date)
             End If
         End If
         
         ' seasonal
-        PosPrint 9390, 2385, .AlphaCheckLine18
+        PosPrint 9390, 2225, .AlphaCheckLine18a
+        ' startup
+        PosPrint 9390, 2580, .AlphaCheckLine18b
 
-        VertSpace = 470
-        VertPosn = 2350
+        VertSpace = 360
+        VertPosn = 2575
         HorzPosn = 9330
         
         VertPosn = VertPosn + VertSpace
@@ -4670,19 +4788,25 @@ Dim Xincr, XXpos As Long
         VertPosn = VertPosn + VertSpace
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("23 )", 3)), 15)
 
-    
-        VertPosn = VertPosn + 75
-    
-        VertPosn = VertPosn + VertSpace + 90
+        VertPosn = VertPosn + VertSpace
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("24 )", 3)), 15)
 
-        VertPosn = VertPosn + VertSpace + 50
+        VertPosn = VertPosn + VertSpace + 90
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("25 )", 3)), 15)
-        
+
+        VertPosn = VertPosn + VertSpace + 120
+        PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("26 )", 3)), 15)
+
+        VertPosn = VertPosn + VertSpace
+        PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("27 )", 3)), 15)
+
+        VertPosn = VertPosn + VertSpace + 110
+        PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("28 )", 3)), 15)
+    
         If .Part4CheckYes = 1 Then
-            PosPrint 1125, 7100, "X"
+            PosPrint 1125, 7700, "X"
         Else
-            PosPrint 1125, 8300, "X"
+            PosPrint 1125, 8070, "X"
         End If
         
         Form941Pt4Pt5_2017 frm941_2021_June
@@ -4732,13 +4856,13 @@ Dim HorzPosn1, HorzPosn2, Xincr As Long
     PRGlobal.Save (Equate.RecPut)
     
     If frm.Part4CheckYes Then
-        VertPosn = 7225
+        VertPosn = 7740
         PosPrint 5210, VertPosn, PRGlobal.Var1
         PosPrint 9060, VertPosn, PRGlobal.Var2
         
         HorzPosn = 8480
         Xincr = 445
-        VertPosn = 7690
+        VertPosn = 8200
         
         ' part 4 PIN in gay boxes
         x = Trim(PRGlobal.Var3)
@@ -4767,10 +4891,10 @@ Dim HorzPosn1, HorzPosn2, Xincr As Long
     PRGlobal.Save (Equate.RecPut)
 
     ' part 5 - name and title - split the string on the slash
-    PosPrint 8565, 9200, SlashSplit(PRGlobal.Var1, 1)
-    PosPrint 8565, 9710, SlashSplit(PRGlobal.Var1, 2)
-    PosPrint 2890, 10320, DateSplit(frm.Part5Date)
-    PosPrint 9100, 10320, Trim(frm.Part5Phone)
+    PosPrint 8565, 9720, SlashSplit(PRGlobal.Var1, 1)
+    PosPrint 8565, 10230, SlashSplit(PRGlobal.Var1, 2)
+    PosPrint 2890, 10840, DateSplit(frm.Part5Date)
+    PosPrint 9100, 10840, Trim(frm.Part5Phone)
         
     'Paid Preparer - Per User
     If frm.PaidPrepID <> 0 Then
@@ -4798,7 +4922,7 @@ Dim HorzPosn1, HorzPosn2, Xincr As Long
     PRGlobal.Var9 = frm.cmbPrepName.text
     PRGlobal.Save (Equate.RecPut)
     
-    VertPosn = 11240
+    VertPosn = 11800
     VertSpace = 485
     HorzPosn1 = 2405
     HorzPosn2 = 8805
