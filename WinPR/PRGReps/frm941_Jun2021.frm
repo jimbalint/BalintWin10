@@ -175,59 +175,59 @@ Begin VB.Form frm941_2021_June
       TabCaption(0)   =   "Form 941 Part 1/3"
       TabPicture(0)   =   "frm941_Jun2021.frx":0000
       Tab(0).ControlEnabled=   0   'False
-      Tab(0).Control(0)=   "Label33"
-      Tab(0).Control(1)=   "Label38"
-      Tab(0).Control(2)=   "Label5"
-      Tab(0).Control(3)=   "Line15Check2"
+      Tab(0).Control(0)=   "cmdPmt"
+      Tab(0).Control(1)=   "chkManualFractions"
+      Tab(0).Control(2)=   "fg"
+      Tab(0).Control(3)=   "Timer1"
       Tab(0).Control(4)=   "Line15Check1"
-      Tab(0).Control(5)=   "Timer1"
-      Tab(0).Control(6)=   "fg"
-      Tab(0).Control(7)=   "chkManualFractions"
-      Tab(0).Control(8)=   "cmdPmt"
+      Tab(0).Control(5)=   "Line15Check2"
+      Tab(0).Control(6)=   "Label5"
+      Tab(0).Control(7)=   "Label38"
+      Tab(0).Control(8)=   "Label33"
       Tab(0).ControlCount=   9
       TabCaption(1)   =   "Form 941   Parts 2/3/4"
       TabPicture(1)   =   "frm941_Jun2021.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "Label48"
-      Tab(1).Control(1)=   "Label6"
-      Tab(1).Control(2)=   "Label17"
-      Tab(1).Control(3)=   "Label43"
-      Tab(1).Control(4)=   "Label44"
-      Tab(1).Control(5)=   "Label39"
-      Tab(1).Control(6)=   "Label40"
-      Tab(1).Control(7)=   "Label45"
-      Tab(1).Control(8)=   "Label46"
-      Tab(1).Control(9)=   "Label47"
-      Tab(1).Control(10)=   "Label49"
-      Tab(1).Control(11)=   "Label51"
-      Tab(1).Control(12)=   "Label52"
-      Tab(1).Control(13)=   "Label53"
-      Tab(1).Control(14)=   "Label54"
-      Tab(1).Control(15)=   "Label1"
-      Tab(1).Control(16)=   "Label3"
-      Tab(1).Control(17)=   "Label7"
-      Tab(1).Control(18)=   "Label8"
-      Tab(1).Control(19)=   "Line16Mo1"
-      Tab(1).Control(20)=   "Line16Total"
-      Tab(1).Control(21)=   "Line16Mo3"
-      Tab(1).Control(22)=   "Line16Mo2"
-      Tab(1).Control(23)=   "txtEIN"
-      Tab(1).Control(24)=   "Line16Check1"
-      Tab(1).Control(25)=   "Line16Check2"
-      Tab(1).Control(26)=   "Line16Check3"
-      Tab(1).Control(27)=   "Part4CheckNo"
-      Tab(1).Control(28)=   "Line17Check"
-      Tab(1).Control(29)=   "Line17Date"
-      Tab(1).Control(30)=   "Line18a"
-      Tab(1).Control(31)=   "txtName"
-      Tab(1).Control(32)=   "Line10Show"
-      Tab(1).Control(33)=   "Line16Diff"
-      Tab(1).Control(34)=   "Part4CheckYes"
-      Tab(1).Control(35)=   "Part4Name"
-      Tab(1).Control(36)=   "Part4Pin"
-      Tab(1).Control(37)=   "Part4Phone"
-      Tab(1).Control(38)=   "txtTradeName"
-      Tab(1).Control(39)=   "Line18b"
+      Tab(1).Control(0)=   "Line18b"
+      Tab(1).Control(1)=   "txtTradeName"
+      Tab(1).Control(2)=   "Part4Phone"
+      Tab(1).Control(3)=   "Part4Pin"
+      Tab(1).Control(4)=   "Part4Name"
+      Tab(1).Control(5)=   "Part4CheckYes"
+      Tab(1).Control(6)=   "Line16Diff"
+      Tab(1).Control(7)=   "Line10Show"
+      Tab(1).Control(8)=   "txtName"
+      Tab(1).Control(9)=   "Line18a"
+      Tab(1).Control(10)=   "Line17Date"
+      Tab(1).Control(11)=   "Line17Check"
+      Tab(1).Control(12)=   "Part4CheckNo"
+      Tab(1).Control(13)=   "Line16Check3"
+      Tab(1).Control(14)=   "Line16Check2"
+      Tab(1).Control(15)=   "Line16Check1"
+      Tab(1).Control(16)=   "txtEIN"
+      Tab(1).Control(17)=   "Line16Mo2"
+      Tab(1).Control(18)=   "Line16Mo3"
+      Tab(1).Control(19)=   "Line16Total"
+      Tab(1).Control(20)=   "Line16Mo1"
+      Tab(1).Control(21)=   "Label8"
+      Tab(1).Control(22)=   "Label7"
+      Tab(1).Control(23)=   "Label3"
+      Tab(1).Control(24)=   "Label1"
+      Tab(1).Control(25)=   "Label54"
+      Tab(1).Control(26)=   "Label53"
+      Tab(1).Control(27)=   "Label52"
+      Tab(1).Control(28)=   "Label51"
+      Tab(1).Control(29)=   "Label49"
+      Tab(1).Control(30)=   "Label47"
+      Tab(1).Control(31)=   "Label46"
+      Tab(1).Control(32)=   "Label45"
+      Tab(1).Control(33)=   "Label40"
+      Tab(1).Control(34)=   "Label39"
+      Tab(1).Control(35)=   "Label44"
+      Tab(1).Control(36)=   "Label43"
+      Tab(1).Control(37)=   "Label17"
+      Tab(1).Control(38)=   "Label6"
+      Tab(1).Control(39)=   "Label48"
       Tab(1).ControlCount=   40
       TabCaption(2)   =   "Form 941   Part 5"
       TabPicture(2)   =   "frm941_Jun2021.frx":0038
@@ -268,24 +268,24 @@ Begin VB.Form frm941_2021_June
       TabCaption(3)   =   "Schedule B (Form 941)"
       TabPicture(3)   =   "frm941_Jun2021.frx":0054
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "Label58"
-      Tab(3).Control(1)=   "Label59"
-      Tab(3).Control(2)=   "Label60"
-      Tab(3).Control(3)=   "Label61"
-      Tab(3).Control(4)=   "lblBMonth1"
-      Tab(3).Control(5)=   "lblBMonth2"
-      Tab(3).Control(6)=   "lblBMonth3"
-      Tab(3).Control(7)=   "BDifference"
-      Tab(3).Control(8)=   "BLine10Show"
-      Tab(3).Control(9)=   "tdbNumVertNudge"
-      Tab(3).Control(10)=   "fgMo3"
-      Tab(3).Control(11)=   "fgMo2"
-      Tab(3).Control(12)=   "BTotalTax"
-      Tab(3).Control(13)=   "BMo3Tax"
-      Tab(3).Control(14)=   "BMo2Tax"
-      Tab(3).Control(15)=   "BMo1Tax"
-      Tab(3).Control(16)=   "fgMo1"
-      Tab(3).Control(17)=   "tdbNumHorzNudge"
+      Tab(3).Control(0)=   "tdbNumHorzNudge"
+      Tab(3).Control(1)=   "fgMo1"
+      Tab(3).Control(2)=   "BMo1Tax"
+      Tab(3).Control(3)=   "BMo2Tax"
+      Tab(3).Control(4)=   "BMo3Tax"
+      Tab(3).Control(5)=   "BTotalTax"
+      Tab(3).Control(6)=   "fgMo2"
+      Tab(3).Control(7)=   "fgMo3"
+      Tab(3).Control(8)=   "tdbNumVertNudge"
+      Tab(3).Control(9)=   "BLine10Show"
+      Tab(3).Control(10)=   "BDifference"
+      Tab(3).Control(11)=   "lblBMonth3"
+      Tab(3).Control(12)=   "lblBMonth2"
+      Tab(3).Control(13)=   "lblBMonth1"
+      Tab(3).Control(14)=   "Label61"
+      Tab(3).Control(15)=   "Label60"
+      Tab(3).Control(16)=   "Label59"
+      Tab(3).Control(17)=   "Label58"
       Tab(3).ControlCount=   18
       Begin VB.CheckBox Line18b 
          Caption         =   "Check here"
@@ -3187,6 +3187,9 @@ Dim rsCol As New ADODB.Recordset
 Dim RowNum, ColNum As Integer
 Dim ERSSTax, MatchSS, MatchSSTotal As Currency
         
+Dim PanelVert As Integer
+Dim PrtTest As Boolean
+
 
 Private Sub cmdPmt_Click()
 ' Get941Val(" 5a)", 1)
@@ -3757,6 +3760,9 @@ Private Sub cmdExit_Click()
 End Sub
 
 Private Sub cmdPrint_Click()
+    
+    PrtTest = (User.Logon = "jim")
+    
     PrtInit ("Port")
     SetFont 10, Equate.Portrait
 
@@ -4503,6 +4509,8 @@ Dim FmtString, TelFmtString, ReportTitle As String
 Dim ff, FedID As String
 Dim Xincr, XXpos As Long
  
+    TestPattern941
+ 
     CurrYear = Year(Now())
     Ln = 0
     SetEquates
@@ -4518,16 +4526,21 @@ Dim Xincr, XXpos As Long
     
     With frm941_2021_June
     
+        TestPattern941
+        
+        ' %%%%% Pg 1 Panel 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        PanelVert = 800
+        
         ' PosPrint 3200, 1020, PRCompany.FederalID
         ' formatting for the GAY fed id boxes
-        HorzPosn = 2450
+        HorzPosn = 2410
         Xincr = 499
         FedID = Trim(PRCompany.FederalID)
         For XXpos = 1 To Len(FedID)
             ff = Mid(FedID, XXpos, 1)
             If ff <> "-" Then
                 HorzPosn = HorzPosn + Xincr
-                PosPrint HorzPosn, 1170, ff
+                PosPrint HorzPosn, 170 + PanelVert, ff
             End If
             If XXpos = 2 Then
                 HorzPosn = HorzPosn + 315
@@ -4535,34 +4548,40 @@ Dim Xincr, XXpos As Long
         Next XXpos
         
         ' PosPrint 2500, 1490, PRCompany.Name
-        PosPrint 2530, 1630, Me.txtName
+        PosPrint 2530, 630 + PanelVert, Me.txtName
         
-        PosPrint 2120, 2120, Me.txtTradeName
+        PosPrint 2120, 1120 + PanelVert, Me.txtTradeName
         
-        PosPrint 1430, 2580, Trim(PRCompany.Address1) & " " & Trim(PRCompany.Address2)
+        PosPrint 1430, 1580 + PanelVert, Trim(PRCompany.Address1) & " " & Trim(PRCompany.Address2)
         
 '        If PRCompany.Address2 <> "" Then
 '            PosPrint 2400, 2450, PRCompany.Address2
 '        End If
         
-        PosPrint 1430, 3150, PRCompany.City
+        PosPrint 1430, 2150 + PanelVert, PRCompany.City
         If PRState.GetBySQL("Select * from PRState where PRState.StateID = " & PRCompany.AddrStateID) Then
-            PosPrint 5290, 3150, PRState.StateAbbrev
+            PosPrint 5290, 2150 + PanelVert, PRState.StateAbbrev
         End If
-        PosPrint 6130, 3150, PRCompany.ZipCode
+        PosPrint 6130, 2150 + PanelVert, PRCompany.ZipCode
     
         ' checkbox for the quarter
         Dim qNum As Integer
         qNum = .cmbQtr
         ' qNum = 2
-        VertPosn = 1610 + (qNum - 1) * 370
+        Dim qtr941 As Integer
+        VertPosn = 610 + PanelVert + (qNum - 1) * 360
         PosPrint 8263, VertPosn, "X"
+        If PrtTest Then
+            For qtr941 = 0 To 3
+                VertPosn = 610 + PanelVert + qtr941 * 360
+                PosPrint 8263, VertPosn, "X"
+            Next qtr941
+        End If
         
-        VertPosn = 4320
+        ' %%%%% Pg 1 Panel 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
-        ' jan 2014
-        VertPosn = 5150
-        
+        ' june 2021
+        VertPosn = 4910
         VertSpace = 490
         
         PosPrint 10200, VertPosn, PadRight(Format(Get941Val(" 1 )", 3), "##,##0"), 6)
@@ -4574,10 +4593,10 @@ Dim Xincr, XXpos As Long
         VertPosn = VertPosn + VertSpace
         PosPrint 9320, VertPosn, PadRight(DollarAndCents(Get941Val(" 3 )", 3)), 15)
         
-        VertPosn = VertPosn + VertSpace + 50
-        PosPrint 8800, VertPosn, .AlphaCheckLine4
+        VertPosn = VertPosn + VertSpace + 35
+        PosPrint 8700, VertPosn, IIf(Not PrtTest, .AlphaCheckLine4, "X")
     
-        VertPosn = 7220
+        VertPosn = 6990
         
         VertSpace = 375
         HorzPosn1 = 3980
@@ -4607,9 +4626,9 @@ Dim Xincr, XXpos As Long
         PosPrint HorzPosn1, VertPosn, PadRight(DollarAndCents(Get941Val(" 5d)", 1)), 15)
         PosPrint HorzPosn2, VertPosn, PadRight(DollarAndCents(Get941Val(" 5d)", 2)), 15)
         
-        VertPosn = 9640
+        VertPosn = 9400
         VertSpace = 482
-        HorzPosn = 9330
+        HorzPosn = 9270
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val(" 5e)", 3)), 15)
         VertPosn = VertPosn + VertSpace
@@ -4619,7 +4638,7 @@ Dim Xincr, XXpos As Long
         VertPosn = VertPosn + VertSpace
         
         '' PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val(" 7 )", 3)), 15)
-        PosPrint HorzPosn, VertPosn, PadRight(Get941Val(" 7 )", 3), 15)
+        PosPrint HorzPosn - 80, VertPosn, PadRight(Get941Val(" 7 )", 3), 15)
         VertPosn = VertPosn + VertSpace
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val(" 8 )", 3)), 15)
@@ -4634,8 +4653,9 @@ Dim Xincr, XXpos As Long
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("11a)", 3)), 15)
         VertPosn = VertPosn + VertSpace
         
+        VertPosn = VertPosn + 50
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("11b)", 3)), 15)
-        VertPosn = VertPosn + VertSpace
+        VertPosn = VertPosn + VertSpace + 30
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("11c)", 3)), 15)
         VertPosn = VertPosn + VertSpace
@@ -4644,10 +4664,12 @@ Dim Xincr, XXpos As Long
         '
         FormFeed
         
-        PosPrint 900, 825, PRCompany.Name
-        PosPrint 8490, 825, PRCompany.FederalID
+        TestPattern941
+        
+        PosPrint 900, 800, PRCompany.Name
+        PosPrint 8490, 800, PRCompany.FederalID
 
-        VertPosn = 1600
+        VertPosn = 1580
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("11d)", 3)), 15)
         VertPosn = VertPosn + VertSpace + 90
@@ -4701,8 +4723,8 @@ Dim Xincr, XXpos As Long
 '        PosPrint 9730, VertPosn - 70, .AlphaCheckLine15a
 '        PosPrint 9730, VertPosn + 50, .AlphaCheckLine15b
 
-        PosPrint 8930, VertPosn, .AlphaCheckLine15a
-        PosPrint 10150, VertPosn, .AlphaCheckLine15b
+        PosPrint 8780, VertPosn, IIf(Not PrtTest, AlphaCheckLine15a, "X")
+        PosPrint 10170, VertPosn, IIf(Not PrtTest, AlphaCheckLine15b, "X")
 
         ' *** FIX ***
         'VertNudge = VertNudge + 6
@@ -4710,7 +4732,9 @@ Dim Xincr, XXpos As Long
 
         ' PosPrint 950, 2100, .Line16 - was the state on 2011 form
 
-        ' Part 2
+        ' %%%%%%%%%%%%% Part 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        PanelVert = 10000
 
         ' stuff it!!!!
         If Me.Line16Check1 Then
@@ -4729,48 +4753,60 @@ Dim Xincr, XXpos As Long
             AlphaCheckLine16c = "X"
         End If
 
-        PosPrint 2000, 10430, AlphaCheckLine16a
-
-        PosPrint 2000, 11310, AlphaCheckLine16b
-
-        If .Line16Check2 = 1 Then
-            HorzPosn = 5010
-            VertPosn = 11920
-            VertSpace = 440
-            PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(.Line16Mo1), 15)
-            VertPosn = VertPosn + VertSpace
-            PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(.Line16Mo2), 15)
-            VertPosn = VertPosn + VertSpace - 15  ' nice...
-            PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(.Line16Mo3), 15)
-            VertPosn = VertPosn + VertSpace
-            PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(.Line16Total), 15)
+        PosPrint 1980, 430 + PanelVert, AlphaCheckLine16a
+        PosPrint 1980, 1370 + PanelVert, AlphaCheckLine16b
+        PosPrint 1980, 3630 + PanelVert, AlphaCheckLine16c
+        If PrtTest Then
+            PosPrint 1980, 430 + PanelVert, "X"
+            PosPrint 1980, 1370 + PanelVert, "X"
+            PosPrint 1980, 3630 + PanelVert, "X"
         End If
 
-        PosPrint 2000, 13550, AlphaCheckLine16c
+        If .Line16Check2 = 1 Or PrtTest Then
+            HorzPosn = 5010
+            VertPosn = 1990 + PanelVert
+            VertSpace = 440
+            PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(IIf(Not PrtTest, .Line16Mo1, 99999.99)), 15)
+            VertPosn = VertPosn + VertSpace
+            PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(IIf(Not PrtTest, .Line16Mo2, 99999.99)), 15)
+            VertPosn = VertPosn + VertSpace - 15  ' nice...
+            PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(IIf(Not PrtTest, .Line16Mo3, 99999.99)), 15)
+            VertPosn = VertPosn + VertSpace
+            PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(IIf(Not PrtTest, .Line16Total, 99999.99)), 15)
+        End If
+        
+        ' %%%%%%%%%%%%% Part 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
         '   #######################  FORM 941 - PAGE 3  ####################################
         '
         
         FormFeed
 
-        PosPrint 900, 785, PRCompany.Name
-        PosPrint 8490, 785, PRCompany.FederalID
+        TestPattern941
+        
+        ' %%%%%% page 3 panel 1 - lines 17 to 28 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+        
+        PanelVert = 410
+        
+        PosPrint 900, 365 + PanelVert, PRCompany.Name
+        PosPrint 8490, 365 + PanelVert, PRCompany.FederalID
 
         ' Part 3
-        PosPrint 9390, 1400, .AlphaCheckLine17
+        PosPrint 9390, 1000 + PanelVert, IIf(Not PrtTest, .AlphaCheckLine17, "X")
         If .Line17Check = 1 Then
             If IsNull(.Line17Date) = False Then
-                PosPrint 3960, 1830, DateSplit(.Line17Date)
+                PosPrint 3890, 1400 + PanelVert, DateSplit(.Line17Date)
             End If
         End If
+        If PrtTest Then PosPrint 3890, 1400 + PanelVert, DateSplit(Date)
         
         ' seasonal
-        PosPrint 9390, 2225, .AlphaCheckLine18a
+        PosPrint 9390, 1825 + PanelVert, IIf(Not PrtTest, .AlphaCheckLine18a, "X")
         ' startup
-        PosPrint 9390, 2580, .AlphaCheckLine18b
+        PosPrint 9390, 2180 + PanelVert, IIf(Not PrtTest, .AlphaCheckLine18b, "X")
 
         VertSpace = 360
-        VertPosn = 2575
+        VertPosn = 2175 + PanelVert
         HorzPosn = 9330
         
         VertPosn = VertPosn + VertSpace
@@ -4803,11 +4839,7 @@ Dim Xincr, XXpos As Long
         VertPosn = VertPosn + VertSpace + 110
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("28 )", 3)), 15)
     
-        If .Part4CheckYes = 1 Then
-            PosPrint 1125, 7700, "X"
-        Else
-            PosPrint 1125, 8070, "X"
-        End If
+        ' %%%%%% page 3 panel 1 - lines 17 to 28 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         
         Form941Pt4Pt5_2017 frm941_2021_June
 
@@ -4838,7 +4870,21 @@ Dim HorzPosn1, HorzPosn2, Xincr As Long
     PRGlobal.Var6 = ""
     PRGlobal.Var7 = ""
     
-    ' Part 4 - Third Party Designee - Per User
+    ' %%%%%%%%%%% Part 4 - Third Party Designee - Per User %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    PanelVert = 7100
+    
+    If Not PrtTest Then
+        If frm.Part4CheckYes = 1 Then
+            PosPrint 1060, 635 + PanelVert, "X"
+        Else
+            PosPrint 1060, 1430 + PanelVert, "X"
+        End If
+    Else
+        PosPrint 1060, 635 + PanelVert, "X"
+        PosPrint 1060, 1430 + PanelVert, "X"
+    End If
+    
     If frm.Part4ID <> 0 Then
         If PRGlobal.GetByID(frm.Part4ID) Then
         End If
@@ -4855,14 +4901,14 @@ Dim HorzPosn1, HorzPosn2, Xincr As Long
     PRGlobal.Var4 = frm.txtTradeName
     PRGlobal.Save (Equate.RecPut)
     
-    If frm.Part4CheckYes Then
-        VertPosn = 7740
+    If frm.Part4CheckYes Or PrtTest Then
+        VertPosn = 650 + PanelVert
         PosPrint 5210, VertPosn, PRGlobal.Var1
         PosPrint 9060, VertPosn, PRGlobal.Var2
         
         HorzPosn = 8480
         Xincr = 445
-        VertPosn = 8200
+        VertPosn = 1070 + PanelVert
         
         ' part 4 PIN in gay boxes
         x = Trim(PRGlobal.Var3)
@@ -4891,10 +4937,13 @@ Dim HorzPosn1, HorzPosn2, Xincr As Long
     PRGlobal.Save (Equate.RecPut)
 
     ' part 5 - name and title - split the string on the slash
-    PosPrint 8565, 9720, SlashSplit(PRGlobal.Var1, 1)
-    PosPrint 8565, 10230, SlashSplit(PRGlobal.Var1, 2)
-    PosPrint 2890, 10840, DateSplit(frm.Part5Date)
-    PosPrint 9100, 10840, Trim(frm.Part5Phone)
+    
+    PanelVert = 6970
+    
+    PosPrint 8565, 2720 + PanelVert, SlashSplit(PRGlobal.Var1, 1)
+    PosPrint 8565, 3230 + PanelVert, SlashSplit(PRGlobal.Var1, 2)
+    PosPrint 2890, 3840 + PanelVert, DateSplit(frm.Part5Date)
+    PosPrint 9100, 3840 + PanelVert, Trim(frm.Part5Phone)
         
     'Paid Preparer - Per User
     If frm.PaidPrepID <> 0 Then
@@ -4922,7 +4971,7 @@ Dim HorzPosn1, HorzPosn2, Xincr As Long
     PRGlobal.Var9 = frm.cmbPrepName.text
     PRGlobal.Save (Equate.RecPut)
     
-    VertPosn = 11800
+    VertPosn = 4800 + PanelVert
     VertSpace = 485
     HorzPosn1 = 2405
     HorzPosn2 = 8805
@@ -5081,3 +5130,25 @@ Dim FmtString As String
 
 End Sub
 
+Sub TestPattern941()
+    If Not PrtTest Then Exit Sub
+    Exit Sub
+    Dim trow, tcol, ccount As Integer
+    For trow = 100 To 15000 Step 100
+        If trow Mod 2000 = 0 Then
+            ccount = 0
+            For tcol = 100 To 11000 Step 100
+                ccount = ccount + 1
+                PosPrint tcol, trow, ccount Mod 10
+            Next tcol
+            ccount = 0
+            For tcol = 100 To 12000 Step 1000
+                ccount = ccount + 1
+                If ccount > 1 Then
+                    PosPrint tcol - 100, trow + 100, ccount - 1 Mod 10
+                End If
+            Next tcol
+        End If
+        PosPrint 100, trow, Int(trow / 100)
+    Next trow
+End Sub
