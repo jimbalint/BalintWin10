@@ -133,23 +133,6 @@ Begin VB.Form frm941_2021_June
       Top             =   30
       Width           =   645
    End
-   Begin VB.CommandButton cmdPrint 
-      Caption         =   "&PRINT"
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   250
-      Left            =   9930
-      TabIndex        =   43
-      Top             =   40
-      Width           =   855
-   End
    Begin TabDlg.SSTab SSTab1 
       Height          =   9315
       Left            =   120
@@ -175,59 +158,59 @@ Begin VB.Form frm941_2021_June
       TabCaption(0)   =   "Form 941 Part 1/3"
       TabPicture(0)   =   "frm941_Jun2021.frx":0000
       Tab(0).ControlEnabled=   0   'False
-      Tab(0).Control(0)=   "cmdPmt"
-      Tab(0).Control(1)=   "chkManualFractions"
-      Tab(0).Control(2)=   "fg"
-      Tab(0).Control(3)=   "Timer1"
+      Tab(0).Control(0)=   "Label33"
+      Tab(0).Control(1)=   "Label38"
+      Tab(0).Control(2)=   "Label5"
+      Tab(0).Control(3)=   "Line15Check2"
       Tab(0).Control(4)=   "Line15Check1"
-      Tab(0).Control(5)=   "Line15Check2"
-      Tab(0).Control(6)=   "Label5"
-      Tab(0).Control(7)=   "Label38"
-      Tab(0).Control(8)=   "Label33"
+      Tab(0).Control(5)=   "Timer1"
+      Tab(0).Control(6)=   "fg"
+      Tab(0).Control(7)=   "chkManualFractions"
+      Tab(0).Control(8)=   "cmdPmt"
       Tab(0).ControlCount=   9
       TabCaption(1)   =   "Form 941   Parts 2/3/4"
       TabPicture(1)   =   "frm941_Jun2021.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "Line18b"
-      Tab(1).Control(1)=   "txtTradeName"
-      Tab(1).Control(2)=   "Part4Phone"
-      Tab(1).Control(3)=   "Part4Pin"
-      Tab(1).Control(4)=   "Part4Name"
-      Tab(1).Control(5)=   "Part4CheckYes"
-      Tab(1).Control(6)=   "Line16Diff"
-      Tab(1).Control(7)=   "Line10Show"
-      Tab(1).Control(8)=   "txtName"
-      Tab(1).Control(9)=   "Line18a"
-      Tab(1).Control(10)=   "Line17Date"
-      Tab(1).Control(11)=   "Line17Check"
-      Tab(1).Control(12)=   "Part4CheckNo"
-      Tab(1).Control(13)=   "Line16Check3"
-      Tab(1).Control(14)=   "Line16Check2"
-      Tab(1).Control(15)=   "Line16Check1"
-      Tab(1).Control(16)=   "txtEIN"
-      Tab(1).Control(17)=   "Line16Mo2"
-      Tab(1).Control(18)=   "Line16Mo3"
-      Tab(1).Control(19)=   "Line16Total"
-      Tab(1).Control(20)=   "Line16Mo1"
-      Tab(1).Control(21)=   "Label8"
-      Tab(1).Control(22)=   "Label7"
-      Tab(1).Control(23)=   "Label3"
-      Tab(1).Control(24)=   "Label1"
-      Tab(1).Control(25)=   "Label54"
-      Tab(1).Control(26)=   "Label53"
-      Tab(1).Control(27)=   "Label52"
-      Tab(1).Control(28)=   "Label51"
-      Tab(1).Control(29)=   "Label49"
-      Tab(1).Control(30)=   "Label47"
-      Tab(1).Control(31)=   "Label46"
-      Tab(1).Control(32)=   "Label45"
-      Tab(1).Control(33)=   "Label40"
-      Tab(1).Control(34)=   "Label39"
-      Tab(1).Control(35)=   "Label44"
-      Tab(1).Control(36)=   "Label43"
-      Tab(1).Control(37)=   "Label17"
-      Tab(1).Control(38)=   "Label6"
-      Tab(1).Control(39)=   "Label48"
+      Tab(1).Control(0)=   "Label48"
+      Tab(1).Control(1)=   "Label6"
+      Tab(1).Control(2)=   "Label17"
+      Tab(1).Control(3)=   "Label43"
+      Tab(1).Control(4)=   "Label44"
+      Tab(1).Control(5)=   "Label39"
+      Tab(1).Control(6)=   "Label40"
+      Tab(1).Control(7)=   "Label45"
+      Tab(1).Control(8)=   "Label46"
+      Tab(1).Control(9)=   "Label47"
+      Tab(1).Control(10)=   "Label49"
+      Tab(1).Control(11)=   "Label51"
+      Tab(1).Control(12)=   "Label52"
+      Tab(1).Control(13)=   "Label53"
+      Tab(1).Control(14)=   "Label54"
+      Tab(1).Control(15)=   "Label1"
+      Tab(1).Control(16)=   "Label3"
+      Tab(1).Control(17)=   "Label7"
+      Tab(1).Control(18)=   "Label8"
+      Tab(1).Control(19)=   "Line16Mo1"
+      Tab(1).Control(20)=   "Line16Total"
+      Tab(1).Control(21)=   "Line16Mo3"
+      Tab(1).Control(22)=   "Line16Mo2"
+      Tab(1).Control(23)=   "txtEIN"
+      Tab(1).Control(24)=   "Line16Check1"
+      Tab(1).Control(25)=   "Line16Check2"
+      Tab(1).Control(26)=   "Line16Check3"
+      Tab(1).Control(27)=   "Part4CheckNo"
+      Tab(1).Control(28)=   "Line17Check"
+      Tab(1).Control(29)=   "Line17Date"
+      Tab(1).Control(30)=   "Line18a"
+      Tab(1).Control(31)=   "txtName"
+      Tab(1).Control(32)=   "Line10Show"
+      Tab(1).Control(33)=   "Line16Diff"
+      Tab(1).Control(34)=   "Part4CheckYes"
+      Tab(1).Control(35)=   "Part4Name"
+      Tab(1).Control(36)=   "Part4Pin"
+      Tab(1).Control(37)=   "Part4Phone"
+      Tab(1).Control(38)=   "txtTradeName"
+      Tab(1).Control(39)=   "Line18b"
       Tab(1).ControlCount=   40
       TabCaption(2)   =   "Form 941   Part 5"
       TabPicture(2)   =   "frm941_Jun2021.frx":0038
@@ -268,24 +251,24 @@ Begin VB.Form frm941_2021_June
       TabCaption(3)   =   "Schedule B (Form 941)"
       TabPicture(3)   =   "frm941_Jun2021.frx":0054
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "tdbNumHorzNudge"
-      Tab(3).Control(1)=   "fgMo1"
-      Tab(3).Control(2)=   "BMo1Tax"
-      Tab(3).Control(3)=   "BMo2Tax"
-      Tab(3).Control(4)=   "BMo3Tax"
-      Tab(3).Control(5)=   "BTotalTax"
-      Tab(3).Control(6)=   "fgMo2"
-      Tab(3).Control(7)=   "fgMo3"
-      Tab(3).Control(8)=   "tdbNumVertNudge"
-      Tab(3).Control(9)=   "BLine10Show"
-      Tab(3).Control(10)=   "BDifference"
-      Tab(3).Control(11)=   "lblBMonth3"
-      Tab(3).Control(12)=   "lblBMonth2"
-      Tab(3).Control(13)=   "lblBMonth1"
-      Tab(3).Control(14)=   "Label61"
-      Tab(3).Control(15)=   "Label60"
-      Tab(3).Control(16)=   "Label59"
-      Tab(3).Control(17)=   "Label58"
+      Tab(3).Control(0)=   "Label58"
+      Tab(3).Control(1)=   "Label59"
+      Tab(3).Control(2)=   "Label60"
+      Tab(3).Control(3)=   "Label61"
+      Tab(3).Control(4)=   "lblBMonth1"
+      Tab(3).Control(5)=   "lblBMonth2"
+      Tab(3).Control(6)=   "lblBMonth3"
+      Tab(3).Control(7)=   "BDifference"
+      Tab(3).Control(8)=   "BLine10Show"
+      Tab(3).Control(9)=   "tdbNumVertNudge"
+      Tab(3).Control(10)=   "fgMo3"
+      Tab(3).Control(11)=   "fgMo2"
+      Tab(3).Control(12)=   "BTotalTax"
+      Tab(3).Control(13)=   "BMo3Tax"
+      Tab(3).Control(14)=   "BMo2Tax"
+      Tab(3).Control(15)=   "BMo1Tax"
+      Tab(3).Control(16)=   "fgMo1"
+      Tab(3).Control(17)=   "tdbNumHorzNudge"
       Tab(3).ControlCount=   18
       Begin VB.CheckBox Line18b 
          Caption         =   "Check here"
@@ -3101,6 +3084,23 @@ Begin VB.Form frm941_2021_June
          Width           =   7035
       End
    End
+   Begin VB.CommandButton cmdPrint 
+      Caption         =   "&PRINT"
+      BeginProperty Font 
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   700
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      Height          =   250
+      Left            =   9930
+      TabIndex        =   43
+      Top             =   40
+      Width           =   855
+   End
    Begin VB.Label Label4 
       Caption         =   "18a"
       BeginProperty Font 
@@ -3775,7 +3775,7 @@ Private Sub cmdPrint_Click()
     
     Form941A2021Jun
         
-    If Me.Line16Check3 = 1 Then
+    If Me.Line16Check3 = 1 Or PrtTest Then
         FormFeed
         
         VertNudge = VertNudge + 2
@@ -3788,9 +3788,14 @@ Private Sub cmdPrint_Click()
 '        Form941BPrint 10500, Me.fgMo3, BMo3Tax
     
         ' twk for eagl 07/02/10
-        Form941BPrint_2017 4785, Me.fgMo1, BMo1Tax
-        Form941BPrint_2017 7855, Me.fgMo2, BMo2Tax
-        Form941BPrint_2017 11010, Me.fgMo3, BMo3Tax
+'        Form941BPrint_2017 4785, Me.fgMo1, BMo1Tax
+'        Form941BPrint_2017 7855, Me.fgMo2, BMo2Tax
+'        Form941BPrint_2017 11010, Me.fgMo3, BMo3Tax
+    
+        ' 2021 941
+        Form941BPrint_2017 4580, Me.fgMo1, BMo1Tax
+        Form941BPrint_2017 7650, Me.fgMo2, BMo2Tax
+        Form941BPrint_2017 10805, Me.fgMo3, BMo3Tax
     
     End If
 
@@ -5013,13 +5018,13 @@ Dim HorzPosn, Xincr, XXpos As Integer
         HP = 8220
         CurrYear = Year(Now())
         If .cmbQtr = 1 Then
-            PosPrint HP, 2030, "X"
+            PosPrint HP, 1900, "X"
         ElseIf .cmbQtr = 2 Then
-            PosPrint HP, 2280, "X"
+            PosPrint HP, 2150, "X"
         ElseIf .cmbQtr = 3 Then
-            PosPrint HP, 2560, "X"
+            PosPrint HP, 2430, "X"
         ElseIf .cmbQtr = 4 Then
-            PosPrint HP, 2790, "X"
+            PosPrint HP, 2660, "X"
         End If
     
         ' PosPrint 3380, 900, PRCompany.FederalID
@@ -5031,14 +5036,14 @@ Dim HorzPosn, Xincr, XXpos As Integer
             ff = Mid(FedID, XXpos, 1)
             If ff <> "-" Then
                 HorzPosn = HorzPosn + Xincr
-                PosPrint HorzPosn, 1500, ff
+                PosPrint HorzPosn, 1400, ff
             End If
             If XXpos = 2 Then
                 HorzPosn = HorzPosn + 315
             End If
         Next XXpos
         
-        PosPrint 2500, 1970, PRCompany.Name
+        PosPrint 2500, 1870, PRCompany.Name
         
         ' GAY boxes for tax year
         ' PosPrint 3380, 1430, TaxYear
@@ -5050,10 +5055,10 @@ Dim HorzPosn, Xincr, XXpos As Integer
         For XXpos = 1 To Len(yy1)
             yy2 = Mid(yy1, XXpos, 1)
             HorzPosn = HorzPosn + Xincr
-            PosPrint HorzPosn, 2460, yy2
+            PosPrint HorzPosn, 2360, yy2
         Next XXpos
         
-        PosPrint 9355, 14260, PadRight(DollarAndCents(.BTotalTax), 15)
+        PosPrint 9355, 13880, PadRight(DollarAndCents(.BTotalTax), 15)
         
     End With
     
@@ -5133,19 +5138,19 @@ End Sub
 Sub TestPattern941()
     If Not PrtTest Then Exit Sub
     Exit Sub
-    Dim trow, tcol, ccount As Integer
+    Dim trow, tcol, CCount As Integer
     For trow = 100 To 15000 Step 100
         If trow Mod 2000 = 0 Then
-            ccount = 0
+            CCount = 0
             For tcol = 100 To 11000 Step 100
-                ccount = ccount + 1
-                PosPrint tcol, trow, ccount Mod 10
+                CCount = CCount + 1
+                PosPrint tcol, trow, CCount Mod 10
             Next tcol
-            ccount = 0
+            CCount = 0
             For tcol = 100 To 12000 Step 1000
-                ccount = ccount + 1
-                If ccount > 1 Then
-                    PosPrint tcol - 100, trow + 100, ccount - 1 Mod 10
+                CCount = CCount + 1
+                If CCount > 1 Then
+                    PosPrint tcol - 100, trow + 100, CCount - 1 Mod 10
                 End If
             Next tcol
         End If
