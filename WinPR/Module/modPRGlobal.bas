@@ -2244,7 +2244,7 @@ Dim sPos As Integer
             SlashSplit = Mid(sString, sPos + 1)
         End If
     End If
-
+    SlashSplit = Trim(SlashSplit)
 End Function
 
 Public Function DateSplit(ByVal sDate As Date) As String

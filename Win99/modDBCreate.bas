@@ -51,7 +51,7 @@ Public Sub Payee99Create()
     AddField "Payee99", "PayeeNumber", "Long", cn
     AddField "Payee99", "Address", "char (50)", cn
     AddField "Payee99", "CSZ", "char (50)", cn
-    AddField "Payee99", "FederalID", "char (15)", cn
+    AddField "Payee99", "FederalID", "char (255)", cn
     AddField "Payee99", "AccountNumber", "char (50)", cn
     AddField "Payee99", "Comment", "char (50)", cn
     AddField "Payee99", "Inactive", "Byte", cn
@@ -139,6 +139,96 @@ Public Sub ClearFormRecs(ByVal FormType As String, ByVal TaxYear As Long)
     cn99.Execute SQLString
 
 End Sub
+
+Public Sub Create2021Forms(ByVal jFormType As String)
+
+Dim TaxYear As Long
+Dim HorzPosn1, HorzPosn2, HorzPosn3, Tab1, Tab2 As Integer
+Dim VertSpacing, VertPosn As Integer
+Dim FormID As Long
+Dim FormType As String
+
+    TaxYear = 2021
+
+    Form99.OpenRS
+    Form99.Clear
+
+    ' ================================================================================================
+    ' NEC
+    
+    If jFormType = "NEC" Then
+    
+        ClearFormRecs "NEC", TaxYear
+        
+        Form99.FormType = "NEC"
+        Form99.TaxYear = TaxYear
+        Form99.FormsPerPg = 3
+        Form99.FormVert1 = 800
+        Form99.FormVert2 = 6100
+        Form99.FormVert3 = 11400
+        Form99.Save (Equate.RecAdd)
+        FormID = Form99.FormID
+        
+        ' FormID, BoxName, FieldTitle, FieldFormat, HorzPosn, VertPosn, QuickEntry
+        Tab1 = 650          ' demographic fields from left margin
+        HorzPosn1 = 5590
+        HorzPosn2 = 7300
+        VertSpacing = 240
+        VertPosn = 0
+        FieldOrderNum = 0
+        FormType = "NEC"
+        
+        Field99Add TaxYear, FormType, "Payer1", "Payer1", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer2", "Payer2", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer3", "Payer3", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer4", "Payer4", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer5", "Payer5", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 2 - 135
+        Field99Add TaxYear, FormType, "PayerFederalID", "PayerFederalID", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "PayeeFederalID", "PayeeFederalID", Equate.fmtString, Tab1 + 2500, VertPosn, 0
+        Field99Add TaxYear, FormType, "1", "Nonemployee compensation", Equate.fmtAmount, HorzPosn2, VertPosn, 1
+        
+        VertPosn = VertPosn + VertSpacing * 2 - 80
+        Field99Add TaxYear, FormType, "2", "DirectSales5000", Equate.fmtString, 9130, VertPosn, 1
+        VertPosn = VertPosn + 80
+        
+        VertPosn = VertPosn + VertSpacing
+        Field99Add TaxYear, FormType, "PayeeName", "PayeeName", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing
+        Field99Add TaxYear, FormType, "PayeeAddress", "PayeeAddress", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing
+        Field99Add TaxYear, FormType, "PayeeCSZ", "PayeeCSZ", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing
+        Field99Add TaxYear, FormType, "4", "Federal income tax withheld", Equate.fmtAmount, HorzPosn1 + 1430, VertPosn, 2
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "5a", "State tax withheld", Equate.fmtAmount, HorzPosn1, VertPosn, 3
+        Field99Add TaxYear, FormType, "6a", "State/Payers state no.", Equate.fmtString, HorzPosn2, VertPosn, 4
+        Field99Add TaxYear, FormType, "7a", "State tax withheld", Equate.fmtAmount, HorzPosn2 + 2100, VertPosn, 5
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "PayeeAccountNumber", "PayeeAccountNumber", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "5b", "State tax withheld", Equate.fmtAmount, HorzPosn1, VertPosn, 6
+        Field99Add TaxYear, FormType, "6b", "State/Payers state no.", Equate.fmtString, HorzPosn2, VertPosn, 7
+        Field99Add TaxYear, FormType, "7b", "State tax withheld", Equate.fmtAmount, HorzPosn2 + 2100, VertPosn, 8
+    
+    End If
+
+End Sub
+
+
 Public Sub Create2020Forms(ByVal jFormType As String)
     
 Dim TaxYear As Long
@@ -205,12 +295,10 @@ Dim FormType As String
         
         VertPosn = VertPosn + VertSpacing * 3
         Field99Add TaxYear, FormType, "PayeeName", "PayeeName", Equate.fmtString, Tab1, VertPosn, 0
-        
-        VertPosn = VertPosn + VertSpacing
         Field99Add TaxYear, FormType, "7", "Payer made direct sales", Equate.fmtString, HorzPosn1 + 1430, VertPosn, 7
         Field99Add TaxYear, FormType, "8", "Sub pmts in lieu of div or int", Equate.fmtAmount, HorzPosn2, VertPosn, 8
         
-        VertPosn = VertPosn + VertSpacing * 2
+        VertPosn = VertPosn + VertSpacing * 3
         Field99Add TaxYear, FormType, "PayeeAddress", "PayeeAddress", Equate.fmtString, Tab1, VertPosn, 0
         Field99Add TaxYear, FormType, "9", "Corp insurance proceeds", Equate.fmtAmount, HorzPosn1, VertPosn, 9
         Field99Add TaxYear, FormType, "10", "Gross proceeds to attny", Equate.fmtAmount, HorzPosn2, VertPosn, 10
@@ -290,11 +378,9 @@ Dim FormType As String
         
         VertPosn = VertPosn + VertSpacing * 2
         Field99Add TaxYear, FormType, "PayeeAddress", "PayeeAddress", Equate.fmtString, Tab1, VertPosn, 0
-        
-        VertPosn = VertPosn + VertSpacing
         Field99Add TaxYear, FormType, "4", "Federal income tax withheld", Equate.fmtAmount, HorzPosn1 + 1430, VertPosn, 2
         
-        VertPosn = VertPosn + VertSpacing * 2
+        VertPosn = VertPosn + VertSpacing * 3
         Field99Add TaxYear, FormType, "PayeeCSZ", "PayeeCSZ", Equate.fmtString, Tab1, VertPosn, 0
         
         VertPosn = VertPosn + VertSpacing * 3

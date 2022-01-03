@@ -147,8 +147,9 @@ Dim FileExt As String
     ' copies from the previous year
     ' parameter is the copy TO year
     ' creates in \balint\data
-    ' copy to \Balint\Data_1099 for the install
-    ' CopyForms 2020
+    ' OLD: copy to \Balint\Data_1099 for the install
+    ' NEW: Payee Maint - Init New Year button has logic for new forms
+    ' CopyForms 2021
     ' End
     
     
@@ -194,8 +195,8 @@ Dim FileExt As String
 'If CmdLine = "" Then
 '    HorzNudge = 4
 '    VertNudge = 4
-'    Create2020Forms "1096"
-'    PrintForm99 "1096", 2020, True
+'    Create2021Forms "NEC"
+'    PrintForm99 "NEC", 2021, True
 '    End
 'End If
 

@@ -71,7 +71,7 @@ Public Sub PrintForm99(ByVal FormType As String, ByVal TaxYear As Long, ByVal Te
         If I = 3 Then X = Trim(GLCompany.Address2)
         If I = 4 Then X = Trim(GLCompany.Address3)
         If I = 5 Then X = Trim(GLCompany.CSZ)
-        If X <> "" Then
+        If X <> "" And X <> "0" Then
             J = J + 1
             PayerDemo(J) = X
         End If
