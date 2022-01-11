@@ -298,6 +298,14 @@ Begin VB.Form frmPrint99
       MaxValueVT      =   5
       MinValueVT      =   5
    End
+   Begin VB.Label Label3 
+      Caption         =   "01/10/2022"
+      Height          =   255
+      Left            =   11040
+      TabIndex        =   14
+      Top             =   1440
+      Width           =   1335
+   End
    Begin VB.Label Label2 
       Caption         =   "1099 Form:"
       Height          =   255

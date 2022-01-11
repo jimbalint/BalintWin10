@@ -279,6 +279,24 @@ Private Sub cmdNewYear_Click()
     txyr = InputBox("Enter tax year to init for")
     If txyr = "" Then Exit Sub
     
+    ' 2022-01-10 clear forms first
+    ClearFormRecs "NEC", txyr
+    ClearFormRecs "MISC", txyr
+    ClearFormRecs "R", txyr
+    ClearFormRecs "INT", txyr
+    ClearFormRecs "DIV", txyr
+    ClearFormRecs "1096", txyr
+    
+'SQLString = "SELECT distinct(FormType) as FormType from Form99 where TaxYear = 2021"
+'rsInit SQLString, cn99, rs
+'Do While Not rs.EOF
+'    MsgBox (rs("FormType"))
+'    rs.MoveNext
+'Loop
+'rs.Close
+'End
+
+    
     CopyForms CInt(txyr)
     
     If txyr = "2020" Then

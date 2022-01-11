@@ -198,31 +198,31 @@ Dim FormType As String
         Field99Add TaxYear, FormType, "1", "Nonemployee compensation", Equate.fmtAmount, HorzPosn2, VertPosn, 1
         
         VertPosn = VertPosn + VertSpacing * 2 - 80
-        Field99Add TaxYear, FormType, "2", "DirectSales5000", Equate.fmtString, 9130, VertPosn, 1
+        Field99Add TaxYear, FormType, "2", "DirectSales5000", Equate.fmtString, 9130, VertPosn, 2
         VertPosn = VertPosn + 80
         
         VertPosn = VertPosn + VertSpacing
         Field99Add TaxYear, FormType, "PayeeName", "PayeeName", Equate.fmtString, Tab1, VertPosn, 0
         
-        VertPosn = VertPosn + VertSpacing
+        VertPosn = VertPosn + VertSpacing * 2
         Field99Add TaxYear, FormType, "PayeeAddress", "PayeeAddress", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing
+        Field99Add TaxYear, FormType, "4", "Federal income tax withheld", Equate.fmtAmount, HorzPosn1 + 1430, VertPosn, 3
         
         VertPosn = VertPosn + VertSpacing
         Field99Add TaxYear, FormType, "PayeeCSZ", "PayeeCSZ", Equate.fmtString, Tab1, VertPosn, 0
         
-        VertPosn = VertPosn + VertSpacing
-        Field99Add TaxYear, FormType, "4", "Federal income tax withheld", Equate.fmtAmount, HorzPosn1 + 1430, VertPosn, 2
-        
         VertPosn = VertPosn + VertSpacing * 2
-        Field99Add TaxYear, FormType, "5a", "State tax withheld", Equate.fmtAmount, HorzPosn1, VertPosn, 3
-        Field99Add TaxYear, FormType, "6a", "State/Payers state no.", Equate.fmtString, HorzPosn2, VertPosn, 4
-        Field99Add TaxYear, FormType, "7a", "State tax withheld", Equate.fmtAmount, HorzPosn2 + 2100, VertPosn, 5
+        Field99Add TaxYear, FormType, "5a", "State tax withheld", Equate.fmtAmount, HorzPosn1 - 100, VertPosn, 4
+        Field99Add TaxYear, FormType, "6a", "State/Payers state no.", Equate.fmtString, HorzPosn2, VertPosn, 5
+        Field99Add TaxYear, FormType, "7a", "State tax withheld", Equate.fmtAmount, HorzPosn2 + 2100, VertPosn, 6
         
         VertPosn = VertPosn + VertSpacing * 1
         Field99Add TaxYear, FormType, "PayeeAccountNumber", "PayeeAccountNumber", Equate.fmtString, Tab1, VertPosn, 0
-        Field99Add TaxYear, FormType, "5b", "State tax withheld", Equate.fmtAmount, HorzPosn1, VertPosn, 6
-        Field99Add TaxYear, FormType, "6b", "State/Payers state no.", Equate.fmtString, HorzPosn2, VertPosn, 7
-        Field99Add TaxYear, FormType, "7b", "State tax withheld", Equate.fmtAmount, HorzPosn2 + 2100, VertPosn, 8
+        Field99Add TaxYear, FormType, "5b", "State tax withheld", Equate.fmtAmount, HorzPosn1 - 100, VertPosn, 7
+        Field99Add TaxYear, FormType, "6b", "State/Payers state no.", Equate.fmtString, HorzPosn2, VertPosn, 8
+        Field99Add TaxYear, FormType, "7b", "State tax withheld", Equate.fmtAmount, HorzPosn2 + 2100, VertPosn, 9
     
     End If
 
