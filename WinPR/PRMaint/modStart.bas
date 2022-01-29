@@ -50,7 +50,7 @@ Dim FileExt As String
        BalintFolder = "\\vboxsrv\vm-share\Balint"
        BalintFolder = "c:\Balint"
        dbPwd = ""
-       ProgName = UCase("EMPLOYEE")
+       ProgName = UCase("EMPLOYER")
        ' ProgName = UCase("test2")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2

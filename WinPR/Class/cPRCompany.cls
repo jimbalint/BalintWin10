@@ -62,6 +62,20 @@ Public DirDepUseAltID As Byte
 Public DirDepAltID As Long
 Public DirDepID1 As Byte
     
+' Fields for OH W2 E-Submit 2022-01-29
+Public OHeW2 As Byte
+Public TermBiz As Byte
+Public EstablishmentNumber As String
+Public OtherEIN As String
+Public KindOfEmployer As String
+Public EmploymentCode As String
+Public ThirdPartySickPay As Byte
+Public ContactName As String
+Public ContactPhoneNum As String
+Public ContactPhoneExt As String
+Public ContactFasNum As String
+Public ContactEmail As String
+    
 Dim rs As New ADODB.Recordset
 
 Public Sub OpenRS()
@@ -133,6 +147,19 @@ Public Function Save(ByVal booAddPut As Boolean) As String
     rs.Fields("DirDepAltID") = DirDepAltID
     rs.Fields("DirDepID1") = DirDepID1
     
+    rs.Fields("OHeW2") = OHeW2
+    rs.Fields("TermBiz") = TermBiz
+    rs.Fields("EstablishmentNumber") = EstablishmentNumber
+    rs.Fields("OtherEIN") = OtherEIN
+    rs.Fields("KindOfEmployer") = KindOfEmployer
+    rs.Fields("EmploymentCode") = EmploymentCode
+    rs.Fields("ThirdPartySickPay") = ThirdPartySickPay
+    rs.Fields("ContactName") = ContactName
+    rs.Fields("ContactPhoneNum") = ContactPhoneNum
+    rs.Fields("ContactPhoneExt") = ContactPhoneExt
+    rs.Fields("ContactFasNum") = ContactFasNum
+    rs.Fields("ContactEmail") = ContactEmail
+    
     rs.Update
     
     CompanyID = rs!CompanyID
@@ -189,6 +216,19 @@ Public Sub Clear()
     DirDepAltID = 0
     DirDepID1 = 0
       
+    OHeW2 = 0
+    TermBiz = 0
+    EstablishmentNumber = ""
+    OtherEIN = ""
+    KindOfEmployer = ""
+    EmploymentCode = ""
+    ThirdPartySickPay = 0
+    ContactName = ""
+    ContactPhoneNum = ""
+    ContactPhoneExt = ""
+    ContactFasNum = ""
+    ContactEmail = ""
+
 End Sub
 
 Public Sub DeleteAll()
@@ -249,6 +289,19 @@ Public Sub AssignFields()
     DirDepUseAltID = nNull(rs!DirDepUseAltID)
     DirDepAltID = nNull(rs!DirDepAltID)
     DirDepID1 = nNull(rs!DirDepID1)
+
+    OHeW2 = nNull(rs!OHeW2)
+    TermBiz = nNull(rs!TermBiz)
+    EstablishmentNumber = nNull(rs!EstablishmentNumber)
+    OtherEIN = nNull(rs!OtherEIN)
+    KindOfEmployer = nNull(rs!KindOfEmployer)
+    EmploymentCode = nNull(rs!EmploymentCode)
+    ThirdPartySickPay = nNull(rs!ThirdPartySickPay)
+    ContactName = nNull(rs!ContactName)
+    ContactPhoneNum = nNull(rs!ContactPhoneNum)
+    ContactPhoneExt = nNull(rs!ContactPhoneExt)
+    ContactFasNum = nNull(rs!ContactFasNum)
+    ContactEmail = nNull(rs!ContactEmail)
 
 End Sub
 

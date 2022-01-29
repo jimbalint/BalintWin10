@@ -6,11 +6,11 @@ Imports System.Text
 Module Module1
 
     Dim bExcel As Boolean = True
-    Dim TaxYear As Integer = 2020
+    Dim TaxYear As Integer = 2021
     Dim tTest As String = ""
     Dim Corrected As String = " "
 
-    Dim InputFolder As String = "C:\aSend\NIHFF_20"
+    Dim InputFolder As String = "C:\aSend\NIHFF_21"
     Dim UploadFolder As String = InputFolder & "\UploadFiles"
     Dim dctCompany As New Dictionary(Of String, String)
     Dim dtFiles As DataTable

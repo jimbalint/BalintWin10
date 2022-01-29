@@ -306,6 +306,7 @@ Private Sub cmdNewYear_Click()
     
     If txyr = "2021" Then
         Create2021Forms ("NEC")
+        Create2021Forms ("1096")
     End If
     
 End Sub

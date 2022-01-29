@@ -143,7 +143,7 @@ Begin VB.Form frmPayer
       CenturyMode     =   0
    End
    Begin VB.CheckBox chkFinal 
-      Caption         =   "Form 1099-MISC with NEC in box 7, check"
+      Caption         =   "Box 7 (Not in use)"
       Height          =   615
       Left            =   1440
       TabIndex        =   19

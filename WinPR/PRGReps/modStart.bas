@@ -42,16 +42,17 @@ Dim FileExt As String
     x = Command()
     
     If x = "" Then         ' set for testing
+       BalintFolder = "\\vboxsrv\vm-share\balint"
        BalintFolder = "c:\Balint"
        dbPwd = ""
        ' ProgName = UCase("ITEMDETAIL")
-       ProgName = UCase("test")
+       ProgName = UCase("EARNSUMMARY")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
        ' UserID = 15
        BackName = ""
        MenuName = ""
-       BatchNum = 1
+       BatchNum = 155
        BatchNumber = BatchNum
        PRBatchID = BatchNum
        BatchNumbr = BatchNum

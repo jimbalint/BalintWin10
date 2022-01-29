@@ -348,6 +348,14 @@ Begin VB.Form frm1099
       MaxValueVT      =   6356997
       MinValueVT      =   5242885
    End
+   Begin VB.Label Label3 
+      Caption         =   "01/19/2022"
+      Height          =   255
+      Left            =   7680
+      TabIndex        =   15
+      Top             =   2520
+      Width           =   1095
+   End
    Begin VB.Label lblTotal 
       Caption         =   "Label3"
       Height          =   255
@@ -399,7 +407,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim i, j, k As Long
+Dim I, J, K As Long
 Dim X, Y, Z As String
 Dim boo As Boolean
 Dim Flg As Boolean
@@ -426,13 +434,13 @@ Private Sub Form_Load()
             TaxYear = Int(PRBatch.YearMonth / 100)
             If .ListCount > 0 Then
                 Flg = False
-                For j = 0 To .ListCount - 1
-                    .ListIndex = j
-                    If .Text = TaxYear Then
+                For J = 0 To .ListCount - 1
+                    .ListIndex = J
+                    If .text = TaxYear Then
                         Flg = True
                         Exit For
                     End If
-                Next j
+                Next J
                 If Flg = False Then
                     .AddItem TaxYear
                 End If
@@ -491,13 +499,13 @@ Private Sub Form_Load()
                    
     If PRGlobal.Var4 <> "0" Then
         With Me.cmbItem
-            For i = 0 To .ListCount - 1
-                X = .ItemData(i)
+            For I = 0 To .ListCount - 1
+                X = .ItemData(I)
                 If X = PRGlobal.Var4 Then
-                    .ListIndex = i
+                    .ListIndex = I
                     Exit For
                 End If
-            Next i
+            Next I
         End With
     End If
                    
@@ -522,11 +530,11 @@ Private Sub cmdCalc_Click()
     rs.Fields.Append "EmployeeID", adDouble
     rs.Open , , adOpenDynamic, adLockOptimistic
 
-    TaxYear = Me.cmbTaxYear.Text
-    i = TaxYear * 100 + 1
-    j = TaxYear * 100 + 12
-    SQLString = "SELECT * FROM PRDist WHERE YearMonth >= " & i & _
-                " AND YearMonth <= " & j & _
+    TaxYear = Me.cmbTaxYear.text
+    I = TaxYear * 100 + 1
+    J = TaxYear * 100 + 12
+    SQLString = "SELECT * FROM PRDist WHERE YearMonth >= " & I & _
+                " AND YearMonth <= " & J & _
                 " AND EmployerItemID = " & Me.cmbItem.ItemData(Me.cmbItem.ListIndex) & _
                 " ORDER BY EmployeeID"
     If PRDist.GetBySQL(SQLString) = False Then
@@ -603,7 +611,7 @@ End Sub
 
 Private Sub MarkRecs(ByVal sel As Boolean)
     If rs.RecordCount = 0 Then Exit Sub
-    i = fg.Row
+    I = fg.Row
     rs.MoveFirst
     Do
         rs!Select = sel
@@ -611,7 +619,7 @@ Private Sub MarkRecs(ByVal sel As Boolean)
         rs.MoveNext
     Loop Until rs.EOF
     CalcTotals
-    fg.Row = i
+    fg.Row = I
 End Sub
 
 Private Sub CalcTotals()
@@ -619,7 +627,7 @@ Private Sub CalcTotals()
     If rs.RecordCount = 0 Then Exit Sub
     TlCount = 0
     TlAmount = 0
-    i = fg.Row
+    I = fg.Row
     rs.MoveFirst
     Do
         If rs!Select = True Then
@@ -630,7 +638,7 @@ Private Sub CalcTotals()
     Loop Until rs.EOF
     Me.lblTotal = "Totals: " & Format(TlCount, "#,##0") & " " & Format(TlAmount, "###,##0.00")
     Me.Refresh
-    fg.Row = i
+    fg.Row = I
 
 End Sub
 
@@ -658,7 +666,7 @@ Private Sub cmdPrint_Click()
     HorzNudge = Me.tdbHorzNudge.Value
     VertNudge = Me.tdbVertNudge.Value
     
-    PR1099 Me.cmbTaxYear.Text
+    PR1099 Me.cmbTaxYear.text
     
     GoBack
 

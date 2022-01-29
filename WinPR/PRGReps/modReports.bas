@@ -17,8 +17,8 @@ Dim Z As String
 Dim w As String
 Dim x As String
 Dim LandSw As Byte
-Dim i As Long
-Dim j As Long
+Dim I As Long
+Dim J As Long
 Dim QTR1Mo As Date
 Dim QTR2Mo As Date
 Dim TGross As Currency
@@ -139,7 +139,7 @@ Public Sub Form941Pt4Pt5(ByRef frm As Form)
     Else
         PRGlobal.Var8 = "0"
     End If
-    PRGlobal.Var9 = frm.cmbPrepName.Text
+    PRGlobal.Var9 = frm.cmbPrepName.text
 
     PRGlobal.Save (Equate.RecPut)
     
@@ -1058,17 +1058,17 @@ Dim AIW As String
     FormatPrint
     Ln = Ln + 2
  
-    For i = 1 To 4
-        If i = 1 Then
+    For I = 1 To 4
+        If I = 1 Then
             If PREmployee.AltName = "" Then
                 AIW = PREmployee.FLName
             Else
                 AIW = PREmployee.AltName
             End If
         End If
-        If i = 2 Then AIW = PREmployee.Address1
-        If i = 3 Then AIW = PREmployee.Address2
-        If i = 4 Then AIW = PREmployee.CSZ
+        If I = 2 Then AIW = PREmployee.Address1
+        If I = 3 Then AIW = PREmployee.Address2
+        If I = 4 Then AIW = PREmployee.CSZ
         If AIW <> "" Then
             PrintValue(1) = " ":            FormatString(1) = "a10"
             PrintValue(2) = AIW:            FormatString(2) = "a40"
@@ -1076,7 +1076,7 @@ Dim AIW As String
             FormatPrint
             Ln = Ln + 1
         End If
-    Next i
+    Next I
  
  
 '    If PRHist.Net <= 0 Then         '   Net is <= Zero
@@ -1297,7 +1297,7 @@ Dim NoAsterisks As Long
         WrittenAmount = AmountInWords(PRHist.Net, False)
         Prvw.vsp.CurrentX = 10700 - Prvw.vsp.TextWidth(Trim(WrittenAmount)) + (Nudge * HorzNudge)
         Prvw.vsp.CurrentY = 2310 + (Nudge * VertNudge)
-        Prvw.vsp.Text = Trim(WrittenAmount)
+        Prvw.vsp.text = Trim(WrittenAmount)
 
     End If
     
@@ -1365,7 +1365,7 @@ Dim NoAsterisks As Long
         WrittenAmount = AmountInWords(PRHist.Net, False)
         Prvw.vsp.CurrentX = 10200 - Prvw.vsp.TextWidth(Trim(WrittenAmount)) + (Nudge * HorzNudge)
         Prvw.vsp.CurrentY = 2485 + (Nudge * VertNudge)
-        Prvw.vsp.Text = Trim(WrittenAmount)
+        Prvw.vsp.text = Trim(WrittenAmount)
 
     End If
     
@@ -1426,7 +1426,7 @@ Dim NoAsterisks As Long
         WrittenAmount = AmountInWords(PRHist.Net, False)
         Prvw.vsp.CurrentX = 10200 - Prvw.vsp.TextWidth(Trim(WrittenAmount)) + (Nudge * HorzNudge)
         Prvw.vsp.CurrentY = 2485 + (Nudge * VertNudge)
-        Prvw.vsp.Text = Trim(WrittenAmount)
+        Prvw.vsp.text = Trim(WrittenAmount)
 
     End If
     
@@ -1641,7 +1641,7 @@ Dim BankAcctString As String
         
         Prvw.vsp.CurrentX = 11350 - Prvw.vsp.TextWidth(Trim(WrittenAmount)) + (Nudge * HorzNudge)
         Prvw.vsp.CurrentY = 1900 + (Nudge * VertNudge)
-        Prvw.vsp.Text = Trim(WrittenAmount)
+        Prvw.vsp.text = Trim(WrittenAmount)
         
         prt 10, 55, CheckNum
         prt 10, 67, Format(PRBatch.CheckDate, "mm/dd/yyyy")
@@ -5135,9 +5135,115 @@ NextHist:
     EarnSummaryPrtTotals
     Ln = Ln + 1
 
+    MonthlySummary
+
     Prvw.vsp.EndDoc
     Prvw.Show vbModal
         
+End Sub
+
+Public Sub MonthlySummary()
+    
+    Dim strSQL As String
+    Dim mos(12) As String
+    mos(1) = "JAN"
+    mos(2) = "FEB"
+    mos(3) = "MAR"
+    mos(4) = "APR"
+    mos(5) = "MAY"
+    mos(6) = "JUN"
+    mos(7) = "JUL"
+    mos(8) = "AUG"
+    mos(9) = "SEP"
+    mos(10) = "OCT"
+    mos(11) = "NOV"
+    mos(12) = "DEC"
+    
+    strSQL = ""
+    strSQL = strSQL & "select year(CheckDate) as Yr, month(CheckDate) as Mo, sum(Gross) as Gr, sum(SSTax) as SST, sum(MedTax) as MED, sum(FWTTax) as FWT, sum(SWTTax) as SWT, sum(CWTTax) as CWT"
+    strSQL = strSQL & " From PRHist"
+    strSQL = strSQL & " WHERE PRHist.CheckDate >= " & CLng(frmEarnSumm.BOYDate)
+    strSQL = strSQL & " AND PRHist.CheckDate <= " & CLng(frmEarnSumm.EOQDate)
+    strSQL = strSQL & " group by year(CheckDate), month(CheckDate)"
+    strSQL = strSQL & " order by year(CheckDate), month(CheckDate)"
+    
+    rsInit strSQL, cn, rs
+    If rs.RecordCount = 0 Then Exit Sub
+    
+    FormFeed
+    PageHeader ReportTitle, "", "Payroll Amounts by Year/Month", ""
+    
+    Ln = Ln + 5
+    
+    Dim ii As Integer
+    Dim Totals(6) As Currency
+    Dim Amts(6) As Currency
+    For ii = 1 To 6
+        Totals(ii) = 0
+    Next ii
+    
+    Dim Titles(8) As String
+    Titles(1) = "YEAR"
+    Titles(2) = "MONTH"
+    Titles(3) = "GROSS"
+    Titles(4) = "SS TX"
+    Titles(5) = "MED"
+    Titles(6) = "FWT"
+    Titles(7) = "SWT"
+    Titles(8) = "CWT"
+    For ii = 1 To 8
+        PrintValue(ii) = Titles(ii)
+        If ii <= 2 Then
+            FormatString(ii) = "a10"
+        Else
+            FormatString(ii) = "r13"
+        End If
+    Next ii
+    PrintValue(9) = " ":    FormatString(9) = "~"
+    FormatPrint
+    Ln = Ln + 1
+    
+    PrintValue(1) = String(148, "="):       FormatString(1) = "a148"
+    PrintValue(2) = " ":                    FormatString(2) = "~"
+    FormatPrint
+    Ln = Ln + 2
+    
+    rs.MoveFirst
+    Do While Not rs.EOF
+        
+        PrintValue(1) = rs("Yr"):       FormatString(1) = "a10"
+        PrintValue(2) = mos(rs("Mo")):       FormatString(2) = "a10"
+        
+        Amts(1) = rs("Gr")
+        Amts(2) = rs("SST")
+        Amts(3) = rs("MED")
+        Amts(4) = rs("FWT")
+        Amts(5) = rs("SWT")
+        Amts(6) = rs("CWT")
+        For ii = 1 To 6
+            Totals(ii) = Totals(ii) + Amts(ii)
+            PrintValue(ii + 2) = Format(Amts(ii), "###,###.#0")
+            FormatString(ii + 2) = "d13"
+        Next ii
+        PrintValue(9) = " "
+        FormatString(9) = "~"
+        FormatPrint
+        Ln = Ln + 2
+        
+        rs.MoveNext
+    Loop
+
+    Ln = Ln + 2
+    PrintValue(1) = "TOTALS":       FormatString(1) = "a10"
+    PrintValue(2) = "":             FormatString(2) = "a10"
+    For ii = 1 To 6
+        PrintValue(ii + 2) = Format(Totals(ii), "###,###.#0")
+        FormatString(ii + 2) = "d13"
+    Next ii
+    PrintValue(9) = " "
+    FormatString(9) = "~"
+    FormatPrint
+
 End Sub
 
 Public Sub EarnSummaryHdr()
@@ -5175,25 +5281,26 @@ Public Sub EarnSummaryPrtTotals()
             Ln = Ln + 1
         End If
         
-        For i = 1 To 3
-            If i = 1 Then x = "CURR TOTAL"
-            If i = 2 Then x = "QTD TOTAL"
-            If i = 3 Then x = "YTD TOTAL"
+        For I = 1 To 3
+            If I = 1 Then x = "CURR TOTAL"
+            If I = 2 Then x = "QTD TOTAL"
+            If I = 3 Then x = "YTD TOTAL"
             PrintValue(1) = x:                              FormatString(1) = "a31"
-            For j = 1 To 9
+            For J = 1 To 9
                 If EndFlag = True Then
-                    PrintValue(j + 1) = GrTotals(i, j):     FormatString(j + 1) = "d13"
+                    PrintValue(J + 1) = GrTotals(I, J):     FormatString(J + 1) = "d13"
                 Else
-                    PrintValue(j + 1) = ErnTotals(i, j):    FormatString(j + 1) = "d13"
-                    GrTotals(i, j) = GrTotals(i, j) + ErnTotals(i, j)
-                    ErnTotals(i, j) = 0
+                    PrintValue(J + 1) = ErnTotals(I, J):    FormatString(J + 1) = "d13"
+                    GrTotals(I, J) = GrTotals(I, J) + ErnTotals(I, J)
+                    ErnTotals(I, J) = 0
                 End If
-            Next j
+            Next J
     
             PrintValue(11) = " ":                           FormatString(11) = "~"
             FormatPrint
             Ln = Ln + 1
-        Next i
+        Next I
+        
 '
 '        For i = 1 To 3
 '            For j = 1 To 9

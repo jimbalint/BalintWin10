@@ -299,7 +299,7 @@ Begin VB.Form frmPrint99
       MinValueVT      =   5
    End
    Begin VB.Label Label3 
-      Caption         =   "01/10/2022"
+      Caption         =   "01/15/2022"
       Height          =   255
       Left            =   11040
       TabIndex        =   14
@@ -516,6 +516,7 @@ Dim ColCt As Integer
         
         Loop
 
+        
         ' load the payee data
         SQLString = " SELECT * FROM Payee99 ORDER BY PayeeNumber"
         If Payee99.GetBySQL(SQLString) = False Then
@@ -576,8 +577,12 @@ NextPayee:
             End With
         
         Loop
-        .AutoSize 0, .Cols - 1
+        
+        ' 2022-01-15 causing issue for new clients???
+        ' .AutoSize 0, .Cols - 1
+        
         .TabBehavior = flexTabCells
+    
     End With
     
     ' load nudge

@@ -66,29 +66,45 @@ Begin VB.Form frmCompany
       _ExtentX        =   25003
       _ExtentY        =   15690
       _Version        =   393216
-      Tabs            =   4
-      Tab             =   3
-      TabsPerRow      =   4
+      Tabs            =   5
+      Tab             =   4
+      TabsPerRow      =   5
       TabHeight       =   520
       TabCaption(0)   =   "MAIN"
       TabPicture(0)   =   "frmCompany.frx":0000
       Tab(0).ControlEnabled=   0   'False
-      Tab(0).Control(0)=   "tdbtxtComment"
-      Tab(0).Control(1)=   "tdbtxtStateUnempID"
-      Tab(0).Control(2)=   "cmbState"
-      Tab(0).Control(3)=   "tdbtxtPhoneNumber"
-      Tab(0).Control(4)=   "tdbtxtWkcPolicyNum"
-      Tab(0).Control(5)=   "tdbnumSUNPct"
-      Tab(0).Control(6)=   "lngZipCode"
-      Tab(0).Control(7)=   "txtStateID"
-      Tab(0).Control(8)=   "txtCompanyName"
-      Tab(0).Control(9)=   "txtAddress1"
-      Tab(0).Control(10)=   "txtAddress2"
-      Tab(0).Control(11)=   "txtCity"
-      Tab(0).Control(12)=   "txtFederalID"
-      Tab(0).Control(13)=   "txtFileName"
-      Tab(0).Control(14)=   "Label9"
-      Tab(0).Control(15)=   "lblState"
+      Tab(0).Control(0)=   "lblState"
+      Tab(0).Control(0).Enabled=   0   'False
+      Tab(0).Control(1)=   "Label9"
+      Tab(0).Control(1).Enabled=   0   'False
+      Tab(0).Control(2)=   "txtFileName"
+      Tab(0).Control(2).Enabled=   0   'False
+      Tab(0).Control(3)=   "txtFederalID"
+      Tab(0).Control(3).Enabled=   0   'False
+      Tab(0).Control(4)=   "txtCity"
+      Tab(0).Control(4).Enabled=   0   'False
+      Tab(0).Control(5)=   "txtAddress2"
+      Tab(0).Control(5).Enabled=   0   'False
+      Tab(0).Control(6)=   "txtAddress1"
+      Tab(0).Control(6).Enabled=   0   'False
+      Tab(0).Control(7)=   "txtCompanyName"
+      Tab(0).Control(7).Enabled=   0   'False
+      Tab(0).Control(8)=   "txtStateID"
+      Tab(0).Control(8).Enabled=   0   'False
+      Tab(0).Control(9)=   "lngZipCode"
+      Tab(0).Control(9).Enabled=   0   'False
+      Tab(0).Control(10)=   "tdbnumSUNPct"
+      Tab(0).Control(10).Enabled=   0   'False
+      Tab(0).Control(11)=   "tdbtxtWkcPolicyNum"
+      Tab(0).Control(11).Enabled=   0   'False
+      Tab(0).Control(12)=   "tdbtxtPhoneNumber"
+      Tab(0).Control(12).Enabled=   0   'False
+      Tab(0).Control(13)=   "cmbState"
+      Tab(0).Control(13).Enabled=   0   'False
+      Tab(0).Control(14)=   "tdbtxtStateUnempID"
+      Tab(0).Control(14).Enabled=   0   'False
+      Tab(0).Control(15)=   "tdbtxtComment"
+      Tab(0).Control(15).Enabled=   0   'False
       Tab(0).ControlCount=   16
       TabCaption(1)   =   "ITEM"
       TabPicture(1)   =   "frmCompany.frx":001C
@@ -177,21 +193,32 @@ Begin VB.Form frmCompany
       TabCaption(2)   =   "PAY INFORMATION"
       TabPicture(2)   =   "frmCompany.frx":0038
       Tab(2).ControlEnabled=   0   'False
-      Tab(2).Control(0)=   "cmbSortOrder"
-      Tab(2).Control(1)=   "cmbCity"
-      Tab(2).Control(2)=   "cmbPPY"
-      Tab(2).Control(3)=   "tdbnumLastChkNum"
-      Tab(2).Control(4)=   "tdbnumCheckDays"
+      Tab(2).Control(0)=   "Label3"
+      Tab(2).Control(0).Enabled=   0   'False
+      Tab(2).Control(1)=   "Label8"
+      Tab(2).Control(1).Enabled=   0   'False
+      Tab(2).Control(2)=   "Label10"
+      Tab(2).Control(2).Enabled=   0   'False
+      Tab(2).Control(3)=   "tdbnumDfltOTRate"
+      Tab(2).Control(3).Enabled=   0   'False
+      Tab(2).Control(4)=   "tdbnumDfltRegHrs"
+      Tab(2).Control(4).Enabled=   0   'False
       Tab(2).Control(5)=   "tdbnumDfltMinWage"
-      Tab(2).Control(6)=   "tdbnumDfltRegHrs"
-      Tab(2).Control(7)=   "tdbnumDfltOTRate"
-      Tab(2).Control(8)=   "Label10"
-      Tab(2).Control(9)=   "Label8"
-      Tab(2).Control(10)=   "Label3"
+      Tab(2).Control(5).Enabled=   0   'False
+      Tab(2).Control(6)=   "tdbnumCheckDays"
+      Tab(2).Control(6).Enabled=   0   'False
+      Tab(2).Control(7)=   "tdbnumLastChkNum"
+      Tab(2).Control(7).Enabled=   0   'False
+      Tab(2).Control(8)=   "cmbPPY"
+      Tab(2).Control(8).Enabled=   0   'False
+      Tab(2).Control(9)=   "cmbCity"
+      Tab(2).Control(9).Enabled=   0   'False
+      Tab(2).Control(10)=   "cmbSortOrder"
+      Tab(2).Control(10).Enabled=   0   'False
       Tab(2).ControlCount=   11
       TabCaption(3)   =   "DIRECT DEPOSIT SETUP"
       TabPicture(3)   =   "frmCompany.frx":0054
-      Tab(3).ControlEnabled=   -1  'True
+      Tab(3).ControlEnabled=   0   'False
       Tab(3).Control(0)=   "Label11"
       Tab(3).Control(0).Enabled=   0   'False
       Tab(3).Control(1)=   "Label12"
@@ -223,16 +250,48 @@ Begin VB.Form frmCompany
       Tab(3).Control(14)=   "tdbBatchHeader"
       Tab(3).Control(14).Enabled=   0   'False
       Tab(3).ControlCount=   15
-      Begin TDBText6Ctl.TDBText tdbBatchHeader 
-         Height          =   735
-         Left            =   240
-         TabIndex        =   87
-         Top             =   5400
-         Width           =   7695
+      TabCaption(4)   =   "Ohio W2 Upload"
+      TabPicture(4)   =   "frmCompany.frx":0070
+      Tab(4).ControlEnabled=   -1  'True
+      Tab(4).Control(0)=   "Label15"
+      Tab(4).Control(0).Enabled=   0   'False
+      Tab(4).Control(1)=   "Label16"
+      Tab(4).Control(1).Enabled=   0   'False
+      Tab(4).Control(2)=   "chkOHeW2"
+      Tab(4).Control(2).Enabled=   0   'False
+      Tab(4).Control(3)=   "chkTermBiz"
+      Tab(4).Control(3).Enabled=   0   'False
+      Tab(4).Control(4)=   "txtEstablishmentNumber"
+      Tab(4).Control(4).Enabled=   0   'False
+      Tab(4).Control(5)=   "txtOtherEIN"
+      Tab(4).Control(5).Enabled=   0   'False
+      Tab(4).Control(6)=   "cmbKindOfEmployer"
+      Tab(4).Control(6).Enabled=   0   'False
+      Tab(4).Control(7)=   "cmbEmploymentCode"
+      Tab(4).Control(7).Enabled=   0   'False
+      Tab(4).Control(8)=   "chkThirdPartySickPay"
+      Tab(4).Control(8).Enabled=   0   'False
+      Tab(4).Control(9)=   "txtContactName"
+      Tab(4).Control(9).Enabled=   0   'False
+      Tab(4).Control(10)=   "txtContactPhoneNum"
+      Tab(4).Control(10).Enabled=   0   'False
+      Tab(4).Control(11)=   "txtContactPhoneExt"
+      Tab(4).Control(11).Enabled=   0   'False
+      Tab(4).Control(12)=   "txtContactFaxNum"
+      Tab(4).Control(12).Enabled=   0   'False
+      Tab(4).Control(13)=   "txtContactEmail"
+      Tab(4).Control(13).Enabled=   0   'False
+      Tab(4).ControlCount=   14
+      Begin TDBText6Ctl.TDBText txtContactEmail 
+         Height          =   375
+         Left            =   3240
+         TabIndex        =   102
+         Top             =   7560
+         Width           =   6615
          _Version        =   65536
-         _ExtentX        =   13573
-         _ExtentY        =   1296
-         Caption         =   "frmCompany.frx":0070
+         _ExtentX        =   11668
+         _ExtentY        =   661
+         Caption         =   "frmCompany.frx":008C
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -242,8 +301,452 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":00DE
-         Key             =   "frmCompany.frx":00FC
+         DropDown        =   "frmCompany.frx":010C
+         Key             =   "frmCompany.frx":012A
+         BackColor       =   -2147483643
+         EditMode        =   0
+         ForeColor       =   -2147483640
+         ReadOnly        =   0
+         ShowContextMenu =   1
+         MarginLeft      =   1
+         MarginRight     =   1
+         MarginTop       =   1
+         MarginBottom    =   1
+         Enabled         =   -1
+         MousePointer    =   0
+         Appearance      =   1
+         BorderStyle     =   1
+         AlignHorizontal =   0
+         AlignVertical   =   0
+         MultiLine       =   0
+         ScrollBars      =   0
+         PasswordChar    =   ""
+         AllowSpace      =   -1
+         Format          =   "Aa"
+         FormatMode      =   1
+         AutoConvert     =   -1
+         ErrorBeep       =   0
+         MaxLength       =   40
+         LengthAsByte    =   0
+         Text            =   ""
+         Furigana        =   0
+         HighlightText   =   0
+         IMEMode         =   0
+         IMEStatus       =   0
+         DropWndWidth    =   0
+         DropWndHeight   =   0
+         ScrollBarMode   =   0
+         MoveOnLRKey     =   0
+         OLEDragMode     =   0
+         OLEDropMode     =   0
+      End
+      Begin TDBText6Ctl.TDBText txtContactFaxNum 
+         Height          =   375
+         Left            =   3240
+         TabIndex        =   101
+         Top             =   6960
+         Width           =   6615
+         _Version        =   65536
+         _ExtentX        =   11668
+         _ExtentY        =   661
+         Caption         =   "frmCompany.frx":016E
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DropDown        =   "frmCompany.frx":01EC
+         Key             =   "frmCompany.frx":020A
+         BackColor       =   -2147483643
+         EditMode        =   0
+         ForeColor       =   -2147483640
+         ReadOnly        =   0
+         ShowContextMenu =   1
+         MarginLeft      =   1
+         MarginRight     =   1
+         MarginTop       =   1
+         MarginBottom    =   1
+         Enabled         =   -1
+         MousePointer    =   0
+         Appearance      =   1
+         BorderStyle     =   1
+         AlignHorizontal =   0
+         AlignVertical   =   0
+         MultiLine       =   0
+         ScrollBars      =   0
+         PasswordChar    =   ""
+         AllowSpace      =   0
+         Format          =   "9"
+         FormatMode      =   1
+         AutoConvert     =   -1
+         ErrorBeep       =   0
+         MaxLength       =   10
+         LengthAsByte    =   0
+         Text            =   ""
+         Furigana        =   0
+         HighlightText   =   0
+         IMEMode         =   0
+         IMEStatus       =   0
+         DropWndWidth    =   0
+         DropWndHeight   =   0
+         ScrollBarMode   =   0
+         MoveOnLRKey     =   0
+         OLEDragMode     =   0
+         OLEDropMode     =   0
+      End
+      Begin TDBText6Ctl.TDBText txtContactPhoneExt 
+         Height          =   375
+         Left            =   3240
+         TabIndex        =   100
+         Top             =   6360
+         Width           =   4815
+         _Version        =   65536
+         _ExtentX        =   8493
+         _ExtentY        =   661
+         Caption         =   "frmCompany.frx":024E
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DropDown        =   "frmCompany.frx":02D2
+         Key             =   "frmCompany.frx":02F0
+         BackColor       =   -2147483643
+         EditMode        =   0
+         ForeColor       =   -2147483640
+         ReadOnly        =   0
+         ShowContextMenu =   1
+         MarginLeft      =   1
+         MarginRight     =   1
+         MarginTop       =   1
+         MarginBottom    =   1
+         Enabled         =   -1
+         MousePointer    =   0
+         Appearance      =   1
+         BorderStyle     =   1
+         AlignHorizontal =   0
+         AlignVertical   =   0
+         MultiLine       =   0
+         ScrollBars      =   0
+         PasswordChar    =   ""
+         AllowSpace      =   -1
+         Format          =   "9"
+         FormatMode      =   1
+         AutoConvert     =   -1
+         ErrorBeep       =   0
+         MaxLength       =   5
+         LengthAsByte    =   0
+         Text            =   ""
+         Furigana        =   0
+         HighlightText   =   0
+         IMEMode         =   0
+         IMEStatus       =   0
+         DropWndWidth    =   0
+         DropWndHeight   =   0
+         ScrollBarMode   =   0
+         MoveOnLRKey     =   0
+         OLEDragMode     =   0
+         OLEDropMode     =   0
+      End
+      Begin TDBText6Ctl.TDBText txtContactPhoneNum 
+         Height          =   375
+         Left            =   3240
+         TabIndex        =   99
+         Top             =   5760
+         Width           =   5895
+         _Version        =   65536
+         _ExtentX        =   10398
+         _ExtentY        =   661
+         Caption         =   "frmCompany.frx":0334
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DropDown        =   "frmCompany.frx":03B2
+         Key             =   "frmCompany.frx":03D0
+         BackColor       =   -2147483643
+         EditMode        =   0
+         ForeColor       =   -2147483640
+         ReadOnly        =   0
+         ShowContextMenu =   1
+         MarginLeft      =   1
+         MarginRight     =   1
+         MarginTop       =   1
+         MarginBottom    =   1
+         Enabled         =   -1
+         MousePointer    =   0
+         Appearance      =   1
+         BorderStyle     =   1
+         AlignHorizontal =   0
+         AlignVertical   =   0
+         MultiLine       =   0
+         ScrollBars      =   0
+         PasswordChar    =   ""
+         AllowSpace      =   -1
+         Format          =   "9"
+         FormatMode      =   1
+         AutoConvert     =   -1
+         ErrorBeep       =   0
+         MaxLength       =   15
+         LengthAsByte    =   0
+         Text            =   ""
+         Furigana        =   0
+         HighlightText   =   0
+         IMEMode         =   0
+         IMEStatus       =   0
+         DropWndWidth    =   0
+         DropWndHeight   =   0
+         ScrollBarMode   =   0
+         MoveOnLRKey     =   0
+         OLEDragMode     =   0
+         OLEDropMode     =   0
+      End
+      Begin TDBText6Ctl.TDBText txtContactName 
+         Height          =   375
+         Left            =   3240
+         TabIndex        =   98
+         Top             =   5160
+         Width           =   7215
+         _Version        =   65536
+         _ExtentX        =   12726
+         _ExtentY        =   661
+         Caption         =   "frmCompany.frx":0414
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DropDown        =   "frmCompany.frx":0492
+         Key             =   "frmCompany.frx":04B0
+         BackColor       =   -2147483643
+         EditMode        =   0
+         ForeColor       =   -2147483640
+         ReadOnly        =   0
+         ShowContextMenu =   1
+         MarginLeft      =   1
+         MarginRight     =   1
+         MarginTop       =   1
+         MarginBottom    =   1
+         Enabled         =   -1
+         MousePointer    =   0
+         Appearance      =   1
+         BorderStyle     =   1
+         AlignHorizontal =   0
+         AlignVertical   =   0
+         MultiLine       =   0
+         ScrollBars      =   0
+         PasswordChar    =   ""
+         AllowSpace      =   -1
+         Format          =   "A"
+         FormatMode      =   1
+         AutoConvert     =   -1
+         ErrorBeep       =   0
+         MaxLength       =   27
+         LengthAsByte    =   0
+         Text            =   ""
+         Furigana        =   0
+         HighlightText   =   0
+         IMEMode         =   0
+         IMEStatus       =   0
+         DropWndWidth    =   0
+         DropWndHeight   =   0
+         ScrollBarMode   =   0
+         MoveOnLRKey     =   0
+         OLEDragMode     =   0
+         OLEDropMode     =   0
+      End
+      Begin VB.CheckBox chkThirdPartySickPay 
+         Caption         =   "Third Party Sick Pay"
+         Height          =   375
+         Left            =   3240
+         TabIndex        =   97
+         Top             =   4560
+         Width           =   4575
+      End
+      Begin VB.ComboBox cmbEmploymentCode 
+         Height          =   360
+         Left            =   5880
+         TabIndex        =   95
+         Top             =   3960
+         Width           =   2655
+      End
+      Begin VB.ComboBox cmbKindOfEmployer 
+         Height          =   360
+         Left            =   5880
+         TabIndex        =   93
+         Top             =   3360
+         Width           =   2655
+      End
+      Begin TDBText6Ctl.TDBText txtOtherEIN 
+         Height          =   375
+         Left            =   3240
+         TabIndex        =   92
+         Top             =   2640
+         Width           =   5055
+         _Version        =   65536
+         _ExtentX        =   8916
+         _ExtentY        =   661
+         Caption         =   "frmCompany.frx":04F4
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DropDown        =   "frmCompany.frx":055A
+         Key             =   "frmCompany.frx":0578
+         BackColor       =   -2147483643
+         EditMode        =   0
+         ForeColor       =   -2147483640
+         ReadOnly        =   0
+         ShowContextMenu =   1
+         MarginLeft      =   1
+         MarginRight     =   1
+         MarginTop       =   1
+         MarginBottom    =   1
+         Enabled         =   -1
+         MousePointer    =   0
+         Appearance      =   1
+         BorderStyle     =   1
+         AlignHorizontal =   0
+         AlignVertical   =   0
+         MultiLine       =   0
+         ScrollBars      =   0
+         PasswordChar    =   ""
+         AllowSpace      =   0
+         Format          =   "9"
+         FormatMode      =   1
+         AutoConvert     =   -1
+         ErrorBeep       =   0
+         MaxLength       =   9
+         LengthAsByte    =   0
+         Text            =   ""
+         Furigana        =   0
+         HighlightText   =   0
+         IMEMode         =   0
+         IMEStatus       =   0
+         DropWndWidth    =   0
+         DropWndHeight   =   0
+         ScrollBarMode   =   0
+         MoveOnLRKey     =   0
+         OLEDragMode     =   0
+         OLEDropMode     =   0
+      End
+      Begin TDBText6Ctl.TDBText txtEstablishmentNumber 
+         Height          =   375
+         Left            =   3240
+         TabIndex        =   90
+         Top             =   2040
+         Width           =   4095
+         _Version        =   65536
+         _ExtentX        =   7223
+         _ExtentY        =   661
+         Caption         =   "frmCompany.frx":05BC
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DropDown        =   "frmCompany.frx":0638
+         Key             =   "frmCompany.frx":0656
+         BackColor       =   -2147483643
+         EditMode        =   0
+         ForeColor       =   -2147483640
+         ReadOnly        =   0
+         ShowContextMenu =   1
+         MarginLeft      =   1
+         MarginRight     =   1
+         MarginTop       =   1
+         MarginBottom    =   1
+         Enabled         =   -1
+         MousePointer    =   0
+         Appearance      =   1
+         BorderStyle     =   1
+         AlignHorizontal =   0
+         AlignVertical   =   0
+         MultiLine       =   0
+         ScrollBars      =   0
+         PasswordChar    =   ""
+         AllowSpace      =   0
+         Format          =   "A"
+         FormatMode      =   1
+         AutoConvert     =   -1
+         ErrorBeep       =   0
+         MaxLength       =   4
+         LengthAsByte    =   0
+         Text            =   ""
+         Furigana        =   0
+         HighlightText   =   0
+         IMEMode         =   0
+         IMEStatus       =   0
+         DropWndWidth    =   0
+         DropWndHeight   =   0
+         ScrollBarMode   =   0
+         MoveOnLRKey     =   0
+         OLEDragMode     =   0
+         OLEDropMode     =   0
+      End
+      Begin VB.CheckBox chkTermBiz 
+         Caption         =   "Terminating Business Indicator"
+         Height          =   375
+         Left            =   3240
+         TabIndex        =   89
+         Top             =   1560
+         Width           =   5895
+      End
+      Begin VB.CheckBox chkOHeW2 
+         Caption         =   "Include in Ohio W2 Upload"
+         Height          =   375
+         Left            =   3240
+         TabIndex        =   88
+         Top             =   1080
+         Width           =   3015
+      End
+      Begin TDBText6Ctl.TDBText tdbBatchHeader 
+         Height          =   735
+         Left            =   -74760
+         TabIndex        =   87
+         Top             =   5400
+         Width           =   7695
+         _Version        =   65536
+         _ExtentX        =   13573
+         _ExtentY        =   1296
+         Caption         =   "frmCompany.frx":069A
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DropDown        =   "frmCompany.frx":0708
+         Key             =   "frmCompany.frx":0726
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -333,22 +836,22 @@ Begin VB.Form frmCompany
       Begin VB.CheckBox chkDirDepID1 
          Caption         =   """1"" Before Fed ID"
          Height          =   255
-         Left            =   7560
+         Left            =   -67440
          TabIndex        =   63
          Top             =   1320
          Width           =   2655
       End
       Begin TDBNumber6Ctl.TDBNumber tdbDirDepAltID 
          Height          =   375
-         Left            =   7560
+         Left            =   -67440
          TabIndex        =   65
          Top             =   2160
          Width           =   2535
          _Version        =   65536
          _ExtentX        =   4471
          _ExtentY        =   661
-         Calculator      =   "frmCompany.frx":0140
-         Caption         =   "frmCompany.frx":0160
+         Calculator      =   "frmCompany.frx":076A
+         Caption         =   "frmCompany.frx":078A
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -358,9 +861,9 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":01C4
-         Keys            =   "frmCompany.frx":01E2
-         Spin            =   "frmCompany.frx":022C
+         DropDown        =   "frmCompany.frx":07EE
+         Keys            =   "frmCompany.frx":080C
+         Spin            =   "frmCompany.frx":0856
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -399,14 +902,14 @@ Begin VB.Form frmCompany
       Begin VB.CheckBox chkDirDepUseAltID 
          Caption         =   "Use Alternate Fed ID"
          Height          =   255
-         Left            =   7560
+         Left            =   -67440
          TabIndex        =   64
          Top             =   1800
          Width           =   2295
       End
       Begin VB.TextBox txtDirDepHeader 
          Height          =   375
-         Left            =   240
+         Left            =   -74760
          TabIndex        =   67
          Text            =   "Text2"
          Top             =   4800
@@ -414,7 +917,7 @@ Begin VB.Form frmCompany
       End
       Begin VB.TextBox txtDirDepFolder 
          Height          =   375
-         Left            =   7560
+         Left            =   -67440
          TabIndex        =   66
          Text            =   "Text1"
          Top             =   3120
@@ -423,7 +926,7 @@ Begin VB.Form frmCompany
       Begin VB.CheckBox chkDirDepBalanced 
          Caption         =   "Balanced Direct Deposit File"
          Height          =   375
-         Left            =   7560
+         Left            =   -67440
          TabIndex        =   62
          Top             =   720
          Width           =   2775
@@ -488,7 +991,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   9340
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":0254
+         Caption         =   "frmCompany.frx":087E
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -498,8 +1001,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":02B8
-         Key             =   "frmCompany.frx":02D6
+         DropDown        =   "frmCompany.frx":08E2
+         Key             =   "frmCompany.frx":0900
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -546,7 +1049,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   13150
          _ExtentY        =   2355
-         Caption         =   "frmCompany.frx":031A
+         Caption         =   "frmCompany.frx":0944
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -556,8 +1059,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":037E
-         Key             =   "frmCompany.frx":039C
+         DropDown        =   "frmCompany.frx":09A8
+         Key             =   "frmCompany.frx":09C6
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -612,7 +1115,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   9128
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":03E0
+         Caption         =   "frmCompany.frx":0A0A
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -622,8 +1125,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":0452
-         Key             =   "frmCompany.frx":0470
+         DropDown        =   "frmCompany.frx":0A7C
+         Key             =   "frmCompany.frx":0A9A
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -710,7 +1213,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   8705
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":04B4
+         Caption         =   "frmCompany.frx":0ADE
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -720,8 +1223,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":0522
-         Key             =   "frmCompany.frx":0540
+         DropDown        =   "frmCompany.frx":0B4C
+         Key             =   "frmCompany.frx":0B6A
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -776,7 +1279,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   10186
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":0584
+         Caption         =   "frmCompany.frx":0BAE
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -786,8 +1289,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":060E
-         Key             =   "frmCompany.frx":062C
+         DropDown        =   "frmCompany.frx":0C38
+         Key             =   "frmCompany.frx":0C56
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -908,7 +1411,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   10398
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":0670
+         Caption         =   "frmCompany.frx":0C9A
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -918,8 +1421,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":06D0
-         Key             =   "frmCompany.frx":06EE
+         DropDown        =   "frmCompany.frx":0CFA
+         Key             =   "frmCompany.frx":0D18
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -1216,8 +1719,8 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   4789
          _ExtentY        =   661
-         Calculator      =   "frmCompany.frx":0732
-         Caption         =   "frmCompany.frx":0752
+         Calculator      =   "frmCompany.frx":0D5C
+         Caption         =   "frmCompany.frx":0D7C
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1227,9 +1730,9 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":07C6
-         Keys            =   "frmCompany.frx":07E4
-         Spin            =   "frmCompany.frx":082E
+         DropDown        =   "frmCompany.frx":0DF0
+         Keys            =   "frmCompany.frx":0E0E
+         Spin            =   "frmCompany.frx":0E58
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -1283,8 +1786,8 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   3836
          _ExtentY        =   661
-         Calculator      =   "frmCompany.frx":0856
-         Caption         =   "frmCompany.frx":0876
+         Calculator      =   "frmCompany.frx":0E80
+         Caption         =   "frmCompany.frx":0EA0
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1294,9 +1797,9 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":08DC
-         Keys            =   "frmCompany.frx":08FA
-         Spin            =   "frmCompany.frx":0944
+         DropDown        =   "frmCompany.frx":0F06
+         Keys            =   "frmCompany.frx":0F24
+         Spin            =   "frmCompany.frx":0F6E
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -1341,7 +1844,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   7435
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":096C
+         Caption         =   "frmCompany.frx":0F96
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1351,8 +1854,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":09D2
-         Key             =   "frmCompany.frx":09F0
+         DropDown        =   "frmCompany.frx":0FFC
+         Key             =   "frmCompany.frx":101A
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -1399,7 +1902,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   13996
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":0A34
+         Caption         =   "frmCompany.frx":105E
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1409,8 +1912,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":0AA2
-         Key             =   "frmCompany.frx":0AC0
+         DropDown        =   "frmCompany.frx":10CC
+         Key             =   "frmCompany.frx":10EA
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -1457,7 +1960,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   13996
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":0B04
+         Caption         =   "frmCompany.frx":112E
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1467,8 +1970,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":0B6C
-         Key             =   "frmCompany.frx":0B8A
+         DropDown        =   "frmCompany.frx":1196
+         Key             =   "frmCompany.frx":11B4
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -1515,7 +2018,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   13996
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":0BCE
+         Caption         =   "frmCompany.frx":11F8
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1525,8 +2028,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":0C36
-         Key             =   "frmCompany.frx":0C54
+         DropDown        =   "frmCompany.frx":1260
+         Key             =   "frmCompany.frx":127E
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -1573,7 +2076,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   10398
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":0C98
+         Caption         =   "frmCompany.frx":12C2
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1583,8 +2086,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":0CF6
-         Key             =   "frmCompany.frx":0D14
+         DropDown        =   "frmCompany.frx":1320
+         Key             =   "frmCompany.frx":133E
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -1631,7 +2134,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   7435
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":0D58
+         Caption         =   "frmCompany.frx":1382
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1641,8 +2144,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":0DC2
-         Key             =   "frmCompany.frx":0DE0
+         DropDown        =   "frmCompany.frx":13EC
+         Key             =   "frmCompany.frx":140A
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -1689,7 +2192,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   8493
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":0E24
+         Caption         =   "frmCompany.frx":144E
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1699,8 +2202,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":0E8C
-         Key             =   "frmCompany.frx":0EAA
+         DropDown        =   "frmCompany.frx":14B6
+         Key             =   "frmCompany.frx":14D4
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -1747,7 +2250,7 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   5953
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":0EEE
+         Caption         =   "frmCompany.frx":1518
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1757,8 +2260,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":0F5C
-         Key             =   "frmCompany.frx":0F7A
+         DropDown        =   "frmCompany.frx":1586
+         Key             =   "frmCompany.frx":15A4
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -1805,8 +2308,8 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   5530
          _ExtentY        =   661
-         Calculator      =   "frmCompany.frx":0FBE
-         Caption         =   "frmCompany.frx":0FDE
+         Calculator      =   "frmCompany.frx":15E8
+         Caption         =   "frmCompany.frx":1608
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1816,9 +2319,9 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":1046
-         Keys            =   "frmCompany.frx":1064
-         Spin            =   "frmCompany.frx":10AE
+         DropDown        =   "frmCompany.frx":1670
+         Keys            =   "frmCompany.frx":168E
+         Spin            =   "frmCompany.frx":16D8
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -1863,8 +2366,8 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   5953
          _ExtentY        =   661
-         Calculator      =   "frmCompany.frx":10D6
-         Caption         =   "frmCompany.frx":10F6
+         Calculator      =   "frmCompany.frx":1700
+         Caption         =   "frmCompany.frx":1720
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1874,9 +2377,9 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":115A
-         Keys            =   "frmCompany.frx":1178
-         Spin            =   "frmCompany.frx":11C2
+         DropDown        =   "frmCompany.frx":1784
+         Keys            =   "frmCompany.frx":17A2
+         Spin            =   "frmCompany.frx":17EC
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -1921,8 +2424,8 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   4048
          _ExtentY        =   1085
-         Calculator      =   "frmCompany.frx":11EA
-         Caption         =   "frmCompany.frx":120A
+         Calculator      =   "frmCompany.frx":1814
+         Caption         =   "frmCompany.frx":1834
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1932,9 +2435,9 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":126E
-         Keys            =   "frmCompany.frx":128C
-         Spin            =   "frmCompany.frx":12D6
+         DropDown        =   "frmCompany.frx":1898
+         Keys            =   "frmCompany.frx":18B6
+         Spin            =   "frmCompany.frx":1900
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -1979,8 +2482,8 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   5318
          _ExtentY        =   661
-         Calculator      =   "frmCompany.frx":12FE
-         Caption         =   "frmCompany.frx":131E
+         Calculator      =   "frmCompany.frx":1928
+         Caption         =   "frmCompany.frx":1948
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1990,9 +2493,9 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":138C
-         Keys            =   "frmCompany.frx":13AA
-         Spin            =   "frmCompany.frx":13F4
+         DropDown        =   "frmCompany.frx":19B6
+         Keys            =   "frmCompany.frx":19D4
+         Spin            =   "frmCompany.frx":1A1E
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -2037,8 +2540,8 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   5741
          _ExtentY        =   661
-         Calculator      =   "frmCompany.frx":141C
-         Caption         =   "frmCompany.frx":143C
+         Calculator      =   "frmCompany.frx":1A46
+         Caption         =   "frmCompany.frx":1A66
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2048,9 +2551,9 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":14C2
-         Keys            =   "frmCompany.frx":14E0
-         Spin            =   "frmCompany.frx":152A
+         DropDown        =   "frmCompany.frx":1AEC
+         Keys            =   "frmCompany.frx":1B0A
+         Spin            =   "frmCompany.frx":1B54
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -2095,8 +2598,8 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   5953
          _ExtentY        =   661
-         Calculator      =   "frmCompany.frx":1552
-         Caption         =   "frmCompany.frx":1572
+         Calculator      =   "frmCompany.frx":1B7C
+         Caption         =   "frmCompany.frx":1B9C
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2106,9 +2609,9 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":15EA
-         Keys            =   "frmCompany.frx":1608
-         Spin            =   "frmCompany.frx":1652
+         DropDown        =   "frmCompany.frx":1C14
+         Keys            =   "frmCompany.frx":1C32
+         Spin            =   "frmCompany.frx":1C7C
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -2153,8 +2656,8 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   5318
          _ExtentY        =   661
-         Calculator      =   "frmCompany.frx":167A
-         Caption         =   "frmCompany.frx":169A
+         Calculator      =   "frmCompany.frx":1CA4
+         Caption         =   "frmCompany.frx":1CC4
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2164,9 +2667,9 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":170E
-         Keys            =   "frmCompany.frx":172C
-         Spin            =   "frmCompany.frx":1776
+         DropDown        =   "frmCompany.frx":1D38
+         Keys            =   "frmCompany.frx":1D56
+         Spin            =   "frmCompany.frx":1DA0
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -2211,8 +2714,8 @@ Begin VB.Form frmCompany
          _Version        =   65536
          _ExtentX        =   5318
          _ExtentY        =   661
-         Calculator      =   "frmCompany.frx":179E
-         Caption         =   "frmCompany.frx":17BE
+         Calculator      =   "frmCompany.frx":1DC8
+         Caption         =   "frmCompany.frx":1DE8
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2222,9 +2725,9 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":1832
-         Keys            =   "frmCompany.frx":1850
-         Spin            =   "frmCompany.frx":189A
+         DropDown        =   "frmCompany.frx":1E5C
+         Keys            =   "frmCompany.frx":1E7A
+         Spin            =   "frmCompany.frx":1EC4
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -2262,14 +2765,14 @@ Begin VB.Form frmCompany
       End
       Begin TDBText6Ctl.TDBText tdbtxtBankName 
          Height          =   375
-         Left            =   360
+         Left            =   -74640
          TabIndex        =   56
          Top             =   720
          Width           =   5895
          _Version        =   65536
          _ExtentX        =   10398
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":18C2
+         Caption         =   "frmCompany.frx":1EEC
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2279,8 +2782,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":192A
-         Key             =   "frmCompany.frx":1948
+         DropDown        =   "frmCompany.frx":1F54
+         Key             =   "frmCompany.frx":1F72
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -2320,14 +2823,14 @@ Begin VB.Form frmCompany
       End
       Begin TDBText6Ctl.TDBText tdbtxtBankABA 
          Height          =   375
-         Left            =   360
+         Left            =   -74640
          TabIndex        =   57
          Top             =   1320
          Width           =   3495
          _Version        =   65536
          _ExtentX        =   6165
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":198C
+         Caption         =   "frmCompany.frx":1FB6
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2337,8 +2840,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":19F2
-         Key             =   "frmCompany.frx":1A10
+         DropDown        =   "frmCompany.frx":201C
+         Key             =   "frmCompany.frx":203A
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -2378,14 +2881,14 @@ Begin VB.Form frmCompany
       End
       Begin TDBText6Ctl.TDBText tdbtxtBankAccount 
          Height          =   375
-         Left            =   360
+         Left            =   -74640
          TabIndex        =   58
          Top             =   1920
          Width           =   4455
          _Version        =   65536
          _ExtentX        =   7858
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":1A54
+         Caption         =   "frmCompany.frx":207E
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2395,8 +2898,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":1AC2
-         Key             =   "frmCompany.frx":1AE0
+         DropDown        =   "frmCompany.frx":20EC
+         Key             =   "frmCompany.frx":210A
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -2436,14 +2939,14 @@ Begin VB.Form frmCompany
       End
       Begin TDBText6Ctl.TDBText tdbtxtBankAddress1 
          Height          =   375
-         Left            =   360
+         Left            =   -74640
          TabIndex        =   59
          Top             =   2520
          Width           =   5895
          _Version        =   65536
          _ExtentX        =   10398
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":1B24
+         Caption         =   "frmCompany.frx":214E
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2453,8 +2956,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":1B96
-         Key             =   "frmCompany.frx":1BB4
+         DropDown        =   "frmCompany.frx":21C0
+         Key             =   "frmCompany.frx":21DE
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -2494,14 +2997,14 @@ Begin VB.Form frmCompany
       End
       Begin TDBText6Ctl.TDBText tdbtxtBankAddress2 
          Height          =   375
-         Left            =   360
+         Left            =   -74640
          TabIndex        =   60
          Top             =   3120
          Width           =   5895
          _Version        =   65536
          _ExtentX        =   10398
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":1BF8
+         Caption         =   "frmCompany.frx":2222
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2511,8 +3014,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":1C6A
-         Key             =   "frmCompany.frx":1C88
+         DropDown        =   "frmCompany.frx":2294
+         Key             =   "frmCompany.frx":22B2
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -2552,14 +3055,14 @@ Begin VB.Form frmCompany
       End
       Begin TDBText6Ctl.TDBText tdbtxtBankFraction 
          Height          =   375
-         Left            =   360
+         Left            =   -74640
          TabIndex        =   61
          Top             =   3720
          Width           =   5895
          _Version        =   65536
          _ExtentX        =   10398
          _ExtentY        =   661
-         Caption         =   "frmCompany.frx":1CCC
+         Caption         =   "frmCompany.frx":22F6
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2569,8 +3072,8 @@ Begin VB.Form frmCompany
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmCompany.frx":1D3C
-         Key             =   "frmCompany.frx":1D5A
+         DropDown        =   "frmCompany.frx":2366
+         Key             =   "frmCompany.frx":2384
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -2607,6 +3110,22 @@ Begin VB.Form frmCompany
          MoveOnLRKey     =   0
          OLEDragMode     =   0
          OLEDropMode     =   0
+      End
+      Begin VB.Label Label16 
+         Caption         =   "Employment Code"
+         Height          =   255
+         Left            =   3240
+         TabIndex        =   96
+         Top             =   3960
+         Width           =   2055
+      End
+      Begin VB.Label Label15 
+         Caption         =   "Kind of Employer"
+         Height          =   255
+         Left            =   3240
+         TabIndex        =   94
+         Top             =   3360
+         Width           =   1935
       End
       Begin VB.Label Label14 
          Caption         =   "Default City:"
@@ -2662,7 +3181,7 @@ Begin VB.Form frmCompany
       Begin VB.Label Label12 
          Caption         =   "Direct Deposit Header:"
          Height          =   255
-         Left            =   240
+         Left            =   -74760
          TabIndex        =   82
          Top             =   4440
          Width           =   2055
@@ -2670,7 +3189,7 @@ Begin VB.Form frmCompany
       Begin VB.Label Label11 
          Caption         =   "Default Direct Deposit Folder/FileName:"
          Height          =   255
-         Left            =   7560
+         Left            =   -67440
          TabIndex        =   81
          Top             =   2760
          Width           =   3615
@@ -2777,9 +3296,9 @@ Begin VB.Form frmCompany
    End
    Begin TrueOleDBList80.TDBCombo TDBCombo1 
       Height          =   390
-      Left            =   11280
+      Left            =   1920
       TabIndex        =   73
-      Top             =   3120
+      Top             =   8640
       Width           =   975
       _ExtentX        =   1720
       _ExtentY        =   688
@@ -2860,7 +3379,7 @@ Begin VB.Form frmCompany
       RowDividerColor =   12632256
       RowSubDividerColor=   12632256
       AddItemSeparator=   ";"
-      _PropDict       =   $"frmCompany.frx":1D9E
+      _PropDict       =   $"frmCompany.frx":23C8
       _StyleDefs(0)   =   "_StyleRoot:id=0,.parent=-1,.alignment=3,.valignment=0,.bgcolor=&H80000005&"
       _StyleDefs(1)   =   ":id=0,.fgcolor=&H80000008&,.wraptext=0,.locked=0,.transparentBmp=0"
       _StyleDefs(2)   =   ":id=0,.fgpicPosition=0,.bgpicMode=0,.appearance=0,.borderSize=0,.ellipsis=0"
@@ -2923,6 +3442,64 @@ Begin VB.Form frmCompany
       _StyleDefs(59)  =   "Named:id=42:FilterBar"
       _StyleDefs(60)  =   ":id=42,.parent=33"
    End
+   Begin TDBText6Ctl.TDBText TDBText2 
+      Height          =   375
+      Left            =   4200
+      TabIndex        =   91
+      Top             =   8400
+      Width           =   3735
+      _Version        =   65536
+      _ExtentX        =   6588
+      _ExtentY        =   661
+      Caption         =   "frmCompany.frx":2472
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      DropDown        =   "frmCompany.frx":24EE
+      Key             =   "frmCompany.frx":250C
+      BackColor       =   -2147483643
+      EditMode        =   0
+      ForeColor       =   -2147483640
+      ReadOnly        =   0
+      ShowContextMenu =   1
+      MarginLeft      =   1
+      MarginRight     =   1
+      MarginTop       =   1
+      MarginBottom    =   1
+      Enabled         =   -1
+      MousePointer    =   0
+      Appearance      =   1
+      BorderStyle     =   1
+      AlignHorizontal =   0
+      AlignVertical   =   0
+      MultiLine       =   0
+      ScrollBars      =   0
+      PasswordChar    =   ""
+      AllowSpace      =   0
+      Format          =   "A"
+      FormatMode      =   1
+      AutoConvert     =   -1
+      ErrorBeep       =   0
+      MaxLength       =   4
+      LengthAsByte    =   0
+      Text            =   ""
+      Furigana        =   0
+      HighlightText   =   0
+      IMEMode         =   0
+      IMEStatus       =   0
+      DropWndWidth    =   0
+      DropWndHeight   =   0
+      ScrollBarMode   =   0
+      MoveOnLRKey     =   0
+      OLEDragMode     =   0
+      OLEDropMode     =   0
+   End
    Begin VB.Label Label7 
       Caption         =   "ALL CHANGES WILL NOT BE SAVED !!!"
       BeginProperty Font 
@@ -2974,8 +3551,8 @@ Dim drs As New ADODB.Recordset
 
 Dim ActiveDrop As String
 Dim TypeDrop As String
-Dim i, j, k As Long
-Dim X As String
+Dim I, J, K As Long
+Dim x As String
 
 Dim PREEItem As New cPRItem
 
@@ -3094,10 +3671,10 @@ Private Sub Form_Load()
     ' +--------------------------------------------------
     Me.lblCompanyName = PRCompany.Name
     
-    Me.txtCompanyName.Text = PRCompany.Name
-    Me.txtAddress1.Text = PRCompany.Address1
-    Me.txtAddress2.Text = PRCompany.Address2
-    Me.txtCity.Text = PRCompany.City
+    Me.txtCompanyName.text = PRCompany.Name
+    Me.txtAddress1.text = PRCompany.Address1
+    Me.txtAddress2.text = PRCompany.Address2
+    Me.txtCity.text = PRCompany.City
     
     Me.lngZipCode.MinValue = 0
     Me.lngZipCode.MaxValue = 99999
@@ -3107,8 +3684,8 @@ Private Sub Form_Load()
     Me.lngZipCode = Mid(PRCompany.ZipCode, 1, 5)
     Me.tdbtxtPhoneNumber = PRCompany.PhoneNumber
     
-    Me.txtFederalID.Text = PRCompany.FederalID
-    Me.txtStateID.Text = PRCompany.StateID
+    Me.txtFederalID.text = PRCompany.FederalID
+    Me.txtStateID.text = PRCompany.StateID
     Me.tdbnumSUNPct = PRCompany.StateUnempPct
     Me.tdbtxtStateUnempID = PRCompany.StateUnempID
     
@@ -3124,7 +3701,7 @@ Private Sub Form_Load()
     Me.tdbnumLastChkNum.Key.Clear = ""
     Me.tdbnumLastChkNum = PRCompany.LastCheckNum
     
-    Me.txtFileName.Text = PRCompany.FileName
+    Me.txtFileName.text = PRCompany.FileName
     Me.txtFileName.Enabled = False
     
     Me.tdbtxtWkcPolicyNum = PRCompany.WkcPolicyNum
@@ -3173,11 +3750,11 @@ Private Sub Form_Load()
     If PRGlobal.GetBySQL(SQLString) = True Then
         Me.txtDirDepFolder = PRGlobal.Var1 & ""
         Me.txtDirDepHeader = PRGlobal.Var2 & ""
-        Me.tdbBatchHeader.Text = PRGlobal.Var3 & ""
+        Me.tdbBatchHeader.text = PRGlobal.Var3 & ""
     Else
         Me.txtDirDepFolder = ""
         Me.txtDirDepHeader = ""
-        Me.tdbBatchHeader.Text = ""
+        Me.tdbBatchHeader.text = ""
     End If
     
     ' initialize all of the drop downs
@@ -3286,7 +3863,7 @@ Private Sub cmdSave_Click()
         
     ' verify data
     If ERItem.RecordCount > 0 Then
-        If Me.cmbType.Text = "" Then
+        If Me.cmbType.text = "" Then
             MsgBox "Please select an item type!", vbExclamation
             Me.cmbType.SetFocus
             Exit Sub
@@ -3359,7 +3936,7 @@ Private Sub cmdSave_Click()
     ' assign from the drop down xArray's
     PRCompany.AddrStateID = Me.cmbState.ItemData(Me.cmbState.ListIndex)
         
-    PRCompany.WkcPolicyNum = Me.tdbtxtWkcPolicyNum.Text
+    PRCompany.WkcPolicyNum = Me.tdbtxtWkcPolicyNum.text
     
     ' save dir dep info
     PRCompany.BankName = Me.tdbtxtBankName
@@ -3370,7 +3947,7 @@ Private Sub cmdSave_Click()
     PRCompany.BankFraction = Me.tdbtxtBankFraction
     
     ' dflt pays per year
-    PRCompany.DfltPaysPerYear = Me.cmbPPY.Text
+    PRCompany.DfltPaysPerYear = Me.cmbPPY.text
         
     ' dflt sort order
     PRCompany.DfltSortOrder = Me.cmbSortOrder.ListIndex
@@ -3449,21 +4026,21 @@ Private Sub DropDownInit()
     ' used for flex grid and screen combo box
     
     ' skip regular and overtime
-    i = 2
+    I = 2
     
     Do
-        i = i + 1
-        X = ItemName(i)     ' modPRGlobal function returns item names
+        I = I + 1
+        x = ItemName(I)     ' modPRGlobal function returns item names
         
-        If Mid(X, 1, 1) = "?" Then Exit Do
+        If Mid(x, 1, 1) = "?" Then Exit Do
         
         ' make a string for the flex grid display
-        TypeDrop = Trim(TypeDrop) & "|#" & i & ";" & X
+        TypeDrop = Trim(TypeDrop) & "|#" & I & ";" & x
         
         ' add to combo box
         With Me.cmbType
-            .AddItem X
-            .ItemData(.NewIndex) = i
+            .AddItem x
+            .ItemData(.NewIndex) = I
         End With
     
     Loop
@@ -3472,8 +4049,8 @@ Private Sub DropDownInit()
     ' ***********************************************************************
     ' load state Combo Box
     
-    i = PRState.Records
-    If i = 0 Then
+    I = PRState.Records
+    If I = 0 Then
         MsgBox "PRState file empty!", vbExclamation
         End
     End If
@@ -3506,14 +4083,14 @@ Private Sub DropDownInit()
         SQLString = "SELECT * FROM PRCity ORDER BY CityName"
         If PRCity.GetBySQL(SQLString) Then
             Do
-                X = PRCity.CityName
+                x = PRCity.CityName
                 If PRState.GetByID(PRCity.StateID) Then
-                    X = Trim(X) & ", " & PRState.StateAbbrev
+                    x = Trim(x) & ", " & PRState.StateAbbrev
                 Else
-                    X = Trim(X) & ", ??"
+                    x = Trim(x) & ", ??"
                 End If
-                X = Trim(X) & "  " & Format(PRCity.CityRate / 100, "##0.00%")
-                .AddItem X
+                x = Trim(x) & "  " & Format(PRCity.CityRate / 100, "##0.00%")
+                .AddItem x
                 .ItemData(.NewIndex) = PRCity.CityID
                 
                 If Not PRCity.GetNext Then Exit Do
@@ -3530,14 +4107,14 @@ Private Sub DropDownInit()
         SQLString = "SELECT * FROM PRCity ORDER BY CityName"
         If PRCity.GetBySQL(SQLString) Then
             Do
-                X = PRCity.CityName
+                x = PRCity.CityName
                 If PRState.GetByID(PRCity.StateID) Then
-                    X = Trim(X) & ", " & PRState.StateAbbrev
+                    x = Trim(x) & ", " & PRState.StateAbbrev
                 Else
-                    X = Trim(X) & ", ??"
+                    x = Trim(x) & ", ??"
                 End If
-                X = Trim(X) & "  " & Format(PRCity.CityRate / 100, "##0.00%")
-                .AddItem X
+                x = Trim(x) & "  " & Format(PRCity.CityRate / 100, "##0.00%")
+                .AddItem x
                 .ItemData(.NewIndex) = PRCity.CityID
                 
                 If Not PRCity.GetNext Then Exit Do
@@ -3603,6 +4180,7 @@ Private Sub DropDownInit()
     End With
 
 End Sub
+
 
 Private Sub txtTitle_Change()
     ERItem!Title = Trim(txtTitle)
@@ -3824,7 +4402,7 @@ Private Sub ItemUpdate()
     ' ***************************************************************
     
     With Me.cmbType
-        If .Text = "" Then
+        If .text = "" Then
             MsgBox "Please select an item type!", vbExclamation
             .SetFocus
             Exit Sub
@@ -3934,20 +4512,20 @@ Private Sub cmdApplyToAll_Click()
 
 Dim EECount As Long
 
-    X = "This item must be SAVED first!"
+    x = "This item must be SAVED first!"
     
     If IsNull(ERItem!ItemID) Then
-        MsgBox X, vbExclamation
+        MsgBox x, vbExclamation
         Exit Sub
     End If
     
     If ERItem!ItemID = 0 Then
-        MsgBox X, vbExclamation
+        MsgBox x, vbExclamation
         Exit Sub
     End If
     
-    X = "OK to apply " & ERItem!Title & vbCr & "to all ACTIVE employees?"
-    If MsgBox(X, vbQuestion + vbYesNo) = vbNo Then Exit Sub
+    x = "OK to apply " & ERItem!Title & vbCr & "to all ACTIVE employees?"
+    If MsgBox(x, vbQuestion + vbYesNo) = vbNo Then Exit Sub
 
     EECount = 0
     
@@ -3974,8 +4552,8 @@ Dim EECount As Long
         Loop
     End If
 
-    X = ERItem!Title & " has been added to " & EECount & " employees"
-    MsgBox X, vbInformation
+    x = ERItem!Title & " has been added to " & EECount & " employees"
+    MsgBox x, vbInformation
 
 End Sub
 

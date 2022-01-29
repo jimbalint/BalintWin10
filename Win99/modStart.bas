@@ -30,7 +30,7 @@ Dim FileExt As String
        BalintFolder = "c:\Balint"
         ' BalintFolder = ""
        dbPwd = ""
-       ProgName = UCase("payee")
+       ProgName = UCase("payer")
        ' ProgName = UCase("test2")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2

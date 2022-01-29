@@ -62,6 +62,14 @@ Begin VB.Form frm941_Select
       Top             =   8280
       Width           =   3735
    End
+   Begin VB.Label Label2 
+      Caption         =   "01/06/2022"
+      Height          =   495
+      Left            =   6720
+      TabIndex        =   7
+      Top             =   8280
+      Width           =   1095
+   End
    Begin VB.Label Label1 
       Alignment       =   2  'Center
       Caption         =   "Select which 941 Form you have"

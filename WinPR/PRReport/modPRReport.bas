@@ -217,14 +217,9 @@ Public Sub PR1099(ByVal jTaxYear As String)
                 
                 PayeeID = PREmployee.SSString
                 
-                Misc1099(3) = PadRight(Format(!Amount, "##,###,##0.00"), 13)
+                Misc1099(1) = PadRight(Format(!Amount, "##,###,##0.00"), 13)
         
-                If jTaxYear = "2013" Then
-                    Print1099MISC_2013
-                Else
-                    Print1099MISC
-                End If
-            
+                Print1099MISC
             End If
             
             .MoveNext
@@ -236,88 +231,11 @@ Public Sub PR1099(ByVal jTaxYear As String)
     Prvw.Show vbModal
 
 End Sub
-Public Sub Print1099MISC_2013()
-
-    Dim fmtNm As String
-    fmtNm = "a40"
-    
-    Dim FormSp, VertSp As Long
-    Dim xPos, yPos As Long
-    Dim FormDiff As Long
-    
-    ' name/id fields printed first
-    ' then box fields
-    Dim NameStart, BoxStart As Long
-    NameStart = 900
-    BoxStart = 2100
-    
-    VertSp = 200        ' line feed value
-    FormDiff = 7920     ' space between top and bottom panel
-    
-    FormCount = FormCount + 1
-    If FormCount = 1 Then
-        yPos = NameStart
-    Else
-        yPos = NameStart + FormDiff
-    End If
-    
-    xPos = 1000
-    
-    ' print the payer info
-    For I = 1 To 5
-        If I = 1 Then X = PayerName
-        If I = 2 Then X = PayerAddr1
-        If I = 3 Then X = PayerAddr2
-        If I = 4 Then X = PayerAddr3
-        If I = 5 Then X = PayerAddr4
-        PosPrint xPos, yPos, X
-        yPos = yPos + VertSp
-    Next I
-    
-    ' print the ID numbers
-    yPos = yPos + 1200
-    PosPrint xPos, yPos, PayerID
-    PosPrint xPos + 2600, yPos, PayeeID
-    
-    ' print the payee info
-    yPos = yPos + 750
-    PosPrint xPos, yPos, PayeeName
-    
-    If PayeeAddr2 <> "" Then
-        yPos = yPos + 500
-        PosPrint xPos, yPos, PayeeAddr1
-        yPos = yPos + VertSp
-        PosPrint xPos, yPos, PayeeAddr2
-    Else
-        yPos = yPos + 700
-        PosPrint xPos, yPos, PayeeAddr1
-    End If
-    
-    yPos = yPos + 700
-    PosPrint xPos, yPos, PayeeAddr3
-    
-    ' print the amounts
-    If FormCount = 1 Then
-        yPos = BoxStart
-    Else
-        yPos = BoxStart + FormDiff
-    End If
-    
-    ' box 3 and 4 only ...
-    xPos = 5600
-    PosPrint xPos, yPos, Misc1099(3)
-    xPos = xPos + 1750
-    PosPrint xPos, yPos, Misc1099(4)
-    
-    If FormCount = 2 Then
-        Prvw.vsp.NewPage
-        FormCount = 0
-    End If
-
-End Sub
 
 Public Sub Print1099MISC()
 
+    ' 2022-01-19 - 3 forms per page
+
     Dim fmtNm As String
     fmtNm = "a40"
     
@@ -327,19 +245,11 @@ Public Sub Print1099MISC()
     
     ' name/id fields printed first
     ' then box fields
-    Dim NameStart, BoxStart As Long
-    NameStart = 900
-    BoxStart = 2100
-    
+    FormDiff = 2500      ' space between forms
     VertSp = 200        ' line feed value
-    FormDiff = 7920     ' space between top and bottom panel
     
     FormCount = FormCount + 1
-    If FormCount = 1 Then
-        yPos = NameStart
-    Else
-        yPos = NameStart + FormDiff
-    End If
+    yPos = 720 + ((FormCount - 1) * 5300)
     
     xPos = 1000
     
@@ -350,47 +260,35 @@ Public Sub Print1099MISC()
         If I = 3 Then X = PayerAddr2
         If I = 4 Then X = PayerAddr3
         If I = 5 Then X = PayerAddr4
-        PosPrint xPos, yPos, X
+        PosPrint xPos, yPos + 40, X
         yPos = yPos + VertSp
     Next I
     
-    ' print the ID numbers
-    yPos = yPos + 1000
+    ' print the ID numbers & Box 1 NEC
+    yPos = yPos + 400
     PosPrint xPos, yPos, PayerID
     PosPrint xPos + 2600, yPos, PayeeID
+    xPos = 5600
+    PosPrint xPos, yPos, Misc1099(1)
     
     ' print the payee info
-    yPos = yPos + 800
+    yPos = yPos + 870
+    xPos = 1000
     PosPrint xPos, yPos, PayeeName
     
-    If PayeeAddr2 <> "" Then
-        yPos = yPos + 650
-        PosPrint xPos, yPos, PayeeAddr1
-        yPos = yPos + VertSp
-        PosPrint xPos, yPos, PayeeAddr2
-    Else
-        yPos = yPos + 650 + (VertSp / 2)
-        PosPrint xPos, yPos, PayeeAddr1
-        yPos = yPos + (VertSp / 2)
-    End If
+    ' single address field
+    yPos = yPos + VertSp * 2
+    PosPrint 1000, yPos, Left(Trim(PayeeAddr1) & " " & Trim(PayeeAddr2) & " " & String(45, " "), 45)
     
-    yPos = yPos + 100 + (VertSp * 2)
-    PosPrint xPos, yPos, PayeeAddr3
-    
-    ' print the amounts
-    If FormCount = 1 Then
-        yPos = BoxStart
-    Else
-        yPos = BoxStart + FormDiff
-    End If
-    
-    ' box 3 and 4 only ...
+    yPos = yPos + VertSp
     xPos = 5600
-    PosPrint xPos, yPos, Misc1099(3)
-    xPos = xPos + 1750
     PosPrint xPos, yPos, Misc1099(4)
     
-    If FormCount = 2 Then
+    yPos = yPos + VertSp
+    xPos = 1000
+    PosPrint xPos, yPos, PayeeAddr3
+    
+    If FormCount = 3 Then
         Prvw.vsp.NewPage
         FormCount = 0
     End If
