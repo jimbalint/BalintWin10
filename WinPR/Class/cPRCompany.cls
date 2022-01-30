@@ -292,16 +292,16 @@ Public Sub AssignFields()
 
     OHeW2 = nNull(rs!OHeW2)
     TermBiz = nNull(rs!TermBiz)
-    EstablishmentNumber = nNull(rs!EstablishmentNumber)
-    OtherEIN = nNull(rs!OtherEIN)
-    KindOfEmployer = nNull(rs!KindOfEmployer)
-    EmploymentCode = nNull(rs!EmploymentCode)
+    EstablishmentNumber = rs!EstablishmentNumber & ""
+    OtherEIN = rs!OtherEIN & ""
+    KindOfEmployer = rs!KindOfEmployer & ""
+    EmploymentCode = rs!EmploymentCode & ""
     ThirdPartySickPay = nNull(rs!ThirdPartySickPay)
-    ContactName = nNull(rs!ContactName)
-    ContactPhoneNum = nNull(rs!ContactPhoneNum)
-    ContactPhoneExt = nNull(rs!ContactPhoneExt)
-    ContactFasNum = nNull(rs!ContactFasNum)
-    ContactEmail = nNull(rs!ContactEmail)
+    ContactName = rs!ContactName & ""
+    ContactPhoneNum = rs!ContactPhoneNum & ""
+    ContactPhoneExt = rs!ContactPhoneExt & ""
+    ContactFasNum = rs!ContactFasNum & ""
+    ContactEmail = rs!ContactEmail & ""
 
 End Sub
 
@@ -320,6 +320,19 @@ Public Function GetBySQL(ByVal SString As String) As Boolean
    
    GetBySQL = True
                              
+End Function
+Public Function GetNext() As Byte
+
+   rs.MoveNext
+   
+   If rs.EOF Then
+      GetNext = False
+      Exit Function
+   Else
+      AssignFields
+      GetNext = True
+   End If
+
 End Function
 
 Public Sub UpdateBatch()

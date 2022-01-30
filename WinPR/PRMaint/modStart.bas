@@ -47,8 +47,8 @@ Dim FileExt As String
     x = Command()
     
     If x = "" Then         ' set for testing
-       BalintFolder = "\\vboxsrv\vm-share\Balint"
        BalintFolder = "c:\Balint"
+       BalintFolder = "\\vboxsrv\vm-share\Balint"
        dbPwd = ""
        ProgName = UCase("EMPLOYER")
        ' ProgName = UCase("test2")

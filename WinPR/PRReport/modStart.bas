@@ -44,11 +44,12 @@ Dim FileExt As String
     
     If X = "" Then         ' set for testing
        BalintFolder = "c:\Balint"
+       BalintFolder = "\\vboxsrv\vm-share\Balint"
        dbPwd = ""
        PRBatchID = 0
        BatchNum = PRBatchID
        BatchNumber = PRBatchID
-       ProgName = UCase("1099")                  ''''''  Select from cases below
+       ProgName = UCase("OHW2")                  ''''''  Select from cases below
        SysFile = "s:\Balint\Data\GLSystem.mdb"
        UserID = 2
        BackName = ""
@@ -218,6 +219,9 @@ Dim FileExt As String
             frm1099.Show
         Case "FUTA940"
             frmFUTA940.Show
+        Case "OHW2"
+            frmOHW2.FileExt = FileExt
+            frmOHW2.Show
         Case Else
             MsgBox "Selection NF: " & ProgName, vbExclamation
             End

@@ -264,3 +264,10 @@ Public PeriodTypePay As Byte
 Public PayTypeCheck As Byte
 Public PayTypeEFT As Byte
 
+Public GlobalTypeOHW2Company As Byte
+Public GlobalTypeOHW2Contact As Byte
+Public GlobalTypeOHW2Submit As Byte
+
+
+
+
