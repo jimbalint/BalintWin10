@@ -5,9 +5,9 @@ Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
 Begin VB.Form frmOHW2 
    Caption         =   "Ohio W2 Upload"
    ClientHeight    =   10290
-   ClientLeft      =   60
-   ClientTop       =   405
-   ClientWidth     =   15795
+   ClientLeft      =   165
+   ClientTop       =   510
+   ClientWidth     =   14505
    BeginProperty Font 
       Name            =   "Arial"
       Size            =   9.75
@@ -19,7 +19,7 @@ Begin VB.Form frmOHW2
    EndProperty
    LinkTopic       =   "Form2"
    ScaleHeight     =   10290
-   ScaleWidth      =   15795
+   ScaleWidth      =   14505
    StartUpPosition =   3  'Windows Default
    Begin MSComDlg.CommonDialog cdlTextOutput 
       Left            =   14880
@@ -51,42 +51,24 @@ Begin VB.Form frmOHW2
       TabCaption(0)   =   "Submitter Information"
       TabPicture(0)   =   "frmOhioW2Upload.frx":0000
       Tab(0).ControlEnabled=   0   'False
-      Tab(0).Control(0)=   "Label2"
-      Tab(0).Control(0).Enabled=   0   'False
-      Tab(0).Control(1)=   "Label3"
-      Tab(0).Control(1).Enabled=   0   'False
-      Tab(0).Control(2)=   "txtUserID"
-      Tab(0).Control(2).Enabled=   0   'False
-      Tab(0).Control(3)=   "txtContactPhn"
-      Tab(0).Control(3).Enabled=   0   'False
-      Tab(0).Control(4)=   "txtContactName"
-      Tab(0).Control(4).Enabled=   0   'False
-      Tab(0).Control(5)=   "txtZipCodeExt"
-      Tab(0).Control(5).Enabled=   0   'False
-      Tab(0).Control(6)=   "txtZipCode"
-      Tab(0).Control(6).Enabled=   0   'False
-      Tab(0).Control(7)=   "txtState"
-      Tab(0).Control(7).Enabled=   0   'False
-      Tab(0).Control(8)=   "txtCity"
-      Tab(0).Control(8).Enabled=   0   'False
-      Tab(0).Control(9)=   "txtDeliveryAddress"
-      Tab(0).Control(9).Enabled=   0   'False
-      Tab(0).Control(10)=   "txtLocationAddress"
-      Tab(0).Control(10).Enabled=   0   'False
-      Tab(0).Control(11)=   "txtCompanyName"
-      Tab(0).Control(11).Enabled=   0   'False
-      Tab(0).Control(12)=   "txtEIN"
-      Tab(0).Control(12).Enabled=   0   'False
-      Tab(0).Control(13)=   "txtContactPhnExt"
-      Tab(0).Control(13).Enabled=   0   'False
-      Tab(0).Control(14)=   "txtContactEmail"
-      Tab(0).Control(14).Enabled=   0   'False
-      Tab(0).Control(15)=   "txtContactFax"
-      Tab(0).Control(15).Enabled=   0   'False
-      Tab(0).Control(16)=   "cmbPreparerCode"
-      Tab(0).Control(16).Enabled=   0   'False
-      Tab(0).Control(17)=   "cmdSaveSubm"
-      Tab(0).Control(17).Enabled=   0   'False
+      Tab(0).Control(0)=   "cmdSaveSubm"
+      Tab(0).Control(1)=   "cmbPreparerCode"
+      Tab(0).Control(2)=   "txtContactFax"
+      Tab(0).Control(3)=   "txtContactEmail"
+      Tab(0).Control(4)=   "txtContactPhnExt"
+      Tab(0).Control(5)=   "txtEIN"
+      Tab(0).Control(6)=   "txtCompanyName"
+      Tab(0).Control(7)=   "txtLocationAddress"
+      Tab(0).Control(8)=   "txtDeliveryAddress"
+      Tab(0).Control(9)=   "txtCity"
+      Tab(0).Control(10)=   "txtState"
+      Tab(0).Control(11)=   "txtZipCode"
+      Tab(0).Control(12)=   "txtZipCodeExt"
+      Tab(0).Control(13)=   "txtContactName"
+      Tab(0).Control(14)=   "txtContactPhn"
+      Tab(0).Control(15)=   "txtUserID"
+      Tab(0).Control(16)=   "Label3"
+      Tab(0).Control(17)=   "Label2"
       Tab(0).ControlCount=   18
       TabCaption(1)   =   "Submit OH W2 File"
       TabPicture(1)   =   "frmOhioW2Upload.frx":001C
@@ -1190,19 +1172,29 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
+
 Dim strSQL As String
 Dim TextFileName As String
 Dim TextChannel2 As Integer
 Dim sOut As String
 Public FileExt As String
+Dim ii As Integer
+Dim xx As String
+
+Dim PRW2 As New cPRW2
+Dim PRW2State As New cPRW2State
+Dim PRW2City As New cPRW2City
+Dim W2TL As New cOHW2Totals
 
 Private Sub Form_Load()
+
+    W2TL.RWTotalCount = 0
 
     ' create PRGlobal Records
     InitPRGlobal PREquate.GlobalTypeOHW2Company
     InitPRGlobal PREquate.GlobalTypeOHW2Contact
     InitPRGlobal PREquate.GlobalTypeOHW2Submit
-
+    
     With Me
         
         .KeyPreview = True
@@ -1261,7 +1253,8 @@ Private Sub Form_Load()
     
     End With
 
-
+    RunW2
+    
 End Sub
 
 Public Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -1379,7 +1372,7 @@ Private Sub cmdFileName_Click()
 
 End Sub
 
-Private Sub cmdCreateFile_Click()
+Sub RunW2()
     
     If Not PreCheck Then Exit Sub
     SaveSubmitterInfo
@@ -1390,12 +1383,350 @@ Private Sub cmdCreateFile_Click()
     strSQL = "select * from PRCompany where OHeW2 = True"
     If Not PRCompany.GetBySQL(strSQL) Then End
     Do
-        WriteCompany (65)
+        W2TL.Clear
+        WriteCompany (PRCompany.CompanyID)
+        strSQL = "select * from PRW2 where TaxYear = " & Me.txtTaxYear & _
+                " and Void = 0" & _
+                " and Skip = 0"
+        If PRW2.GetBySQL(strSQL) Then
+            Do
+                WriteRW
+                WriteRO
+                WriteRS
+                If Not PRW2.GetNext Then Exit Do
+            Loop
+        End If
+        WriteRT
+        WriteRU
         If Not PRCompany.GetNext Then Exit Do
     Loop
     Close #TextChannel2
     GoBack
     
+End Sub
+
+Sub WriteRU()
+
+End Sub
+
+Sub WriteRT()
+    sOut = "RT"
+    sOut = sOut & Format(W2TL.RWCount, "0000000")
+    sOut = sOut & AmtFmt15(W2TL.Box1_Wages)
+    sOut = sOut & AmtFmt15(W2TL.Box2_FedTax)
+    sOut = sOut & AmtFmt15(W2TL.Box3_SSWages)
+    sOut = sOut & AmtFmt15(W2TL.Box4_SSTax)
+    sOut = sOut & AmtFmt15(W2TL.Box5_MedWages)
+    sOut = sOut & AmtFmt15(W2TL.Box6_MedTax)
+    sOut = sOut & AmtFmt15(W2TL.Box7_SSTips)
+    sOut = sOut & Wrt("", 15)
+    sOut = sOut & AmtFmt15(W2TL.Box10_DCBen)
+    sOut = sOut & AmtFmt15(W2TL.CodeD)
+    sOut = sOut & AmtFmt15(W2TL.CodeE)
+    sOut = sOut & AmtFmt15(W2TL.CodeF)
+    sOut = sOut & AmtFmt15(W2TL.CodeG)
+    sOut = sOut & AmtFmt15(W2TL.CodeH)
+    sOut = sOut & Wrt("", 15)
+    sOut = sOut & AmtFmt15(0)       ' ToDo 457 nq
+    sOut = sOut & AmtFmt15(W2TL.CodeW)
+    sOut = sOut & AmtFmt15(0)       ' ToDo 457 nq ns
+    sOut = sOut & AmtFmt15(W2TL.CodeQ)
+    sOut = sOut & AmtFmt15(W2TL.CodeDD)
+    sOut = sOut & AmtFmt15(W2TL.CodeC)
+    sOut = sOut & AmtFmt15(W2TL.IncTax3rdSick)  ' ToDo ???
+    sOut = sOut & AmtFmt15(W2TL.CodeV)
+    sOut = sOut & AmtFmt15(W2TL.CodeY)
+    sOut = sOut & AmtFmt15(W2TL.CodeAA)
+    sOut = sOut & AmtFmt15(W2TL.CodeBB)
+    sOut = sOut & AmtFmt15(W2TL.CodeFF)
+    sOut = sOut & Wrt("", 98)
+    Print #TextChannel2, sOut
+End Sub
+
+
+Sub WriteRS()
+    
+    strSQL = "select *" & _
+            " from PRW2State " & _
+            " where W2ID = " & PRW2.W2ID & _
+            " and TaxYear = " & Me.txtTaxYear & _
+            " and StateID = 36"
+    If Not PRW2State.GetBySQL(strSQL) Then Exit Sub ' ???
+    
+    Dim NameLast As String
+    Dim NameSuffix As String
+    ii = InStr(PRW2.BoxE_EELastName, ",")
+    If ii > 0 Then
+        NameLast = Left(PRW2.BoxE_EELastName, ii - 1)
+        NameSuffix = Right(PRW2.BoxE_EELastName, Len(PRW2.BoxE_EELastName) - ii)
+    Else
+        NameLast = PRW2.BoxE_EELastName
+        NameSuffix = ""
+    End If
+    
+    Dim ZipExt As String
+    If Len(Trim(PRW2.BoxE_EEZip)) > 5 Then
+        ZipExt = Right(PRW2.BoxE_EEZip, 4)
+    Else
+        ZipExt = ""
+    End If
+    
+    sOut = "RS39"
+    sOut = sOut & Wrt("", 5)
+    sOut = sOut & Wrt(PRW2.BoxA_SSNumber, 9)
+    sOut = sOut & Wrt(PRW2.BoxE_EEFirstName, 15)
+    sOut = sOut & Wrt(Replace(PRW2.BoxE_EEMidInit, ".", ""), 15)
+    sOut = sOut & Wrt(NameLast, 20)
+    sOut = sOut & Wrt(NameSuffix, 4)
+    sOut = sOut & Wrt(PRW2.BoxE_EEAddr2, 22)
+    sOut = sOut & Wrt(PRW2.BoxE_EEAddr1, 22)
+    sOut = sOut & Wrt(PRW2.BoxE_EECity, 22)
+    sOut = sOut & Wrt(PRW2.BoxE_EEState, 2)
+    sOut = sOut & Wrt(Left(PRW2.BoxE_EEZip, 5), 5)
+    sOut = sOut & Wrt(ZipExt, 4)
+    sOut = sOut & Wrt("", 5)
+    sOut = sOut & Wrt("", 23)       ' foreign state
+    sOut = sOut & Wrt("", 15)       ' foreign postal code
+    sOut = sOut & Wrt("", 2)        ' country code
+    
+    ' unemployment reporting
+    sOut = sOut & Wrt("", 2)
+    sOut = sOut & Wrt("", 6)
+    sOut = sOut & Wrt("", 11)
+    sOut = sOut & Wrt("", 11)
+    sOut = sOut & Wrt("", 2)
+    sOut = sOut & Wrt("", 8)
+    sOut = sOut & Wrt("", 8)
+    sOut = sOut & Wrt("", 5)
+    
+    sOut = sOut & Wrt(PRW2State.ERStateID, 20)
+    sOut = sOut & Wrt("", 6)
+    sOut = sOut & Wrt("39", 2)
+    sOut = sOut & AmtFmt(PRW2State.StateWage)
+    sOut = sOut & AmtFmt(PRW2State.StateTax)
+    sOut = sOut & Right(AmtFmt(PRW2.Box1_Wages), 10)
+    
+    ' SD Tax?
+    Dim LocalWages As Currency
+    Dim LocalTax As Currency
+    Dim TaxTypeCode As String
+    Dim SDNumber As String
+    TaxTypeCode = ""
+    LocalWages = 0
+    LocalTax = 0
+    SDNumber = ""
+    strSQL = "select *" & _
+            " from PRW2City" & _
+            " where W2ID = " & PRW2.W2ID & _
+            " and TaxYear = " & Me.txtTaxYear & _
+            " and SDTax = 1"
+    If PRW2City.GetBySQL(strSQL) Then
+        TaxTypeCode = "E"
+        LocalWages = PRW2City.CityWage
+        LocalTax = PRW2City.CityTax
+        If PRItem.GetByID(PRW2City.CityID) Then
+            SDNumber = PRItem.Abbreviation
+        Else
+            MsgBox "Item ID not found for SD Tax: " & PRW2City.CityID
+            End
+        End If
+    End If
+    
+    sOut = sOut & Wrt(TaxTypeCode, 1)
+    sOut = sOut & AmtFmt(LocalWages)
+    sOut = sOut & AmtFmt(LocalTax)
+    sOut = sOut & Wrt(SDNumber, 7)
+    
+    sOut = sOut & Wrt("", 75)
+    sOut = sOut & Wrt("", 75)
+    sOut = sOut & Wrt("", 25)
+    
+    Print #TextChannel2, sOut
+
+End Sub
+
+Sub WriteRO()
+    
+    Dim roamt As Currency
+    roamt = 0
+    roamt = roamt + PRW2.Box8_AllocTips
+    roamt = roamt + GetBox12Amt("A")
+    roamt = roamt + GetBox12Amt("B")
+    roamt = roamt + GetBox12Amt("R")
+    roamt = roamt + GetBox12Amt("S")
+    roamt = roamt + GetBox12Amt("T")
+    roamt = roamt + GetBox12Amt("M")
+    roamt = roamt + GetBox12Amt("N")
+    roamt = roamt + GetBox12Amt("Z")
+    roamt = roamt + GetBox12Amt("EE")
+    roamt = roamt + GetBox12Amt("GG")
+    roamt = roamt + GetBox12Amt("HH")
+    
+    Dim RetireAmt As Currency
+    RetireAmt = 0
+    If PRGlobal.GetByID(PRW2.Box14A_ID) Then
+        If PRGlobal.Description = "RETIREMENT" Then
+            roamt = roamt + PRW2.Box14A_Amount
+            RetireAmt = RetireAmt + PRW2.Box14A_Amount
+        End If
+    End If
+    If PRGlobal.GetByID(PRW2.Box14B_ID) Then
+        If PRGlobal.Description = "RETIREMENT" Then
+            roamt = roamt + PRW2.Box14B_Amount
+            RetireAmt = RetireAmt + PRW2.Box14B_Amount
+        End If
+    End If
+    If PRGlobal.GetByID(PRW2.Box14C_ID) Then
+        If PRGlobal.Description = "RETIREMENT" Then
+            roamt = roamt + PRW2.Box14C_Amount
+            RetireAmt = RetireAmt + PRW2.Box14C_Amount
+        End If
+    End If
+    If PRGlobal.GetByID(PRW2.Box14D_ID) Then
+        If PRGlobal.Description = "RETIREMENT" Then
+            roamt = roamt + PRW2.Box14D_Amount
+            RetireAmt = RetireAmt + PRW2.Box14D_Amount
+        End If
+    End If
+    
+    If roamt <= 0 Then Exit Sub
+    
+    sOut = "RO"
+    sOut = sOut & Wrt("", 9)
+    sOut = sOut & AmtFmt(PRW2.Box8_AllocTips)
+    sOut = sOut & AmtFmt(GetBox12Amt("A") + GetBox12Amt("B"))
+    sOut = sOut & AmtFmt(GetBox12Amt("R"))
+    sOut = sOut & AmtFmt(GetBox12Amt("S"))
+    sOut = sOut & AmtFmt(GetBox12Amt("T"))
+    sOut = sOut & AmtFmt(GetBox12Amt("M"))
+    sOut = sOut & AmtFmt(GetBox12Amt("N"))
+    sOut = sOut & AmtFmt(GetBox12Amt("Z"))
+    sOut = sOut & Wrt("", 11)
+    sOut = sOut & AmtFmt(GetBox12Amt("EE"))
+    sOut = sOut & AmtFmt(GetBox12Amt("GG"))
+    sOut = sOut & AmtFmt(GetBox12Amt("HH"))
+    sOut = sOut & Wrt("", 131)
+    
+    ' Puerto Rico fields
+    sOut = sOut & AmtFmt(0)
+    sOut = sOut & AmtFmt(0)
+    sOut = sOut & AmtFmt(0)
+    sOut = sOut & AmtFmt(0)
+    sOut = sOut & AmtFmt(0)
+    sOut = sOut & AmtFmt(0)
+    
+    sOut = sOut & AmtFmt(RetireAmt)
+        
+    sOut = sOut & Wrt("", 11)
+    
+    ' vi/guam
+    sOut = sOut & AmtFmt(0)
+    sOut = sOut & AmtFmt(0)
+    
+    sOut = sOut & Wrt("", 128)
+    
+    Print #TextChannel2, sOut
+
+End Sub
+
+Sub WriteRW()
+    
+    Dim NameLast As String
+    Dim NameSuffix As String
+    ii = InStr(PRW2.BoxE_EELastName, ",")
+    If ii > 0 Then
+        NameLast = Left(PRW2.BoxE_EELastName, ii - 1)
+        NameSuffix = Right(PRW2.BoxE_EELastName, Len(PRW2.BoxE_EELastName) - ii)
+    Else
+        NameLast = PRW2.BoxE_EELastName
+        NameSuffix = ""
+    End If
+    
+    Dim ZipExt As String
+    If Len(Trim(PRW2.BoxE_EEZip)) > 5 Then
+        ZipExt = Right(PRW2.BoxE_EEZip, 4)
+    Else
+        ZipExt = ""
+    End If
+    
+    W2TL.Box1_Wages = W2TL.Box1_Wages + PRW2.Box1_Wages
+    W2TL.Box2_FedTax = W2TL.Box2_FedTax + PRW2.Box2_FedTax
+    W2TL.Box3_SSWages = W2TL.Box3_SSWages + PRW2.Box3_SSWages
+    W2TL.Box4_SSTax = W2TL.Box4_SSTax + PRW2.Box4_SSTax
+    W2TL.Box5_MedWages = W2TL.Box5_MedWages + PRW2.Box5_MedWages
+    W2TL.Box6_MedTax = W2TL.Box6_MedTax + PRW2.Box6_MedTax
+    W2TL.Box7_SSTips = W2TL.Box7_SSTips + PRW2.Box7_SSTips
+    W2TL.Box10_DCBen = W2TL.Box10_DCBen + PRW2.Box10_DCBen
+    
+    sOut = "RW"
+    sOut = sOut & Wrt(PRW2.BoxA_SSNumber, 9)
+    sOut = sOut & Wrt(PRW2.BoxE_EEFirstName, 15)
+    sOut = sOut & Wrt(Replace(PRW2.BoxE_EEMidInit, ".", ""), 15)
+    sOut = sOut & Wrt(NameLast, 20)
+    sOut = sOut & Wrt(NameSuffix, 4)
+    sOut = sOut & Wrt(PRW2.BoxE_EEAddr2, 22)
+    sOut = sOut & Wrt(PRW2.BoxE_EEAddr1, 22)
+    sOut = sOut & Wrt(PRW2.BoxE_EECity, 22)
+    sOut = sOut & Wrt(PRW2.BoxE_EEState, 2)
+    sOut = sOut & Wrt(Left(PRW2.BoxE_EEZip, 5), 5)
+    sOut = sOut & Wrt(ZipExt, 4)
+    sOut = sOut & Wrt("", 5)
+    sOut = sOut & Wrt("", 23)       ' foreign state
+    sOut = sOut & Wrt("", 15)       ' foreign postal code
+    sOut = sOut & Wrt("", 2)        ' country code
+    sOut = sOut & AmtFmt(PRW2.Box1_Wages)
+    sOut = sOut & AmtFmt(PRW2.Box2_FedTax)
+    sOut = sOut & AmtFmt(PRW2.Box3_SSWages)
+    sOut = sOut & AmtFmt(PRW2.Box4_SSTax)
+    sOut = sOut & AmtFmt(PRW2.Box5_MedWages)
+    sOut = sOut & AmtFmt(PRW2.Box6_MedTax)
+    sOut = sOut & AmtFmt(PRW2.Box7_SSTips)
+    sOut = sOut & Wrt("", 11)
+    sOut = sOut & AmtFmt(PRW2.Box10_DCBen)
+    sOut = sOut & AmtFmt(GetBox12Amt("D"))
+    sOut = sOut & AmtFmt(GetBox12Amt("E"))
+    sOut = sOut & AmtFmt(GetBox12Amt("F"))
+    sOut = sOut & AmtFmt(GetBox12Amt("G"))
+    sOut = sOut & AmtFmt(GetBox12Amt("H"))
+    sOut = sOut & Wrt("", 11)
+    sOut = sOut & AmtFmt(0)                 ' ????? sec 457 - not code G  ToDo
+    sOut = sOut & AmtFmt(GetBox12Amt("W"))
+    sOut = sOut & AmtFmt(0)                 ' ????? NOT sec 457 - not code G  ToDo
+    sOut = sOut & AmtFmt(GetBox12Amt("Q"))
+    sOut = sOut & Wrt("", 11)
+    sOut = sOut & AmtFmt(GetBox12Amt("C"))
+    sOut = sOut & AmtFmt(GetBox12Amt("V"))
+    sOut = sOut & AmtFmt(GetBox12Amt("Y"))
+    sOut = sOut & AmtFmt(GetBox12Amt("AA"))
+    sOut = sOut & AmtFmt(GetBox12Amt("BB"))
+    sOut = sOut & AmtFmt(GetBox12Amt("DD"))
+    sOut = sOut & AmtFmt(GetBox12Amt("FF"))
+    sOut = sOut & Wrt("", 1)
+    
+    W2TL.CodeD = W2TL.CodeD + GetBox12Amt("D")
+    W2TL.CodeE = W2TL.CodeE + GetBox12Amt("E")
+    W2TL.CodeF = W2TL.CodeF + GetBox12Amt("F")
+    W2TL.CodeG = W2TL.CodeG + GetBox12Amt("G")
+    W2TL.CodeH = W2TL.CodeH + GetBox12Amt("H")
+    W2TL.CodeW = W2TL.CodeW + GetBox12Amt("W")
+    W2TL.CodeQ = W2TL.CodeQ + GetBox12Amt("Q")
+    W2TL.CodeC = W2TL.CodeC + GetBox12Amt("C")
+    W2TL.CodeV = W2TL.CodeV + GetBox12Amt("V")
+    W2TL.CodeY = W2TL.CodeY + GetBox12Amt("Y")
+    W2TL.CodeAA = W2TL.CodeAA + GetBox12Amt("AA")
+    W2TL.CodeDD = W2TL.CodeDD + GetBox12Amt("DD")
+    W2TL.CodeBB = W2TL.CodeBB + GetBox12Amt("BB")
+    W2TL.CodeFF = W2TL.CodeFF + GetBox12Amt("FF")
+    ' ToDo - 457 ???
+        
+    sOut = sOut & Wrt(PRW2.Box13_StatEmp, 1)
+    sOut = sOut & Wrt("", 1)
+    sOut = sOut & Wrt(PRW2.Box13_RetirePlan, 1)
+    sOut = sOut & Wrt(PRW2.Box13_3rdParty, 1)
+    sOut = sOut & Wrt("", 23)
+    Print #TextChannel2, sOut
+    W2TL.RWCount = W2TL.RWCount + 1
+    W2TL.RWTotalCount = W2TL.RWTotalCount + 1
 End Sub
 
 Sub WriteRA()
@@ -1448,8 +1779,42 @@ Sub WriteRA()
     Print #TextChannel2, sOut
 End Sub
 
+Function AmtFmt(Amt As Currency) As String
+    If Amt < 0 Then Amt = 0
+    AmtFmt = Format(Amt, "00000000.00")
+End Function
+Function AmtFmt15(Amt As Currency) As String
+    If Amt < 0 Then Amt = 0
+    AmtFmt15 = Format(Amt, "000000000000.00")
+End Function
+
+Function GetBox12Amt(ByVal Code12 As String) As Currency
+    GetBox12Amt = 0
+    If PRW2.Box12A_ID <> 0 Then GetBox12Amt = GetBox12Amt + GetBox12CodeAmt(Code12, PRW2.Box12A_ID, 1)
+    If PRW2.Box12B_ID <> 0 Then GetBox12Amt = GetBox12Amt + GetBox12CodeAmt(Code12, PRW2.Box12B_ID, 2)
+    If PRW2.Box12C_ID <> 0 Then GetBox12Amt = GetBox12Amt + GetBox12CodeAmt(Code12, PRW2.Box12C_ID, 3)
+    If PRW2.Box12D_ID <> 0 Then GetBox12Amt = GetBox12Amt + GetBox12CodeAmt(Code12, PRW2.Box12D_ID, 4)
+End Function
+
+Function GetBox12CodeAmt(ByVal Code12 As String, ByVal ID12 As Integer, ByVal BucketNum As Integer) As Currency
+    If Not PRGlobal.GetByID(ID12) Then
+        MsgBox "PRGlobal - Box 12 Error!! " & ID12
+        End
+    End If
+    Dim ThisCode As String
+    ThisCode = Mid(PRGlobal.Description, 2, IIf(Mid(PRGlobal.Description, 3, 1) = ")", 1, 2))
+    If ThisCode = Code12 Then
+        If BucketNum = 1 Then GetBox12CodeAmt = PRW2.Box12A_Amount
+        If BucketNum = 2 Then GetBox12CodeAmt = PRW2.Box12B_Amount
+        If BucketNum = 3 Then GetBox12CodeAmt = PRW2.Box12C_Amount
+        If BucketNum = 4 Then GetBox12CodeAmt = PRW2.Box12D_Amount
+    End If
+End Function
+
+
 Sub WriteCompany(PRCompanyID As Integer)
-    
+    ' todo - validate eer ein / state id
+    ' prcompany zip+4
     cn.Close
     
     ' open the company database
@@ -1468,8 +1833,43 @@ Sub WriteCompany(PRCompanyID As Integer)
         MsgBox "wtf..."
         End
     End If
-    MsgBox (PRCompany.ContactEmail)
+    WriteRE
     
+End Sub
+
+Sub WriteRE()
+    sOut = ""
+    sOut = sOut & Wrt("RE", 2)
+    sOut = sOut & Wrt(Me.txtTaxYear.text, 4)
+    sOut = sOut & Wrt("", 1)        ' agent indicator code
+    sOut = sOut & Wrt(Replace(PRCompany.FederalID, "-", ""), 9)
+    sOut = sOut & Wrt("", 9)        ' agent for EIN
+    sOut = sOut & Wrt(PRCompany.TermBiz, 1)
+    sOut = sOut & Wrt(PRCompany.EstablishmentNumber, 4)
+    sOut = sOut & Wrt(PRCompany.OtherEIN, 9)
+    sOut = sOut & Wrt(PRCompany.Name, 57)
+    sOut = sOut & Wrt(PRCompany.Address2, 22)
+    sOut = sOut & Wrt(PRCompany.Address1, 22)
+    sOut = sOut & Wrt(PRCompany.City, 22)
+    ' sOut = sOut & Wrt(PRState.GetByID(PRCompany.StateID), 2)  ' todo <<<<<<<<<<<<<<<<<<<<<<<<<<<
+    sOut = sOut & "OH"
+    sOut = sOut & Wrt(Left(PRCompany.ZipCode, 5), 5)        ' todo
+    sOut = sOut & Wrt("", 4)                                ' todo
+    sOut = sOut & Wrt(PRCompany.KindOfEmployer, 1)
+    sOut = sOut & Wrt("", 4)
+    sOut = sOut & Wrt("", 23)                   ' foreign state/prov.
+    sOut = sOut & Wrt("", 15)                   ' foreign postal code
+    sOut = sOut & Wrt("", 2)                    ' country code
+    sOut = sOut & Wrt(PRCompany.EmploymentCode, 1)
+    sOut = sOut & Wrt("", 1)                    ' tax jurid. code
+    sOut = sOut & Wrt(PRCompany.ThirdPartySickPay, 1)
+    sOut = sOut & Wrt(PRCompany.ContactName, 27)
+    sOut = sOut & Wrt(PRCompany.ContactPhoneNum, 15)
+    sOut = sOut & Wrt(PRCompany.ContactPhoneExt, 5)
+    sOut = sOut & Wrt(PRCompany.ContactFasNum, 10)
+    sOut = sOut & Wrt(PRCompany.ContactEmail, 40)
+    sOut = sOut & Wrt("", 194)
+    Print #TextChannel2, sOut
 End Sub
 
 Function Wrt(ByVal strng As String, ByVal sLen As Integer) As String
@@ -1483,10 +1883,11 @@ End Function
 
 Function InitOutputFile() As Boolean
     InitOutputFile = False
+    
     With Me
-        If Dir(.txtOutputFile) <> "" Then
-            If MsgBox(.txtOutputFile & vbCr & "Already exists - OK to overwrite?", vbQuestion + vbYesNo, "Ohio W2 Upload") = vbNo Then Exit Function
-        End If
+'        If Dir(.txtOutputFile) <> "" Then
+'            If MsgBox(.txtOutputFile & vbCr & "Already exists - OK to overwrite?", vbQuestion + vbYesNo, "Ohio W2 Upload") = vbNo Then Exit Function
+'        End If
     End With
     
     ' assign

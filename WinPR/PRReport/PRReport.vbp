@@ -86,6 +86,7 @@ Form=frm1099.frm
 Form=frmFUTA940.frm
 Module=modRC4; ..\Module\modRC4.bas
 Form=frmOhioW2Upload.frm
+Class=cOHW2Totals; ..\Class\cOHW2Totals.cls
 IconForm="frmTest"
 Startup="Sub Main"
 HelpFile=""

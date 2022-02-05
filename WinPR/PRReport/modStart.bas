@@ -3,7 +3,7 @@ Private Sub Main()
 
 Dim X As String
 Dim FileExt As String
-
+    
     frmSplash.Show
 
     Set Equate = New cEquate
