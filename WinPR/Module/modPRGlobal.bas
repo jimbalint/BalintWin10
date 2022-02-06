@@ -1960,7 +1960,8 @@ Public Sub PageHeader(Optional ByVal ReportName As String, _
                        Optional ByVal Msg2 As String, _
                        Optional ByVal msg3 As String, _
                        Optional ByVal SkipLines As Byte, _
-                       Optional ByVal UseGLName As Boolean)
+                       Optional ByVal UseGLName As Boolean, _
+                       Optional ByVal NoName As Boolean)
                        
 Dim SideCols As Integer
 Dim HdrName As String
@@ -1968,7 +1969,9 @@ Dim HdrName As String
     Ln = SkipLines
     Pg = Pg + 1
    
-    If UseGLName = True Then
+    If NoName Then
+        HdrName = ""
+    ElseIf UseGLName = True Then
         HdrName = GLCompany.Name
     Else
         HdrName = PRCompany.Name
@@ -2272,23 +2275,23 @@ Public Function FNameOnly(ByVal fnm As String) As String
 
 End Function
 
-Public Function DollarAndCents(ByVal Amt As Currency) As String
+Public Function DollarAndCents(ByVal amt As Currency) As String
     ' 2018-09-29 - needs rounded?  - returned "8  100" for 9.00 ..
     '   corrected double negative error
-    Amt = nNull(Amt)
+    amt = nNull(amt)
 
     Dim dAmt, cAmt As Integer
     Dim AmtSign As String
         
     AmtSign = "+"
-    If Amt < 0 Then
+    If amt < 0 Then
         AmtSign = "-"
     End If
     
-    Amt = Abs(Amt)
+    amt = Abs(amt)
     
-    dAmt = Int(Amt)
-    cAmt = (Amt - Int(Amt)) * 100
+    dAmt = Int(amt)
+    cAmt = (amt - Int(amt)) * 100
     
     If AmtSign = "+" Then
         DollarAndCents = Format(dAmt, "##,###,##0") & "  " & Format(cAmt, "00")
