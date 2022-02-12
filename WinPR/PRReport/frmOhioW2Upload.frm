@@ -51,24 +51,24 @@ Begin VB.Form frmOHW2
       TabCaption(0)   =   "Submitter Information"
       TabPicture(0)   =   "frmOhioW2Upload.frx":0000
       Tab(0).ControlEnabled=   0   'False
-      Tab(0).Control(0)=   "cmdSaveSubm"
-      Tab(0).Control(1)=   "cmbPreparerCode"
-      Tab(0).Control(2)=   "txtContactFax"
-      Tab(0).Control(3)=   "txtContactEmail"
-      Tab(0).Control(4)=   "txtContactPhnExt"
-      Tab(0).Control(5)=   "txtEIN"
-      Tab(0).Control(6)=   "txtCompanyName"
-      Tab(0).Control(7)=   "txtLocationAddress"
-      Tab(0).Control(8)=   "txtDeliveryAddress"
-      Tab(0).Control(9)=   "txtCity"
-      Tab(0).Control(10)=   "txtState"
-      Tab(0).Control(11)=   "txtZipCode"
-      Tab(0).Control(12)=   "txtZipCodeExt"
-      Tab(0).Control(13)=   "txtContactName"
-      Tab(0).Control(14)=   "txtContactPhn"
-      Tab(0).Control(15)=   "txtUserID"
-      Tab(0).Control(16)=   "Label3"
-      Tab(0).Control(17)=   "Label2"
+      Tab(0).Control(0)=   "Label2"
+      Tab(0).Control(1)=   "Label3"
+      Tab(0).Control(2)=   "txtUserID"
+      Tab(0).Control(3)=   "txtContactPhn"
+      Tab(0).Control(4)=   "txtContactName"
+      Tab(0).Control(5)=   "txtZipCodeExt"
+      Tab(0).Control(6)=   "txtZipCode"
+      Tab(0).Control(7)=   "txtState"
+      Tab(0).Control(8)=   "txtCity"
+      Tab(0).Control(9)=   "txtDeliveryAddress"
+      Tab(0).Control(10)=   "txtLocationAddress"
+      Tab(0).Control(11)=   "txtCompanyName"
+      Tab(0).Control(12)=   "txtEIN"
+      Tab(0).Control(13)=   "txtContactPhnExt"
+      Tab(0).Control(14)=   "txtContactEmail"
+      Tab(0).Control(15)=   "txtContactFax"
+      Tab(0).Control(16)=   "cmbPreparerCode"
+      Tab(0).Control(17)=   "cmdSaveSubm"
       Tab(0).ControlCount=   18
       TabCaption(1)   =   "Submit OH W2 File"
       TabPicture(1)   =   "frmOhioW2Upload.frx":001C
@@ -145,6 +145,7 @@ Begin VB.Form frmOHW2
          OLEDropMode     =   0
       End
       Begin VB.CommandButton cmdCreateFile 
+         BackColor       =   &H00FFFF00&
          Caption         =   "Create OH W2 Upload"
          BeginProperty Font 
             Name            =   "Arial"
@@ -156,9 +157,12 @@ Begin VB.Form frmOHW2
             Strikethrough   =   0   'False
          EndProperty
          Height          =   855
-         Left            =   11520
+         Left            =   11640
+         MaskColor       =   &H00FFFF00&
+         Style           =   1  'Graphical
          TabIndex        =   25
-         Top             =   720
+         Top             =   600
+         UseMaskColor    =   -1  'True
          Width           =   2055
       End
       Begin VB.CommandButton cmdFileName 
@@ -1181,6 +1185,8 @@ Public FileExt As String
 Dim ii As Integer
 Dim xx As String
 Dim ReportTitle As String
+Dim OutOfStateEmp As String
+Dim OHStateID As Integer
 
 Dim PRW2 As New cPRW2
 Dim PRW2State As New cPRW2State
@@ -1191,7 +1197,17 @@ Dim frmp As New frmProgress
 
 Private Sub Form_Load()
 
+    strSQL = "select *" & _
+            " from PRState " & _
+            " where StateAbbrev = 'OH'"
+    If Not PRState.GetBySQL(strSQL) Then
+        MsgBox "State record not found of OH!!"
+        End
+    End If
+    OHStateID = PRState.StateID
+
     W2TL.RWTotalCount = 0
+    OutOfStateEmp = ""
 
     ' create PRGlobal Records
     InitPRGlobal PREquate.GlobalTypeOHW2Company
@@ -1293,6 +1309,7 @@ Private Sub cmdCreateFile_Click()
         If W2TL.ROCount > 0 Then WriteRU
         CompanyReport
         If Not PRCompany.GetNext Then Exit Do
+        FormFeed
     Loop
     WriteRF
     Close #TextChannel2
@@ -1464,8 +1481,16 @@ Sub CompanyReport()
     PrintInfo "Box 12 Code GG", AmtPrt(W2TL.CodeGG), 1
     PrintInfo "Box 12 Code HH", AmtPrt(W2TL.CodeHH), 1
     PrintInfo "Box 14 Retirement", AmtPrt(W2TL.RetireAmt), 1
-    FormFeed
+    PrintInfo "Box 16 State Wage", AmtPrt(W2TL.Box16_StateWages), 1
+    PrintInfo "Box 17 State Tax", AmtPrt(W2TL.Box17_StateTax), 1
+    PrintInfo "SD Tax Wage", AmtPrt(W2TL.Box18_LocalWages), 1
+    PrintInfo "SD Tax", AmtPrt(W2TL.Box19_LocalTax), 1
     
+    If OutOfStateEmp <> "" Then
+        PrintInfo "Employee(s) skipped - No OH W2", "", 1
+        PrintInfo OutOfStateEmp, "", 1
+    End If
+    OutOfStateEmp = ""
     
 'Public Box2_FedTax As Currency
 'Public Box3_SSWages As Currency
@@ -1546,8 +1571,8 @@ Sub InitReport()
     FormFeed
 
 End Sub
-Function AmtPrt(ByVal amt As Currency) As String
-    AmtPrt = Format(amt, "##,###,##0.00")
+Function AmtPrt(ByVal Amt As Currency) As String
+    AmtPrt = Format(Amt, "##,###,##0.00")
     AmtPrt = Space(20 - Len(AmtPrt)) & AmtPrt
 End Function
 
@@ -1637,7 +1662,7 @@ Sub WriteRS()
             " from PRW2State " & _
             " where W2ID = " & PRW2.W2ID & _
             " and TaxYear = " & Me.txtTaxYear & _
-            " and StateID = 36"
+            " and StateID = " & OHStateID
     If Not PRW2State.GetBySQL(strSQL) Then Exit Sub ' ???
     
     Dim NameLast As String
@@ -1693,6 +1718,9 @@ Sub WriteRS()
     sOut = sOut & AmtFmt(PRW2State.StateTax)
     sOut = sOut & Right(AmtFmt(PRW2.Box1_Wages), 10)
     
+    W2TL.Box16_StateWages = W2TL.Box16_StateWages + PRW2State.StateWage
+    W2TL.Box17_StateTax = W2TL.Box17_StateTax + PRW2State.StateTax
+    
     ' SD Tax?
     Dim LocalWages As Currency
     Dim LocalTax As Currency
@@ -1722,7 +1750,18 @@ Sub WriteRS()
     sOut = sOut & Wrt(TaxTypeCode, 1)
     sOut = sOut & AmtFmt(LocalWages)
     sOut = sOut & AmtFmt(LocalTax)
-    sOut = sOut & Wrt(SDNumber, 7)
+    
+    ' this is SD tax only ...
+    W2TL.Box18_LocalWages = W2TL.Box18_LocalWages + LocalWages
+    W2TL.Box19_LocalTax = W2TL.Box19_LocalTax + LocalTax
+    
+    ' right justory
+    SDNumber = Trim(SDNumber)
+    If SDNumber <> "" Then
+        sOut = sOut & Wrt(Space(7 - Len(SDNumber)) & SDNumber, 7)
+    Else
+        sOut = sOut & Wrt("", 7)
+    End If
     
     sOut = sOut & Wrt("", 75)
     sOut = sOut & Wrt("", 75)
@@ -1832,6 +1871,19 @@ Sub WriteRO()
 End Sub
 
 Sub WriteRW()
+    
+    ' must have OH W2
+    strSQL = "select *" & _
+            " from PRW2State" & _
+            " where W2ID = " & PRW2.W2ID & _
+            " and TaxYear = " & PRW2.TaxYear & _
+            " and StateID = " & OHStateID
+    If Not PRW2State.GetBySQL(strSQL) Then
+        If PREmployee.GetByID(PRW2.EmployeeID) Then
+            OutOfStateEmp = OutOfStateEmp & PREmployee.EmployeeNumber & " " & PREmployee.FirstName & " " & PREmployee.LastName & vbCr
+        End If
+        Exit Sub
+    End If
     
     Dim NameLast As String
     Dim NameSuffix As String
@@ -1981,13 +2033,13 @@ Sub WriteRA()
     Print #TextChannel2, sOut
 End Sub
 
-Function AmtFmt(amt As Currency) As String
-    If amt < 0 Then amt = 0
-    AmtFmt = Format(amt, "00000000.00")
+Function AmtFmt(Amt As Currency) As String
+    If Amt < 0 Then Amt = 0
+    AmtFmt = Format(Amt * 100, "00000000000")
 End Function
-Function AmtFmt15(amt As Currency) As String
-    If amt < 0 Then amt = 0
-    AmtFmt15 = Format(amt, "000000000000.00")
+Function AmtFmt15(Amt As Currency) As String
+    If Amt < 0 Then Amt = 0
+    AmtFmt15 = Format(Amt * 100, "000000000000000")
 End Function
 
 Function GetBox12Amt(ByVal Code12 As String) As Currency

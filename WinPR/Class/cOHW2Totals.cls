@@ -28,6 +28,10 @@ Public Box8_AllocTips As Currency
 Public Box9_EIC As Currency
 Public Box10_DCBen As Currency
 Public Box11_NQPlans As Currency
+Public Box16_StateWages As Currency
+Public Box17_StateTax As Currency
+Public Box18_LocalWages As Currency
+Public Box19_LocalTax As Currency
 Public CodeA As Currency
 Public CodeB As Currency
 Public CodeD As Currency
@@ -70,6 +74,10 @@ Public Sub Clear()
     Box9_EIC = 0
     Box10_DCBen = 0
     Box11_NQPlans = 0
+    Box16_StateWages = 0
+    Box17_StateTax = 0
+    Box18_LocalWages = 0
+    Box19_LocalTax = 0
     CodeA = 0
     CodeB = 0
     CodeD = 0

@@ -220,9 +220,9 @@ Public Class clsExport
             'b1              string(10)
             sw.Write(StrDup(10, " "))
 
-            Dim pay(16) As Double
+            Dim pay(18) As Double
             Dim ii As Integer
-            For ii = 1 To 16
+            For ii = 1 To 18
                 pay(ii) = 0
             Next
 
@@ -257,9 +257,11 @@ Public Class clsExport
                 End Select
             End If
 
-            For ii = 1 To 16
+            For ii = 1 To 18
                 sw.Write(AmtString(pay(ii), 12))
             Next
+
+            sw.Write(StrDup(16, " "))
 
             'Foreign         string(1)
             sw.Write(" ")
@@ -267,8 +269,10 @@ Public Class clsExport
             sw.Write(FixedLen(rw("PayeeName"), 40))
             'Name2           string(40)
             sw.Write(FixedLen(rw("PayeeName2"), 40))
+
             'b3              string(40)
-            sw.Write(StrDup(40, " "))
+            ' xxx sw.Write(StrDup(40, " "))
+
             'Addr1           string(40)
             sw.Write(FixedLen(rw("PayeeAddr"), 40))
             'b4              string(40)

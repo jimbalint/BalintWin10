@@ -80,7 +80,7 @@ Module Module1
                 e.WriteTab(dtForms, rw.Item("FileName"))
             End If
 
-            DebugOutput("C:\aSend\NIHFF_20\Debug\NIHFF.txt")
+            ' DebugOutput("C:\aSend\NIHFF_20\Debug\NIHFF.txt")
 
             dtForms.Clear()
 
