@@ -99,32 +99,32 @@ Public Function Save(ByVal booAddPut As Boolean) As String
     If booAddPut = True Then      ' Add
        rs.AddNew
     End If
-    
-    rs.Fields("Name") = UCase(Name)
-    rs.Fields("Address1") = UCase(Address1)
-    rs.Fields("Address2") = UCase(Address2)
-    rs.Fields("City") = UCase(City)
+
+    rs.Fields("Name") = Trim(UCase(Name))
+    rs.Fields("Address1") = Trim(UCase(Address1))
+    rs.Fields("Address2") = Trim(UCase(Address2))
+    rs.Fields("City") = Trim(UCase(City))
     rs.Fields("AddrStateID") = AddrStateID
     rs.Fields("ZipCode") = ZipCode
-    rs.Fields("PhoneNumber") = PhoneNumber
-    rs.Fields("StateID") = StateID
+    rs.Fields("PhoneNumber") = Trim(PhoneNumber)
+    rs.Fields("StateID") = Trim(StateID)
     rs.Fields("StateUnempPct") = StateUnempPct
-    rs.Fields("StateUnempID") = StateUnempID
-    rs.Fields("FederalID") = FederalID
+    rs.Fields("StateUnempID") = Trim(StateUnempID)
+    rs.Fields("FederalID") = Trim(FederalID)
     rs.Fields("FederalUnempPct") = FederalUnempPct
     rs.Fields("DfltPaysPerYear") = DfltPaysPerYear
     rs.Fields("DfltStateID") = DfltStateID
     rs.Fields("DfltMinWage") = DfltMinWage
     rs.Fields("DfltOTRate") = DfltOTRate
     rs.Fields("DfltRegHrs") = DfltRegHrs
-    rs.Fields("FileName") = FileName
+    rs.Fields("FileName") = Trim(FileName)
     
-    rs.Fields("BankName") = BankName
-    rs.Fields("BankABA") = BankABA
-    rs.Fields("BankAccount") = BankAccount
-    rs.Fields("BankAddr1") = BankAddr1
-    rs.Fields("BankAddr2") = BankAddr2
-    rs.Fields("BankFraction") = BankFraction
+    rs.Fields("BankName") = Trim(BankName)
+    rs.Fields("BankABA") = Trim(BankABA)
+    rs.Fields("BankAccount") = Trim(BankAccount)
+    rs.Fields("BankAddr1") = Trim(BankAddr1)
+    rs.Fields("BankAddr2") = Trim(BankAddr2)
+    rs.Fields("BankFraction") = Trim(BankFraction)
     
     rs.Fields("GLAcctSS") = GLAcctSS
     rs.Fields("GLAcctMED") = GLAcctMED
@@ -138,7 +138,7 @@ Public Function Save(ByVal booAddPut As Boolean) As String
     rs.Fields("DfltCityID") = DfltCityID
     rs.Fields("CheckDays") = CheckDays
     
-    rs.Fields("WkcPolicyNum") = WkcPolicyNum
+    rs.Fields("WkcPolicyNum") = Trim(WkcPolicyNum)
     rs.Fields("GLCompanyID") = GLCompanyID
     rs.Fields("DfltSortOrder") = DfltSortOrder
     rs.Fields("DirDepBalanced") = DirDepBalanced
@@ -149,16 +149,16 @@ Public Function Save(ByVal booAddPut As Boolean) As String
     
     rs.Fields("OHeW2") = OHeW2
     rs.Fields("TermBiz") = TermBiz
-    rs.Fields("EstablishmentNumber") = EstablishmentNumber
-    rs.Fields("OtherEIN") = OtherEIN
-    rs.Fields("KindOfEmployer") = KindOfEmployer
-    rs.Fields("EmploymentCode") = EmploymentCode
+    rs.Fields("EstablishmentNumber") = Trim(EstablishmentNumber)
+    rs.Fields("OtherEIN") = Trim(OtherEIN)
+    rs.Fields("KindOfEmployer") = Trim(KindOfEmployer)
+    rs.Fields("EmploymentCode") = Trim(EmploymentCode)
     rs.Fields("ThirdPartySickPay") = ThirdPartySickPay
-    rs.Fields("ContactName") = ContactName
-    rs.Fields("ContactPhoneNum") = ContactPhoneNum
-    rs.Fields("ContactPhoneExt") = ContactPhoneExt
-    rs.Fields("ContactFasNum") = ContactFasNum
-    rs.Fields("ContactEmail") = ContactEmail
+    rs.Fields("ContactName") = Trim(ContactName)
+    rs.Fields("ContactPhoneNum") = Trim(ContactPhoneNum)
+    rs.Fields("ContactPhoneExt") = Trim(ContactPhoneExt)
+    rs.Fields("ContactFasNum") = Trim(ContactFasNum)
+    rs.Fields("ContactEmail") = Trim(ContactEmail)
     
     rs.Update
     

@@ -1279,6 +1279,12 @@ Private Sub cmdCreateFile_Click()
     SaveSubmitterInfo
     If Not InitOutputFile Then Exit Sub
     
+    If CInt(Me.txtTaxYear.text) <> Year(Date) - 1 Then
+        Dim bResult As Integer
+        bResult = MsgBox("Are you SURE you want to submit for the Tax Year of: " & Me.txtTaxYear.text, vbExclamation + vbYesNo, "OH W2 Upload")
+        If bResult = vbNo Then Exit Sub
+    End If
+   
     frmp.lblMsg1 = "Now Running OH W2 Upload"
     frmp.Show
     
@@ -1492,45 +1498,6 @@ Sub CompanyReport()
     End If
     OutOfStateEmp = ""
     
-'Public Box2_FedTax As Currency
-'Public Box3_SSWages As Currency
-'Public Box4_SSTax As Currency
-'Public Box5_MedWages As Currency
-'Public Box6_MedTax As Currency
-'Public Box7_SSTips As Currency
-'Public Box8_AllocTips As Currency
-'Public Box9_EIC As Currency
-'Public Box10_DCBen As Currency
-'Public Box11_NQPlans As Currency
-'Public CodeA As Currency
-'Public CodeB As Currency
-'Public CodeD As Currency
-'Public CodeE As Currency
-'Public CodeF As Currency
-'Public CodeG As Currency
-'Public CodeH As Currency
-'Public CodeM As Currency
-'Public CodeN As Currency
-'Public CodeR As Currency
-'Public CodeS As Currency
-'Public CodeT As Currency
-'Public CodeW As Currency
-'Public CodeQ As Currency
-'Public CodeZ As Currency
-'Public CodeDD As Currency
-'Public CodeC As Currency
-'Public IncTax3rdSick As Currency
-'Public CodeV As Currency
-'Public CodeY As Currency
-'Public CodeAA As Currency
-'Public CodeBB As Currency
-'Public CodeEE As Currency
-'Public CodeFF As Currency
-'Public CodeGG As Currency
-'Public CodeHH As Currency
-'Public RetireAmt As Currency
-    
-    
 End Sub
 
 Sub InitReport()
@@ -1685,7 +1652,7 @@ Sub WriteRS()
     
     sOut = "RS39"
     sOut = sOut & Wrt("", 5)
-    sOut = sOut & Wrt(PRW2.BoxA_SSNumber, 9)
+    sOut = sOut & Wrt(Right("000000000" & PRW2.BoxA_SSNumber, 9), 9)
     sOut = sOut & Wrt(PRW2.BoxE_EEFirstName, 15)
     sOut = sOut & Wrt(Replace(PRW2.BoxE_EEMidInit, ".", ""), 15)
     sOut = sOut & Wrt(NameLast, 20)
@@ -1929,7 +1896,7 @@ Sub WriteRW()
     ' ToDo - 457 ???
     
     sOut = "RW"
-    sOut = sOut & Wrt(PRW2.BoxA_SSNumber, 9)
+    sOut = sOut & Wrt(Right("000000000" & PRW2.BoxA_SSNumber, 9), 9)
     sOut = sOut & Wrt(PRW2.BoxE_EEFirstName, 15)
     sOut = sOut & Wrt(Replace(PRW2.BoxE_EEMidInit, ".", ""), 15)
     sOut = sOut & Wrt(NameLast, 20)
