@@ -46,7 +46,7 @@ Dim FileExt As String
        BalintFolder = "c:\Balint"
        dbPwd = ""
        ' ProgName = UCase("ITEMDETAIL")
-       ProgName = UCase("EARNSUMMARY")
+       ProgName = UCase("test")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
        ' UserID = 15
@@ -173,7 +173,7 @@ Dim FileExt As String
     Select Case ProgName
 
         Case "TEST"
-            frm941_2021_June.Show
+            frm941_2022_March.Show
         Case "CHECKPRINT"
             frmCheckPrint.Show
         Case "FORM941"
@@ -206,6 +206,9 @@ Dim FileExt As String
                 ElseIf I = 10 Then
                     ' added on 2021-08-04
                     frm941_2021_June.Show
+                ElseIf I = 11 Then
+                    ' added on 2022-04-09
+                    frm941_2022_March.Show
                 Else
                     GoBack
                 End If
