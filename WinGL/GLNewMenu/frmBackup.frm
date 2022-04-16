@@ -235,6 +235,7 @@ Dim x, y, z As String
 Dim i, j, k As Integer
 Dim mmsg As String
 
+
 Private Sub Form_Load()
     
     ' last back up info
@@ -379,7 +380,7 @@ Function CopyDB(ByVal fnm As String) As Integer
     If BalintFolder = "" Then
         CopyFrom = Left(App.Path, 1) & ":\Balint\Data\" & dbName
     Else
-        CopyFrom = BalintFolder & "\Data\" & dbName
+        CopyFrom = Replace(BalintFolder, "^", " ") & "\Data\" & dbName
     End If
     CopyTo = AddBS(Me.txtFolderName) & dbName
     
@@ -488,8 +489,8 @@ Private Sub CmdExit_Click()
 End Sub
 
 Private Sub cmdSelectPath_Click()
-
-   Dim sTempDir As String
+    
+    Dim sTempDir As String
     On Error Resume Next
     sTempDir = CurDir    'Remember the current active directory
     CommonDialog1.DialogTitle = "Select a directory" 'titlebar
@@ -504,7 +505,7 @@ Private Sub cmdSelectPath_Click()
         Me.txtFolderName = CurDir
     End If
 
-    ' ChDir sTempDir  'restore path to what it was at entering
+    ChDir sTempDir  'restore path to what it was at entering
 
 End Sub
 

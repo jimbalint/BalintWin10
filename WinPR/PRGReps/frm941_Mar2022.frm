@@ -4675,10 +4675,10 @@ Dim Xincr, XXpos As Long
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13g)", 3)), 15)
         VertPosn = VertPosn + VertSpace
         
-        PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13h)", 3)), 15)
+        ' PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13h)", 3)), 15)
         VertPosn = VertPosn + VertSpace
         
-        PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13i)", 3)), 15)
+        ' PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13i)", 3)), 15)
         VertPosn = VertPosn + VertSpace
         
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("14 )", 3)), 15)
@@ -4779,7 +4779,7 @@ Dim Xincr, XXpos As Long
 '        HorzPosn = 9330
         
         VertSpace = 360
-        VertPosn = 1975 + PanelVert
+        VertPosn = 1890 + PanelVert
         HorzPosn = 9330
         
         VertPosn = VertPosn + VertSpace
@@ -4789,10 +4789,10 @@ Dim Xincr, XXpos As Long
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("20 )", 3)), 15)
 
         VertPosn = VertPosn + VertSpace
-        PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("21 )", 3)), 15)
+        ' PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("21 )", 3)), 15)
 
         VertPosn = VertPosn + VertSpace
-        PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("22 )", 3)), 15)
+        ' PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("22 )", 3)), 15)
 
         VertPosn = VertPosn + VertSpace
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("23 )", 3)), 15)
@@ -4846,7 +4846,7 @@ Dim HorzPosn1, HorzPosn2, Xincr As Long
     ' %%%%%%%%%%% Part 4 - Third Party Designee - Per User %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     PanelVert = 7100
-    PanelVert = 6970  ' Mar 2022 - 18b removed - this panel moves up
+    PanelVert = 6785  ' Mar 2022 - 18b removed - this panel moves up
     
     If Not PrtTest Then
         If frm.Part4CheckYes = 1 Then
@@ -4913,7 +4913,7 @@ Dim HorzPosn1, HorzPosn2, Xincr As Long
     ' part 5 - name and title - split the string on the slash
     
     PanelVert = 6970    ' Mar 2022 - 18b removed - this panel moves up
-    PanelVert = 6840
+    PanelVert = 6710
     
     PosPrint 8565, 2720 + PanelVert, SlashSplit(PRGlobal.Var1, 1)
     PosPrint 8565, 3230 + PanelVert, SlashSplit(PRGlobal.Var1, 2)
@@ -4946,7 +4946,7 @@ Dim HorzPosn1, HorzPosn2, Xincr As Long
     PRGlobal.Var9 = frm.cmbPrepName.text
     PRGlobal.Save (Equate.RecPut)
     
-    VertPosn = 4800 + PanelVert
+    VertPosn = 4760 + PanelVert
     VertSpace = 485
     HorzPosn1 = 2405
     HorzPosn2 = 8805

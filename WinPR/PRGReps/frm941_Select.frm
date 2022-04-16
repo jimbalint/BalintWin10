@@ -72,7 +72,7 @@ Begin VB.Form frm941_Select
       Width           =   3735
    End
    Begin VB.Label Label2 
-      Caption         =   "01/06/2022"
+      Caption         =   "04/16/2022"
       Height          =   495
       Left            =   6720
       TabIndex        =   7
