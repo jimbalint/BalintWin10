@@ -966,25 +966,58 @@ Private Sub Form_Load()
 
     CurrDate = Now()
        
-    cmbQtr.AddItem "1"
-    cmbQtr.AddItem "2"
-    cmbQtr.AddItem "3"
-    cmbQtr.AddItem "4"
-    cmbQtr.ListIndex = 0
-    CurrYear = Year(Now())
-    cmbYear.AddItem CurrYear
-    cmbYear.AddItem CurrYear - 1
-    cmbYear.AddItem CurrYear - 2
-    cmbYear.AddItem CurrYear - 3
-    cmbYear.AddItem CurrYear - 4
-    cmbYear.AddItem CurrYear - 5
-    cmbYear.AddItem CurrYear - 6
-    cmbYear.AddItem CurrYear - 7
-    cmbYear.AddItem CurrYear - 8
-    cmbYear.AddItem CurrYear - 9
-    cmbYear.AddItem CurrYear - 10
+'    cmbQtr.AddItem "1"
+'    cmbQtr.AddItem "2"
+'    cmbQtr.AddItem "3"
+'    cmbQtr.AddItem "4"
+'    cmbQtr.ListIndex = 0
+'    CurrYear = Year(Now())
+'    cmbYear.AddItem CurrYear
+'    cmbYear.AddItem CurrYear - 1
+'    cmbYear.AddItem CurrYear - 2
+'    cmbYear.AddItem CurrYear - 3
+'    cmbYear.AddItem CurrYear - 4
+'    cmbYear.AddItem CurrYear - 5
+'    cmbYear.AddItem CurrYear - 6
+'    cmbYear.AddItem CurrYear - 7
+'    cmbYear.AddItem CurrYear - 8
+'    cmbYear.AddItem CurrYear - 9
+'    cmbYear.AddItem CurrYear - 10
+'
+'    cmbYear.ListIndex = 0
     
-    cmbYear.ListIndex = 0
+    ' init year / qtr combo even if no data exists
+    Dim I As Integer
+    Dim J As Integer
+    With Me.cmbQtr
+        .AddItem "1"
+        .AddItem "2"
+        .AddItem "3"
+        .AddItem "4"
+    End With
+    With Me.cmbYear
+        J = Year(Now()) + 1
+        For I = 1 To 5
+            .AddItem J
+            J = J - 1
+        Next I
+        .ListIndex = 1
+    End With
+    
+    ' select the default qtr
+    Select Case Month(Now())
+        Case 1
+            cmbQtr.ListIndex = 3    ' Q4
+            If cmbYear.ListCount > 1 Then cmbYear.ListIndex = 2
+        Case 2 To 4
+            cmbQtr.ListIndex = 0    ' Q1
+        Case 5 To 7
+            cmbQtr.ListIndex = 1    ' Q2
+        Case Else
+            cmbQtr.ListIndex = 2    ' Q3
+    End Select
+    
+    
     TDBDate1 = CurrDate
     PrtDate = CurrDate
     
