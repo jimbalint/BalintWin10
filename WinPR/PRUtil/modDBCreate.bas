@@ -559,7 +559,7 @@ End Sub
 Private Sub AddField(ByVal TableName As String, _
                      ByVal FieldName As String, _
                      ByVal FieldType As String, _
-                     ByVal acn As adodb.Connection)
+                     ByVal acn As ADODB.Connection)
                      
     SQLString = "ALTER TABLE " & TableName & _
               " ADD COLUMN [" & FieldName & "]   " & FieldType
@@ -570,18 +570,18 @@ End Sub
 
 
 Public Sub DropTable(ByVal TableName As String, _
-                      ByVal adoCn As adodb.Connection)
+                      ByVal adoCn As ADODB.Connection)
 
 ' *** Drop a table if it exists ***
 
-Dim cm As adodb.Command
-Dim frs As adodb.Recordset
+Dim cm As ADODB.Command
+Dim frs As ADODB.Recordset
 Dim TableFlag As Boolean
-Dim FString As String
+Dim fString As String
                          
                          
     ' see if the field is already in the Table
-    Set frs = New adodb.Recordset
+    Set frs = New ADODB.Recordset
     frs.CursorLocation = adUseClient
     frs.CursorType = adOpenStatic
     frs.LockType = adLockBatchOptimistic
@@ -605,8 +605,8 @@ Dim FString As String
     ' table does not exist
     If TableFlag = False Then Exit Sub
 
-    FString = "DROP TABLE " & TableName
-    adoCn.Execute FString
+    fString = "DROP TABLE " & TableName
+    adoCn.Execute fString
 
 End Sub
 
@@ -932,4 +932,23 @@ Public Sub GLFFSchedCreate()
     AddField "GLFFSched", "ReportID", "Byte", cn
 
 End Sub
+
+Public Sub PRW4Create()
+
+    SQLString = "CREATE TABLE PRW4 ( " & _
+                        "[W4ID] Counter, CONSTRAINT w4IDKey PRIMARY KEY ([W4ID]) ) "
+                        
+    cn.Execute SQLString
+                        
+    AddField "PRW4", "EmployeeID", "Long", cn
+    AddField "PRW4", "TwoJobs", "Byte", cn
+    AddField "PRW4", "FilingType", "Byte", cn
+    AddField "PRW4", "Dependents", "Byte", cn
+    AddField "PRW4", "DependentsOther", "Byte", cn
+    AddField "PRW4", "OtherIncome", "Currency", cn
+    AddField "PRW4", "Deductions", "Currency", cn
+    AddField "PRW4", "ExtraWH", "Currency", cn
+
+End Sub
+
 

@@ -30,6 +30,8 @@ Dim FileExt As String
     Set PRState = New cPRState
     Set PRW2Box = New cPRW2Box
     
+    Set PRW4 = New cPRW4
+    
     Set JCCustomer = New cJCCustomer
     Set JCJob = New cJCJob
     Set PRTimeSheet = New cPRTimeSheet
@@ -50,7 +52,7 @@ Dim FileExt As String
        BalintFolder = "c:\Balint"
        BalintFolder = "\\vboxsrv\vm-share\Balint"
        dbPwd = ""
-       ProgName = UCase("EMPLOYER")
+       ProgName = UCase("EMPLOYEE")
        ' ProgName = UCase("test2")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
@@ -175,6 +177,7 @@ Dim FileExt As String
     If TableExists("PREmployee", cn) = False Then EmployeeCreate
     If TableExists("PRGLUpd", cn) = False Then GLUpdCreate
     If TableExists("PRItemHist", cn) = False Then ItemHistCreate
+    If TableExists("PRW4", cn) = False Then PRW4Create
     
     ' perform field sweeps - in NewField module
     FieldSweep

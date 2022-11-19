@@ -268,6 +268,10 @@ Public GlobalTypeOHW2Company As Byte
 Public GlobalTypeOHW2Contact As Byte
 Public GlobalTypeOHW2Submit As Byte
 
+Public PRW4Standard As Byte
+Public PRW4Single As Byte
+Public PRW4Married As Byte
+Public PRW4HOH As Byte
 
 
 

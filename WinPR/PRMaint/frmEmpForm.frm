@@ -42,15 +42,16 @@ Begin VB.Form frmEmpForm
       Width           =   1455
    End
    Begin TabDlg.SSTab SSTab1 
-      Height          =   8580
+      Height          =   8700
       Left            =   240
       TabIndex        =   29
-      Top             =   1200
+      Top             =   1080
       Width           =   13725
       _ExtentX        =   24209
-      _ExtentY        =   15134
+      _ExtentY        =   15346
       _Version        =   393216
       Tabs            =   5
+      Tab             =   1
       TabHeight       =   520
       BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
          Name            =   "Arial"
@@ -63,93 +64,109 @@ Begin VB.Form frmEmpForm
       EndProperty
       TabCaption(0)   =   "MAIN (F2)"
       TabPicture(0)   =   "frmEmpForm.frx":0000
-      Tab(0).ControlEnabled=   -1  'True
-      Tab(0).Control(0)=   "Label1"
-      Tab(0).Control(0).Enabled=   0   'False
-      Tab(0).Control(1)=   "Label9"
-      Tab(0).Control(1).Enabled=   0   'False
-      Tab(0).Control(2)=   "Label16"
-      Tab(0).Control(2).Enabled=   0   'False
-      Tab(0).Control(3)=   "Label17"
-      Tab(0).Control(3).Enabled=   0   'False
-      Tab(0).Control(4)=   "Label18"
-      Tab(0).Control(4).Enabled=   0   'False
-      Tab(0).Control(5)=   "Label22"
-      Tab(0).Control(5).Enabled=   0   'False
-      Tab(0).Control(6)=   "txtMI"
-      Tab(0).Control(6).Enabled=   0   'False
-      Tab(0).Control(7)=   "txtCity"
-      Tab(0).Control(7).Enabled=   0   'False
-      Tab(0).Control(8)=   "txtAddress2"
-      Tab(0).Control(8).Enabled=   0   'False
-      Tab(0).Control(9)=   "txtLastName"
-      Tab(0).Control(9).Enabled=   0   'False
-      Tab(0).Control(10)=   "txtFirstName"
-      Tab(0).Control(10).Enabled=   0   'False
-      Tab(0).Control(11)=   "lngEmployeeNumber"
-      Tab(0).Control(11).Enabled=   0   'False
-      Tab(0).Control(12)=   "txtAddress1"
-      Tab(0).Control(12).Enabled=   0   'False
+      Tab(0).ControlEnabled=   0   'False
+      Tab(0).Control(0)=   "txtSSN"
+      Tab(0).Control(1)=   "tdbtxtComment"
+      Tab(0).Control(2)=   "txtAltName"
+      Tab(0).Control(3)=   "txtCheckComment"
+      Tab(0).Control(4)=   "cmbWkcCat"
+      Tab(0).Control(5)=   "cmbDept"
+      Tab(0).Control(6)=   "cmb1099"
+      Tab(0).Control(7)=   "cmbEICType"
+      Tab(0).Control(8)=   "chkUseDeptWkc"
+      Tab(0).Control(9)=   "chkInactive"
+      Tab(0).Control(10)=   "chkStatutory"
+      Tab(0).Control(11)=   "cmbState"
+      Tab(0).Control(12)=   "tdbnumZipCode"
       Tab(0).Control(13)=   "chkUseAltName"
-      Tab(0).Control(13).Enabled=   0   'False
-      Tab(0).Control(14)=   "tdbnumZipCode"
-      Tab(0).Control(14).Enabled=   0   'False
-      Tab(0).Control(15)=   "cmbState"
-      Tab(0).Control(15).Enabled=   0   'False
-      Tab(0).Control(16)=   "chkStatutory"
-      Tab(0).Control(16).Enabled=   0   'False
-      Tab(0).Control(17)=   "chkInactive"
-      Tab(0).Control(17).Enabled=   0   'False
-      Tab(0).Control(18)=   "chkUseDeptWkc"
-      Tab(0).Control(18).Enabled=   0   'False
-      Tab(0).Control(19)=   "cmbEICType"
-      Tab(0).Control(19).Enabled=   0   'False
-      Tab(0).Control(20)=   "cmb1099"
-      Tab(0).Control(20).Enabled=   0   'False
-      Tab(0).Control(21)=   "cmbDept"
-      Tab(0).Control(21).Enabled=   0   'False
-      Tab(0).Control(22)=   "cmbWkcCat"
-      Tab(0).Control(22).Enabled=   0   'False
-      Tab(0).Control(23)=   "txtCheckComment"
-      Tab(0).Control(23).Enabled=   0   'False
-      Tab(0).Control(24)=   "txtAltName"
-      Tab(0).Control(24).Enabled=   0   'False
-      Tab(0).Control(25)=   "tdbtxtComment"
-      Tab(0).Control(25).Enabled=   0   'False
-      Tab(0).Control(26)=   "txtSSN"
-      Tab(0).Control(26).Enabled=   0   'False
+      Tab(0).Control(14)=   "txtAddress1"
+      Tab(0).Control(15)=   "lngEmployeeNumber"
+      Tab(0).Control(16)=   "txtFirstName"
+      Tab(0).Control(17)=   "txtLastName"
+      Tab(0).Control(18)=   "txtAddress2"
+      Tab(0).Control(19)=   "txtCity"
+      Tab(0).Control(20)=   "txtMI"
+      Tab(0).Control(21)=   "Label22"
+      Tab(0).Control(22)=   "Label18"
+      Tab(0).Control(23)=   "Label17"
+      Tab(0).Control(24)=   "Label16"
+      Tab(0).Control(25)=   "Label9"
+      Tab(0).Control(26)=   "Label1"
       Tab(0).ControlCount=   27
       TabCaption(1)   =   "PAY INFORMATION (F3)"
       TabPicture(1)   =   "frmEmpForm.frx":001C
-      Tab(1).ControlEnabled=   0   'False
+      Tab(1).ControlEnabled=   -1  'True
       Tab(1).Control(0)=   "Label11"
+      Tab(1).Control(0).Enabled=   0   'False
       Tab(1).Control(1)=   "Label14"
+      Tab(1).Control(1).Enabled=   0   'False
       Tab(1).Control(2)=   "Label2"
+      Tab(1).Control(2).Enabled=   0   'False
       Tab(1).Control(3)=   "Label15"
+      Tab(1).Control(3).Enabled=   0   'False
       Tab(1).Control(4)=   "Label19"
+      Tab(1).Control(4).Enabled=   0   'False
       Tab(1).Control(5)=   "lblEEDefaultJob"
-      Tab(1).Control(6)=   "curSalaryAmt"
-      Tab(1).Control(7)=   "curHourlyAmt"
-      Tab(1).Control(8)=   "chkNoStateTax"
-      Tab(1).Control(9)=   "chkNoFedTax"
-      Tab(1).Control(10)=   "chkNoSSTax"
-      Tab(1).Control(11)=   "chkSalaried"
-      Tab(1).Control(12)=   "chkNoCityTax"
-      Tab(1).Control(13)=   "chkNoFedUnemp"
-      Tab(1).Control(14)=   "chkNoStateUnemp"
-      Tab(1).Control(15)=   "chkSWTMarried"
-      Tab(1).Control(16)=   "chkFWTMarried"
-      Tab(1).Control(17)=   "chkNoMedTax"
-      Tab(1).Control(18)=   "Frame1"
-      Tab(1).Control(19)=   "Frame2"
-      Tab(1).Control(20)=   "Frame3"
-      Tab(1).Control(21)=   "Frame4"
-      Tab(1).Control(22)=   "cmbPPY"
-      Tab(1).Control(23)=   "chkCourtAdd"
-      Tab(1).Control(24)=   "cmbEEDfltCity"
-      Tab(1).Control(25)=   "cmbCourtCWT"
-      Tab(1).Control(26)=   "cmbEEDefaultJob"
-      Tab(1).ControlCount=   27
+      Tab(1).Control(5).Enabled=   0   'False
+      Tab(1).Control(6)=   "Label13"
+      Tab(1).Control(6).Enabled=   0   'False
+      Tab(1).Control(7)=   "curSalaryAmt"
+      Tab(1).Control(7).Enabled=   0   'False
+      Tab(1).Control(8)=   "curHourlyAmt"
+      Tab(1).Control(8).Enabled=   0   'False
+      Tab(1).Control(9)=   "chkNoStateTax"
+      Tab(1).Control(9).Enabled=   0   'False
+      Tab(1).Control(10)=   "chkNoFedTax"
+      Tab(1).Control(10).Enabled=   0   'False
+      Tab(1).Control(11)=   "chkNoSSTax"
+      Tab(1).Control(11).Enabled=   0   'False
+      Tab(1).Control(12)=   "chkSalaried"
+      Tab(1).Control(12).Enabled=   0   'False
+      Tab(1).Control(13)=   "chkNoCityTax"
+      Tab(1).Control(13).Enabled=   0   'False
+      Tab(1).Control(14)=   "chkNoFedUnemp"
+      Tab(1).Control(14).Enabled=   0   'False
+      Tab(1).Control(15)=   "chkNoStateUnemp"
+      Tab(1).Control(15).Enabled=   0   'False
+      Tab(1).Control(16)=   "chkSWTMarried"
+      Tab(1).Control(16).Enabled=   0   'False
+      Tab(1).Control(17)=   "chkFWTMarried"
+      Tab(1).Control(17).Enabled=   0   'False
+      Tab(1).Control(18)=   "chkNoMedTax"
+      Tab(1).Control(18).Enabled=   0   'False
+      Tab(1).Control(19)=   "Frame1"
+      Tab(1).Control(19).Enabled=   0   'False
+      Tab(1).Control(20)=   "Frame2"
+      Tab(1).Control(20).Enabled=   0   'False
+      Tab(1).Control(21)=   "Frame3"
+      Tab(1).Control(21).Enabled=   0   'False
+      Tab(1).Control(22)=   "Frame4"
+      Tab(1).Control(22).Enabled=   0   'False
+      Tab(1).Control(23)=   "cmbPPY"
+      Tab(1).Control(23).Enabled=   0   'False
+      Tab(1).Control(24)=   "chkCourtAdd"
+      Tab(1).Control(24).Enabled=   0   'False
+      Tab(1).Control(25)=   "cmbEEDfltCity"
+      Tab(1).Control(25).Enabled=   0   'False
+      Tab(1).Control(26)=   "cmbCourtCWT"
+      Tab(1).Control(26).Enabled=   0   'False
+      Tab(1).Control(27)=   "cmbEEDefaultJob"
+      Tab(1).Control(27).Enabled=   0   'False
+      Tab(1).Control(28)=   "cmbPRW4"
+      Tab(1).Control(28).Enabled=   0   'False
+      Tab(1).Control(29)=   "chkW4_2Jobs"
+      Tab(1).Control(29).Enabled=   0   'False
+      Tab(1).Control(30)=   "tdbnumW4Dependents"
+      Tab(1).Control(30).Enabled=   0   'False
+      Tab(1).Control(31)=   "tdbnumW4OtherDependents"
+      Tab(1).Control(31).Enabled=   0   'False
+      Tab(1).Control(32)=   "tdbnumW4OtherIncome"
+      Tab(1).Control(32).Enabled=   0   'False
+      Tab(1).Control(33)=   "tdbnumW4Deductions"
+      Tab(1).Control(33).Enabled=   0   'False
+      Tab(1).Control(34)=   "tdbnumW4ExtraWH"
+      Tab(1).Control(34).Enabled=   0   'False
+      Tab(1).ControlCount=   35
       TabCaption(2)   =   "DATES AND OTHER INFORMATION (F4)"
       TabPicture(2)   =   "frmEmpForm.frx":0038
       Tab(2).ControlEnabled=   0   'False
@@ -228,9 +245,315 @@ Begin VB.Form frmEmpForm
       Tab(4).Control(9)=   "cmdDirDepDelete"
       Tab(4).Control(10)=   "cmdDDUpdate"
       Tab(4).ControlCount=   11
+      Begin TDBNumber6Ctl.TDBNumber tdbnumW4ExtraWH 
+         Height          =   375
+         Left            =   7800
+         TabIndex        =   154
+         Top             =   4920
+         Width           =   4215
+         _Version        =   65536
+         _ExtentX        =   7435
+         _ExtentY        =   661
+         Calculator      =   "frmEmpForm.frx":008C
+         Caption         =   "frmEmpForm.frx":00AC
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DropDown        =   "frmEmpForm.frx":0122
+         Keys            =   "frmEmpForm.frx":0140
+         Spin            =   "frmEmpForm.frx":018A
+         AlignHorizontal =   1
+         AlignVertical   =   0
+         Appearance      =   1
+         BackColor       =   -2147483643
+         BorderStyle     =   1
+         BtnPositioning  =   0
+         ClipMode        =   0
+         ClearAction     =   0
+         DecimalPoint    =   "."
+         DisplayFormat   =   "####0;;Null"
+         EditMode        =   0
+         Enabled         =   -1
+         ErrorBeep       =   0
+         ForeColor       =   -2147483640
+         Format          =   "####0"
+         HighlightText   =   0
+         MarginBottom    =   1
+         MarginLeft      =   1
+         MarginRight     =   1
+         MarginTop       =   1
+         MaxValue        =   99999
+         MinValue        =   -99999
+         MousePointer    =   0
+         MoveOnLRKey     =   0
+         NegativeColor   =   255
+         OLEDragMode     =   0
+         OLEDropMode     =   0
+         ReadOnly        =   0
+         Separator       =   ","
+         ShowContextMenu =   -1
+         ValueVT         =   5
+         Value           =   0
+         MaxValueVT      =   5
+         MinValueVT      =   5
+      End
+      Begin TDBNumber6Ctl.TDBNumber tdbnumW4Deductions 
+         Height          =   375
+         Left            =   7800
+         TabIndex        =   153
+         Top             =   4440
+         Width           =   4215
+         _Version        =   65536
+         _ExtentX        =   7435
+         _ExtentY        =   661
+         Calculator      =   "frmEmpForm.frx":01B2
+         Caption         =   "frmEmpForm.frx":01D2
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DropDown        =   "frmEmpForm.frx":023A
+         Keys            =   "frmEmpForm.frx":0258
+         Spin            =   "frmEmpForm.frx":02A2
+         AlignHorizontal =   1
+         AlignVertical   =   0
+         Appearance      =   1
+         BackColor       =   -2147483643
+         BorderStyle     =   1
+         BtnPositioning  =   0
+         ClipMode        =   0
+         ClearAction     =   0
+         DecimalPoint    =   "."
+         DisplayFormat   =   "####0;;Null"
+         EditMode        =   0
+         Enabled         =   -1
+         ErrorBeep       =   0
+         ForeColor       =   -2147483640
+         Format          =   "####0"
+         HighlightText   =   0
+         MarginBottom    =   1
+         MarginLeft      =   1
+         MarginRight     =   1
+         MarginTop       =   1
+         MaxValue        =   99999
+         MinValue        =   -99999
+         MousePointer    =   0
+         MoveOnLRKey     =   0
+         NegativeColor   =   255
+         OLEDragMode     =   0
+         OLEDropMode     =   0
+         ReadOnly        =   0
+         Separator       =   ","
+         ShowContextMenu =   -1
+         ValueVT         =   5
+         Value           =   0
+         MaxValueVT      =   5
+         MinValueVT      =   5
+      End
+      Begin TDBNumber6Ctl.TDBNumber tdbnumW4OtherIncome 
+         Height          =   375
+         Left            =   7800
+         TabIndex        =   152
+         Top             =   3960
+         Width           =   4215
+         _Version        =   65536
+         _ExtentX        =   7435
+         _ExtentY        =   661
+         Calculator      =   "frmEmpForm.frx":02CA
+         Caption         =   "frmEmpForm.frx":02EA
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DropDown        =   "frmEmpForm.frx":0356
+         Keys            =   "frmEmpForm.frx":0374
+         Spin            =   "frmEmpForm.frx":03BE
+         AlignHorizontal =   1
+         AlignVertical   =   0
+         Appearance      =   1
+         BackColor       =   -2147483643
+         BorderStyle     =   1
+         BtnPositioning  =   0
+         ClipMode        =   0
+         ClearAction     =   0
+         DecimalPoint    =   "."
+         DisplayFormat   =   "####0;;Null"
+         EditMode        =   0
+         Enabled         =   -1
+         ErrorBeep       =   0
+         ForeColor       =   -2147483640
+         Format          =   "####0"
+         HighlightText   =   0
+         MarginBottom    =   1
+         MarginLeft      =   1
+         MarginRight     =   1
+         MarginTop       =   1
+         MaxValue        =   99999
+         MinValue        =   -99999
+         MousePointer    =   0
+         MoveOnLRKey     =   0
+         NegativeColor   =   255
+         OLEDragMode     =   0
+         OLEDropMode     =   0
+         ReadOnly        =   0
+         Separator       =   ","
+         ShowContextMenu =   -1
+         ValueVT         =   5
+         Value           =   0
+         MaxValueVT      =   5
+         MinValueVT      =   5
+      End
+      Begin TDBNumber6Ctl.TDBNumber tdbnumW4OtherDependents 
+         Height          =   375
+         Left            =   3000
+         TabIndex        =   151
+         Top             =   4920
+         Width           =   3735
+         _Version        =   65536
+         _ExtentX        =   6588
+         _ExtentY        =   661
+         Calculator      =   "frmEmpForm.frx":03E6
+         Caption         =   "frmEmpForm.frx":0406
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DropDown        =   "frmEmpForm.frx":0484
+         Keys            =   "frmEmpForm.frx":04A2
+         Spin            =   "frmEmpForm.frx":04EC
+         AlignHorizontal =   1
+         AlignVertical   =   0
+         Appearance      =   1
+         BackColor       =   -2147483643
+         BorderStyle     =   1
+         BtnPositioning  =   0
+         ClipMode        =   0
+         ClearAction     =   0
+         DecimalPoint    =   "."
+         DisplayFormat   =   "####0;;Null"
+         EditMode        =   0
+         Enabled         =   -1
+         ErrorBeep       =   0
+         ForeColor       =   -2147483640
+         Format          =   "####0"
+         HighlightText   =   0
+         MarginBottom    =   1
+         MarginLeft      =   1
+         MarginRight     =   1
+         MarginTop       =   1
+         MaxValue        =   99999
+         MinValue        =   -99999
+         MousePointer    =   0
+         MoveOnLRKey     =   0
+         NegativeColor   =   255
+         OLEDragMode     =   0
+         OLEDropMode     =   0
+         ReadOnly        =   0
+         Separator       =   ","
+         ShowContextMenu =   -1
+         ValueVT         =   5
+         Value           =   0
+         MaxValueVT      =   5
+         MinValueVT      =   5
+      End
+      Begin TDBNumber6Ctl.TDBNumber tdbnumW4Dependents 
+         Height          =   375
+         Left            =   3000
+         TabIndex        =   150
+         Top             =   4440
+         Width           =   3735
+         _Version        =   65536
+         _ExtentX        =   6588
+         _ExtentY        =   661
+         Calculator      =   "frmEmpForm.frx":0514
+         Caption         =   "frmEmpForm.frx":0534
+         BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   400
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         DropDown        =   "frmEmpForm.frx":05A6
+         Keys            =   "frmEmpForm.frx":05C4
+         Spin            =   "frmEmpForm.frx":060E
+         AlignHorizontal =   1
+         AlignVertical   =   0
+         Appearance      =   1
+         BackColor       =   -2147483643
+         BorderStyle     =   1
+         BtnPositioning  =   0
+         ClipMode        =   0
+         ClearAction     =   0
+         DecimalPoint    =   "."
+         DisplayFormat   =   "####0;;Null"
+         EditMode        =   0
+         Enabled         =   -1
+         ErrorBeep       =   0
+         ForeColor       =   -2147483640
+         Format          =   "####0"
+         HighlightText   =   0
+         MarginBottom    =   1
+         MarginLeft      =   1
+         MarginRight     =   1
+         MarginTop       =   1
+         MaxValue        =   99999
+         MinValue        =   -99999
+         MousePointer    =   0
+         MoveOnLRKey     =   0
+         NegativeColor   =   255
+         OLEDragMode     =   0
+         OLEDropMode     =   0
+         ReadOnly        =   0
+         Separator       =   ","
+         ShowContextMenu =   -1
+         ValueVT         =   5
+         Value           =   0
+         MaxValueVT      =   5
+         MinValueVT      =   5
+      End
+      Begin VB.CheckBox chkW4_2Jobs 
+         Caption         =   "Two Jobs Total"
+         Height          =   375
+         Left            =   360
+         TabIndex        =   149
+         Top             =   4440
+         Width           =   2295
+      End
+      Begin VB.ComboBox cmbPRW4 
+         Height          =   360
+         Left            =   3000
+         TabIndex        =   148
+         Text            =   "cmbPRW4"
+         Top             =   3960
+         Width           =   4455
+      End
       Begin MSMask.MaskEdBox txtSSN 
          Height          =   375
-         Left            =   4560
+         Left            =   -70440
          TabIndex        =   40
          Top             =   2880
          Width           =   1695
@@ -269,7 +592,7 @@ Begin VB.Form frmEmpForm
          Caption         =   "UPDATE"
          Height          =   615
          Left            =   -71400
-         TabIndex        =   143
+         TabIndex        =   142
          Top             =   6000
          Width           =   1095
       End
@@ -324,7 +647,7 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   10821
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":008C
+         Caption         =   "frmEmpForm.frx":0636
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -334,8 +657,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":00F0
-         Key             =   "frmEmpForm.frx":010E
+         DropDown        =   "frmEmpForm.frx":069A
+         Key             =   "frmEmpForm.frx":06B8
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -375,14 +698,14 @@ Begin VB.Form frmEmpForm
       End
       Begin TDBText6Ctl.TDBText tdbtxtComment 
          Height          =   1215
-         Left            =   1560
+         Left            =   -73440
          TabIndex        =   50
          Top             =   5640
          Width           =   8895
          _Version        =   65536
          _ExtentX        =   15690
          _ExtentY        =   2143
-         Caption         =   "frmEmpForm.frx":0152
+         Caption         =   "frmEmpForm.frx":06FC
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -392,8 +715,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":01B6
-         Key             =   "frmEmpForm.frx":01D4
+         DropDown        =   "frmEmpForm.frx":0760
+         Key             =   "frmEmpForm.frx":077E
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -433,22 +756,22 @@ Begin VB.Form frmEmpForm
       End
       Begin VB.ComboBox cmbEEDefaultJob 
          Height          =   360
-         Left            =   -74640
+         Left            =   360
          Style           =   2  'Dropdown List
          TabIndex        =   107
-         Top             =   6480
+         Top             =   8040
          Width           =   6135
       End
       Begin TDBText6Ctl.TDBText txtAltName 
          Height          =   375
-         Left            =   360
+         Left            =   -74640
          TabIndex        =   47
          Top             =   4560
          Width           =   9615
          _Version        =   65536
          _ExtentX        =   16960
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":0218
+         Caption         =   "frmEmpForm.frx":07C2
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -458,8 +781,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":027E
-         Key             =   "frmEmpForm.frx":029C
+         DropDown        =   "frmEmpForm.frx":0828
+         Key             =   "frmEmpForm.frx":0846
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -499,14 +822,14 @@ Begin VB.Form frmEmpForm
       End
       Begin TDBText6Ctl.TDBText txtCheckComment 
          Height          =   375
-         Left            =   360
+         Left            =   -74640
          TabIndex        =   49
          Top             =   5040
          Width           =   10815
          _Version        =   65536
          _ExtentX        =   19076
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":02E0
+         Caption         =   "frmEmpForm.frx":088A
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -516,8 +839,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":0350
-         Key             =   "frmEmpForm.frx":036E
+         DropDown        =   "frmEmpForm.frx":08FA
+         Key             =   "frmEmpForm.frx":0918
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -557,7 +880,7 @@ Begin VB.Form frmEmpForm
       End
       Begin VB.ComboBox cmbWkcCat 
          Height          =   360
-         Left            =   6720
+         Left            =   -68280
          Style           =   2  'Dropdown List
          TabIndex        =   43
          Top             =   3360
@@ -581,23 +904,23 @@ Begin VB.Form frmEmpForm
       End
       Begin VB.ComboBox cmbCourtCWT 
          Height          =   360
-         Left            =   -68160
+         Left            =   6840
          Style           =   2  'Dropdown List
          TabIndex        =   106
-         Top             =   5640
+         Top             =   7200
          Width           =   5775
       End
       Begin VB.ComboBox cmbEEDfltCity 
          Height          =   360
-         Left            =   -74640
+         Left            =   360
          Style           =   2  'Dropdown List
          TabIndex        =   105
-         Top             =   5640
+         Top             =   7200
          Width           =   6135
       End
       Begin VB.ComboBox cmbDept 
          Height          =   360
-         Left            =   1320
+         Left            =   -73680
          Style           =   2  'Dropdown List
          TabIndex        =   42
          Top             =   3360
@@ -606,14 +929,14 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkCourtAdd 
          Caption         =   "Additional"
          Height          =   255
-         Left            =   -65400
+         Left            =   9840
          TabIndex        =   104
-         Top             =   5280
+         Top             =   6720
          Width           =   1335
       End
       Begin VB.ComboBox cmb1099 
          Height          =   360
-         Left            =   8640
+         Left            =   -66360
          Style           =   2  'Dropdown List
          TabIndex        =   46
          Top             =   3840
@@ -621,7 +944,7 @@ Begin VB.Form frmEmpForm
       End
       Begin VB.ComboBox cmbEICType 
          Height          =   360
-         Left            =   1320
+         Left            =   -73680
          Style           =   2  'Dropdown List
          TabIndex        =   44
          Top             =   3840
@@ -630,7 +953,7 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkUseDeptWkc 
          Caption         =   "Use Department Category"
          Height          =   255
-         Left            =   9000
+         Left            =   -66000
          TabIndex        =   41
          Top             =   3000
          Width           =   2775
@@ -638,7 +961,7 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkInactive 
          Caption         =   "  Inactive"
          Height          =   375
-         Left            =   1440
+         Left            =   -73560
          TabIndex        =   30
          Top             =   840
          Width           =   1215
@@ -646,14 +969,14 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkStatutory 
          Caption         =   "Statutory Employee"
          Height          =   255
-         Left            =   4560
+         Left            =   -70440
          TabIndex        =   45
          Top             =   3960
          Width           =   2055
       End
       Begin VB.ComboBox cmbPPY 
          Height          =   360
-         Left            =   -72600
+         Left            =   2400
          Style           =   2  'Dropdown List
          TabIndex        =   82
          Top             =   1920
@@ -661,7 +984,7 @@ Begin VB.Form frmEmpForm
       End
       Begin VB.ComboBox cmbState 
          Height          =   360
-         Left            =   11400
+         Left            =   -63600
          TabIndex        =   38
          Text            =   "cmbState"
          Top             =   2400
@@ -669,15 +992,15 @@ Begin VB.Form frmEmpForm
       End
       Begin TDBNumber6Ctl.TDBNumber tdbnumZipCode 
          Height          =   375
-         Left            =   240
+         Left            =   -74760
          TabIndex        =   39
          Top             =   2880
          Width           =   2535
          _Version        =   65536
          _ExtentX        =   4471
          _ExtentY        =   661
-         Calculator      =   "frmEmpForm.frx":03B2
-         Caption         =   "frmEmpForm.frx":03D2
+         Calculator      =   "frmEmpForm.frx":095C
+         Caption         =   "frmEmpForm.frx":097C
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -687,9 +1010,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":0438
-         Keys            =   "frmEmpForm.frx":0456
-         Spin            =   "frmEmpForm.frx":04A0
+         DropDown        =   "frmEmpForm.frx":09E2
+         Keys            =   "frmEmpForm.frx":0A00
+         Spin            =   "frmEmpForm.frx":0A4A
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -728,7 +1051,7 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkUseAltName 
          Caption         =   "Use Alt Name for Docs."
          Height          =   375
-         Left            =   10080
+         Left            =   -64920
          TabIndex        =   48
          Top             =   4560
          Width           =   2535
@@ -736,9 +1059,9 @@ Begin VB.Form frmEmpForm
       Begin VB.Frame Frame4 
          Caption         =   " SWT ADDITIONAL AMOUNT "
          Height          =   735
-         Left            =   -68040
-         TabIndex        =   135
-         Top             =   4440
+         Left            =   6960
+         TabIndex        =   134
+         Top             =   5880
          Width           =   5055
          Begin TDBNumber6Ctl.TDBNumber tdbnumSWTExtraAmount 
             Height          =   375
@@ -749,8 +1072,8 @@ Begin VB.Form frmEmpForm
             _Version        =   65536
             _ExtentX        =   2990
             _ExtentY        =   661
-            Calculator      =   "frmEmpForm.frx":04C8
-            Caption         =   "frmEmpForm.frx":04E8
+            Calculator      =   "frmEmpForm.frx":0A72
+            Caption         =   "frmEmpForm.frx":0A92
             BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                Name            =   "Arial"
                Size            =   9.75
@@ -760,9 +1083,9 @@ Begin VB.Form frmEmpForm
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
-            DropDown        =   "frmEmpForm.frx":054C
-            Keys            =   "frmEmpForm.frx":056A
-            Spin            =   "frmEmpForm.frx":05B4
+            DropDown        =   "frmEmpForm.frx":0AF6
+            Keys            =   "frmEmpForm.frx":0B14
+            Spin            =   "frmEmpForm.frx":0B5E
             AlignHorizontal =   1
             AlignVertical   =   0
             Appearance      =   1
@@ -818,9 +1141,9 @@ Begin VB.Form frmEmpForm
       Begin VB.Frame Frame3 
          Caption         =   " SWT BASIS "
          Height          =   735
-         Left            =   -73320
-         TabIndex        =   134
-         Top             =   4440
+         Left            =   1680
+         TabIndex        =   133
+         Top             =   5880
          Width           =   4935
          Begin TDBNumber6Ctl.TDBNumber tdbnumSWTAmount 
             Height          =   375
@@ -831,8 +1154,8 @@ Begin VB.Form frmEmpForm
             _Version        =   65536
             _ExtentX        =   2143
             _ExtentY        =   661
-            Calculator      =   "frmEmpForm.frx":05DC
-            Caption         =   "frmEmpForm.frx":05FC
+            Calculator      =   "frmEmpForm.frx":0B86
+            Caption         =   "frmEmpForm.frx":0BA6
             BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                Name            =   "Arial"
                Size            =   9.75
@@ -842,9 +1165,9 @@ Begin VB.Form frmEmpForm
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
-            DropDown        =   "frmEmpForm.frx":0660
-            Keys            =   "frmEmpForm.frx":067E
-            Spin            =   "frmEmpForm.frx":06C8
+            DropDown        =   "frmEmpForm.frx":0C0A
+            Keys            =   "frmEmpForm.frx":0C28
+            Spin            =   "frmEmpForm.frx":0C72
             AlignHorizontal =   1
             AlignVertical   =   0
             Appearance      =   1
@@ -875,7 +1198,7 @@ Begin VB.Form frmEmpForm
             ReadOnly        =   0
             Separator       =   ","
             ShowContextMenu =   -1
-            ValueVT         =   2088828933
+            ValueVT         =   5
             Value           =   0
             MaxValueVT      =   5
             MinValueVT      =   5
@@ -900,8 +1223,8 @@ Begin VB.Form frmEmpForm
       Begin VB.Frame Frame2 
          Caption         =   " FWT ADDITIONAL AMOUNT "
          Height          =   735
-         Left            =   -68040
-         TabIndex        =   133
+         Left            =   6960
+         TabIndex        =   132
          Top             =   3000
          Width           =   5055
          Begin TDBNumber6Ctl.TDBNumber tdbnumFWTExtraAmount 
@@ -913,8 +1236,8 @@ Begin VB.Form frmEmpForm
             _Version        =   65536
             _ExtentX        =   2990
             _ExtentY        =   661
-            Calculator      =   "frmEmpForm.frx":06F0
-            Caption         =   "frmEmpForm.frx":0710
+            Calculator      =   "frmEmpForm.frx":0C9A
+            Caption         =   "frmEmpForm.frx":0CBA
             BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                Name            =   "Arial"
                Size            =   9.75
@@ -924,9 +1247,9 @@ Begin VB.Form frmEmpForm
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
-            DropDown        =   "frmEmpForm.frx":0774
-            Keys            =   "frmEmpForm.frx":0792
-            Spin            =   "frmEmpForm.frx":07DC
+            DropDown        =   "frmEmpForm.frx":0D1E
+            Keys            =   "frmEmpForm.frx":0D3C
+            Spin            =   "frmEmpForm.frx":0D86
             AlignHorizontal =   1
             AlignVertical   =   0
             Appearance      =   1
@@ -957,7 +1280,7 @@ Begin VB.Form frmEmpForm
             ReadOnly        =   0
             Separator       =   ","
             ShowContextMenu =   -1
-            ValueVT         =   2088828933
+            ValueVT         =   5
             Value           =   0
             MaxValueVT      =   5
             MinValueVT      =   5
@@ -982,8 +1305,8 @@ Begin VB.Form frmEmpForm
       Begin VB.Frame Frame1 
          Caption         =   " FWT BASIS "
          Height          =   735
-         Left            =   -73320
-         TabIndex        =   132
+         Left            =   1680
+         TabIndex        =   131
          Top             =   3000
          Width           =   4935
          Begin TDBNumber6Ctl.TDBNumber tdbnumFWTAmount 
@@ -995,8 +1318,8 @@ Begin VB.Form frmEmpForm
             _Version        =   65536
             _ExtentX        =   2143
             _ExtentY        =   661
-            Calculator      =   "frmEmpForm.frx":0804
-            Caption         =   "frmEmpForm.frx":0824
+            Calculator      =   "frmEmpForm.frx":0DAE
+            Caption         =   "frmEmpForm.frx":0DCE
             BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                Name            =   "Arial"
                Size            =   9.75
@@ -1006,9 +1329,9 @@ Begin VB.Form frmEmpForm
                Italic          =   0   'False
                Strikethrough   =   0   'False
             EndProperty
-            DropDown        =   "frmEmpForm.frx":0888
-            Keys            =   "frmEmpForm.frx":08A6
-            Spin            =   "frmEmpForm.frx":08F0
+            DropDown        =   "frmEmpForm.frx":0E32
+            Keys            =   "frmEmpForm.frx":0E50
+            Spin            =   "frmEmpForm.frx":0E9A
             AlignHorizontal =   1
             AlignVertical   =   0
             Appearance      =   1
@@ -1086,8 +1409,8 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   6165
          _ExtentY        =   661
-         Calculator      =   "frmEmpForm.frx":0918
-         Caption         =   "frmEmpForm.frx":0938
+         Calculator      =   "frmEmpForm.frx":0EC2
+         Caption         =   "frmEmpForm.frx":0EE2
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1097,9 +1420,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":099A
-         Keys            =   "frmEmpForm.frx":09B8
-         Spin            =   "frmEmpForm.frx":0A02
+         DropDown        =   "frmEmpForm.frx":0F44
+         Keys            =   "frmEmpForm.frx":0F62
+         Spin            =   "frmEmpForm.frx":0FAC
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -1296,8 +1619,8 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   5318
          _ExtentY        =   661
-         Calculator      =   "frmEmpForm.frx":0A2A
-         Caption         =   "frmEmpForm.frx":0A4A
+         Calculator      =   "frmEmpForm.frx":0FD4
+         Caption         =   "frmEmpForm.frx":0FF4
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1307,9 +1630,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":0AB4
-         Keys            =   "frmEmpForm.frx":0AD2
-         Spin            =   "frmEmpForm.frx":0B1C
+         DropDown        =   "frmEmpForm.frx":105E
+         Keys            =   "frmEmpForm.frx":107C
+         Spin            =   "frmEmpForm.frx":10C6
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -1354,8 +1677,8 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   4895
          _ExtentY        =   661
-         Calculator      =   "frmEmpForm.frx":0B44
-         Caption         =   "frmEmpForm.frx":0B64
+         Calculator      =   "frmEmpForm.frx":10EE
+         Caption         =   "frmEmpForm.frx":110E
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1365,9 +1688,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":0BC6
-         Keys            =   "frmEmpForm.frx":0BE4
-         Spin            =   "frmEmpForm.frx":0C2E
+         DropDown        =   "frmEmpForm.frx":1170
+         Keys            =   "frmEmpForm.frx":118E
+         Spin            =   "frmEmpForm.frx":11D8
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -1548,7 +1871,7 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   8281
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":0C56
+         Caption         =   "frmEmpForm.frx":1200
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1558,8 +1881,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":0CBE
-         Key             =   "frmEmpForm.frx":0CDC
+         DropDown        =   "frmEmpForm.frx":1268
+         Key             =   "frmEmpForm.frx":1286
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -1971,8 +2294,8 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   4471
          _ExtentY        =   661
-         Calculator      =   "frmEmpForm.frx":0D20
-         Caption         =   "frmEmpForm.frx":0D40
+         Calculator      =   "frmEmpForm.frx":12CA
+         Caption         =   "frmEmpForm.frx":12EA
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -1982,9 +2305,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":0DB0
-         Keys            =   "frmEmpForm.frx":0DCE
-         Spin            =   "frmEmpForm.frx":0E18
+         DropDown        =   "frmEmpForm.frx":135A
+         Keys            =   "frmEmpForm.frx":1378
+         Spin            =   "frmEmpForm.frx":13C2
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -2036,8 +2359,8 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   5530
          _ExtentY        =   661
-         Calendar        =   "frmEmpForm.frx":0E40
-         Caption         =   "frmEmpForm.frx":0F40
+         Calendar        =   "frmEmpForm.frx":13EA
+         Caption         =   "frmEmpForm.frx":14EA
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2047,9 +2370,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":0FB4
-         Keys            =   "frmEmpForm.frx":0FD2
-         Spin            =   "frmEmpForm.frx":1030
+         DropDown        =   "frmEmpForm.frx":155E
+         Keys            =   "frmEmpForm.frx":157C
+         Spin            =   "frmEmpForm.frx":15DA
          AlignHorizontal =   0
          AlignVertical   =   0
          Appearance      =   1
@@ -2092,7 +2415,7 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkNoMedTax 
          Caption         =   "  No Med Tax"
          Height          =   375
-         Left            =   -71160
+         Left            =   3840
          TabIndex        =   87
          Top             =   2040
          Width           =   1695
@@ -2100,7 +2423,7 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkFWTMarried 
          Caption         =   " Married"
          Height          =   375
-         Left            =   -74640
+         Left            =   360
          TabIndex        =   90
          Top             =   3240
          Width           =   1095
@@ -2108,15 +2431,15 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkSWTMarried 
          Caption         =   " Married"
          Height          =   375
-         Left            =   -74640
+         Left            =   360
          TabIndex        =   97
-         Top             =   4680
+         Top             =   6120
          Width           =   1095
       End
       Begin VB.CheckBox chkNoStateUnemp 
          Caption         =   "  No State Unemp"
          Height          =   375
-         Left            =   -65520
+         Left            =   9480
          TabIndex        =   89
          Top             =   2040
          Width           =   1935
@@ -2124,7 +2447,7 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkNoFedUnemp 
          Caption         =   "  No Fed Unemp"
          Height          =   375
-         Left            =   -65520
+         Left            =   9480
          TabIndex        =   86
          Top             =   1680
          Width           =   1815
@@ -2132,7 +2455,7 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkNoCityTax 
          Caption         =   "  No City Tax"
          Height          =   375
-         Left            =   -67440
+         Left            =   7560
          TabIndex        =   85
          Top             =   1680
          Width           =   1575
@@ -2140,7 +2463,7 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkSalaried 
          Caption         =   "  Salaried"
          Height          =   375
-         Left            =   -73200
+         Left            =   1800
          TabIndex        =   79
          Top             =   960
          Width           =   1215
@@ -2148,7 +2471,7 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkNoSSTax 
          Caption         =   "  No SS Tax"
          Height          =   375
-         Left            =   -71160
+         Left            =   3840
          TabIndex        =   83
          Top             =   1680
          Width           =   1455
@@ -2156,7 +2479,7 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkNoFedTax 
          Caption         =   "  No Fed Tax"
          Height          =   375
-         Left            =   -69120
+         Left            =   5880
          TabIndex        =   84
          Top             =   1680
          Width           =   1455
@@ -2164,21 +2487,21 @@ Begin VB.Form frmEmpForm
       Begin VB.CheckBox chkNoStateTax 
          Caption         =   "  No State Tax"
          Height          =   375
-         Left            =   -69120
+         Left            =   5880
          TabIndex        =   88
          Top             =   2040
          Width           =   1575
       End
       Begin TDBText6Ctl.TDBText txtAddress1 
          Height          =   375
-         Left            =   240
+         Left            =   -74760
          TabIndex        =   35
          Top             =   1920
          Width           =   12015
          _Version        =   65536
          _ExtentX        =   21193
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":1058
+         Caption         =   "frmEmpForm.frx":1602
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2188,8 +2511,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":10BE
-         Key             =   "frmEmpForm.frx":10DC
+         DropDown        =   "frmEmpForm.frx":1668
+         Key             =   "frmEmpForm.frx":1686
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -2229,15 +2552,15 @@ Begin VB.Form frmEmpForm
       End
       Begin TDBNumber6Ctl.TDBNumber lngEmployeeNumber 
          Height          =   375
-         Left            =   240
+         Left            =   -74760
          TabIndex        =   31
          Top             =   1440
          Width           =   2415
          _Version        =   65536
          _ExtentX        =   4260
          _ExtentY        =   661
-         Calculator      =   "frmEmpForm.frx":1120
-         Caption         =   "frmEmpForm.frx":1140
+         Calculator      =   "frmEmpForm.frx":16CA
+         Caption         =   "frmEmpForm.frx":16EA
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2247,9 +2570,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":11AA
-         Keys            =   "frmEmpForm.frx":11C8
-         Spin            =   "frmEmpForm.frx":1212
+         DropDown        =   "frmEmpForm.frx":1754
+         Keys            =   "frmEmpForm.frx":1772
+         Spin            =   "frmEmpForm.frx":17BC
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -2287,14 +2610,14 @@ Begin VB.Form frmEmpForm
       End
       Begin TDBText6Ctl.TDBText txtFirstName 
          Height          =   375
-         Left            =   2880
+         Left            =   -72120
          TabIndex        =   32
          Top             =   1440
          Width           =   4095
          _Version        =   65536
          _ExtentX        =   7223
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":123A
+         Caption         =   "frmEmpForm.frx":17E4
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2304,8 +2627,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":12A4
-         Key             =   "frmEmpForm.frx":12C2
+         DropDown        =   "frmEmpForm.frx":184E
+         Key             =   "frmEmpForm.frx":186C
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -2345,14 +2668,14 @@ Begin VB.Form frmEmpForm
       End
       Begin TDBText6Ctl.TDBText txtLastName 
          Height          =   375
-         Left            =   8400
+         Left            =   -66600
          TabIndex        =   34
          Top             =   1440
          Width           =   4095
          _Version        =   65536
          _ExtentX        =   7223
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":1306
+         Caption         =   "frmEmpForm.frx":18B0
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2362,8 +2685,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":136E
-         Key             =   "frmEmpForm.frx":138C
+         DropDown        =   "frmEmpForm.frx":1918
+         Key             =   "frmEmpForm.frx":1936
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -2403,14 +2726,14 @@ Begin VB.Form frmEmpForm
       End
       Begin TDBText6Ctl.TDBText txtAddress2 
          Height          =   375
-         Left            =   240
+         Left            =   -74760
          TabIndex        =   36
          Top             =   2400
          Width           =   6015
          _Version        =   65536
          _ExtentX        =   10610
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":13D0
+         Caption         =   "frmEmpForm.frx":197A
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2420,8 +2743,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":1436
-         Key             =   "frmEmpForm.frx":1454
+         DropDown        =   "frmEmpForm.frx":19E0
+         Key             =   "frmEmpForm.frx":19FE
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -2461,14 +2784,14 @@ Begin VB.Form frmEmpForm
       End
       Begin TDBText6Ctl.TDBText txtCity 
          Height          =   375
-         Left            =   6480
+         Left            =   -68520
          TabIndex        =   37
          Top             =   2400
          Width           =   3975
          _Version        =   65536
          _ExtentX        =   7011
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":1498
+         Caption         =   "frmEmpForm.frx":1A42
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2478,8 +2801,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":14F6
-         Key             =   "frmEmpForm.frx":1514
+         DropDown        =   "frmEmpForm.frx":1AA0
+         Key             =   "frmEmpForm.frx":1ABE
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -2519,14 +2842,14 @@ Begin VB.Form frmEmpForm
       End
       Begin TDBText6Ctl.TDBText txtMI 
          Height          =   375
-         Left            =   7320
+         Left            =   -67680
          TabIndex        =   33
          Top             =   1440
          Width           =   855
          _Version        =   65536
          _ExtentX        =   1508
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":1558
+         Caption         =   "frmEmpForm.frx":1B02
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2536,8 +2859,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":15B0
-         Key             =   "frmEmpForm.frx":15CE
+         DropDown        =   "frmEmpForm.frx":1B5A
+         Key             =   "frmEmpForm.frx":1B78
          BackColor       =   -2147483643
          EditMode        =   1
          ForeColor       =   -2147483640
@@ -2577,15 +2900,15 @@ Begin VB.Form frmEmpForm
       End
       Begin TDBNumber6Ctl.TDBNumber curHourlyAmt 
          Height          =   375
-         Left            =   -67080
+         Left            =   7920
          TabIndex        =   81
          Top             =   960
          Width           =   3375
          _Version        =   65536
          _ExtentX        =   5953
          _ExtentY        =   661
-         Calculator      =   "frmEmpForm.frx":1612
-         Caption         =   "frmEmpForm.frx":1632
+         Calculator      =   "frmEmpForm.frx":1BBC
+         Caption         =   "frmEmpForm.frx":1BDC
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2595,9 +2918,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":16A2
-         Keys            =   "frmEmpForm.frx":16C0
-         Spin            =   "frmEmpForm.frx":170A
+         DropDown        =   "frmEmpForm.frx":1C4C
+         Keys            =   "frmEmpForm.frx":1C6A
+         Spin            =   "frmEmpForm.frx":1CB4
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -2628,7 +2951,7 @@ Begin VB.Form frmEmpForm
          ReadOnly        =   0
          Separator       =   ","
          ShowContextMenu =   -1
-         ValueVT         =   82575361
+         ValueVT         =   1
          Value           =   0
          MaxValueVT      =   5
          MinValueVT      =   5
@@ -2642,7 +2965,7 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   7646
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":1732
+         Caption         =   "frmEmpForm.frx":1CDC
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2652,8 +2975,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":179A
-         Key             =   "frmEmpForm.frx":17B8
+         DropDown        =   "frmEmpForm.frx":1D44
+         Key             =   "frmEmpForm.frx":1D62
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -2693,15 +3016,15 @@ Begin VB.Form frmEmpForm
       End
       Begin TDBNumber6Ctl.TDBNumber curSalaryAmt 
          Height          =   375
-         Left            =   -71040
+         Left            =   3960
          TabIndex        =   80
          Top             =   960
          Width           =   3375
          _Version        =   65536
          _ExtentX        =   5953
          _ExtentY        =   661
-         Calculator      =   "frmEmpForm.frx":17FC
-         Caption         =   "frmEmpForm.frx":181C
+         Calculator      =   "frmEmpForm.frx":1DA6
+         Caption         =   "frmEmpForm.frx":1DC6
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2711,9 +3034,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":188C
-         Keys            =   "frmEmpForm.frx":18AA
-         Spin            =   "frmEmpForm.frx":18F4
+         DropDown        =   "frmEmpForm.frx":1E36
+         Keys            =   "frmEmpForm.frx":1E54
+         Spin            =   "frmEmpForm.frx":1E9E
          AlignHorizontal =   1
          AlignVertical   =   0
          Appearance      =   1
@@ -2759,8 +3082,8 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   5741
          _ExtentY        =   661
-         Calendar        =   "frmEmpForm.frx":191C
-         Caption         =   "frmEmpForm.frx":1A1E
+         Calendar        =   "frmEmpForm.frx":1EC6
+         Caption         =   "frmEmpForm.frx":1FC8
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2770,9 +3093,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":1A88
-         Keys            =   "frmEmpForm.frx":1AA6
-         Spin            =   "frmEmpForm.frx":1B04
+         DropDown        =   "frmEmpForm.frx":2032
+         Keys            =   "frmEmpForm.frx":2050
+         Spin            =   "frmEmpForm.frx":20AE
          AlignHorizontal =   0
          AlignVertical   =   0
          Appearance      =   1
@@ -2821,8 +3144,8 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   5530
          _ExtentY        =   661
-         Calendar        =   "frmEmpForm.frx":1B2C
-         Caption         =   "frmEmpForm.frx":1C2C
+         Calendar        =   "frmEmpForm.frx":20D6
+         Caption         =   "frmEmpForm.frx":21D6
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2832,9 +3155,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":1CA0
-         Keys            =   "frmEmpForm.frx":1CBE
-         Spin            =   "frmEmpForm.frx":1D1C
+         DropDown        =   "frmEmpForm.frx":224A
+         Keys            =   "frmEmpForm.frx":2268
+         Spin            =   "frmEmpForm.frx":22C6
          AlignHorizontal =   0
          AlignVertical   =   0
          Appearance      =   1
@@ -2883,8 +3206,8 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   5741
          _ExtentY        =   661
-         Calendar        =   "frmEmpForm.frx":1D44
-         Caption         =   "frmEmpForm.frx":1E44
+         Calendar        =   "frmEmpForm.frx":22EE
+         Caption         =   "frmEmpForm.frx":23EE
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2894,9 +3217,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":1EBA
-         Keys            =   "frmEmpForm.frx":1ED8
-         Spin            =   "frmEmpForm.frx":1F36
+         DropDown        =   "frmEmpForm.frx":2464
+         Keys            =   "frmEmpForm.frx":2482
+         Spin            =   "frmEmpForm.frx":24E0
          AlignHorizontal =   0
          AlignVertical   =   0
          Appearance      =   1
@@ -2945,8 +3268,8 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   5530
          _ExtentY        =   661
-         Calendar        =   "frmEmpForm.frx":1F5E
-         Caption         =   "frmEmpForm.frx":205E
+         Calendar        =   "frmEmpForm.frx":2508
+         Caption         =   "frmEmpForm.frx":2608
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -2956,9 +3279,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":20CE
-         Keys            =   "frmEmpForm.frx":20EC
-         Spin            =   "frmEmpForm.frx":214A
+         DropDown        =   "frmEmpForm.frx":2678
+         Keys            =   "frmEmpForm.frx":2696
+         Spin            =   "frmEmpForm.frx":26F4
          AlignHorizontal =   0
          AlignVertical   =   0
          Appearance      =   1
@@ -3007,8 +3330,8 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   5530
          _ExtentY        =   661
-         Calendar        =   "frmEmpForm.frx":2172
-         Caption         =   "frmEmpForm.frx":2272
+         Calendar        =   "frmEmpForm.frx":271C
+         Caption         =   "frmEmpForm.frx":281C
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -3018,9 +3341,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":22E4
-         Keys            =   "frmEmpForm.frx":2302
-         Spin            =   "frmEmpForm.frx":2360
+         DropDown        =   "frmEmpForm.frx":288E
+         Keys            =   "frmEmpForm.frx":28AC
+         Spin            =   "frmEmpForm.frx":290A
          AlignHorizontal =   0
          AlignVertical   =   0
          Appearance      =   1
@@ -3069,8 +3392,8 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   5530
          _ExtentY        =   661
-         Calendar        =   "frmEmpForm.frx":2388
-         Caption         =   "frmEmpForm.frx":2488
+         Calendar        =   "frmEmpForm.frx":2932
+         Caption         =   "frmEmpForm.frx":2A32
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -3080,9 +3403,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":24FE
-         Keys            =   "frmEmpForm.frx":251C
-         Spin            =   "frmEmpForm.frx":257A
+         DropDown        =   "frmEmpForm.frx":2AA8
+         Keys            =   "frmEmpForm.frx":2AC6
+         Spin            =   "frmEmpForm.frx":2B24
          AlignHorizontal =   0
          AlignVertical   =   0
          Appearance      =   1
@@ -3131,8 +3454,8 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   5741
          _ExtentY        =   661
-         Calendar        =   "frmEmpForm.frx":25A2
-         Caption         =   "frmEmpForm.frx":26A2
+         Calendar        =   "frmEmpForm.frx":2B4C
+         Caption         =   "frmEmpForm.frx":2C4C
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -3142,9 +3465,9 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":2718
-         Keys            =   "frmEmpForm.frx":2736
-         Spin            =   "frmEmpForm.frx":2794
+         DropDown        =   "frmEmpForm.frx":2CC2
+         Keys            =   "frmEmpForm.frx":2CE0
+         Spin            =   "frmEmpForm.frx":2D3E
          AlignHorizontal =   0
          AlignVertical   =   0
          Appearance      =   1
@@ -3193,7 +3516,7 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   5530
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":27BC
+         Caption         =   "frmEmpForm.frx":2D66
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -3203,8 +3526,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":2818
-         Key             =   "frmEmpForm.frx":2836
+         DropDown        =   "frmEmpForm.frx":2DC2
+         Key             =   "frmEmpForm.frx":2DE0
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -3251,7 +3574,7 @@ Begin VB.Form frmEmpForm
          _Version        =   65536
          _ExtentX        =   8281
          _ExtentY        =   661
-         Caption         =   "frmEmpForm.frx":287A
+         Caption         =   "frmEmpForm.frx":2E24
          BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
             Name            =   "Arial"
             Size            =   9.75
@@ -3261,8 +3584,8 @@ Begin VB.Form frmEmpForm
             Italic          =   0   'False
             Strikethrough   =   0   'False
          EndProperty
-         DropDown        =   "frmEmpForm.frx":28E4
-         Key             =   "frmEmpForm.frx":2902
+         DropDown        =   "frmEmpForm.frx":2E8E
+         Key             =   "frmEmpForm.frx":2EAC
          BackColor       =   -2147483643
          EditMode        =   0
          ForeColor       =   -2147483640
@@ -3300,11 +3623,28 @@ Begin VB.Form frmEmpForm
          OLEDragMode     =   0
          OLEDropMode     =   0
       End
+      Begin VB.Label Label13 
+         Caption         =   "REVISED W4 FORM"
+         BeginProperty Font 
+            Name            =   "Arial"
+            Size            =   9.75
+            Charset         =   0
+            Weight          =   700
+            Underline       =   0   'False
+            Italic          =   0   'False
+            Strikethrough   =   0   'False
+         EndProperty
+         Height          =   255
+         Left            =   360
+         TabIndex        =   147
+         Top             =   4080
+         Width           =   2295
+      End
       Begin VB.Label Label22 
          Caption         =   "S S N:"
          Height          =   255
-         Left            =   3480
-         TabIndex        =   147
+         Left            =   -71520
+         TabIndex        =   146
          Top             =   2880
          Width           =   975
       End
@@ -3321,7 +3661,7 @@ Begin VB.Form frmEmpForm
          EndProperty
          Height          =   255
          Left            =   -68640
-         TabIndex        =   146
+         TabIndex        =   145
          Top             =   8040
          Width           =   1215
       End
@@ -3338,7 +3678,7 @@ Begin VB.Form frmEmpForm
          EndProperty
          Height          =   255
          Left            =   -68760
-         TabIndex        =   144
+         TabIndex        =   143
          Top             =   4200
          Width           =   1575
       End
@@ -3354,9 +3694,9 @@ Begin VB.Form frmEmpForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   -74640
-         TabIndex        =   142
-         Top             =   6120
+         Left            =   360
+         TabIndex        =   141
+         Top             =   7680
          Width           =   1335
       End
       Begin VB.Label Label19 
@@ -3371,40 +3711,40 @@ Begin VB.Form frmEmpForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   -68160
-         TabIndex        =   141
-         Top             =   5280
+         Left            =   6840
+         TabIndex        =   140
+         Top             =   6720
          Width           =   2655
       End
       Begin VB.Label Label18 
          Caption         =   "1099 Employee:"
          Height          =   255
-         Left            =   7200
-         TabIndex        =   140
+         Left            =   -67800
+         TabIndex        =   139
          Top             =   3960
          Width           =   1455
       End
       Begin VB.Label Label17 
          Caption         =   "EIC Type:"
          Height          =   255
-         Left            =   240
-         TabIndex        =   139
+         Left            =   -74760
+         TabIndex        =   138
          Top             =   3960
          Width           =   855
       End
       Begin VB.Label Label16 
          Caption         =   "Workers Comp Category:"
          Height          =   255
-         Left            =   6600
-         TabIndex        =   138
+         Left            =   -68400
+         TabIndex        =   137
          Top             =   3000
          Width           =   2295
       End
       Begin VB.Label Label15 
          Caption         =   "Pays Per Year:"
          Height          =   255
-         Left            =   -74160
-         TabIndex        =   137
+         Left            =   840
+         TabIndex        =   136
          Top             =   1920
          Width           =   1335
       End
@@ -3420,9 +3760,9 @@ Begin VB.Form frmEmpForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   -74640
-         TabIndex        =   136
-         Top             =   5280
+         Left            =   360
+         TabIndex        =   135
+         Top             =   6840
          Width           =   3615
       End
       Begin VB.Label Label14 
@@ -3437,9 +3777,9 @@ Begin VB.Form frmEmpForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   -74640
-         TabIndex        =   131
-         Top             =   4080
+         Left            =   360
+         TabIndex        =   130
+         Top             =   5520
          Width           =   3495
       End
       Begin VB.Label Label11 
@@ -3454,7 +3794,7 @@ Begin VB.Form frmEmpForm
             Strikethrough   =   0   'False
          EndProperty
          Height          =   255
-         Left            =   -74640
+         Left            =   360
          TabIndex        =   129
          Top             =   2640
          Width           =   3615
@@ -3519,7 +3859,7 @@ Begin VB.Form frmEmpForm
       Begin VB.Label Label9 
          Caption         =   "Department:"
          Height          =   255
-         Left            =   120
+         Left            =   -74880
          TabIndex        =   120
          Top             =   3480
          Width           =   1095
@@ -3575,7 +3915,7 @@ Begin VB.Form frmEmpForm
       Begin VB.Label Label1 
          Caption         =   "State:"
          Height          =   255
-         Left            =   10680
+         Left            =   -64320
          TabIndex        =   114
          Top             =   2520
          Width           =   615
@@ -3585,26 +3925,9 @@ Begin VB.Form frmEmpForm
       Caption         =   "c"
       Height          =   375
       Left            =   240
-      TabIndex        =   145
+      TabIndex        =   144
       Top             =   10320
       Width           =   375
-   End
-   Begin VB.Label Label13 
-      Caption         =   "STATE"
-      BeginProperty Font 
-         Name            =   "Arial"
-         Size            =   9.75
-         Charset         =   0
-         Weight          =   700
-         Underline       =   0   'False
-         Italic          =   0   'False
-         Strikethrough   =   0   'False
-      EndProperty
-      Height          =   255
-      Left            =   720
-      TabIndex        =   130
-      Top             =   4680
-      Width           =   3615
    End
    Begin VB.Label Label12 
       Caption         =   "ALL CHANGES WILL NOT BE SAVED !!!"
@@ -3676,7 +3999,7 @@ Dim rsOEDED As ADODB.Recordset
 Dim rsDirDep As ADODB.Recordset
 Dim rsERItem As New ADODB.Recordset
 
-Dim i, j, k As Long
+Dim I, J, K As Long
 Dim ActiveDrop, TypeDrop As String
 
 Dim AddFlag As Boolean
@@ -3686,6 +4009,10 @@ Dim InitFlag As Boolean
 Dim SaveFlag As Boolean
 
 Dim OrigEmpNum As Long
+
+Private Sub cmbPRW4_Click()
+    FWTDisplay
+End Sub
 
 Private Sub cmdDDUpdate_Click()
     DirDepSave
@@ -3708,6 +4035,12 @@ Private Sub Form_Load()
     If Not PREmployee.GetByID(SelID) Then
         MsgBox "Employee ID NF: " & SelID, vbExclamation
         End
+    End If
+    
+    If Not PRW4.GetBySQL("SELECT * FROM PRW4 WHERE PRW4.EmployeeID = " & PREmployee.EmployeeID) Then
+        PRW4.Clear
+        PRW4.EmployeeID = PREmployee.EmployeeID
+        PRW4.Save (Equate.RecAdd)
     End If
     
     ' store the original employee number
@@ -3752,7 +4085,7 @@ Private Sub Form_Load()
         Notes.RelatedID = PREmployee.EmployeeID
         Notes.Save (Equate.RecAdd)
     End If
-    Me.tdbtxtComment.Text = Notes.Notation
+    Me.tdbtxtComment.text = Notes.Notation
     
     tdbTextSet Me.tdbtxtItemComment
     Me.tdbtxtItemComment.MaxLength = 50
@@ -3763,6 +4096,8 @@ Private Sub Form_Load()
     ' tdbIntegerSet Me.lngFWTPercent
     ' tdbIntegerSet Me.lngSWTExemptions
     ' tdbIntegerSet Me.lngSWTPercent
+    tdbIntegerSet Me.tdbnumW4Dependents
+    tdbIntegerSet Me.tdbnumW4OtherDependents
     
     ' set tdbAmount parameters - two decimal places
     tdbAmountSet Me.curSalaryAmt
@@ -3774,6 +4109,10 @@ Private Sub Form_Load()
     tdbAmountSet Me.tdbnumAmtPct
     tdbAmountSet Me.tdbnumMaxAmt
     tdbAmountSet Me.tdbnumDDAmount
+    
+    tdbAmountSet Me.tdbnumW4OtherIncome
+    tdbAmountSet Me.tdbnumW4Deductions
+    tdbAmountSet Me.tdbnumW4ExtraWH
     
     ' set tdbDate parameters
     tdbDateSet Me.DteDateHired, PREmployee.DateHired
@@ -3797,9 +4136,9 @@ Private Sub Form_Load()
     Me.lngEmployeeNumber.MaxValue = 999999999
     Me.lngEmployeeNumber = PREmployee.EmployeeNumber
     
-    Me.txtFirstName.Text = PREmployee.FirstName
-    Me.txtMI.Text = PREmployee.MidInit
-    Me.txtLastName.Text = PREmployee.LastName
+    Me.txtFirstName.text = PREmployee.FirstName
+    Me.txtMI.text = PREmployee.MidInit
+    Me.txtLastName.text = PREmployee.LastName
     
     Me.txtAltName = PREmployee.AltName
     Me.txtCheckComment = PREmployee.CheckComment
@@ -3812,7 +4151,7 @@ Private Sub Form_Load()
     
     ' Me.txtSSN.HighlightText = dbiHighlightField
     ' Me.txtSSN.Value = Format(PREmployee.SSN, "000000000")
-    Me.txtSSN.Text = Format(PREmployee.SSN, "000-00-0000")
+    Me.txtSSN.text = Format(PREmployee.SSN, "000-00-0000")
     
     Me.chkStatutory = PREmployee.Statutory
        
@@ -3889,6 +4228,14 @@ Private Sub Form_Load()
     End If
     Me.tdbnumSWTExtraAmount = PREmployee.SWTExtraAmount
     
+    ' revised W4
+    Me.chkW4_2Jobs = PRW4.TwoJobs
+    Me.tdbnumW4Dependents = PRW4.Dependents
+    Me.tdbnumW4OtherDependents = PRW4.DependentsOther
+    Me.tdbnumW4OtherIncome = PRW4.OtherIncome
+    Me.tdbnumW4Deductions = PRW4.Deductions
+    Me.tdbnumW4ExtraWH = PRW4.ExtraWH
+    
     ' Populate state dropdown box
     PRState.GetBySQL ("SELECT * FROM PRState order by PRState.StateAbbrev")
     Do
@@ -3927,7 +4274,7 @@ Private Sub Form_Load()
     On Error GoTo 0
     
     DropDownInit
-    
+    FWTDisplay
     GridInit
     
     ' populate the default Job combo?
@@ -3949,12 +4296,12 @@ Private Sub Form_Load()
             End If
             If .ListCount > 0 Then
                 .ListIndex = 0
-                For i = 0 To .ListCount - 1
-                    If .ItemData(i) = PREmployee.DefaultJobID Then
-                        .ListIndex = i
+                For I = 0 To .ListCount - 1
+                    If .ItemData(I) = PREmployee.DefaultJobID Then
+                        .ListIndex = I
                         Exit For
                     End If
-                Next i
+                Next I
             End If
         End With
     End If
@@ -3962,12 +4309,38 @@ Private Sub Form_Load()
     ' start tab - zero based
     Me.SSTab1.Tab = 0
     
+    ' Federal type
+    FWTDisplay
+    
     InitFlag = False
 
     ' trap keyboard strokes before the
     ' controls on the form does
     Me.KeyPreview = True
 
+End Sub
+
+Private Sub FWTDisplay()
+    Dim booStandard As Boolean
+    Dim booW4 As Boolean
+    If Me.cmbPRW4.ListIndex = PREquate.PRW4Standard Then
+        booStandard = True
+        booW4 = False
+    Else
+        booStandard = False
+        booW4 = True
+    End If
+    With Me
+        .chkW4_2Jobs.Visible = booW4
+        .tdbnumW4Dependents.Visible = booW4
+        .tdbnumW4OtherDependents.Visible = booW4
+        .tdbnumW4OtherIncome.Visible = booW4
+        .tdbnumW4Deductions.Visible = booW4
+        .tdbnumW4ExtraWH.Visible = booW4
+        .chkFWTMarried.Visible = booStandard
+        .Frame1.Visible = booStandard
+        .Frame2.Visible = booStandard
+    End With
 End Sub
 
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -4414,8 +4787,8 @@ Dim Hrs As New ADODB.Recordset
     ' save data
     ' Main Screen Tab
     PREmployee.EmployeeNumber = Me.lngEmployeeNumber
-    PREmployee.LastName = Me.txtLastName.Text
-    PREmployee.FirstName = Me.txtFirstName.Text
+    PREmployee.LastName = Me.txtLastName.text
+    PREmployee.FirstName = Me.txtFirstName.text
     PREmployee.MidInit = Me.txtMI
     PREmployee.AltName = Me.txtAltName
     PREmployee.UseAltName = Me.chkUseAltName
@@ -4423,7 +4796,7 @@ Dim Hrs As New ADODB.Recordset
     PREmployee.Address1 = Me.txtAddress1
     PREmployee.Address2 = Me.txtAddress2
     PREmployee.City = Me.txtCity
-    PREmployee.State = Me.cmbState.Text
+    PREmployee.State = Me.cmbState.text
     
     If IsNull(Me.tdbnumZipCode) Then
         PREmployee.ZipCode = 0
@@ -4580,7 +4953,7 @@ Dim Hrs As New ADODB.Recordset
     End If
 
     ' pays per year
-    PREmployee.PaysPerYear = Me.cmbPPY.Text
+    PREmployee.PaysPerYear = Me.cmbPPY.text
 
     ' EIC filing type
     PREmployee.EICType = Me.cmbEICType.ListIndex
@@ -4655,6 +5028,17 @@ Dim Hrs As New ADODB.Recordset
             If rsDirDep.EOF Then Exit Do
         Loop
     End If
+    
+    ' revised W4
+    PRW4.FilingType = Me.cmbPRW4.ListIndex
+    PRW4.TwoJobs = Me.chkW4_2Jobs
+    PRW4.Dependents = Me.tdbnumW4Dependents
+    PRW4.DependentsOther = Me.tdbnumW4OtherDependents
+    PRW4.OtherIncome = Me.tdbnumW4OtherIncome
+    PRW4.Deductions = Me.tdbnumW4Deductions
+    PRW4.ExtraWH = Me.tdbnumW4ExtraWH
+    PRW4.Save (Equate.RecPut)
+    
     SkipSave = False
 
     ' save the disconnected record sets
@@ -4983,6 +5367,12 @@ Dim x As String
     Me.cmb1099.AddItem "1099 Inc"       ' = 2
     Me.cmb1099.ListIndex = PREmployee.x1099Employee
     
+    Me.cmbPRW4.AddItem "Standard"
+    Me.cmbPRW4.AddItem "Single/Married Separate"
+    Me.cmbPRW4.AddItem "Married Joint/Widow(er)"
+    Me.cmbPRW4.AddItem "Head of Household"
+    Me.cmbPRW4.ListIndex = PRW4.FilingType
+    
 End Sub
 
 Private Sub GridInit()
@@ -5296,21 +5686,21 @@ Private Sub chkUseDeptWkc_Click()
     If Me.chkUseDeptWkc Then    ' use the department cat
 
         ' get the department selected on the screen
-        j = Me.cmbDept.ItemData(Me.cmbDept.ListIndex)
+        J = Me.cmbDept.ItemData(Me.cmbDept.ListIndex)
         
-        If j = 0 Then   ' no dept selected - cant do it
+        If J = 0 Then   ' no dept selected - cant do it
             Me.chkUseDeptWkc = 0
             Exit Sub
-        ElseIf PRDepartment.GetByID(j) Then   ' take from the department record
+        ElseIf PRDepartment.GetByID(J) Then   ' take from the department record
             With Me.cmbWkcCat
                 .Enabled = False
                 .ListIndex = 0
-                For i = 0 To .ListCount - 1
-                    If .ItemData(i) = PRDepartment.WkcCat Then
-                        .ListIndex = i
+                For I = 0 To .ListCount - 1
+                    If .ItemData(I) = PRDepartment.WkcCat Then
+                        .ListIndex = I
                         Exit For
                     End If
-                Next i
+                Next I
             End With
         Else    ' dept NF
             Me.chkUseDeptWkc = 0

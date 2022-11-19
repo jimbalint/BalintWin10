@@ -29,6 +29,8 @@ Dim FileExt As String
     Set PRTotal = New cPRTotal
     Set PRGLUpd = New cPRGLUpd
 
+    Set PRW4 = New cPRW4
+
     Set JCCustomer = New cJCCustomer
     Set JCJob = New cJCJob
     Set PRTimeSheet = New cPRTimeSheet

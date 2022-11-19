@@ -26,6 +26,8 @@ Public Amount As Currency
 Public Percent As Double
 Public ExcessBase As Currency
 
+Public W4Type As String
+
 Dim rs As New ADODB.Recordset
     
 Public Sub OpenRS()
@@ -145,6 +147,7 @@ Public Function Save(ByVal booAddPut As Boolean) As String
     rs.Fields("Amount") = Amount
     rs.Fields("Percent") = Percent
     rs.Fields("ExcessBase") = ExcessBase
+    rs.Fields("W4Type") = W4Type
 
     rs.Update
     
@@ -164,6 +167,7 @@ Public Sub Clear()
     Amount = 0
     Percent = 0
     ExcessBase = 0
+    W4Type = ""
 
 End Sub
 
@@ -187,6 +191,7 @@ Public Sub AssignFields()
     Amount = nNull(rs!Amount)
     Percent = nNull(rs!Percent)
     ExcessBase = nNull(rs!ExcessBase)
+    W4Type = rs!W4Type
         
 End Sub
 

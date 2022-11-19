@@ -20,6 +20,7 @@ Public PRDist As cPRDist
 Public PRFWTTable As cPRFWTTable
 Public PRGlobal As cPRGlobal
 Public PRGLUpd As cPRGLUpd
+Public PRW4 As cPRW4
 
 Public GLAccount As cGLAccount
 Public GLBatch As cGLBatch
@@ -86,7 +87,7 @@ Public ii As Long
 Public jj As Long
 Public kk As Long
 Public xx As String
-Public X As Variant
+Public x As Variant
 
 ' command line variables
 Public CompanyID As Long
@@ -162,7 +163,7 @@ Public NumEmployees As Long
 Public ZipString As String
 Public HorzNudge, VertNudge, Nudge As Byte
 Public OptDate As String
-Public ct, Recs As Long
+Public Ct, Recs As Long
 Public RecCt As Long
 Public CountFormat As String
 
@@ -481,7 +482,11 @@ Public Sub SetEquates()
     Equate.NoteTypeER = 2
     
     PrvwReturn = False
-   
+
+    PREquate.PRW4Standard = 0
+    PREquate.PRW4Single = 1
+    PREquate.PRW4Married = 2
+    PREquate.PRW4HOH = 3
     
 End Sub
 
@@ -834,47 +839,47 @@ Dim CommaFlag As Boolean
             If CommaFlag Then       ' put in commas if there is enough room
                 Select Case FValue
                     Case 5
-                        X = Format(Abs(PrintValue(pi)), "0.00")
+                        x = Format(Abs(PrintValue(pi)), "0.00")
                     Case 6
-                        X = Format(Abs(PrintValue(pi)), "#0.00")
+                        x = Format(Abs(PrintValue(pi)), "#0.00")
                     Case 7
-                        X = Format(Abs(PrintValue(pi)), "##0.00")
+                        x = Format(Abs(PrintValue(pi)), "##0.00")
                     Case 8
-                        X = Format(Abs(PrintValue(pi)), "###0.00")
+                        x = Format(Abs(PrintValue(pi)), "###0.00")
                     Case 9
-                        X = Format(Abs(PrintValue(pi)), "#,##0.00")
+                        x = Format(Abs(PrintValue(pi)), "#,##0.00")
                     Case 10
-                        X = Format(Abs(PrintValue(pi)), "##,###0.00")
+                        x = Format(Abs(PrintValue(pi)), "##,###0.00")
                     Case 11
-                        X = Format(Abs(PrintValue(pi)), "###,##0.00")
+                        x = Format(Abs(PrintValue(pi)), "###,##0.00")
                     Case 12
-                        X = Format(Abs(PrintValue(pi)), "####,##0.00")
+                        x = Format(Abs(PrintValue(pi)), "####,##0.00")
                     Case 13
-                        X = Format(Abs(PrintValue(pi)), "#,###,##0.00")
+                        x = Format(Abs(PrintValue(pi)), "#,###,##0.00")
                     Case 14
-                        X = Format(Abs(PrintValue(pi)), "##,###,##0.00")
+                        x = Format(Abs(PrintValue(pi)), "##,###,##0.00")
                     Case Else
                         MsgBox "Invalid Format Value: " & FValue, vbCritical
                         End
                 End Select
             Else
-                Y = String(FValue - 5, "#") & "0.00"
-                X = Format(Abs(PrintValue(pi)), Y)
+                y = String(FValue - 5, "#") & "0.00"
+                x = Format(Abs(PrintValue(pi)), y)
             End If
                 
             If PrintValue(pi) < 0 Then
-               X = X & "-"
+               x = x & "-"
                TxtX = "-" & Format(Abs(PrintValue(pi)), "##,###,##0.00")    ' leading minus sign for text output
             Else
-               X = X & Space(1)
-               TxtX = X
+               x = x & Space(1)
+               TxtX = x
             End If
                
             If DWidth <= 14 Then
-                PrintString = PrintString & Space(FValue - DWidth) & X
+                PrintString = PrintString & Space(FValue - DWidth) & x
                 TextString = TextString & Quote & Space(FValue - DWidth) & TxtX & Quote & Comma
             Else
-                PrintString = PrintString & X
+                PrintString = PrintString & x
                 TextString = TextString & Quote & TxtX & Quote & Comma
             End If
          
@@ -922,21 +927,21 @@ Dim CommaFlag As Boolean
                DWidth = DWidth + 1
             Loop
             
-            X = Format(Abs(PrintValue(pi)), "##0.0")
+            x = Format(Abs(PrintValue(pi)), "##0.0")
 
             If PrintValue(pi) < 0 Then
-               X = X & "-"
+               x = x & "-"
                TxtX = "-" & Format(Abs(PrintValue(pi)), "##0.0")
             Else
-               X = X & Space(1)
-               TxtX = X
+               x = x & Space(1)
+               TxtX = x
             End If
             
             If DWidth <= 6 Then
-               PrintString = PrintString & Space(6 - DWidth) & X
+               PrintString = PrintString & Space(6 - DWidth) & x
                TextString = TextString & Quote & Space(6 - DWidth) & TxtX & Quote & Comma
             Else
-               PrintString = PrintString & X
+               PrintString = PrintString & x
                TextString = TextString & Quote & TxtX & Quote & Comma
             End If
             
@@ -949,17 +954,17 @@ Dim CommaFlag As Boolean
   
             If PrintValue(pi) <> 0 Then
             
-                X = Format(Abs(PrintValue(pi)), "##0.0")
+                x = Format(Abs(PrintValue(pi)), "##0.0")
 
                 If PrintValue(pi) < 0 Then
-                   X = X & "-"
+                   x = x & "-"
                    TxtX = "-" & Format(Abs(PrintValue(pi)), "##0.0")
                 Else
-                   X = X & Space(1)
-                   TxtX = X
+                   x = x & Space(1)
+                   TxtX = x
                 End If
             
-                X = Format(Abs(PrintValue(pi)), "##0.0")
+                x = Format(Abs(PrintValue(pi)), "##0.0")
             
                 DWidth = 4  ' 0.0-
                 DExp = 1
@@ -969,7 +974,7 @@ Dim CommaFlag As Boolean
                   DWidth = DWidth + 1
                 Loop
             
-                PrintString = PrintString & Space(6 - DWidth) & X
+                PrintString = PrintString & Space(6 - DWidth) & x
                 
                 TextString = TextString & Quote & Space(6 - DWidth) & TxtX & Quote & Comma
             
@@ -996,17 +1001,17 @@ Dim CommaFlag As Boolean
             Loop
             DWidth = DWidth + CCount       ' add in the comma count
                
-            X = Format(Abs(PrintValue(pi)), "##,###,##0")
+            x = Format(Abs(PrintValue(pi)), "##,###,##0")
 
             If PrintValue(pi) < 0 Then
-               X = X & "-"
+               x = x & "-"
                TxtX = "-" & Format(Abs(PrintValue(pi)), "##,###,##0")
             Else
-               X = X & Space(1)
-               TxtX = X
+               x = x & Space(1)
+               TxtX = x
             End If
             
-            PrintString = PrintString & Space(14 - DWidth) & X
+            PrintString = PrintString & Space(14 - DWidth) & x
             
             TextString = TextString & Comma & Space(14 - DWidth) & TxtX & Quote & Comma
             
@@ -1015,10 +1020,10 @@ Dim CommaFlag As Boolean
             ' 2017-01-14 !!!
             If IsNull(PrintValue(pi)) Then PrintValue(pi) = 0
   
-            X = Format(Abs(PrintValue(pi)), "########0")
+            x = Format(Abs(PrintValue(pi)), "########0")
                         
-            PrintString = PrintString & Space(FValue - Len(X)) & X
-            TextString = TextString & Quote & Space(FValue - Len(X)) & X & Quote & Comma
+            PrintString = PrintString & Space(FValue - Len(x)) & x
+            TextString = TextString & Quote & Space(FValue - Len(x)) & x & Quote & Comma
             
          Case Else
             
@@ -1072,15 +1077,15 @@ Public Sub GoBack()
     ' return call if given
     If BackName <> "" Then
         
-        X = BackName & " UserID=" & UserID & _
+        x = BackName & " UserID=" & UserID & _
             " dbPwd=" & dbPwd & _
             " OpenTab=" & OpenTab & _
             " MenuName=" & MenuName
             
         If BalintFolder <> "" Then
-            X = X & " BalintFolder=" & BalintFolder
+            x = x & " BalintFolder=" & BalintFolder
         End If
-        TaskID = Shell(X, vbMaximizedFocus)
+        TaskID = Shell(x, vbMaximizedFocus)
     End If
 
     End
@@ -1318,19 +1323,19 @@ Dim TxtX As String
     Loop
     DWidth = DWidth + CCount       ' add in the comma count
                
-    X = Format(Abs(Amount), "##,###,##0.00")
+    x = Format(Abs(Amount), "##,###,##0.00")
     If Round(Amount, 2) < 0 Then
-        X = X & "-"
+        x = x & "-"
         TxtX = "-" & Format(Abs(Amount), "##,###,##0.00")    ' leading minus sign for text output
     Else
-        X = X & Space(1)
-        TxtX = X
+        x = x & Space(1)
+        TxtX = x
     End If
            
     If DWidth <= 14 Then
-        CurrFormat = Space(14 - DWidth) & X
+        CurrFormat = Space(14 - DWidth) & x
     Else
-        CurrFormat = X
+        CurrFormat = x
     End If
 
 End Function
@@ -1345,7 +1350,7 @@ Dim Amt2 As Long         ' hundreds of thousands
 Dim Amt3 As Long         ' singles
 Dim Amt4 As Long         ' cents
 Dim MaxLen, I As Long
-Dim X As String
+Dim x As String
 
     MaxLen = 77
  
@@ -1512,28 +1517,28 @@ Public Function CheckAmount(ByVal Amount As Currency) As String
         Exit Function
     End If
 
-    X = Format(Amount, "$##,###,##0.00")
-    CheckAmount = String(15 - Len(Trim(X)), "*") & Trim(X)
+    x = Format(Amount, "$##,###,##0.00")
+    CheckAmount = String(15 - Len(Trim(x)), "*") & Trim(x)
 
 End Function
 
-Public Function StripOhio(ByVal X As String) As String
+Public Function StripOhio(ByVal x As String) As String
 
     ' take "OHIO" out of a string
 
 Dim pos As Long
 
-    If IsNull(X) Then
+    If IsNull(x) Then
         StripOhio = ""
         Exit Function
     End If
 
-    pos = InStr(1, X, "OHIO", vbTextCompare)
+    pos = InStr(1, x, "OHIO", vbTextCompare)
     
     If pos = 0 Then
-        StripOhio = X
+        StripOhio = x
     Else
-        StripOhio = Mid(X, 1, pos - 1) & Mid(X, pos + 4, 99)
+        StripOhio = Mid(x, 1, pos - 1) & Mid(x, pos + 4, 99)
     End If
 
 End Function
@@ -1923,7 +1928,7 @@ Public Function TableExists(ByVal TableName As String, _
 Dim cm As ADODB.Command
 Dim frs As ADODB.Recordset
 Dim FldFlag As Boolean
-Dim FString As String
+Dim fString As String
                          
     ' see if the field is already in the Table
     Set frs = New ADODB.Recordset
@@ -1980,33 +1985,33 @@ Dim HdrName As String
     ' 29 characters for fixed left and right portion of first header line
     '    1             8       1   8                    10         1
     ' first line - system date & time / company name / page #
-    X = Trim(HdrName)
-    Y = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss")
-    Z = "Page: " & Format(Pg, "####")
+    x = Trim(HdrName)
+    y = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss")
+    z = "Page: " & Format(Pg, "####")
    
-    If Len(X) > Columns - 39 Then
-       X = Mid(Trim(HdrName), 1, Columns - 39)
+    If Len(x) > Columns - 39 Then
+       x = Mid(Trim(HdrName), 1, Columns - 39)
     End If
            
     If LandSw = 1 Then
-        I = ((Columns - Len(X)) / 2) - 29           ' i = 49
+        I = ((Columns - Len(x)) / 2) - 29           ' i = 49
         w = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss") & _
-            Space(I) & X
+            Space(I) & x
         I = Columns - Len(w) - 30
         w = w & Space(I) & "Page: " & Format(Pg, "###0")
     Else
-        I = ((Columns - Len(X)) / 2) - 19
+        I = ((Columns - Len(x)) / 2) - 19
         w = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss") & _
-            Space(I) & X
+            Space(I) & x
         I = Columns - Len(w) - 10
         w = w & Space(I) & "Page: " & Format(Pg, "###0")
 
     End If
     
-    SideCols = (Columns - Len(X)) / 2
+    SideCols = (Columns - Len(x)) / 2
     
     w = "  " & Format(Now(), "mm/dd/yy") & " " & Format(Now(), "hh:mm:ss")
-    w = Trim(w) & Space(SideCols - 19) & Trim(X)
+    w = Trim(w) & Space(SideCols - 19) & Trim(x)
     w = Trim(w) & Space(SideCols - 10) & "Page: " & Format(Pg, "###0")
     
     PrintValue(1) = w
@@ -2053,7 +2058,7 @@ Public Function ParseString(ByVal InString As String, ByVal SepString As String)
 
 Dim rs As New ADODB.Recordset
 Dim I, J As Long
-Dim X, Y As String
+Dim x, y As String
 
     Set ParseString = New ADODB.Recordset
     ParseString.CursorLocation = adUseClient
@@ -2064,24 +2069,24 @@ Dim X, Y As String
     If InString = "" Then Exit Function
     
     J = Len(Trim(InString))
-    X = ""
-    Y = ""
+    x = ""
+    y = ""
     For I = 1 To J
         If Mid(InString, I, 1) = SepString Then
             ParseString.AddNew
-            ParseString!listvalue = X
+            ParseString!listvalue = x
             ParseString.Update
-            X = ""
+            x = ""
             I = I + 1
             If I > J Then
                 Exit For
             End If
         End If
-        X = Trim(X) & Mid(InString, I, 1)
+        x = Trim(x) & Mid(InString, I, 1)
     Next I
-    If X <> "" Then
+    If x <> "" Then
         ParseString.AddNew
-        ParseString!listvalue = X
+        ParseString!listvalue = x
         ParseString.Update
     End If
 
@@ -2090,19 +2095,19 @@ End Function
 Public Sub TestPattern()
     
     For I = 1 To MaxLines
-        X = ""
+        x = ""
         For J = 1 To Columns
             If I Mod 2 = 1 Then
-                X = Trim(X) & J Mod 10
+                x = Trim(x) & J Mod 10
             Else
                 If J Mod 10 = 0 Then
-                    X = X & Int(J / 10)
+                    x = x & Int(J / 10)
                 Else
-                    X = X & " "
+                    x = x & " "
                 End If
             End If
         Next J
-        PrintValue(1) = X
+        PrintValue(1) = x
         FormatString(1) = "a" & Columns
         PrintValue(2) = " "
         FormatString(2) = "~"
@@ -2143,18 +2148,18 @@ End Function
 Public Function GetFileName(ByVal Str As String) As String
     
 Dim I, J As Long
-Dim X As String
+Dim x As String
     
     GetFileName = ""
     
     If IsNull(Str) Then Exit Function
     If Str = "" Then Exit Function
     
-    X = Trim(Str)
-    J = Len(X)
+    x = Trim(Str)
+    J = Len(x)
     For I = J To 1 Step -1
-        If Mid(X, I, 1) = "\" Then Exit For
-        GetFileName = Mid(X, I, 1) & GetFileName
+        If Mid(x, I, 1) = "\" Then Exit For
+        GetFileName = Mid(x, I, 1) & GetFileName
     Next I
 
 End Function
@@ -2275,23 +2280,23 @@ Public Function FNameOnly(ByVal fnm As String) As String
 
 End Function
 
-Public Function DollarAndCents(ByVal amt As Currency) As String
+Public Function DollarAndCents(ByVal Amt As Currency) As String
     ' 2018-09-29 - needs rounded?  - returned "8  100" for 9.00 ..
     '   corrected double negative error
-    amt = nNull(amt)
+    Amt = nNull(Amt)
 
     Dim dAmt, cAmt As Integer
     Dim AmtSign As String
         
     AmtSign = "+"
-    If amt < 0 Then
+    If Amt < 0 Then
         AmtSign = "-"
     End If
     
-    amt = Abs(amt)
+    Amt = Abs(Amt)
     
-    dAmt = Int(amt)
-    cAmt = (amt - Int(amt)) * 100
+    dAmt = Int(Amt)
+    cAmt = (Amt - Int(Amt)) * 100
     
     If AmtSign = "+" Then
         DollarAndCents = Format(dAmt, "##,###,##0") & "  " & Format(cAmt, "00")

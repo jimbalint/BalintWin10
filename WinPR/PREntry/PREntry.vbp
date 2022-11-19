@@ -70,6 +70,7 @@ Form=..\PRMaint\frmJCGetQBData.frm
 Form=frmEntryDPT.frm
 Form=frmEntryTS.frm
 Module=modRC4; ..\Module\modRC4.bas
+Class=cPRW4; ..\Class\cPRW4.cls
 IconForm="frmBatchList"
 Startup="Sub Main"
 HelpFile=""
