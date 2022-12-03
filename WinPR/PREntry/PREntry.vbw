@@ -55,6 +55,6 @@ modQBData = 132, 132, 859, 691, C
 frmQBInvUpdate = 176, 176, 883, 712, C, 154, 154, 861, 690, C
 frmJCGetQBData = 264, 264, 1007, 849, C, 242, 242, 985, 827, C
 frmEntryDPT = 176, 232, 955, 781, C, 66, 87, 845, 636, C
-ZfrmEntryTS = 0, 0, 0, 0, C, 44, 58, 823, 607, C
+ZfrmEntryTS = 156, 156, 1444, 753, C, 44, 58, 823, 607, C
 modRC4 = 0, 0, 0, 0, C
 cPRW4 = 0, 0, 0, 0, C

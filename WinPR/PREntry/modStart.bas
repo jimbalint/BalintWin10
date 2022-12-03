@@ -47,8 +47,8 @@ Dim FileExt As String
     QtrEnding = ""
 
     If X = "" Then         ' SET FOR TESTING
-        BalintFolder = "\\vboxsrv\vm-share\balint"
         BalintFolder = "c:\Balint"
+        BalintFolder = "\\vboxsrv\vm-share\balint"
         dbPwd = ""
         ProgName = UCase("Form941")
         SysFile = "e:\Balint\Data\GLSystem.mdb"
@@ -125,6 +125,35 @@ Dim FileExt As String
        End
     End If
 
+    ' OH multiplier fix text --> need fix for 2023
+    ' 2022 from Oct on is wrong
+'    Dim SQLString
+'    Dim TaxYear, TaxMonth As Integer
+'    TaxYear = 2022
+'    TaxMonth = 10   ' returns 1.001 with old string
+'    TaxMonth = 5    ' returns 1.032 with old string / 1.001 w/ new string
+'
+'    ' old string - put in on 8/28/21
+'    SQLString = "SELECT TOP 1 * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeOHMultiplier & _
+'                " AND Year <= " & TaxYear & _
+'                " AND Month <= " & TaxMonth & _
+'                " ORDER BY Year DESC, Month DESC"
+'
+'    ' new string
+'    Dim ym As Long
+'    ym = TaxYear * 100 + TaxMonth
+'    SQLString = "SELECT TOP 1 * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeOHMultiplier & _
+'                " AND [Year] * 100 + [Month] <= " & ym & _
+'                " ORDER BY Year DESC, Month DESC"
+'
+'    If PRGlobal.GetBySQL(SQLString) = True Then
+'        MsgBox (PRGlobal.Amount)
+'    Else
+'        MsgBox ("...")
+'    End If
+'
+'    End
+    
 '    ' ***** R&C fix - 07/07/2010 *****
 '    If PRCompany.GetByID(64) Then
 '        If InStr(1, LCase(PRCompany.Name), "tobacco") Then

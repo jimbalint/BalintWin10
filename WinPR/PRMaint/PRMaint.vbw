@@ -1,5 +1,5 @@
 Form1 = 156, 156, 1393, 806, C, 22, 29, 1020, 545, C
-modStart = 198, 261, 1223, 803, C
+modStart = 198, 261, 1223, 803, 
 modPRGlobal = 0, 0, 1025, 542, C
 modPRConnect = 0, 0, 1330, 589, C
 cPRDepartment = 0, 0, 0, 0, C
@@ -24,7 +24,7 @@ cPRHist = 0, 0, 0, 0, C
 cPRItemHist = 0, 0, 0, 0, C
 cPRDist = 0, 0, 0, 0, C
 cPRTotal = 0, 0, 0, 0, C
-cPRFWTTable = 26, 26, 1314, 623, C
+cPRFWTTable = 26, 26, 1314, 623, 
 cPRGlobal = 0, 0, 0, 0, C
 frmOEDEDAdd = 0, 0, 0, 0, C, 0, 0, 998, 516, C
 frmAddNewEmp = 0, 0, 0, 0, C, 22, 29, 1020, 545, C

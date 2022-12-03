@@ -12,8 +12,8 @@ Dim rsNew As New ADODB.Recordset
 Dim frs As New ADODB.Recordset
 Dim log As Integer
 
-Dim x, Y, z As String
-Dim I, J, K As Long
+Dim x, y, z As String
+Dim i, j, k As Long
 
 Dim rsNewSchema As ADODB.Recordset
 Dim frm As New frmProgress
@@ -28,6 +28,12 @@ Public Sub RunADO_Conversion(ByVal BalintFolder As String)
 
     Dim resp As Integer
     x = "Convert ALL DBs to New ADO?" & vbCr & "Make sure ALL users are out of the software!"
+    resp = MsgBox(x, vbExclamation + vbYesNo, "Balint Windows Acctg")
+    If resp = vbNo Then End
+
+    x = "If you have any password protected client files" & vbCr & _
+        "the password must be set to blank" & vbCr & vbCr & _
+        "do you STILL want to continue?"
     resp = MsgBox(x, vbExclamation + vbYesNo, "Balint Windows Acctg")
     If resp = vbNo Then End
 
@@ -69,7 +75,7 @@ Public Sub RunADO_Conversion(ByVal BalintFolder As String)
     x = BalintFolder & "\Data_New\GLSystem.accdb"
     dbBlank = BalintFolder & "\Blank\BlankAccdb.accdb"
     If Len(Dir(dbBlank, vbNormal)) = 0 Then
-        MsgBox "Blank DB not found: " & Y, vbExclamation, "Data Conversion"
+        MsgBox "Blank DB not found: " & y, vbExclamation, "Data Conversion"
         End
     End If
     FileCopy dbBlank, x
@@ -293,18 +299,18 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByRef cnFrom As ADODB.Conne
             ' If TblName = "Detail99" And fld.Name = "PayeeID" Then eFlag = True
             If TblName = "Payee99" And fld.Name = "FederalID" Then eFlag = True
             If eFlag Then
-                Y = RC4Encrypt(rs.Fields(fld.Name), rc4Key)
+                y = RC4Encrypt(rs.Fields(fld.Name), rc4Key)
             Else
-                Y = rs.Fields(fld.Name)
+                y = rs.Fields(fld.Name)
             End If
-            Select Case Y
+            Select Case y
                 Case "True": rsNew.Fields(fld.Name) = 1
                 Case "False": rsNew.Fields(fld.Name) = 0
                 
                 ' use nNull for numeric fields only!!!
                 ' PRGlobal.Var fields set to "0"
                 ' Case Else: rsNew.Fields(fld.Name) = nNull(Y)
-                Case Else: rsNew.Fields(fld.Name) = Y
+                Case Else: rsNew.Fields(fld.Name) = y
                 
             End Select
         Next fld
@@ -321,14 +327,14 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByRef cnFrom As ADODB.Conne
         rsNew.Update
         If Err.Number <> 0 Then
             ' x = "Error adding: " & TblName & " " & fld.Name & " " & Y & " " & Ct2
-            x = "Error adding: " & TblName & " " & Y & " " & Ct2 & " >>>" & ffield & "<<<"
+            x = "Error adding: " & TblName & " " & y & " " & Ct2 & " >>>" & ffield & "<<<"
             x = x & vbCr & ">>> " & Err.Description
             MsgBox x
             Print #log, x
             Print #log, "----"
             ' K = MsgBox("Stop???", vbExclamation + vbYesNo, "Data Conversion")
-            K = vbNo
-            If K = vbYes Then
+            k = vbNo
+            If k = vbYes Then
                 rs.Close
                 rsNew.Close
                 On Error Resume Next
@@ -414,9 +420,9 @@ Private Sub PopSchemaRS(ByRef cn As ADODB.Connection)
             rsNewSchema!FieldType = frs!Data_Type
             
             x = ""
-            I = frs!Data_Type
+            i = frs!Data_Type
             ' *** 4 = double
-            Select Case I
+            Select Case i
                 Case 2: x = "Short"
                 Case 3: x = "Long"
                 Case 4: x = "Double"
@@ -432,7 +438,7 @@ Private Sub PopSchemaRS(ByRef cn As ADODB.Connection)
                         x = "Char(" & rsNewSchema!MaxLength & ")"
                     End If
                 Case Else
-                    MsgBox "Data Type NF: " & I
+                    MsgBox "Data Type NF: " & i
                     End
             End Select
             rsNewSchema!FieldType2 = x

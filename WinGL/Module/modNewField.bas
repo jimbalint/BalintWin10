@@ -18,6 +18,12 @@ Dim ucmd As ADODB.Command
 
 Dim Ct1, Ct2, Recs As Long
 
+    ' 2022-11-19
+    If GLSys = True Then
+        If AddField("PRFWTTable", "W4Type", "String", adoConn) Then
+        End If
+    End If
+
     ' 2012-01-08
     If GLSys = False Then
         If AddField("PRW2City", "Courtesy", "Byte", adoConn) Then
@@ -326,6 +332,24 @@ Dim Ct1, Ct2, Recs As Long
         End If
     End If
 
+    ' 01/29/2022 - OH eW2
+    If GLSys = True Then
+        boo = AddField("PRCompany", "OHeW2", "Byte", adoConn)
+        If boo Then
+            boo = AddField("PRCompany", "TermBiz", "Byte", adoConn)
+            boo = AddField("PRCompany", "EstablishmentNumber", "String", adoConn)
+            boo = AddField("PRCompany", "OtherEIN", "String", adoConn)
+            boo = AddField("PRCompany", "KindOfEmployer", "String", adoConn)
+            boo = AddField("PRCompany", "EmploymentCode", "String", adoConn)
+            boo = AddField("PRCompany", "ThirdPartySickPay", "Byte", adoConn)
+            boo = AddField("PRCompany", "ContactName", "String", adoConn)
+            boo = AddField("PRCompany", "ContactPhoneNum", "String", adoConn)
+            boo = AddField("PRCompany", "ContactPhoneExt", "String", adoConn)
+            boo = AddField("PRCompany", "ContactFasNum", "String", adoConn)
+            boo = AddField("PRCompany", "ContactEmail", "String", adoConn)
+        End If
+    End If
+
     ' 12/30/09 - 2010 tax update
     ' 12/31/10 - 2011 tax update
     ' 02/07/12 - 2012 tax update
@@ -335,6 +359,19 @@ Dim Ct1, Ct2, Recs As Long
     End If
     
     If GLSys = True Then
+        
+        ' --- 2022 ---------------------------------------------------------------
+        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
+                    "AND Year = 2022"
+        If PRGlobal.GetBySQL(SQLString) = False Then
+            PRGlobal.Clear
+            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
+            PRGlobal.Year = 2022
+            PRGlobal.Description = "SS MAX"
+            PRGlobal.Amount = 147000#
+            PRGlobal.Save (Equate.RecAdd)
+            MsgBox "SS Max for 2022 updated to: $147,000", vbInformation
+        End If
         
         ' --- 2021 Sept ---------------------------------------------------------------
         ' OH SWT multiplier
@@ -687,6 +724,17 @@ Dim Ct1, Ct2, Recs As Long
         End If
     
         ' Fed tax table update
+' test for 2022 W4 tables
+MsgBox ("clear W4 2022...")
+SQLString = "delete * from PRFWTTable where W4Type <> '' and not isnull(W4Type) and TaxYear = 2022 and StateID = 0"
+cnDes.Execute SQLString
+    
+        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2022 AND StateID = 0 and W4Type <> '' AND NOT ISNULL(W4Type)"
+        If PRFWTTable.GetBySQL(SQLString) = False Then FWT2022Update_W4
+        
+        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2022 AND StateID = 0"
+        If PRFWTTable.GetBySQL(SQLString) = False Then FWT2022Update
+        
         SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2021 AND StateID = 0"
         If PRFWTTable.GetBySQL(SQLString) = False Then FWT2021Update
         
@@ -1089,6 +1137,189 @@ Private Sub FWT2014Update()
     Next SnglMarr
 
 End Sub
+
+Private Sub FWT2022Update_W4()
+    
+    ' pub 15t MONTHLY tables
+    Dim msh As Integer
+    Dim twojob As Integer
+    Dim tbltype As String
+    Dim ftype
+    ftype = Array("", "M", "S", "H")
+    For msh = 1 To 3   ' 1 = Married / 2 = Single / 3 = "Head of Household"
+        For twojob = 1 To 2
+            If msh = 1 Then
+                If twojob = 0 Then
+                    ' FWT Married - 1 job
+                    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+                    FWTRange(2) = 2158: FWTAmount(2) = 0: FWTPct(2) = 10
+                    FWTRange(3) = 3871: FWTAmount(3) = 171.3: FWTPct(3) = 12
+                    FWTRange(4) = 9121: FWTAmount(4) = 801.3: FWTPct(4) = 22
+                    FWTRange(5) = 17004: FWTAmount(5) = 2535.56: FWTPct(5) = 24
+                    FWTRange(6) = 30500: FWTAmount(6) = 5774.6: FWTPct(6) = 32
+                    FWTRange(7) = 38150: FWTAmount(7) = 8222.6: FWTPct(7) = 35
+                    FWTRange(8) = 56146: FWTAmount(8) = 14521.2: FWTPct(8) = 37
+                Else
+                    ' FWT Married - 2 job
+                    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+                    FWTRange(2) = 1079: FWTAmount(2) = 0: FWTPct(2) = 10
+                    FWTRange(3) = 1935: FWTAmount(3) = 85.6: FWTPct(3) = 12
+                    FWTRange(4) = 4560: FWTAmount(4) = 400.6: FWTPct(4) = 22
+                    FWTRange(5) = 8502: FWTAmount(5) = 1267.84: FWTPct(5) = 24
+                    FWTRange(6) = 15250: FWTAmount(6) = 2887.36: FWTPct(6) = 32
+                    FWTRange(7) = 19075: FWTAmount(7) = 4111.36: FWTPct(7) = 35
+                    FWTRange(8) = 28073: FWTAmount(8) = 7260.66: FWTPct(8) = 37
+                End If
+            ElseIf msh = 2 Then
+                If twojob = 0 Then
+                    ' FWT Single - 1 job
+                    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+                    FWTRange(2) = 1079: FWTAmount(2) = 0: FWTPct(2) = 10
+                    FWTRange(3) = 1935: FWTAmount(3) = 85.6: FWTPct(3) = 12
+                    FWTRange(4) = 4560: FWTAmount(4) = 400.6: FWTPct(4) = 22
+                    FWTRange(5) = 8502: FWTAmount(5) = 1267.84: FWTPct(5) = 24
+                    FWTRange(6) = 15250: FWTAmount(6) = 2887.36: FWTPct(6) = 32
+                    FWTRange(7) = 19075: FWTAmount(7) = 4111.36: FWTPct(7) = 35
+                    FWTRange(8) = 46071: FWTAmount(8) = 13559.96: FWTPct(8) = 37
+                Else
+                    ' FWT Single - 2 job
+                    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+                    FWTRange(2) = 540: FWTAmount(2) = 0: FWTPct(2) = 10
+                    FWTRange(3) = 968: FWTAmount(3) = 42.8: FWTPct(3) = 12
+                    FWTRange(4) = 2280: FWTAmount(4) = 200.24: FWTPct(4) = 22
+                    FWTRange(5) = 4251: FWTAmount(5) = 633.86: FWTPct(5) = 24
+                    FWTRange(6) = 7625: FWTAmount(6) = 1443.62: FWTPct(6) = 32
+                    FWTRange(7) = 9538: FWTAmount(7) = 2055.78: FWTPct(7) = 35
+                    FWTRange(8) = 23035: FWTAmount(8) = 6779.73: FWTPct(8) = 37
+                End If
+            Else
+                If twojob = 0 Then
+                    ' FWT HOH - 1 job
+                    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+                    FWTRange(2) = 1617: FWTAmount(2) = 0: FWTPct(2) = 10
+                    FWTRange(3) = 2838: FWTAmount(3) = 122.1: FWTPct(3) = 12
+                    FWTRange(4) = 6275: FWTAmount(4) = 534.54: FWTPct(4) = 22
+                    FWTRange(5) = 9038: FWTAmount(5) = 1142.4: FWTPct(5) = 24
+                    FWTRange(6) = 15788: FWTAmount(6) = 2762.4: FWTPct(6) = 32
+                    FWTRange(7) = 19613: FWTAmount(7) = 3986.4: FWTPct(7) = 35
+                    FWTRange(8) = 46608: FWTAmount(8) = 13434.65: FWTPct(8) = 37
+                Else
+                    ' FWT HOH - 2 job
+                    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+                    FWTRange(2) = 808: FWTAmount(2) = 0: FWTPct(2) = 10
+                    FWTRange(3) = 1419: FWTAmount(3) = 61.1: FWTPct(3) = 12
+                    FWTRange(4) = 3138: FWTAmount(4) = 267.38: FWTPct(4) = 22
+                    FWTRange(5) = 4519: FWTAmount(5) = 571.2: FWTPct(5) = 24
+                    FWTRange(6) = 7894: FWTAmount(6) = 1381.2: FWTPct(6) = 32
+                    FWTRange(7) = 9806: FWTAmount(7) = 1993.04: FWTPct(7) = 35
+                    FWTRange(8) = 23304: FWTAmount(8) = 6717.34: FWTPct(8) = 37
+                End If
+            End If
+            
+            tbltype = ftype(msh) & IIf(twojob = 2, "2", "")
+        
+            For Lvl = 1 To 8
+    
+                PRFWTTable.Clear
+                PRFWTTable.TaxYear = 2022
+                PRFWTTable.TaxMonth = 1
+                PRFWTTable.StateID = 0
+                PRFWTTable.W4Type = tbltype
+    
+                If Lvl = 1 Then
+                    PRFWTTable.LowAmount = 0
+                    PRFWTTable.ExcessBase = 0
+                Else
+                    PRFWTTable.LowAmount = FWTRange(Lvl) + 0.01
+                    PRFWTTable.ExcessBase = FWTRange(Lvl)
+                End If
+    
+                If Lvl = 8 Then
+                    PRFWTTable.HiAmount = 99999999.99
+                Else
+                    PRFWTTable.HiAmount = FWTRange(Lvl + 1)
+                End If
+    
+                PRFWTTable.Amount = FWTAmount(Lvl)
+                PRFWTTable.Percent = FWTPct(Lvl)
+                PRFWTTable.Save (Equate.RecAdd)
+    
+            Next Lvl
+        
+        Next twojob
+    Next msh
+
+    MsgBox "Federal tax tables ** Revised W4 ** updated for 2022!", vbOKOnly + vbInformation
+
+End Sub
+
+Private Sub FWT2022Update()
+
+    For SnglMarr = 1 To 2     ' 1 = single / 2 = married
+
+        If SnglMarr = 1 Then
+            ' FWT SINGLE
+            FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+            FWTRange(2) = 4350: FWTAmount(2) = 0: FWTPct(2) = 10
+            FWTRange(3) = 14625: FWTAmount(3) = 1027.5: FWTPct(3) = 12
+            FWTRange(4) = 46125: FWTAmount(4) = 4807.5: FWTPct(4) = 22
+            FWTRange(5) = 93425: FWTAmount(5) = 15213.5: FWTPct(5) = 24
+            FWTRange(6) = 174400: FWTAmount(6) = 34647.5: FWTPct(6) = 32
+            FWTRange(7) = 220300: FWTAmount(7) = 49335.5: FWTPct(7) = 35
+            FWTRange(8) = 544250: FWTAmount(8) = 162718: FWTPct(8) = 37
+        Else
+            ' FWT MARRIED
+            FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+            FWTRange(2) = 13000: FWTAmount(2) = 0: FWTPct(2) = 10
+            FWTRange(3) = 33550: FWTAmount(3) = 2055: FWTPct(3) = 12
+            FWTRange(4) = 96550: FWTAmount(4) = 9615: FWTPct(4) = 22
+            FWTRange(5) = 191150: FWTAmount(5) = 30427: FWTPct(5) = 24
+            FWTRange(6) = 353100: FWTAmount(6) = 69295: FWTPct(6) = 32
+            FWTRange(7) = 444900: FWTAmount(7) = 98671: FWTPct(7) = 35
+            FWTRange(8) = 660850: FWTAmount(8) = 174253.5: FWTPct(8) = 37
+        End If
+
+        For Lvl = 1 To 8
+
+            PRFWTTable.Clear
+            PRFWTTable.TaxYear = 2022
+            PRFWTTable.TaxMonth = 1
+            PRFWTTable.StateID = 0
+
+            If SnglMarr = 1 Then
+                PRFWTTable.msSingle = 1
+                PRFWTTable.msMarried = 0
+            Else
+                PRFWTTable.msSingle = 0
+                PRFWTTable.msMarried = 1
+            End If
+
+            If Lvl = 1 Then
+                PRFWTTable.LowAmount = 0
+                PRFWTTable.ExcessBase = 0
+            Else
+                PRFWTTable.LowAmount = FWTRange(Lvl) + 0.01
+                PRFWTTable.ExcessBase = FWTRange(Lvl)
+            End If
+
+            If Lvl = 8 Then
+                PRFWTTable.HiAmount = 99999999.99
+            Else
+                PRFWTTable.HiAmount = FWTRange(Lvl + 1)
+            End If
+
+            PRFWTTable.Amount = FWTAmount(Lvl)
+            PRFWTTable.Percent = FWTPct(Lvl)
+            PRFWTTable.Save (Equate.RecAdd)
+
+        Next Lvl
+
+    Next SnglMarr
+
+    MsgBox "Federal tax tables updated for 2022!", vbOKOnly + vbInformation
+
+End Sub
+
 
 Private Sub FWT2021Update()
 

@@ -191,7 +191,7 @@ Public Sub AssignFields()
     Amount = nNull(rs!Amount)
     Percent = nNull(rs!Percent)
     ExcessBase = nNull(rs!ExcessBase)
-    W4Type = rs!W4Type
+    W4Type = nNull(rs!W4Type)
         
 End Sub
 
@@ -284,6 +284,7 @@ Dim rsYM, YM As Long
             ' 2019-12-21 use the OH multiplier
             
             ' 2021-08-28 - Month also / handle if no multiplier for the tax year
+            ' lookee here .... needs fix - see emails from 8-15-22
             If TaxYear >= 2019 Then
                 Dim OHMultiplier As Double
                 OHMultiplier = 1
