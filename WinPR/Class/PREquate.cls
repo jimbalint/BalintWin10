@@ -119,6 +119,8 @@ Public GlobalTypeMEDPct As Byte
 Public GlobalTypeMEDAddPct As Byte
 Public GlobalTypeMEDAddAmt As Byte
 Public GlobalTypeFWTAllow As Byte
+Public GlobalTypeFWTW4DepAmt As Byte
+Public GlobalTypeFWTW4OtherDepAmt As Byte
 Public GLobalTypeOHAllow As Byte
 Public GlobalTypeFUNMax As Byte
 Public GlobalTypeFUNPct As Byte

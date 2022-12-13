@@ -182,7 +182,7 @@ Dim SQLString As String
 Dim DollarFmt, PercentFmt As String
 
 Dim I, J, K As Long
-Dim x, Y, Z As String
+Dim x, y, Z As String
 
 Dim CompanyDrop As String
 
@@ -221,7 +221,7 @@ Private Sub Form_Load()
     dbSortDesc = False
     
     With Me.cmbGlobalType
-        For I = 1 To 21
+        For I = 1 To 24
             Select Case I
                 
                 Case 1:     .AddItem "Company Option":      .ItemData(.NewIndex) = PREquate.GlobalTypeCompanyOption
@@ -245,6 +245,9 @@ Private Sub Form_Load()
                 Case 19:    .AddItem "Work Comp":           .ItemData(.NewIndex) = PREquate.GlobalTypeWkcCat
                 Case 20:    .AddItem "Other State ID":      .ItemData(.NewIndex) = PREquate.GlobalTypeOtherStateID
                 Case 21:    .AddItem "OH SWT Multiplier":   .ItemData(.NewIndex) = PREquate.GlobalTypeOHMultiplier
+                Case 22:    .AddItem "FWT Std Allowance":   .ItemData(.NewIndex) = PREquate.GlobalTypeFWTAllow
+                Case 23:    .AddItem "W4 Dependent":        .ItemData(.NewIndex) = PREquate.GlobalTypeFWTW4DepAmt
+                Case 24:    .AddItem "W4 Other Dependent":  .ItemData(.NewIndex) = PREquate.GlobalTypeFWTW4OtherDepAmt
             End Select
         
         Next I
@@ -394,6 +397,12 @@ Private Sub cmbGlobalType_Click()
         fg.ColFormat(3) = "##0.000"
         SetGridAmount
     
+    ElseIf GlobalType = PREquate.GlobalTypeFWTAllow Then
+        
+        fg.TextMatrix(0, 3) = "FWT Allowance"
+        fg.ColFormat(3) = "##0.00"
+        SetGridAmount
+    
     Else
         SetGridAmount
     End If
@@ -537,7 +546,7 @@ Dim DelConfirm As Integer
 
 End Sub
 
-Private Sub fg_BeforeMouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal Y As Single, Cancel As Boolean)
+Private Sub fg_BeforeMouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single, Cancel As Boolean)
 
 '    ' clicking on a column header sorts based on that column
 '    If Button = 1 And Shift = 0 And fg.MouseRow = 0 Then

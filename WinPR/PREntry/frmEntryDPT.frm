@@ -1424,6 +1424,7 @@ Dim SSPct, MedPct, MedAddPct As Double
 Dim SSMax, MedMax, FUNMax, SUNMax As Currency
 Dim MedAddAmt As Currency
 Dim FedAllow, OHAllow, OHSDAllow As Currency
+Dim W4Dep, W4OtherDep As Currency
 Dim FWTAGI, SWTAGI, p1, P2, P3, P4 As Currency
 Dim TaxYear, TaxMonth As Integer
 
@@ -1438,7 +1439,7 @@ Dim CourtCityID As Long
 Dim CourtCityName As String
 Dim CourtAdd As Byte
 
-Dim DedCount, ErnCount, i, j, k As Integer
+Dim DedCount, ErnCount, I, J, K As Integer
 
 Public HiCheckNum, StartCheckNumber, BatchID As Long
 Dim NotInNetTotal As Currency
@@ -1678,9 +1679,9 @@ Private Sub Form_Load()
     
     ' hide the other columns of the ERN grid
     ' For i = 7 To 35
-    For i = 9 To fgERN.Cols - 1
-        fgERN.ColWidth(i) = 0
-    Next i
+    For I = 9 To fgERN.Cols - 1
+        fgERN.ColWidth(I) = 0
+    Next I
     
     ' Earnings Hours Column
     fgERN.ColFormat(1) = "##0.00"
@@ -1716,6 +1717,8 @@ Private Sub Form_Load()
     MedAddPct = PRGlobal.GetAmount(PREquate.GlobalTypeMEDAddPct, TaxYear)
     MedPct = PRGlobal.GetAmount(PREquate.GlobalTypeMEDPct, TaxYear)
     FedAllow = PRGlobal.GetAmount(PREquate.GlobalTypeFWTAllow, TaxYear)
+    W4Dep = PRGlobal.GetAmount(PREquate.GlobalTypeFWTW4DepAmt, TaxYear)
+    W4OtherDep = PRGlobal.GetAmount(PREquate.GlobalTypeFWTW4OtherDepAmt, TaxYear)
     OHAllow = PRGlobal.GetAmount(PREquate.GLobalTypeOHAllow, TaxYear)
     OHSDAllow = PRGlobal.GetAmount(PREquate.GlobalTypeOHSDTaxAllow, TaxYear)
     FUNMax = PRGlobal.GetAmount(PREquate.GlobalTypeFUNMax, TaxYear)
@@ -2519,7 +2522,7 @@ Dim ErnCount, DedCount As Integer
     End If
         
     ' add some blank lines
-    For i = 1 To 3
+    For I = 1 To 3
     
 '        ERN.AddNew
 '        ERN.Fields("Title") = 0
@@ -2536,7 +2539,7 @@ Dim ErnCount, DedCount As Integer
 '        DED.Fields("ItemType") = PREquate.ItemTypeDED
 '        DED.Update
         
-    Next i
+    Next I
     
     ' ===> assign the city drop down ColComboList
     ' *** use innerjoin to get state name
@@ -2605,15 +2608,15 @@ Dim ErnCount, DedCount As Integer
     
     ' hide remaining columns of the DED grid
     With fgDED
-        For i = 4 To .Cols - 1
-            .ColWidth(i) = 0
-        Next i
+        For I = 4 To .Cols - 1
+            .ColWidth(I) = 0
+        Next I
     End With
     
     With fgEMP
-        For i = 5 To .Cols - 1
-            .ColWidth(i) = 0
-        Next i
+        For I = 5 To .Cols - 1
+            .ColWidth(I) = 0
+        Next I
         .ScrollBars = flexScrollBarBoth
     End With
     
@@ -2935,16 +2938,16 @@ Private Sub LoadHistNew()
     DedBasisCreate
     
     ' add standard taxes
-    For i = 1 To 4
+    For I = 1 To 4
         DED.AddNew
-        DED.Fields("Title") = 99990 + i
+        DED.Fields("Title") = 99990 + I
         DED.Fields("Desc") = ""
         DED.Fields("Amount") = 0
         DED.Fields("ItemType") = PREquate.ItemTypeRegTax
-        DED.Fields("DedSort") = 20 + i
+        DED.Fields("DedSort") = 20 + I
         DED!SDTax = False
         DED.Update
-    Next i
+    Next I
     
     ' add dir dep
     SQLString = "SELECT * FROM PRItem WHERE EmployeeID = " & CStr(EMP!EmployeeID) & _
@@ -4025,14 +4028,22 @@ Dim DedBasis As Currency
             
         ' FWT Tax
         If DED!Title = 99993 Then
+        
+            If Not PRW4.GetByEmployeeID(PREmployee.EmployeeID) Then
+                PRW4.Clear
+                PRW4.EmployeeID = PREmployee.EmployeeID
+                PRW4.Save (Equate.RecAdd)
+            End If
+            
             If DED!AmountManual Then OrigAmt = DED!Amount
-            If PREmployee.NoFedTax = 1 Then
+            
+            If PRW4.FilingType = PREquate.PRW4Standard And PREmployee.NoFedTax = 1 Then
                 p1 = 0
                 DED.Fields("Desc") = "X " & Format(FWTWage, "$###,##0.00")
-            ElseIf PREmployee.FWTBasis = PREquate.BasisPercent Then
+            ElseIf PRW4.FilingType = PREquate.PRW4Standard And PREmployee.FWTBasis = PREquate.BasisPercent Then
                 p1 = Round(FWTWage * PREmployee.FWTAmount / 100, 2)
                 DED.Fields("Desc") = Format(PREmployee.FWTAmount / 100, "##0.00%") & " " & Format(FWTWage, "$###,##0.00")
-            Else
+            ElseIf PRW4.FilingType = PREquate.PRW4Standard Then
                 If PREmployee.FWTMarried = 1 Then
                     MarSng = "M"
                 Else
@@ -4050,8 +4061,34 @@ Dim DedBasis As Currency
                     p1 = Round(p1, 2)
                 End If
                 DED.Fields("Desc") = Trim(MarSng) & PREmployee.FWTAmount & " " & Format(FWTWage, "$###,##0.00")
+            Else
+MsgBox ("w4")
+                ' revised W4 handling - using the Monthly tables
+                Dim W4Type As String
+                If PREmployee.PaysPerYear = 0 Then PREmployee.PaysPerYear = 52
+                FWTAGI = Round(FWTWage * PREmployee.PaysPerYear / 12, 2)
+MsgBox ("a) " & FWTAGI)
+                FWTAGI = FWTAGI + Round((PRW4.OtherIncome / 12), 2) - Round((PRW4.Deductions / 12), 2)
+MsgBox ("b) " & FWTAGI)
+                If PRW4.FilingType = PREquate.PRW4Single Then W4Type = "S"
+                If PRW4.FilingType = PREquate.PRW4Married Then W4Type = "M"
+                If PRW4.FilingType = PREquate.PRW4HOH Then W4Type = "H"
+                If PRW4.TwoJobs <> 0 Then W4Type = W4Type & "2"
+MsgBox (W4Type)
+                p1 = PRFWTTable.GetFWTW4(W4Type, Int(PRBatch.YearMonth / 100), PRBatch.YearMonth Mod 100, FWTAGI)
+MsgBox ("c) " & p1)
+                p1 = p1 - (((PRW4.Dependents * W4Dep) + (PRW4.DependentsOther * W4OtherDep)) / 12)
+MsgBox ("d) " & p1)
+                p1 = p1 * 12 / PREmployee.PaysPerYear
+MsgBox ("e) " & p1)
+                p1 = p1 + PRW4.ExtraWH  ' extra WH per pay
+MsgBox ("f) " & p1)
+                p1 = Round(p1, 2)
+                If p1 < 0 Then p1 = 0
+                DED.Fields("Desc") = "W4-" & W4Type & " " & Format(FWTWage, "$###,##0.00")
             End If
-            If PREmployee.FWTExtraAmount <> 0 Then
+            
+            If PRW4.FilingType = PREquate.PRW4Standard And PREmployee.FWTExtraAmount <> 0 Then
                 If PREmployee.FWTExtraBasis = PREquate.BasisAmount Then
                     DED!Amount = p1 + PREmployee.FWTExtraAmount
                     If DED!Amount < 0 Then DED!Amount = 0

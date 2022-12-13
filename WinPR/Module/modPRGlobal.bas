@@ -418,6 +418,9 @@ Public Sub SetEquates()
     PREquate.GlobalTypeOHW2Contact = 71
     PREquate.GlobalTypeOHW2Submit = 72
     
+    PREquate.GlobalTypeFWTW4DepAmt = 73
+    PREquate.GlobalTypeFWTW4OtherDepAmt = 74
+    
     PREquate.EICTypeSingle = 1
     PREquate.EICTypeMarriedWith = 2
     PREquate.EICTypeMarriedWO = 3
@@ -1987,7 +1990,7 @@ Dim HdrName As String
     ' first line - system date & time / company name / page #
     x = Trim(HdrName)
     y = Format(Date, "mm/dd/yy ") & Format(Time, "hh:mm:ss")
-    z = "Page: " & Format(Pg, "####")
+    Z = "Page: " & Format(Pg, "####")
    
     If Len(x) > Columns - 39 Then
        x = Mid(Trim(HdrName), 1, Columns - 39)

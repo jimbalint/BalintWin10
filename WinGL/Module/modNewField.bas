@@ -415,6 +415,31 @@ Dim Ct1, Ct2, Recs As Long
             MsgBox "OH Multiplier for 2019 updated to: 1.075", vbInformation
         End If
                     
+        ' 2022 Revised W4
+        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeFWTW4DepAmt & " " & _
+                    "AND Year = 2022"
+        If PRGlobal.GetBySQL(SQLString) = False Then
+            PRGlobal.Clear
+            PRGlobal.TypeCode = PREquate.GlobalTypeFWTW4DepAmt
+            PRGlobal.Year = 2022
+            PRGlobal.Description = "W4 Dependent Amt"
+            PRGlobal.Amount = 2000
+            PRGlobal.Save (Equate.RecAdd)
+            MsgBox "W4 Dependent Amt updated to $2,000.00", vbInformation
+        End If
+        
+        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeFWTW4OtherDepAmt & " " & _
+                    "AND Year = 2022"
+        If PRGlobal.GetBySQL(SQLString) = False Then
+            PRGlobal.Clear
+            PRGlobal.TypeCode = PREquate.GlobalTypeFWTW4OtherDepAmt
+            PRGlobal.Year = 2022
+            PRGlobal.Description = "W4 Other Dependent Amt"
+            PRGlobal.Amount = 500
+            PRGlobal.Save (Equate.RecAdd)
+            MsgBox "W4 Other Dependent Amt updated to $500.00", vbInformation
+        End If
+                    
         ' 2021 - OH multiplier not changed
         SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeOHMultiplier & " " & _
                     "AND Year = 2020"
@@ -725,9 +750,9 @@ Dim Ct1, Ct2, Recs As Long
     
         ' Fed tax table update
 ' test for 2022 W4 tables
-MsgBox ("clear W4 2022...")
-SQLString = "delete * from PRFWTTable where W4Type <> '' and not isnull(W4Type) and TaxYear = 2022 and StateID = 0"
-cnDes.Execute SQLString
+'MsgBox ("clear W4 2022...")
+'SQLString = "delete * from PRFWTTable where W4Type <> '' and not isnull(W4Type) and TaxYear = 2022 and StateID = 0"
+'cnDes.Execute SQLString
     
         SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2022 AND StateID = 0 and W4Type <> '' AND NOT ISNULL(W4Type)"
         If PRFWTTable.GetBySQL(SQLString) = False Then FWT2022Update_W4

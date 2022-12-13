@@ -163,6 +163,23 @@ Public Function GetByID(ByVal lngPRW4ID As Long) As Boolean
 
 End Function
 
+Public Function GetByEmployeeID(ByVal lngEmployeeID As Long) As Boolean
+
+    rsInit "SELECT * FROM PRW4 WHERE EmployeeID = " & lngEmployeeID, cn, rs
+    
+    If rs.BOF And rs.EOF Then
+        GetByEmployeeID = False
+        Exit Function
+    End If
+    
+    rs.MoveFirst
+    
+    AssignFields
+    
+    GetByEmployeeID = True
+
+End Function
+
 
 Public Function GetBySQL(ByVal SString As String) As Boolean
                              

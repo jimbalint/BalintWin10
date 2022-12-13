@@ -288,10 +288,19 @@ Dim rsYM, YM As Long
             If TaxYear >= 2019 Then
                 Dim OHMultiplier As Double
                 OHMultiplier = 1
-                SQLString = "SELECT TOP 1 * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeOHMultiplier & _
-                            " AND Year <= " & TaxYear & _
-                            " AND Month <= " & TaxMonth & _
-                            " ORDER BY Year DESC, Month DESC"
+                If TaxYear <= 2022 Then
+                    ' prior SQL string
+                    SQLString = "SELECT TOP 1 * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeOHMultiplier & _
+                                " AND Year <= " & TaxYear & _
+                                " AND Month <= " & TaxMonth & _
+                                " ORDER BY Year DESC, Month DESC"
+                Else
+                    ' corrected SQL string - 2023 and forward
+                    SQLString = "SELECT TOP 1 * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeOHMultiplier & _
+                                " AND [Year] * 100 + [Month] <= " & YM & _
+                                " ORDER BY Year DESC, Month DESC"
+                End If
+
                 If PRGlobal.GetBySQL(SQLString) = True Then
                     OHMultiplier = PRGlobal.Amount
                 End If
@@ -341,6 +350,57 @@ Dim rsYM, YM As Long
 '
 '    GetFWT = rs!Amount + (FWTWage - rs!ExcessBase) * rs!Percent / 100
 
+
+End Function
+
+Public Function GetFWTW4(ByVal W4Type As String, _
+                       ByVal TaxYear As Long, _
+                       ByVal TaxMonth As Byte, _
+                       ByVal FWTWage As Currency) As Currency
+                                              
+                                              
+Dim rsYM, YM As Long
+                                              
+    If FWTWage = 0 Or TaxYear = 0 Then
+        GetFWTW4 = 0
+        Exit Function
+    End If
+                                              
+    If FWTWage > 99999999.99 Then FWTWage = 99999999.99
+                                              
+    ' loop thru and take the latest table entry
+    ' enables entry into next period even if tax table entries
+    '    don't exist yet
+                                              
+    SQLString = "SELECT * FROM PRFWTTable WHERE StateID = 0" & _
+                " AND W4Type = '" & W4Type & "'" & _
+                " AND " & FWTWage & " >= LowAmount " & _
+                " AND " & FWTWage & " <= HiAmount" & _
+                " ORDER BY TaxYear, TaxMonth"
+
+    rsInit SQLString, cnDes, rs
+    
+    If rs.BOF And rs.EOF Then
+        MsgBox "W4 FWT Table NF: " & TaxYear & " " & W4Type & " " & FWTWage, vbExclamation
+        End
+    End If
+    
+    GetFWTW4 = -1
+    
+    YM = TaxYear * 100 + TaxMonth
+    
+    Do
+        rsYM = rs!TaxYear * 100 + rs!TaxMonth
+        If rsYM > YM Then Exit Do
+        GetFWTW4 = Round(rs!Amount + (FWTWage - rs!ExcessBase) * rs!Percent / 100, 2)
+        rs.MoveNext
+        If rs.EOF Then Exit Do
+    Loop
+        
+    If GetFWTW4 = -1 Then
+        MsgBox "FWT Table NF: " & StateID & " " & TaxYear & " " & FWTWage, vbExclamation
+        End
+    End If
 
 End Function
 
