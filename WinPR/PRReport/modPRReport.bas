@@ -373,9 +373,12 @@ Dim ActInact As String
     
     SetEquates
     frmLists.Hide
+    
     Msg2 = "Date: " & Format(Now, "mm/dd/yyyy")
     frmProgress.lblMsg1 = "Printing " & ReportTitle & " for: " & PRCompany.Name
     frmProgress.Show
+   
+    
     ' page set up based on the report type
     Select Case ReportType
 
@@ -468,6 +471,13 @@ Dim ActInact As String
         Exit Sub
     End If
     Do
+    
+        If Not PRW4.GetByEmployeeID(PREmployee.EmployeeID) Then
+            PRW4.Clear
+            PRW4.EmployeeID = PREmployee.EmployeeID
+            PRW4.Save (Equate.RecAdd)
+        End If
+        
         If Ln = 0 Or Ln > MaxLines Then
          
             If Ln Then FormFeed
@@ -839,59 +849,124 @@ Dim ActInact As String
                 
                 PrintValue(1) = "Tax Base: ":                           FormatString(1) = "a11" '  Print 3rd Detail Line
                 
-                If PREmployee.FWTMarried = 1 Then
-                    PrintValue(2) = "FWT Married: Y":                   FormatString(2) = "a14"
+                Dim PrtNum As Integer
+                If PRW4.FilingType = PREquate.PRW4Standard Then
+                    If PREmployee.FWTMarried = 1 Then
+                        PrintValue(2) = "FWT Married: Y":                   FormatString(2) = "a14"
+                    Else
+                        PrintValue(2) = "FWT Married: N":                   FormatString(2) = "a14"
+                    End If
+                
+                    PrintValue(3) = " ":                                    FormatString(3) = "a2"
+                    If PREmployee.FWTBasis = PREquate.BasisExemptions Then
+                        PrintValue(4) = "FWT Exemps: ":                     FormatString(4) = "a12"
+                        PrintValue(5) = PREmployee.FWTAmount:               FormatString(5) = "n2"
+                        PrintValue(6) = " ":                                FormatString(6) = "a2"
+                    ElseIf PREmployee.FWTBasis = PREquate.BasisPercent Then
+                        PrintValue(4) = "FWT: ":                            FormatString(4) = "a5"
+                        PrintValue(5) = PREmployee.FWTAmount:               FormatString(5) = "d10"
+                        PrintValue(6) = "%  ":                              FormatString(6) = "a3"
+                    End If
+                    
+                    If PREmployee.FWTExtraBasis = PREquate.BasisPercent Then
+                        PrintValue(7) = "FWT Extra: ":                      FormatString(7) = "a11"
+                        PrintValue(8) = PREmployee.FWTExtraAmount:          FormatString(8) = "d10"
+                        PrintValue(9) = "% ":                               FormatString(9) = "a3"
+                    ElseIf PREmployee.FWTExtraBasis = PREquate.BasisAmount Then
+                        PrintValue(7) = "FWT Extra: ":                      FormatString(7) = "a11"
+                        PrintValue(8) = "$ " & PREmployee.FWTExtraAmount:   FormatString(8) = "d10"
+                        PrintValue(9) = " ":                                FormatString(9) = "a2"
+                    End If
+                    
+                    PrtNum = 9
+                
                 Else
-                    PrintValue(2) = "FWT Married: N":                   FormatString(2) = "a14"
+                    
+                    If PRW4.FilingType = PREquate.PRW4Single Then PrintValue(2) = "FWT W4 S"
+                    If PRW4.FilingType = PREquate.PRW4Married Then PrintValue(2) = "FWT W4 M"
+                    If PRW4.FilingType = PREquate.PRW4HOH Then PrintValue(2) = "FWT W4 HOH"
+                    If PRW4.TwoJobs <> 0 Then PrintValue(2) = PrintValue(2) & "*2"
+                    PrintValue(2) = PrintValue(2) & " "
+                    FormatString(2) = "a14"
+                    
+                    PrtNum = 2
+                    
+                    If PRW4.Dependents <> 0 Then
+                        PrtNum = PrtNum + 1
+                        PrintValue(PrtNum) = "#Dep:" & PRW4.Dependents & " "
+                        FormatString(PrtNum) = "a9"
+                    End If
+                        
+                    If PRW4.DependentsOther <> 0 Then
+                        PrtNum = PrtNum + 1
+                        PrintValue(PrtNum) = "#Dep Other:" & PRW4.DependentsOther & " "
+                        FormatString(PrtNum) = "a14"
+                    End If
+                    
+                    If PRW4.OtherIncome <> 0 Then
+                        PrtNum = PrtNum + 1
+                        PrintValue(PrtNum) = "Other Inc:": FormatString(PrtNum) = "a10"
+                        PrtNum = PrtNum + 1
+                        PrintValue(PrtNum) = PRW4.OtherIncome: FormatString(PrtNum) = "d10"
+                    End If
+                    
+                    If PRW4.Deductions <> 0 Then
+                        PrtNum = PrtNum + 1
+                        PrintValue(PrtNum) = "Deductions:": FormatString(PrtNum) = "a11"
+                        PrtNum = PrtNum + 1
+                        PrintValue(PrtNum) = PRW4.Deductions: FormatString(PrtNum) = "d10"
+                    End If
+                    
+                    If PRW4.ExtraWH <> 0 Then
+                        PrtNum = PrtNum + 1
+                        PrintValue(PrtNum) = "Extra WH:": FormatString(PrtNum) = "a9"
+                        PrtNum = PrtNum + 1
+                        PrintValue(PrtNum) = PRW4.ExtraWH: FormatString(PrtNum) = "d8"
+                    End If
+                
                 End If
                 
-                PrintValue(3) = " ":                                    FormatString(3) = "a2"
-                If PREmployee.FWTBasis = PREquate.BasisExemptions Then
-                    PrintValue(4) = "FWT Exemps: ":                     FormatString(4) = "a12"
-                    PrintValue(5) = PREmployee.FWTAmount:               FormatString(5) = "n2"
-                    PrintValue(6) = " ":                                FormatString(6) = "a2"
-                ElseIf PREmployee.FWTBasis = PREquate.BasisPercent Then
-                    PrintValue(4) = "FWT: ":                            FormatString(4) = "a5"
-                    PrintValue(5) = PREmployee.FWTAmount:               FormatString(5) = "d10"
-                    PrintValue(6) = "%  ":                              FormatString(6) = "a3"
-                End If
-                
-                If PREmployee.FWTExtraBasis = PREquate.BasisPercent Then
-                    PrintValue(7) = "FWT Extra: ":                      FormatString(7) = "a11"
-                    PrintValue(8) = PREmployee.FWTExtraAmount:          FormatString(8) = "d10"
-                    PrintValue(9) = "% ":                               FormatString(9) = "a3"
-                ElseIf PREmployee.FWTExtraBasis = PREquate.BasisAmount Then
-                    PrintValue(7) = "FWT Extra: ":                      FormatString(7) = "a11"
-                    PrintValue(8) = "$ " & PREmployee.FWTExtraAmount:   FormatString(8) = "d10"
-                    PrintValue(9) = " ":                                FormatString(9) = "a2"
-                End If
-                
+                PrtNum = PrtNum + 1
                 If PREmployee.SWTMarried = 1 Then
-                    PrintValue(10) = "SWT Married: Y":                  FormatString(10) = "a14"
+                    PrintValue(PrtNum) = "SWT Married: Y":                  FormatString(PrtNum) = "a14"
                 Else
-                    PrintValue(10) = "SWT Married: N":                  FormatString(10) = "a14"
+                    PrintValue(PrtNum) = "SWT Married: N":                  FormatString(PrtNum) = "a14"
                 End If
                 
-                PrintValue(11) = " ":                                   FormatString(11) = "a2"
+                PrtNum = PrtNum + 1
+                PrintValue(PrtNum) = " ":                                   FormatString(PrtNum) = "a2"
                 If PREmployee.SWTBasis = PREquate.BasisExemptions Then
-                    PrintValue(12) = "SWT Exemps: ":                    FormatString(12) = "a12"
-                    PrintValue(13) = PREmployee.SWTAmount:              FormatString(13) = "n2"
-                    PrintValue(14) = " ":                               FormatString(14) = "a2"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = "SWT Exemps: ":                    FormatString(PrtNum) = "a12"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = PREmployee.SWTAmount:              FormatString(PrtNum) = "n2"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = " ":                               FormatString(PrtNum) = "a2"
                 ElseIf PREmployee.SWTBasis = PREquate.BasisPercent Then
-                    PrintValue(12) = "SWT: ":                           FormatString(12) = "a5"
-                    PrintValue(13) = PREmployee.SWTAmount:              FormatString(13) = "d9"
-                    PrintValue(14) = "%  ":                             FormatString(14) = "a3"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = "SWT: ":                           FormatString(PrtNum) = "a5"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = PREmployee.SWTAmount:              FormatString(PrtNum) = "d9"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = "%  ":                             FormatString(PrtNum) = "a3"
                 End If
                 
                 If PREmployee.SWTExtraBasis = PREquate.BasisPercent Then
-                    PrintValue(15) = "SWT Extra: ":                     FormatString(15) = "a11"
-                    PrintValue(16) = PREmployee.SWTExtraAmount:         FormatString(16) = "d6"
-                    PrintValue(17) = "%":                               FormatString(17) = "a1"
-                    PrintValue(18) = " ":                               FormatString(18) = "~"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = "SWT Extra: ":                     FormatString(PrtNum) = "a11"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = PREmployee.SWTExtraAmount:         FormatString(PrtNum) = "d6"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = "%":                               FormatString(PrtNum) = "a1"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = " ":                               FormatString(PrtNum) = "~"
                 ElseIf PREmployee.SWTExtraBasis = PREquate.BasisAmount Then
-                    PrintValue(15) = "SWT Extra: ":                     FormatString(15) = "a11"
-                    PrintValue(16) = "$ " & PREmployee.SWTExtraAmount:  FormatString(16) = "d8"
-                    PrintValue(17) = " ":                               FormatString(17) = "~"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = "SWT Extra: ":                     FormatString(PrtNum) = "a11"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = "$ " & PREmployee.SWTExtraAmount:  FormatString(PrtNum) = "d8"
+                    PrtNum = PrtNum + 1
+                    PrintValue(PrtNum) = " ":                               FormatString(PrtNum) = "~"
                 End If
                 FormatPrint
                 Ln = Ln + 1
@@ -1138,15 +1213,31 @@ Dim ActInact As String
                  Else
                     PrintValue(19) = "N":                               FormatString(19) = "a5"
                  End If
-                 If PREmployee.FWTMarried = 1 Then
-                    PrintValue(20) = "Y":                               FormatString(20) = "a3"
+                 
+                 If PRW4.FilingType = PREquate.PRW4Standard Then
+                    If PREmployee.FWTMarried = 1 Then
+                       PrintValue(20) = "Y":                               FormatString(20) = "a3"
+                    Else
+                       PrintValue(20) = "N":                               FormatString(20) = "a3"
+                    End If
+                 
+                    PrintValue(21) = PREmployee.FWTBasis:                  FormatString(21) = "n3"
+                    PrintValue(22) = PREmployee.FWTAmount:                 FormatString(22) = "d9"
+                    PrintValue(23) = Format(PREmployee.FWTExtraAmount):    FormatString(23) = "d9"
                  Else
-                    PrintValue(20) = "N":                               FormatString(20) = "a3"
+                    If PRW4.FilingType = PREquate.PRW4Married Then
+                       PrintValue(20) = "*Y":                               FormatString(20) = "a3"
+                    ElseIf PRW4.FilingType = PREquate.PRW4Single Then
+                       PrintValue(20) = "*S":                               FormatString(20) = "a3"
+                    Else
+                       PrintValue(20) = "*H":                               FormatString(20) = "a3"
+                    End If
+                 
+                    PrintValue(21) = PRW4.Dependents:                  FormatString(21) = "n3"
+                    PrintValue(22) = "":                 FormatString(22) = "a9"
+                    PrintValue(23) = Format(PRW4.ExtraWH):    FormatString(23) = "d9"
                  End If
                  
-                 PrintValue(21) = PREmployee.FWTBasis:                  FormatString(21) = "n3"
-                 PrintValue(22) = PREmployee.FWTAmount:                 FormatString(22) = "d9"
-                 PrintValue(23) = Format(PREmployee.FWTExtraAmount):    FormatString(23) = "d9"
                  PrintValue(24) = " ":                                  FormatString(24) = "a3"
                  If PREmployee.SWTMarried = 1 Then
                     PrintValue(25) = "Y":                               FormatString(25) = "a1"

@@ -4037,7 +4037,7 @@ Dim DedBasis As Currency
             
             If DED!AmountManual Then OrigAmt = DED!Amount
             
-            If PRW4.FilingType = PREquate.PRW4Standard And PREmployee.NoFedTax = 1 Then
+            If PREmployee.NoFedTax = 1 Then
                 p1 = 0
                 DED.Fields("Desc") = "X " & Format(FWTWage, "$###,##0.00")
             ElseIf PRW4.FilingType = PREquate.PRW4Standard And PREmployee.FWTBasis = PREquate.BasisPercent Then
@@ -4062,27 +4062,27 @@ Dim DedBasis As Currency
                 End If
                 DED.Fields("Desc") = Trim(MarSng) & PREmployee.FWTAmount & " " & Format(FWTWage, "$###,##0.00")
             Else
-MsgBox ("w4")
+'If FWTWage > 0 Then MsgBox ("w4")
                 ' revised W4 handling - using the Monthly tables
                 Dim W4Type As String
                 If PREmployee.PaysPerYear = 0 Then PREmployee.PaysPerYear = 52
                 FWTAGI = Round(FWTWage * PREmployee.PaysPerYear / 12, 2)
-MsgBox ("a) " & FWTAGI)
+'If FWTWage > 0 Then MsgBox ("a) " & FWTAGI)
                 FWTAGI = FWTAGI + Round((PRW4.OtherIncome / 12), 2) - Round((PRW4.Deductions / 12), 2)
-MsgBox ("b) " & FWTAGI)
+'If FWTWage > 0 Then MsgBox ("b) " & FWTAGI)
                 If PRW4.FilingType = PREquate.PRW4Single Then W4Type = "S"
                 If PRW4.FilingType = PREquate.PRW4Married Then W4Type = "M"
                 If PRW4.FilingType = PREquate.PRW4HOH Then W4Type = "H"
                 If PRW4.TwoJobs <> 0 Then W4Type = W4Type & "2"
-MsgBox (W4Type)
+'If FWTWage > 0 Then MsgBox (W4Type)
                 p1 = PRFWTTable.GetFWTW4(W4Type, Int(PRBatch.YearMonth / 100), PRBatch.YearMonth Mod 100, FWTAGI)
-MsgBox ("c) " & p1)
+'If FWTWage > 0 Then MsgBox ("c) " & p1)
                 p1 = p1 - (((PRW4.Dependents * W4Dep) + (PRW4.DependentsOther * W4OtherDep)) / 12)
-MsgBox ("d) " & p1)
+'If FWTWage > 0 Then MsgBox ("d) " & p1)
                 p1 = p1 * 12 / PREmployee.PaysPerYear
-MsgBox ("e) " & p1)
+'If FWTWage > 0 Then MsgBox ("e) " & p1)
                 p1 = p1 + PRW4.ExtraWH  ' extra WH per pay
-MsgBox ("f) " & p1)
+'If FWTWage > 0 Then MsgBox ("f) " & p1)
                 p1 = Round(p1, 2)
                 If p1 < 0 Then p1 = 0
                 DED.Fields("Desc") = "W4-" & W4Type & " " & Format(FWTWage, "$###,##0.00")

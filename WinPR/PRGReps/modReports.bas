@@ -640,18 +640,31 @@ Dim FWTString, SWTString As String
             End If
         
             ' display withholding status for FWT / SWT
+            If Not PRW4.GetByEmployeeID(PREmployee.EmployeeID) Then
+                PRW4.Clear
+                PRW4.EmployeeID = PREmployee.EmployeeID
+                PRW4.Save (Equate.RecAdd)
+            End If
             FWTString = "FWT "
-            If PREmployee.FWTBasis = PREquate.BasisExemptions Then
-                If PREmployee.FWTMarried = 1 Then
-                    FWTString = FWTString & " M" & PREmployee.FWTAmount
+            If PRW4.FilingType = PREquate.PRW4Standard Then
+                If PREmployee.FWTBasis = PREquate.BasisExemptions Then
+                    If PREmployee.FWTMarried = 1 Then
+                        FWTString = FWTString & " M" & PREmployee.FWTAmount
+                    Else
+                        FWTString = FWTString & " S" & PREmployee.FWTAmount
+                    End If
                 Else
-                    FWTString = FWTString & " S" & PREmployee.FWTAmount
+                    FWTString = FWTString & PREmployee.FWTAmount & "%"
+                End If
+                If PREmployee.FWTExtraAmount <> 0 Then
+                    FWTString = FWTString & "*"
                 End If
             Else
-                FWTString = FWTString & PREmployee.FWTAmount & "%"
-            End If
-            If PREmployee.FWTExtraAmount <> 0 Then
-                FWTString = FWTString & "*"
+                If PRW4.FilingType = PREquate.PRW4Single Then FWTString = FWTString & "W4-S"
+                If PRW4.FilingType = PREquate.PRW4Married Then FWTString = FWTString & "W4-M"
+                If PRW4.FilingType = PREquate.PRW4HOH Then FWTString = FWTString & "W4-H"
+                If PRW4.TwoJobs <> 0 Then FWTString = FWTString & "- 2Job"
+                If PRW4.ExtraWH <> 0 Then FWTString = FWTString & "*"
             End If
         
             SWTString = "SWT "

@@ -32,6 +32,7 @@ Dim FileExt As String
     Set PRW2 = New cPRW2
     Set PRW2City = New cPRW2City
     Set PRW2State = New cPRW2State
+    Set PRW4 = New cPRW4
     
     Set PRTimeSheet = New cPRTimeSheet
     Set JCJob = New cJCJob
@@ -42,8 +43,8 @@ Dim FileExt As String
     x = Command()
     
     If x = "" Then         ' set for testing
-       BalintFolder = "\\vboxsrv\vm-share\balint"
        BalintFolder = "c:\Balint"
+       BalintFolder = "\\vboxsrv\vm-share\balint"
        dbPwd = ""
        ' ProgName = UCase("ITEMDETAIL")
        ProgName = UCase("test")
@@ -52,7 +53,7 @@ Dim FileExt As String
        ' UserID = 15
        BackName = ""
        MenuName = ""
-       BatchNum = 155
+       BatchNum = 1
        BatchNumber = BatchNum
        PRBatchID = BatchNum
        BatchNumbr = BatchNum

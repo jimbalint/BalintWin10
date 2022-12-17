@@ -22,6 +22,8 @@ Dim FileExt As String
     Set PRGlobal = New cPRGlobal
     Set PRGLUpd = New cPRGLUpd
 
+    Set PRW4 = New cPRW4
+
     Set GLAccount = New cGLAccount
     Set GLBatch = New cGLBatch
     Set GLCompany = New cGLCompany
@@ -49,7 +51,7 @@ Dim FileExt As String
        PRBatchID = 0
        BatchNum = PRBatchID
        BatchNumber = PRBatchID
-       ProgName = UCase("OHBUC")                  ''''''  Select from cases below
+       ProgName = UCase("eelist")                  ''''''  Select from cases below
        SysFile = "s:\Balint\Data\GLSystem.mdb"
        UserID = 2
        BackName = ""
