@@ -30,7 +30,7 @@ Dim FileExt As String
        BalintFolder = "c:\Balint"
         ' BalintFolder = ""
        dbPwd = ""
-       ProgName = UCase("payer")
+       ProgName = UCase("print")
        ' ProgName = UCase("test2")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
@@ -192,13 +192,13 @@ Dim FileExt As String
 
 ' **********************************************************
 ' *** use for test runs ***
-'If CmdLine = "" Then
-'    HorzNudge = 4
-'    VertNudge = 4
-'    Create2021Forms "NEC"
-'    PrintForm99 "NEC", 2021, True
-'    End
-'End If
+If CmdLine = "" Then
+    HorzNudge = 4
+    VertNudge = 4
+    Create2022Forms "DIV"
+    PrintForm99 "DIV", 2022, True
+    End
+End If
 
 ' **********************************************************
     Select Case ProgName

@@ -38,11 +38,11 @@ Begin VB.Form frmOHW2
    End
    Begin TabDlg.SSTab SSTab1 
       Height          =   9135
-      Left            =   240
+      Left            =   0
       TabIndex        =   1
       Top             =   840
-      Width           =   15135
-      _ExtentX        =   26696
+      Width           =   14415
+      _ExtentX        =   25426
       _ExtentY        =   16113
       _Version        =   393216
       Tabs            =   2
@@ -51,41 +51,55 @@ Begin VB.Form frmOHW2
       TabCaption(0)   =   "Submitter Information"
       TabPicture(0)   =   "frmOhioW2Upload.frx":0000
       Tab(0).ControlEnabled=   0   'False
-      Tab(0).Control(0)=   "Label2"
-      Tab(0).Control(1)=   "Label3"
-      Tab(0).Control(2)=   "txtUserID"
-      Tab(0).Control(3)=   "txtContactPhn"
-      Tab(0).Control(4)=   "txtContactName"
-      Tab(0).Control(5)=   "txtZipCodeExt"
-      Tab(0).Control(6)=   "txtZipCode"
-      Tab(0).Control(7)=   "txtState"
-      Tab(0).Control(8)=   "txtCity"
-      Tab(0).Control(9)=   "txtDeliveryAddress"
-      Tab(0).Control(10)=   "txtLocationAddress"
-      Tab(0).Control(11)=   "txtCompanyName"
-      Tab(0).Control(12)=   "txtEIN"
-      Tab(0).Control(13)=   "txtContactPhnExt"
-      Tab(0).Control(14)=   "txtContactEmail"
-      Tab(0).Control(15)=   "txtContactFax"
-      Tab(0).Control(16)=   "cmbPreparerCode"
-      Tab(0).Control(17)=   "cmdSaveSubm"
+      Tab(0).Control(0)=   "cmdSaveSubm"
+      Tab(0).Control(1)=   "cmbPreparerCode"
+      Tab(0).Control(2)=   "txtContactFax"
+      Tab(0).Control(3)=   "txtContactEmail"
+      Tab(0).Control(4)=   "txtContactPhnExt"
+      Tab(0).Control(5)=   "txtEIN"
+      Tab(0).Control(6)=   "txtCompanyName"
+      Tab(0).Control(7)=   "txtLocationAddress"
+      Tab(0).Control(8)=   "txtDeliveryAddress"
+      Tab(0).Control(9)=   "txtCity"
+      Tab(0).Control(10)=   "txtState"
+      Tab(0).Control(11)=   "txtZipCode"
+      Tab(0).Control(12)=   "txtZipCodeExt"
+      Tab(0).Control(13)=   "txtContactName"
+      Tab(0).Control(14)=   "txtContactPhn"
+      Tab(0).Control(15)=   "txtUserID"
+      Tab(0).Control(16)=   "Label3"
+      Tab(0).Control(17)=   "Label2"
       Tab(0).ControlCount=   18
       TabCaption(1)   =   "Submit OH W2 File"
       TabPicture(1)   =   "frmOhioW2Upload.frx":001C
       Tab(1).ControlEnabled=   -1  'True
-      Tab(1).Control(0)=   "txtResubID"
+      Tab(1).Control(0)=   "lblMsg"
       Tab(1).Control(0).Enabled=   0   'False
-      Tab(1).Control(1)=   "chkResubIndicator"
+      Tab(1).Control(1)=   "lblCurrentCompany"
       Tab(1).Control(1).Enabled=   0   'False
-      Tab(1).Control(2)=   "txtOutputFile"
+      Tab(1).Control(2)=   "txtResubID"
       Tab(1).Control(2).Enabled=   0   'False
-      Tab(1).Control(3)=   "cmdFileName"
+      Tab(1).Control(3)=   "chkResubIndicator"
       Tab(1).Control(3).Enabled=   0   'False
-      Tab(1).Control(4)=   "cmdCreateFile"
+      Tab(1).Control(4)=   "txtOutputFile"
       Tab(1).Control(4).Enabled=   0   'False
-      Tab(1).Control(5)=   "txtTaxYear"
+      Tab(1).Control(5)=   "cmdFileName"
       Tab(1).Control(5).Enabled=   0   'False
-      Tab(1).ControlCount=   6
+      Tab(1).Control(6)=   "cmdCreateFile"
+      Tab(1).Control(6).Enabled=   0   'False
+      Tab(1).Control(7)=   "txtTaxYear"
+      Tab(1).Control(7).Enabled=   0   'False
+      Tab(1).Control(8)=   "chkCurrentClient"
+      Tab(1).Control(8).Enabled=   0   'False
+      Tab(1).ControlCount=   9
+      Begin VB.CheckBox chkCurrentClient 
+         Caption         =   "Create the file for only the current client"
+         Height          =   375
+         Left            =   480
+         TabIndex        =   28
+         Top             =   2280
+         Width           =   4935
+      End
       Begin TDBText6Ctl.TDBText txtTaxYear 
          Height          =   375
          Left            =   360
@@ -146,7 +160,7 @@ Begin VB.Form frmOHW2
       End
       Begin VB.CommandButton cmdCreateFile 
          BackColor       =   &H00FFFF00&
-         Caption         =   "Create OH W2 Upload"
+         Caption         =   "Create OH W2 Upload File"
          BeginProperty Font 
             Name            =   "Arial"
             Size            =   12
@@ -1134,6 +1148,22 @@ Begin VB.Form frmOHW2
          OLEDragMode     =   0
          OLEDropMode     =   0
       End
+      Begin VB.Label lblCurrentCompany 
+         Caption         =   "lblCurrentCompany"
+         Height          =   255
+         Left            =   480
+         TabIndex        =   29
+         Top             =   2760
+         Width           =   5535
+      End
+      Begin VB.Label lblMsg 
+         Caption         =   "Label4"
+         Height          =   2055
+         Left            =   2040
+         TabIndex        =   27
+         Top             =   4440
+         Width           =   5655
+      End
       Begin VB.Label Label3 
          Caption         =   "* Preparer Code"
          Height          =   255
@@ -1205,6 +1235,24 @@ Private Sub Form_Load()
         End
     End If
     OHStateID = PRState.StateID
+
+    With Me.lblMsg
+        Dim tmsg As String
+        tmsg = ""
+        tmsg = tmsg & "Use this program to create the file " & vbCrLf
+        tmsg = tmsg & "to upload to the state website." & vbCrLf
+        tmsg = tmsg & "" & vbCrLf
+        tmsg = tmsg & "You can create this file multiple" & vbCrLf
+        tmsg = tmsg & "times until you are sure it is correct." & vbCrLf
+        tmsg = tmsg & "" & vbCrLf
+        tmsg = tmsg & "Once that is done upload " & vbCrLf
+        tmsg = tmsg & "the file to the state website." & vbCrLf
+        .Caption = tmsg
+    End With
+    
+    Dim boo As Boolean
+    boo = PRCompany.GetByID(User.LastPRCompany)
+    Me.lblCurrentCompany.Caption = PRCompany.Name
 
     W2TL.RWTotalCount = 0
     OutOfStateEmp = ""
@@ -1281,7 +1329,7 @@ Private Sub cmdCreateFile_Click()
     
     If CInt(Me.txtTaxYear.text) <> Year(Date) - 1 Then
         Dim bResult As Integer
-        bResult = MsgBox("Are you SURE you want to submit for the Tax Year of: " & Me.txtTaxYear.text, vbExclamation + vbYesNo, "OH W2 Upload")
+        bResult = MsgBox("Are you SURE you want to create a file for the Tax Year of: " & Me.txtTaxYear.text, vbExclamation + vbYesNo, "OH W2 Upload")
         If bResult = vbNo Then Exit Sub
     End If
    
@@ -1292,6 +1340,10 @@ Private Sub cmdCreateFile_Click()
     WriteRA
     
     strSQL = "select * from PRCompany where OHeW2 = True"
+    If Me.chkCurrentClient Then
+        strSQL = strSQL & " and CompanyID = " & User.LastPRCompany
+    End If
+    strSQL = strSQL & " order by Name"
     If Not PRCompany.GetBySQL(strSQL) Then End
     Do
 
@@ -1529,6 +1581,10 @@ Sub InitReport()
     
     PrintInfo "Companies Reported", "", 1
     strSQL = "select * from PRCompany where OHeW2 = True"
+    If Me.chkCurrentClient Then
+        strSQL = strSQL & " and CompanyID = " & User.LastPRCompany
+    End If
+    strSQL = strSQL & " order by Name"
     If Not PRCompany.GetBySQL(strSQL) Then End
     Do
         PrintInfo PRCompany.Name, "", 1

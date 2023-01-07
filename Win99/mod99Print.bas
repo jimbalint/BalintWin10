@@ -186,6 +186,8 @@ Dim Form1096 As Boolean
         Else
             X = "~"
             Select Case Field99.BoxName
+                Case "TaxYear"
+                    X = TaxYear Mod 100
                 Case "Payer1"
                     X = PayerDemo(1)
                 Case "Payer2"

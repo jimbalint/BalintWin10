@@ -299,7 +299,7 @@ Begin VB.Form frmPrint99
       MinValueVT      =   5
    End
    Begin VB.Label Label3 
-      Caption         =   "01/15/2022"
+      Caption         =   "01/07/2023 b"
       Height          =   255
       Left            =   11040
       TabIndex        =   14
@@ -705,3 +705,4 @@ Dim ii As Integer
     If ii = 4 Then GetFormType = "DIV"
 
 End Function
+

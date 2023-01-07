@@ -300,7 +300,7 @@ Dim rsYM, YM As Long
                                 " AND [Year] * 100 + [Month] <= " & YM & _
                                 " ORDER BY Year DESC, Month DESC"
                 End If
-
+                
                 If PRGlobal.GetBySQL(SQLString) = True Then
                     OHMultiplier = PRGlobal.Amount
                 End If

@@ -140,6 +140,373 @@ Public Sub ClearFormRecs(ByVal FormType As String, ByVal TaxYear As Long)
 
 End Sub
 
+Public Sub Create2022Forms(ByVal jFormType As String)
+
+Dim TaxYear As Long
+Dim HorzPosn1, HorzPosn2, HorzPosn3, Tab1, Tab2 As Integer
+Dim VertSpacing, VertPosn As Integer
+Dim FormID As Long
+Dim FormType As String
+Dim vp As Integer
+Dim hp As Integer
+
+    TaxYear = 2022
+
+    Form99.OpenRS
+    Form99.Clear
+
+    ' ================================================================================================
+    ' NEC
+    
+    If jFormType = "All" Or jFormType = "NEC" Then
+    
+        ClearFormRecs "NEC", TaxYear
+        
+        Form99.FormType = "NEC"
+        Form99.TaxYear = TaxYear
+        Form99.FormsPerPg = 3
+        Form99.FormVert1 = 800
+        Form99.FormVert2 = 6100
+        Form99.FormVert3 = 11400
+        Form99.Save (Equate.RecAdd)
+        FormID = Form99.FormID
+        
+        ' FormID, BoxName, FieldTitle, FieldFormat, HorzPosn, VertPosn, QuickEntry
+        Tab1 = 650          ' demographic fields from left margin
+        HorzPosn1 = 5590
+        HorzPosn2 = 7300
+        VertSpacing = 240
+        VertPosn = 40
+        FieldOrderNum = 0
+        FormType = "NEC"
+        
+        Field99Add TaxYear, FormType, "Payer1", "Payer1", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer2", "Payer2", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer3", "Payer3", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer4", "Payer4", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer5", "Payer5", Equate.fmtString, Tab1, VertPosn, 0
+        
+        vp = VertPosn + VertSpacing - 420
+        Field99Add TaxYear, FormType, "TaxYear", "TaxYear", Equate.fmtString, 8250, vp, 0
+        
+        VertPosn = VertPosn + VertSpacing * 2 - 135
+        Field99Add TaxYear, FormType, "PayerFederalID", "PayerFederalID", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "PayeeFederalID", "PayeeFederalID", Equate.fmtString, Tab1 + 2500, VertPosn, 0
+        Field99Add TaxYear, FormType, "1", "Nonemployee compensation", Equate.fmtAmount, HorzPosn2, VertPosn, 1
+        
+        VertPosn = VertPosn + VertSpacing * 2 - 80
+        Field99Add TaxYear, FormType, "2", "DirectSales5000", Equate.fmtString, 9130, VertPosn, 2
+        VertPosn = VertPosn + 80
+        
+        VertPosn = VertPosn + VertSpacing
+        Field99Add TaxYear, FormType, "PayeeName", "PayeeName", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "PayeeAddress", "PayeeAddress", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing
+        Field99Add TaxYear, FormType, "4", "Federal income tax withheld", Equate.fmtAmount, HorzPosn1 + 1430, VertPosn, 3
+        
+        VertPosn = VertPosn + VertSpacing
+        Field99Add TaxYear, FormType, "PayeeCSZ", "PayeeCSZ", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "5a", "State tax withheld", Equate.fmtAmount, HorzPosn1 - 100, VertPosn, 4
+        Field99Add TaxYear, FormType, "6a", "State/Payers state no.", Equate.fmtString, HorzPosn2, VertPosn, 5
+        Field99Add TaxYear, FormType, "7a", "State tax withheld", Equate.fmtAmount, HorzPosn2 + 2100, VertPosn, 6
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "PayeeAccountNumber", "PayeeAccountNumber", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "5b", "State tax withheld", Equate.fmtAmount, HorzPosn1 - 100, VertPosn, 7
+        Field99Add TaxYear, FormType, "6b", "State/Payers state no.", Equate.fmtString, HorzPosn2, VertPosn, 8
+        Field99Add TaxYear, FormType, "7b", "State tax withheld", Equate.fmtAmount, HorzPosn2 + 2100, VertPosn, 9
+    
+    End If
+
+    ' ================================================================================================
+    ' MISC
+    
+    If jFormType = "All" Or jFormType = "MISC" Then
+    
+        ClearFormRecs "MISC", TaxYear
+        
+        Form99.FormType = "MISC"
+        Form99.TaxYear = TaxYear
+        Form99.FormsPerPg = 2
+        Form99.FormVert1 = 1000
+        Form99.FormVert2 = 8930
+        Form99.Save (Equate.RecAdd)
+        FormID = Form99.FormID
+        
+        ' FormID, BoxName, FieldTitle, FieldFormat, HorzPosn, VertPosn, QuickEntry
+        Tab1 = 500          ' demographic fields from left margin
+        HorzPosn1 = 5650
+        HorzPosn2 = 7400
+        VertSpacing = 240
+        VertPosn = 0
+        FieldOrderNum = 0
+        FormType = "MISC"
+        
+        Field99Add TaxYear, FormType, "Payer1", "Payer1", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "1", "Rents", Equate.fmtAmount, HorzPosn1, VertPosn, 1
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer2", "Payer2", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer3", "Payer3", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer4", "Payer4", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "2", "Royalties", Equate.fmtAmount, HorzPosn1, VertPosn, 2
+        
+        Field99Add TaxYear, FormType, "TaxYear", "TaxYear", Equate.fmtString, HorzPosn1 + 2270, VertPosn - 85, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer5", "Payer5", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 2 - 220
+        Field99Add TaxYear, FormType, "3", "Other Income", Equate.fmtAmount, HorzPosn1, VertPosn, 3
+        Field99Add TaxYear, FormType, "4", "Federal income tax withheld", Equate.fmtAmount, HorzPosn2, VertPosn, 4
+        
+        VertPosn = VertPosn + VertSpacing * 4 - (VertSpacing / 2) + 50
+        Field99Add TaxYear, FormType, "PayerFederalID", "PayerFederalID", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "PayeeFederalID", "PayeeFederalID", Equate.fmtString, Tab1 + 2500, VertPosn, 0
+        Field99Add TaxYear, FormType, "5", "Fishing boat proceeds", Equate.fmtAmount, HorzPosn1, VertPosn, 5
+        Field99Add TaxYear, FormType, "6", "Medical and health care payments", Equate.fmtAmount, HorzPosn2, VertPosn, 6
+        
+        VertPosn = VertPosn + VertSpacing * 3
+        Field99Add TaxYear, FormType, "PayeeName", "PayeeName", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "7", "Payer made direct sales", Equate.fmtString, HorzPosn1 + 1430, VertPosn, 7
+        Field99Add TaxYear, FormType, "8", "Sub pmts in lieu of div or int", Equate.fmtAmount, HorzPosn2, VertPosn, 8
+        
+        VertPosn = VertPosn + VertSpacing * 3
+        Field99Add TaxYear, FormType, "PayeeAddress", "PayeeAddress", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "9", "Corp insurance proceeds", Equate.fmtAmount, HorzPosn1, VertPosn, 9
+        Field99Add TaxYear, FormType, "10", "Gross proceeds to attny", Equate.fmtAmount, HorzPosn2, VertPosn, 10
+        
+        VertPosn = VertPosn + VertSpacing
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "PayeeCSZ", "PayeeCSZ", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "12", "Section 409A deferrals", Equate.fmtAmount, HorzPosn2, VertPosn, 11
+        
+        VertPosn = VertPosn + VertSpacing * 3
+        Field99Add TaxYear, FormType, "13", "Excess golden parachute", Equate.fmtAmount, HorzPosn1, VertPosn, 12
+        Field99Add TaxYear, FormType, "14", "Nonqualified deferred compensation", Equate.fmtAmount, HorzPosn2, VertPosn, 13
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "15a", "State tax withheld", Equate.fmtAmount, HorzPosn1, VertPosn, 14
+        Field99Add TaxYear, FormType, "16a", "State/Payers state no.", Equate.fmtString, HorzPosn2, VertPosn, 15
+        Field99Add TaxYear, FormType, "17a", "State tax withheld", Equate.fmtAmount, HorzPosn2 + 2100, VertPosn, 16
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "PayeeAccountNumber", "PayeeAccountNumber", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "15b", "State tax withheld", Equate.fmtAmount, HorzPosn1, VertPosn, 17
+        Field99Add TaxYear, FormType, "16b", "State/Payers state no.", Equate.fmtString, HorzPosn2, VertPosn, 18
+        Field99Add TaxYear, FormType, "17b", "State tax withheld", Equate.fmtAmount, HorzPosn2 + 2100, VertPosn, 19
+    
+    End If
+    
+    ' ================================================================================================
+    ' 1099INT
+    If jFormType = "All" Or jFormType = "INT" Then
+    
+        ClearFormRecs "INT", TaxYear
+            
+        Form99.FormType = "INT"
+        Form99.TaxYear = TaxYear
+        Form99.FormsPerPg = 2
+        Form99.FormVert1 = 880
+        Form99.FormVert2 = 8850
+        Form99.Save (Equate.RecAdd)
+        FormID = Form99.FormID
+        
+        ' FormID, BoxName, FieldTitle, FieldFormat, HorzPosn, VertPosn, QuickEntry
+        Tab1 = 500          ' demographic fields from left margin
+        HorzPosn1 = 5650
+        HorzPosn2 = 7400
+        VertSpacing = 240
+        VertPosn = 0
+        FieldOrderNum = 0
+        FormType = "INT"
+        
+        Field99Add TaxYear, FormType, "Payer1", "Payer1", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "RTN", "Payer RTN", Equate.fmtString, HorzPosn1, VertPosn, 1
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer2", "Payer2", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer3", "Payer3", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer4", "Payer4", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "1", "Int Inc", Equate.fmtAmount, HorzPosn1, VertPosn, 2
+        
+        Field99Add TaxYear, FormType, "TaxYear", "TaxYear", Equate.fmtString, HorzPosn1 + 2570, VertPosn - 45, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer5", "Payer5", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "2", "Early Withdrw", Equate.fmtAmount, HorzPosn1, VertPosn, 3
+        
+        VertPosn = VertPosn + VertSpacing * 3
+        Field99Add TaxYear, FormType, "PayerFederalID", "PayerFederalID", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "PayeeFederalID", "PayeeFederalID", Equate.fmtString, Tab1 + 2500, VertPosn, 0
+        Field99Add TaxYear, FormType, "3", "Int on US Svgs", Equate.fmtAmount, HorzPosn1, VertPosn, 4
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "PayeeName", "PayeeName", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "4", "Federal income tax withheld", Equate.fmtAmount, HorzPosn1, VertPosn, 5
+        Field99Add TaxYear, FormType, "5", "Invest Exp", Equate.fmtAmount, HorzPosn2, VertPosn, 6
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "6", "Foreign Tax Paid", Equate.fmtAmount, HorzPosn1, VertPosn, 7
+        Field99Add TaxYear, FormType, "7", "Foreign Country", Equate.fmtString, HorzPosn2, VertPosn, 8
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "PayeeAddress", "PayeeAddress", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "8", "Tax Ex Int", Equate.fmtAmount, HorzPosn1, VertPosn, 9
+        Field99Add TaxYear, FormType, "9", "Spec Private Activity", Equate.fmtAmount, HorzPosn2, VertPosn, 10
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "PayeeCSZ", "PayeeCSZ", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "10", "Market Discount", Equate.fmtAmount, HorzPosn1, VertPosn, 11
+        Field99Add TaxYear, FormType, "11", "Bond Premium", Equate.fmtAmount, HorzPosn2, VertPosn, 12
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "12", "---", Equate.fmtAmount, HorzPosn1, VertPosn, 13
+        Field99Add TaxYear, FormType, "13", "Bond Prem on tax-exempt bond", Equate.fmtAmount, HorzPosn2, VertPosn, 14
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "15a", "State", Equate.fmtString, 7400, VertPosn, 15
+        Field99Add TaxYear, FormType, "16a", "State ID No.", Equate.fmtString, 8000, VertPosn, 16
+        Field99Add TaxYear, FormType, "17a", "State Tax WH", Equate.fmtAmount, 9300, VertPosn, 17
+        
+        VertPosn = VertPosn + VertSpacing
+        Field99Add TaxYear, FormType, "PayeeAccountNumber", "PayeeAccountNumber", Equate.fmtString, Tab1, VertPosn, 0
+        
+        Field99Add TaxYear, FormType, "15b", "State", Equate.fmtString, 7400, VertPosn, 18
+        Field99Add TaxYear, FormType, "16b", "State ID No.", Equate.fmtString, 8000, VertPosn, 19
+        Field99Add TaxYear, FormType, "17b", "State Tax WH", Equate.fmtAmount, 9300, VertPosn, 20
+    
+    End If
+
+    ' ================================================================================================
+    ' 1099DIV
+    If jFormType = "All" Or jFormType = "DIV" Then
+    
+        ClearFormRecs "DIV", TaxYear
+            
+        Form99.FormType = "DIV"
+        Form99.TaxYear = TaxYear
+        Form99.FormsPerPg = 2
+        Form99.FormVert1 = 950
+        Form99.FormVert2 = 8900
+        Form99.Save (Equate.RecAdd)
+        FormID = Form99.FormID
+        
+        ' FormID, BoxName, FieldTitle, FieldFormat, HorzPosn, VertPosn, QuickEntry
+        Tab1 = 500          ' demographic fields from left margin
+        HorzPosn1 = 5650
+        HorzPosn2 = 7400
+        VertSpacing = 240
+        VertPosn = 0
+        FieldOrderNum = 0
+        FormType = "DIV"
+        
+        Field99Add TaxYear, FormType, "Payer1", "Payer1", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "1a", "Ordinary Dividends", Equate.fmtAmount, HorzPosn1, VertPosn, 1
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer2", "Payer2", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer3", "Payer3", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer4", "Payer4", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "1b", "Qualified Dividens", Equate.fmtAmount, HorzPosn1, VertPosn, 2
+        
+        Field99Add TaxYear, FormType, "TaxYear", "TaxYear", Equate.fmtString, HorzPosn1 + 2300, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 1
+        Field99Add TaxYear, FormType, "Payer5", "Payer5", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 2 - 190
+        Field99Add TaxYear, FormType, "2a", "Total Cap G Distr", Equate.fmtAmount, HorzPosn1, VertPosn, 3
+        Field99Add TaxYear, FormType, "2b", "Unrecap Sec 1250", Equate.fmtAmount, HorzPosn2, VertPosn, 4
+        
+        VertPosn = VertPosn + VertSpacing * 3 - 190
+        Field99Add TaxYear, FormType, "2c", "Sec 1202 Gain", Equate.fmtAmount, HorzPosn1, VertPosn, 5
+        Field99Add TaxYear, FormType, "2d", "Collect 28% Gain", Equate.fmtAmount, HorzPosn2, VertPosn, 6
+        
+        VertPosn = VertPosn + VertSpacing * 2  ' - (VertSpacing / 2)
+        Field99Add TaxYear, FormType, "2e", "Sec 897 Div", Equate.fmtAmount, HorzPosn1, VertPosn, 7
+        Field99Add TaxYear, FormType, "2f", "Sec 897 Gain", Equate.fmtAmount, HorzPosn2, VertPosn, 8
+        Field99Add TaxYear, FormType, "PayerFederalID", "PayerFederalID", Equate.fmtString, Tab1, VertPosn, 0
+        Field99Add TaxYear, FormType, "PayeeFederalID", "PayeeFederalID", Equate.fmtString, Tab1 + 2500, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "3", "Nondiv Distr", Equate.fmtAmount, HorzPosn1, VertPosn, 9
+        Field99Add TaxYear, FormType, "4", "Federal income tax withheld", Equate.fmtAmount, HorzPosn2, VertPosn, 10
+        
+        VertPosn = VertPosn + VertSpacing / 2
+        Field99Add TaxYear, FormType, "PayeeName", "PayeeName", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing + VertSpacing / 2
+        Field99Add TaxYear, FormType, "5", "Sec 199A Div", Equate.fmtAmount, HorzPosn1, VertPosn, 11
+        Field99Add TaxYear, FormType, "6", "Invest Expense", Equate.fmtAmount, HorzPosn2, VertPosn, 12
+        
+        VertPosn = VertPosn + VertSpacing
+        Field99Add TaxYear, FormType, "PayeeAddress", "PayeeAddress", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "7", "Foreign Tax", Equate.fmtAmount, HorzPosn1, VertPosn, 13
+        Field99Add TaxYear, FormType, "8", "Foreign Country", Equate.fmtString, HorzPosn2, VertPosn, 14
+        
+        VertPosn = VertPosn + VertSpacing
+        Field99Add TaxYear, FormType, "PayeeCSZ", "PayeeCSZ", Equate.fmtString, Tab1, VertPosn, 0
+        
+        VertPosn = VertPosn + VertSpacing
+        Field99Add TaxYear, FormType, "9", "Cash Liq Distr", Equate.fmtAmount, HorzPosn1, VertPosn, 15
+        Field99Add TaxYear, FormType, "10", "NonCash Liq Distr", Equate.fmtAmount, HorzPosn2, VertPosn, 16
+        
+        VertPosn = VertPosn + VertSpacing * 3
+        Field99Add TaxYear, FormType, "12", "Exept Int Div", Equate.fmtAmount, HorzPosn1, VertPosn, 17
+        Field99Add TaxYear, FormType, "13", "Spec Private Activity", Equate.fmtAmount, HorzPosn2, VertPosn, 18
+        
+        VertPosn = VertPosn + VertSpacing * 2
+        Field99Add TaxYear, FormType, "12a", "State", Equate.fmtString, 5600, VertPosn, 19
+        Field99Add TaxYear, FormType, "13a", "State ID No.", Equate.fmtString, 6200, VertPosn, 20
+        Field99Add TaxYear, FormType, "14a", "State Tax WH", Equate.fmtAmount, HorzPosn2, VertPosn, 21
+        
+        VertPosn = VertPosn + VertSpacing - 50
+        Field99Add TaxYear, FormType, "12b", "State", Equate.fmtString, 5600, VertPosn, 22
+        Field99Add TaxYear, FormType, "13b", "State ID No.", Equate.fmtString, 6200, VertPosn, 23
+        Field99Add TaxYear, FormType, "14b", "State Tax WH", Equate.fmtAmount, HorzPosn2, VertPosn, 24
+        
+        Field99Add TaxYear, FormType, "PayeeAccountNumber", "PayeeAccountNumber", Equate.fmtString, Tab1, VertPosn, 25
+    
+    End If
+
+End Sub
+
+
 Public Sub Create2021Forms(ByVal jFormType As String)
 
 Dim TaxYear As Long
@@ -288,6 +655,7 @@ Dim FormType As String
          Field99Add TaxYear, FormType, "RX", "RX", Equate.fmtString, 5390, VertPosn, 0
     
     End If
+
 
 End Sub
 

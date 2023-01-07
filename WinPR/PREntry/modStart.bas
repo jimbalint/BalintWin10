@@ -256,6 +256,7 @@ Dim FileExt As String
     
     ' perform field sweeps - in NewField module
     FieldSweep
+    If TableExists("PRW4", cn) = False Then PRW4Create
 
     ' *** frmEntry.Show ***
     frmBatchList.Show
