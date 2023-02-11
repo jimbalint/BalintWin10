@@ -219,7 +219,7 @@ Public Sub PR1099(ByVal jTaxYear As String)
                 
                 Misc1099(1) = PadRight(Format(!Amount, "##,###,##0.00"), 13)
         
-                Print1099MISC
+                Print1099MISC jTaxYear
             End If
             
             .MoveNext
@@ -232,7 +232,7 @@ Public Sub PR1099(ByVal jTaxYear As String)
 
 End Sub
 
-Public Sub Print1099MISC()
+Public Sub Print1099MISC(ByVal jTaxYear As String)
 
     ' 2022-01-19 - 3 forms per page
 
@@ -251,7 +251,7 @@ Public Sub Print1099MISC()
     FormCount = FormCount + 1
     yPos = 720 + ((FormCount - 1) * 5300)
     
-    xPos = 1000
+    xPos = 1100
     
     ' print the payer info
     For I = 1 To 5
@@ -264,27 +264,30 @@ Public Sub Print1099MISC()
         yPos = yPos + VertSp
     Next I
     
+    ' tax year
+    PosPrint 8250, yPos - 250, Right(jTaxYear, 2)
+    
     ' print the ID numbers & Box 1 NEC
-    yPos = yPos + 400
+    yPos = yPos + 200
     PosPrint xPos, yPos, PayerID
     PosPrint xPos + 2600, yPos, PayeeID
     xPos = 5600
     PosPrint xPos, yPos, Misc1099(1)
     
     ' print the payee info
-    yPos = yPos + 870
+    yPos = yPos + 730
     xPos = 1000
     PosPrint xPos, yPos, PayeeName
     
     ' single address field
-    yPos = yPos + VertSp * 2
+    yPos = yPos + 520
     PosPrint 1000, yPos, Left(Trim(PayeeAddr1) & " " & Trim(PayeeAddr2) & " " & String(45, " "), 45)
     
-    yPos = yPos + VertSp
+    yPos = yPos + 260
     xPos = 5600
     PosPrint xPos, yPos, Misc1099(4)
     
-    yPos = yPos + VertSp
+    yPos = yPos + 260
     xPos = 1000
     PosPrint xPos, yPos, PayeeAddr3
     
@@ -1841,7 +1844,8 @@ Dim uFlag As Boolean
             End If
         
             ' skip if DeptID = 0 / always do comp totals
-            If ID <> 0 Then
+            ' 2023-02-11 handle dept not assigned
+            If ID <> -1 Then
                 
                 ' create new total record???
                 If Not PRTotal.tFind(DataType, ID) Then
@@ -1950,12 +1954,17 @@ NxtPRHist:
             NameString = "COMPANY TOTALS"
             SSString = ""
         Else
-            If Not PRDepartment.GetByID(PRTotal.RecID) Then     '  Department Totals
-                MsgBox "Dept NF: " & PRTotal.RecID, vbExclamation
-                GoBack
+            If PRTotal.RecID <> 0 Then
+                If Not PRDepartment.GetByID(PRTotal.RecID) Then     '  Department Totals
+                    MsgBox "Dept NF: " & PRTotal.RecID, vbExclamation
+                    GoBack
+                End If
+                SSString = "Dpt#: " & PRDepartment.DepartmentNumber
+                NameString = PRDepartment.Name
+            Else
+                SSString = "Dpt#: 0"
+                NameString = "Dept Not Assigned"
             End If
-            SSString = "Dpt#: " & PRDepartment.DepartmentNumber
-            NameString = PRDepartment.Name
 
         End If
               
@@ -3807,6 +3816,13 @@ NextEmp:
     End If
 
     ' print dept totals
+    ' ================================================================================================
+    ' 2023-02-11 - check for unassigned dept
+    If PRTotal.tFind(PREquate.GLTypeDept, 0) Then
+        ChkRegPrtTotals "Department Not Assigned"
+        ChkRegPrintODT ODTTypeDpt, 0, "", False
+    End If
+    ' ================================================================================================
     SQLString = "SELECT * FROM PRDepartment ORDER BY DepartmentNumber"
     If PRDepartment.GetBySQL(SQLString) Then
         Do
@@ -3974,6 +3990,9 @@ Dim HdrCount As Integer
             ChkRegAddTotalRecs ODTTypeEE, 0
             ChkRegAddTotalRecs ODTTypeER, 0
                 
+            ' 2023-02-11 - add for dept not assigned
+            ChkRegAddTotalRecs ODTTypeDpt, 0
+            
             SQLString = "SELECT * FROM PRDepartment"
             If PRDepartment.GetBySQL(SQLString) Then
                 Do
