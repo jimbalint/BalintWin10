@@ -10,6 +10,7 @@ Dim trsODTTot As New ADODB.Recordset
 Dim trsEntry As New ADODB.Recordset
 Dim FormColor As String
 
+Dim DptFlag As Boolean
 Dim PrintFlag As Boolean
 Dim LastLine As Byte
 Dim xx As String
@@ -1757,6 +1758,7 @@ Dim FedUnempAmt, StateUnempAmt As Currency
 Dim FedUnempMax, StateUnempMax As Currency
 Dim uFlag As Boolean
 
+    DptFlag = False
     PRTotal.CreateRS
     
     frmPRQtrlyRpts.Hide
@@ -1839,6 +1841,7 @@ Dim uFlag As Boolean
                 ID = PRHist.EmployeeID
             ElseIf DataType = 2 Then    ' dept info
                 ID = PRHist.DepartmentID
+                If PRHist.DepartmentID <> 0 Then DptFlag = True
             ElseIf DataType = 3 Then    ' company info
                 ID = 99999
             End If
@@ -1954,6 +1957,9 @@ NxtPRHist:
             NameString = "COMPANY TOTALS"
             SSString = ""
         Else
+            
+            If Not DptFlag Then GoTo NextQtrRpt
+                        
             If PRTotal.RecID <> 0 Then
                 If Not PRDepartment.GetByID(PRTotal.RecID) Then     '  Department Totals
                     MsgBox "Dept NF: " & PRTotal.RecID, vbExclamation
@@ -2192,6 +2198,7 @@ NxtPRHist:
               
         End Select
 
+NextQtrRpt:
         LastType = PRTotal.RecType
         If Not PRTotal.GetNext Then Exit Do
         
@@ -3393,6 +3400,8 @@ Dim rsState As New ADODB.Recordset
     rsState.Fields.Append "SWT", adDouble
     rsState.Open , , adOpenDynamic, adLockOptimistic
 
+    DptFlag = False
+
     ' max items per line
     ItemMax = 10
     ChkEmp = 0
@@ -3590,6 +3599,7 @@ Dim rsState As New ADODB.Recordset
                 MsgBox "Department NF: " & PREmployee.EmployeeID & " " & rrs![PRHist.DepartmentID], vbExclamation
                 GoBack
             End If
+            DptFlag = True
             DeptID = PRDepartment.DepartmentID
             DeptNum = PRDepartment.DepartmentNumber
         Else
@@ -3818,7 +3828,7 @@ NextEmp:
     ' print dept totals
     ' ================================================================================================
     ' 2023-02-11 - check for unassigned dept
-    If PRTotal.tFind(PREquate.GLTypeDept, 0) Then
+    If DptFlag And PRTotal.tFind(PREquate.GLTypeDept, 0) Then
         ChkRegPrtTotals "Department Not Assigned"
         ChkRegPrintODT ODTTypeDpt, 0, "", False
     End If
