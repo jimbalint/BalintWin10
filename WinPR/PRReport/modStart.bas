@@ -52,7 +52,7 @@ Dim FileExt As String
        BatchNum = PRBatchID
        BatchNumber = PRBatchID
        ProgName = UCase("QTRRPTS")
-       ProgName = UCase("CHECKREG")                  ''''''  Select from cases below
+       ProgName = UCase("deposit")                  ''''''  Select from cases below
        SysFile = "s:\Balint\Data\GLSystem.mdb"
        UserID = 2
        BackName = ""

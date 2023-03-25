@@ -2493,8 +2493,8 @@ Dim StateString As String
         whFWT = whFWT + PRHist.FWTTax
         
         ' match SS# logic
-        ' 2011 ER is still 6.2% / EE is 4.2%
-        If Year(PRHist.CheckDate) >= 2011 Then
+        ' 2011 & 2012 ER is still 6.2% / EE is 4.2% - edit on 2023-03-25
+        If Year(PRHist.CheckDate) >= 2011 And Year(PRHist.CheckDate) <= 2012 Then
             MatchSS = MatchSS + (Round(PRHist.SSWage * 0.062, 2))
         Else
             MatchSS = MatchSS + PRHist.SSTax
