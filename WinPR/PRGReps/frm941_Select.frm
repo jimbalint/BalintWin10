@@ -18,13 +18,21 @@ Begin VB.Form frm941_Select
    ScaleHeight     =   9555
    ScaleWidth      =   8415
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdApr23 
+      Caption         =   "April 2023"
+      Height          =   615
+      Left            =   2280
+      TabIndex        =   7
+      Top             =   4560
+      Width           =   3735
+   End
    Begin VB.CommandButton cmdMar22 
       Caption         =   "March 2022"
       Height          =   615
       Index           =   0
       Left            =   2280
-      TabIndex        =   8
-      Top             =   6000
+      TabIndex        =   6
+      Top             =   3720
       Width           =   3735
    End
    Begin VB.CommandButton cmdJun21 
@@ -32,8 +40,8 @@ Begin VB.Form frm941_Select
       Height          =   615
       Index           =   1
       Left            =   2280
-      TabIndex        =   6
-      Top             =   5040
+      TabIndex        =   4
+      Top             =   2880
       Width           =   3735
    End
    Begin VB.CommandButton cmdJun20 
@@ -41,26 +49,8 @@ Begin VB.Form frm941_Select
       Height          =   615
       Index           =   0
       Left            =   2280
-      TabIndex        =   5
-      Top             =   4080
-      Width           =   3735
-   End
-   Begin VB.CommandButton cmdJan17 
-      Caption         =   "January 2017"
-      Height          =   615
-      Index           =   1
-      Left            =   2340
-      TabIndex        =   4
-      Top             =   3120
-      Width           =   3735
-   End
-   Begin VB.CommandButton cmdJan14 
-      Caption         =   "January 2014"
-      Height          =   615
-      Index           =   0
-      Left            =   2340
       TabIndex        =   3
-      Top             =   2160
+      Top             =   2040
       Width           =   3735
    End
    Begin VB.CommandButton cmdExit 
@@ -72,10 +62,10 @@ Begin VB.Form frm941_Select
       Width           =   3735
    End
    Begin VB.Label Label2 
-      Caption         =   "04/16/2022"
+      Caption         =   "04/22/2023"
       Height          =   495
       Left            =   6720
-      TabIndex        =   7
+      TabIndex        =   5
       Top             =   8280
       Width           =   1095
    End
@@ -109,7 +99,6 @@ Option Explicit
 Public Form941 As Byte
 
 
-
 Private Sub Form_Load()
     Me.KeyPreview = True
 End Sub
@@ -124,57 +113,11 @@ Private Sub cmdExit_Click()
     GoBack
 End Sub
 
-Private Sub cmdFeb2010_Click()
-    Form941 = 1
-    Me.Hide
-End Sub
-
-Private Sub cmdApril2010_Click()
-    Form941 = 2
-    Me.Hide
-End Sub
-Private Sub cmdJan2011_Click()
-    Form941 = 3
-    Me.Hide
-End Sub
-
-Private Sub cmdJan2012_Click()
-    Form941 = 4
-    Me.Hide
-End Sub
-
-Private Sub cmdJan2013_Click(Index As Integer)
-    Form941 = 5
-    Me.Hide
-End Sub
-
-Private Sub cmdJan13v2_Click(Index As Integer)
-    ' added 2014-07-18
-    Form941 = 6
-    Me.Hide
-End Sub
-
-Private Sub cmdJan14_Click(Index As Integer)
-    
-    ' added 2014-08-26
-    Form941 = 7
-    Me.Hide
-
-End Sub
-Private Sub cmdJan17_Click(Index As Integer)
-    
-    ' added 2017-04-08
-    Form941 = 8
-    Me.Hide
-
-End Sub
 
 Private Sub cmdJun20_Click(Index As Integer)
-    
     ' added 2020-07-15
     Form941 = 9
     Me.Hide
-
 End Sub
 
 Private Sub cmdJun21_Click(Index As Integer)
@@ -184,6 +127,11 @@ End Sub
 
 Private Sub cmdMar22_Click(Index As Integer)
     Form941 = 11
+    Me.Hide
+End Sub
+
+Private Sub cmdApr23_Click()
+    Form941 = 12
     Me.Hide
 End Sub
 

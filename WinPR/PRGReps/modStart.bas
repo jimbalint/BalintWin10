@@ -47,7 +47,7 @@ Dim FileExt As String
        BalintFolder = "\\vboxsrv\vm-share\balint"
        dbPwd = ""
        ' ProgName = UCase("ITEMDETAIL")
-       ProgName = UCase("test")
+       ProgName = UCase("form941")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
        UserID = 2
        ' UserID = 15
@@ -210,6 +210,8 @@ Dim FileExt As String
                 ElseIf I = 11 Then
                     ' added on 2022-04-09
                     frm941_2022_March.Show
+                ElseIf I = 12 Then
+                    frm941_2023_April.Show
                 Else
                     GoBack
                 End If
