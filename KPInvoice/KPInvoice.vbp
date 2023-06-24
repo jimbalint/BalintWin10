@@ -89,6 +89,7 @@ Form=frmInvMessage.frm
 Form=frmInvGlobalQB.frm
 Module=modRC4; ..\WinPR\Module\modRC4.bas
 Form=frmChangePrinter.frm
+Class=cPRW4; ..\WinPR\Class\cPRW4.cls
 Startup="Sub Main"
 HelpFile=""
 ExeName32="KPInvoice.exe"

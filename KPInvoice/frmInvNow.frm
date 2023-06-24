@@ -181,7 +181,14 @@ Private Sub cmdPrint_Click()
         Exit Sub
     End If
     
-    KP_PrintInvoice frmInvProcess.tdbnumInvNum, InvGlobal.Var2
+    ' KP_PrintInvoice frmInvProcess.tdbnumInvNum, InvGlobal.Var2
+    Dim PrtAsPckg As Integer
+    
+    If Trim(frmInvProcess.lblInvDate) <> "Invoice Date:" Then
+        PrtAsPckg = MsgBox("Print as Packing Slip", vbYesNo + vbQuestion, "Print Inv/Pckg Slip")
+    End If
+    
+    KP_PrintInvoice frmInvProcess.tdbnumInvNum, InvGlobal.Var2, PrtAsPckg
     
 End Sub
 

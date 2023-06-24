@@ -1,7 +1,7 @@
 Attribute VB_Name = "modStart"
 Private Sub Main()
 
-Dim X As String
+Dim x As String
 Dim NewFlag As Boolean
 
     frmSplash.Show
@@ -35,9 +35,9 @@ Dim NewFlag As Boolean
     
     OpenTab = 4
     
-    X = Command()
+    x = Command()
     
-    If X = "" Then         ' set for testing
+    If x = "" Then         ' set for testing
        dbPwd = ""
        
         Dim Sel As Integer
@@ -57,22 +57,23 @@ Dim NewFlag As Boolean
        'ProgName = UCase("test2")
        'ProgName = UCase("custmsg")
        SysFile = "c:\Balint\Data\GLSystem.mdb"
+       SysFile = "\\vboxsrv\vm-share\balint\GLSystem.mdb"
        UserID = 2
        BackName = ""
        BatchNum = 1
        BatchNumber = 1
        PRBatchID = 1
        Period = 0         ' yyyypp
-       BalintFolder = "c:\Balint"
+       BalintFolder = "\\vboxsrv\vm-share\balint\"
     Else
-       dbPwd = GetCmd(X, "dbPwd", "Str")
-       ProgName = UCase(GetCmd(X, "ProgName", "Str"))
-       SysFile = GetCmd(X, "SysFile", "Str")
-       UserID = GetCmd(X, "UserID", "Num")
-       BackName = GetCmd(X, "BackName", "Str")
-       BatchNum = GetCmd(X, "Batch", "Num")
-       Period = GetCmd(X, "Period", "Num")
-       BalintFolder = GetCmd(X, "BalintFolder", "Str")
+       dbPwd = GetCmd(x, "dbPwd", "Str")
+       ProgName = UCase(GetCmd(x, "ProgName", "Str"))
+       SysFile = GetCmd(x, "SysFile", "Str")
+       UserID = GetCmd(x, "UserID", "Num")
+       BackName = GetCmd(x, "BackName", "Str")
+       BatchNum = GetCmd(x, "Batch", "Num")
+       Period = GetCmd(x, "Period", "Num")
+       BalintFolder = GetCmd(x, "BalintFolder", "Str")
     End If
     
     ' non-standard folders
@@ -157,19 +158,19 @@ Dim NewFlag As Boolean
     ' open the company database
     ' open the company database
     If BalintFolder = "" Then
-        X = Mid(App.Path, 1, 2) & Mid(PRCompany.FileName, 3, Len(PRCompany.FileName) - 2)
+        x = Mid(App.Path, 1, 2) & Mid(PRCompany.FileName, 3, Len(PRCompany.FileName) - 2)
     Else
-        X = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(PRCompany.FileName)
+        x = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(PRCompany.FileName)
     End If
     
     If NewADO Then
-        X = Replace(X, ".mdb", ".accdb")
+        x = Replace(x, ".mdb", ".accdb")
     Else
-        X = Replace(X, ".accdb", ".mdb")
+        x = Replace(x, ".accdb", ".mdb")
     End If
     
     
-    CNOpen X, dbPwd
+    CNOpen x, dbPwd
     CompanyID = PRCompany.CompanyID
     
     ' ***********************************
@@ -243,6 +244,23 @@ Dim NewFlag As Boolean
         End If
     End If
     
+'SQLString = "select * from InvStock where StockID = 16769"
+'If InvStock.GetBySQL(SQLString) Then
+'    MsgBox (InvStock.JobID)
+'End If
+'
+'SQLString = "select * from JCJob where JobID = 33"
+'If JCJob.GetBySQL(SQLString) Then
+'    MsgBox (JCJob.CompanyName)
+'End If
+'
+'SQLString = "select * from InvHeader where InvoiceNumber = 34530"
+'If InvHeader.GetBySQL(SQLString) Then
+'    MsgBox (InvHeader.SoldJobID)
+'End If
+'
+'End
+
     Select Case ProgName
         Case "PROCESS":         frmInvProcess.Show
         Case "STOCKMAINT":      frmInvStockMaint.Show

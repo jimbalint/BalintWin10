@@ -9,7 +9,7 @@ Begin VB.Form frmInvProcess
    ClientHeight    =   11565
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   14610
+   ClientWidth     =   14505
    BeginProperty Font 
       Name            =   "Arial"
       Size            =   9
@@ -22,7 +22,7 @@ Begin VB.Form frmInvProcess
    Icon            =   "frmInvProcess.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   11565
-   ScaleWidth      =   14610
+   ScaleWidth      =   14505
    StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton cmdChgPrinter 
       Caption         =   "Chg Prtr"
@@ -2164,8 +2164,8 @@ Option Explicit
 ' --> fixed where did not get JCCustomer info on invoice find
 
 Dim xdbJob As New XArrayDB
-Dim I, J, K As Long
-Dim X, Y, Z As String
+Dim i, j, k As Long
+Dim x, y, z As String
 Dim txtString(6) As String
 Dim LoadFlag As Boolean
 Dim Flg As Boolean
@@ -2548,45 +2548,45 @@ Dim QBItemID As String
     If Trim(InvHeader.PO2) <> "" Then AddDescLine "PO 2:" & InvHeader.PO2
 
     ' transportation info
-    For I = 1 To 3
+    For i = 1 To 3
         
-        If I = 1 Then
+        If i = 1 Then
             Transpo(1) = InvHeader.TruckID1
             Transpo(2) = InvHeader.TrailerID1
             Transpo(3) = InvHeader.DriverID1
         End If
-        If I = 2 Then
+        If i = 2 Then
             Transpo(1) = InvHeader.TruckID2
             Transpo(2) = InvHeader.TrailerID2
             Transpo(3) = InvHeader.DriverID2
         End If
-        If I = 3 Then
+        If i = 3 Then
             Transpo(1) = InvHeader.TruckID3
             Transpo(2) = InvHeader.TrailerID3
             Transpo(3) = InvHeader.DriverID3
         End If
     
-        X = ""
-        For J = 1 To 3
+        x = ""
+        For j = 1 To 3
             
-            If Transpo(J) <> 0 Then
-                If InvGlobal.GetByID(Transpo(J)) = True Then
-                    If X = "" Then
-                        X = InvGlobal.Description
+            If Transpo(j) <> 0 Then
+                If InvGlobal.GetByID(Transpo(j)) = True Then
+                    If x = "" Then
+                        x = InvGlobal.Description
                     Else
-                        X = X & "/" & InvGlobal.Description
+                        x = x & "/" & InvGlobal.Description
                     End If
                 End If
             End If
         
-        Next J
+        Next j
     
-        Me.lblCompanyName.Caption = "QB Update Trans ... " & I
+        Me.lblCompanyName.Caption = "QB Update Trans ... " & i
         Me.Refresh
         
-        If X <> "" Then AddDescLine X
+        If x <> "" Then AddDescLine x
     
-    Next I
+    Next i
     
     ' -------------------------------------------------------------------------------
         
@@ -2601,7 +2601,7 @@ Dim QBItemID As String
             
             Set orInvoiceLineAdd1 = invoiceAdd.ORInvoiceLineAddList.Append
             
-            X = ""
+            x = ""
             QBItemID = QBIDMisc
             If InvBody.StockID <> 0 Then
                 
@@ -2613,15 +2613,18 @@ Dim QBItemID As String
                 SQLString = "SELECT * FROM InvStock WHERE JobID = " & JCJob.ParentID & _
                             " AND StockID = " & InvBody.StockID
                 
+                ' 2023-06-24 ????????????????
+                SQLString = "SELECT * FROM InvStock WHERE JobID = " & InvHeader.SoldJobID & _
+                            " AND StockID = " & InvBody.StockID
+                
                 If InvStock.GetBySQL(SQLString) = True Then
                     QBItemID = InvStock.QBID
+                    ' update stock file fields
+                    ' 2023-06-24 move these 3 lines into if InvStock record found
+                    InvStock.CustomerPrice = InvBody.Price
+                    InvStock.LastDate = InvHeader.InvoiceDate
+                    InvStock.rsPut
                 End If
-                
-                ' update stock file fields
-                InvStock.CustomerPrice = InvBody.Price
-                InvStock.LastDate = InvHeader.InvoiceDate
-                InvStock.rsPut
-            
                 
             Else        ' use misc item id?
             
@@ -2640,7 +2643,7 @@ Dim QBItemID As String
             End If
             
             If TestMode Then
-                MsgBox InvBody.Description & "/" & InvBody.StockID & "/" & InvStock.QBID & "/" & X
+                MsgBox InvBody.Description & "/" & InvBody.StockID & "/" & InvStock.QBID & "/" & x
             End If
             
             Me.lblCompanyName.Caption = "QB Update j ..."
@@ -2686,21 +2689,21 @@ Dim QBItemID As String
                 " AND CompanyID = " & PRCompany.CompanyID & _
                 " AND UserID = " & InvHeader.SoldJobID
     If InvGlobal.GetBySQL(SQLString) = True Then
-        For I = 1 To 5
+        For i = 1 To 5
             
-            If I = 1 Then X = InvGlobal.Var1
-            If I = 2 Then X = InvGlobal.Var2
-            If I = 3 Then X = InvGlobal.Var3
-            If I = 4 Then X = InvGlobal.Var4
-            If I = 5 Then X = InvGlobal.Var5
-            If X <> "" Then
+            If i = 1 Then x = InvGlobal.Var1
+            If i = 2 Then x = InvGlobal.Var2
+            If i = 3 Then x = InvGlobal.Var3
+            If i = 4 Then x = InvGlobal.Var4
+            If i = 5 Then x = InvGlobal.Var5
+            If x <> "" Then
                 
-                Me.lblCompanyName.Caption = "QB Update n ..." & X
+                Me.lblCompanyName.Caption = "QB Update n ..." & x
                 Me.Refresh
     
-                AddDescLine X
+                AddDescLine x
             End If
-        Next I
+        Next i
     End If
     
     Me.lblCompanyName.Caption = "QB Update o ..."
@@ -2709,12 +2712,12 @@ Dim QBItemID As String
     ' appt date / time
     If InvHeader.TruckID1 <> 0 And InvHeader.ApptDate <> 0 Then
         
-        X = "APPOINTMENT SCHEDULED FOR:"
-        AddDescLine X
+        x = "APPOINTMENT SCHEDULED FOR:"
+        AddDescLine x
         
-        X = InvHeader.ApptTime
-        X = X & Format(InvHeader.ApptDate, " dddd mm/dd/yyyy")
-        AddDescLine X
+        x = InvHeader.ApptTime
+        x = x & Format(InvHeader.ApptDate, " dddd mm/dd/yyyy")
+        AddDescLine x
     
     End If
 
@@ -2747,9 +2750,9 @@ Dim QBItemID As String
     Me.lblCompanyName.Caption = "QB Update r ..."
     Me.Refresh
     
-    For I = 0 To ResponseList.Count - 1
+    For i = 0 To ResponseList.Count - 1
         
-        Set Response = ResponseList.GetAt(I)
+        Set Response = ResponseList.GetAt(i)
         
         ' Check the status returned for the response.
         If Response.StatusCode >= 1000 Then
@@ -2760,23 +2763,23 @@ Dim QBItemID As String
             GoBack
         End If
         
-        If TestMode Then MsgBox "response list b " & I
+        If TestMode Then MsgBox "response list b " & i
         
         If (Response.Detail Is Nothing) Then GoTo InvParseNxtI
         
-        If TestMode Then MsgBox "response list c " & I
+        If TestMode Then MsgBox "response list c " & i
         
         ResponseType = Response.Type.GetValue
         
-        If TestMode Then MsgBox "response list d " & I
+        If TestMode Then MsgBox "response list d " & i
         
         If ResponseType <> rtInvoiceAddRs Then GoTo InvParseNxtI
         
-        If TestMode Then MsgBox "response list e " & I
+        If TestMode Then MsgBox "response list e " & i
         
         Set invoiceRet = Response.Detail
         
-        If TestMode Then MsgBox "response list f " & I
+        If TestMode Then MsgBox "response list f " & i
         
         If invoiceRet Is Nothing Then
             MsgBox "invoiceRet is nothing ", vbExclamation
@@ -2786,7 +2789,7 @@ Dim QBItemID As String
         End If
         
 InvParseNxtI:
-    Next I
+    Next i
     
     ' QB updates are done ... OK to set the invoice record
     frmInvProcess.OK = True
@@ -2867,10 +2870,10 @@ Private Sub cmdFind_Click()
     ' ok to discard changes?
     If CheckForChange = False Then Exit Sub
     
-    X = InputBox("Enter Invoice Number to find:", "Search by Invoice #")
-    If X = "" Then Exit Sub
-    If NumValue(X) = 0 Then Exit Sub
-    If FindInvoice(CLng(X)) = False Then Exit Sub
+    x = InputBox("Enter Invoice Number to find:", "Search by Invoice #")
+    If x = "" Then Exit Sub
+    If NumValue(x) = 0 Then Exit Sub
+    If FindInvoice(CLng(x)) = False Then Exit Sub
 
 End Sub
 
@@ -2924,8 +2927,8 @@ Private Function FindInvoice(ByVal InvNum As Long) As Boolean
         
     With Me
         
-        I = xdbJob.Find(0, 2, InvHeader.SoldJobID, XORDER_ASCEND, XCOMP_EQ, XTYPE_LONG)
-        If I < 0 Then
+        i = xdbJob.Find(0, 2, InvHeader.SoldJobID, XORDER_ASCEND, XCOMP_EQ, XTYPE_LONG)
+        If i < 0 Then
             MsgBox "Customer Job not found: " & InvHeader.SoldJobID, vbExclamation
             GoBack
         End If
@@ -2937,7 +2940,7 @@ Private Function FindInvoice(ByVal InvNum As Long) As Boolean
         CalcSalesTaxPct
         ' **** added 2012-06-09 ******************************
         
-        .tdbcmbSoldTo.SelectedItem = I
+        .tdbcmbSoldTo.SelectedItem = i
         
         .tdbSoldAddr1 = InvHeader.SoldAddr1
         .tdbSoldAddr2 = InvHeader.SoldAddr2
@@ -3007,33 +3010,33 @@ Private Function FindInvoice(ByVal InvNum As Long) As Boolean
         SQLString = "SELECT * FROM InvBody WHERE HeaderID = " & InvHeader.HeaderID & _
                     " ORDER BY LineNum"
         If InvBody.GetBySQL(SQLString) = True Then
-            I = 0
+            i = 0
             Do
-                I = I + 1
-                If fg.Rows < I + 1 Then
-                    X = ""
-                    fg.AddItem X, I
+                i = i + 1
+                If fg.Rows < i + 1 Then
+                    x = ""
+                    fg.AddItem x, i
                 End If
-                fg.TextMatrix(I, GetCol("StockID")) = InvBody.StockID
-                fg.TextMatrix(I, GetCol("QtyOrdered")) = InvBody.QtyOrdered
-                fg.TextMatrix(I, GetCol("QtyShipped")) = InvBody.QtyShipped
-                fg.TextMatrix(I, GetCol("Description")) = InvBody.Description
-                fg.TextMatrix(I, GetCol("Price")) = InvBody.Price
-                fg.TextMatrix(I, GetCol("Amount")) = InvBody.Amount
+                fg.TextMatrix(i, GetCol("StockID")) = InvBody.StockID
+                fg.TextMatrix(i, GetCol("QtyOrdered")) = InvBody.QtyOrdered
+                fg.TextMatrix(i, GetCol("QtyShipped")) = InvBody.QtyShipped
+                fg.TextMatrix(i, GetCol("Description")) = InvBody.Description
+                fg.TextMatrix(i, GetCol("Price")) = InvBody.Price
+                fg.TextMatrix(i, GetCol("Amount")) = InvBody.Amount
                 If InvBody.GetNext = False Then Exit Do
             Loop
         
         End If
     
         ' add a few extra rows
-        For I = 1 To 5
-            X = ""
-            For J = 1 To rsCol.RecordCount
-                X = X & ""
-                If J <> rsCol.RecordCount Then X = X & vbTab
-            Next J
-            fg.AddItem X
-        Next I
+        For i = 1 To 5
+            x = ""
+            For j = 1 To rsCol.RecordCount
+                x = x & ""
+                If j <> rsCol.RecordCount Then x = x & vbTab
+            Next j
+            fg.AddItem x
+        Next i
     
         ' already invoiced ? restrict edits
         ' *** use QBInvoiceID ***
@@ -3050,7 +3053,7 @@ Private Function FindInvoice(ByVal InvNum As Long) As Boolean
     
     InvCalc
     LoadScreenVals
-    
+
 End Function
 
 Private Sub CustomerComments()
@@ -3061,22 +3064,22 @@ Private Sub CustomerComments()
                     " AND CompanyID = " & PRCompany.CompanyID & _
                     " AND UserID = " & JCJob.JobID
         If InvGlobal.GetBySQL(SQLString) = True Then
-            J = 0
+            j = 0
             .lblCustMsg1.Caption = ""
             .lblCustMsg2.Caption = ""
-            For I = 1 To 5
-                If I = 1 Then X = InvGlobal.Var1
-                If I = 2 Then X = InvGlobal.Var2
-                If I = 3 Then X = InvGlobal.Var3
-                If I = 4 Then X = InvGlobal.Var4
-                If I = 5 Then X = InvGlobal.Var5
-                If X <> "" Then
-                    J = J + 1
-                    If J = 1 Then .lblCustMsg1.Caption = X
-                    If J = 2 Then .lblCustMsg2.Caption = X
-                    If J = 2 Then Exit For
+            For i = 1 To 5
+                If i = 1 Then x = InvGlobal.Var1
+                If i = 2 Then x = InvGlobal.Var2
+                If i = 3 Then x = InvGlobal.Var3
+                If i = 4 Then x = InvGlobal.Var4
+                If i = 5 Then x = InvGlobal.Var5
+                If x <> "" Then
+                    j = j + 1
+                    If j = 1 Then .lblCustMsg1.Caption = x
+                    If j = 2 Then .lblCustMsg2.Caption = x
+                    If j = 2 Then Exit For
                 End If
-            Next I
+            Next i
         End If
     End With
 
@@ -3166,15 +3169,15 @@ Dim InvNo As Long
     ' ok to discard changes?
     If CheckForChange = False Then Exit Sub
     
-    I = Me.tdbnumInvNum.Value
+    i = Me.tdbnumInvNum.Value
     SQLString = "SELECT * FROM InvHeader WHERE InvoiceNumber < " & InvNo & _
                 " ORDER BY InvoiceNumber DESC"
     If InvHeader.GetBySQL(SQLString) = False Then
         MsgBox "No Previous Invoice Number Exists", vbInformation
     Else
-        I = InvHeader.InvoiceNumber
+        i = InvHeader.InvoiceNumber
     End If
-    FindInvoice I
+    FindInvoice i
 End Sub
 Private Sub cmdNext_Click()
     
@@ -3189,15 +3192,15 @@ Dim InvNo As Long
     ' ok to discard changes?
     If CheckForChange = False Then Exit Sub
     
-    I = Me.tdbnumInvNum.Value
+    i = Me.tdbnumInvNum.Value
     SQLString = "SELECT * FROM InvHeader WHERE InvoiceNumber > " & InvNo & _
                 " ORDER BY InvoiceNumber"
     If InvHeader.GetBySQL(SQLString) = False Then
         MsgBox "No Next Invoice Number Exists", vbInformation
     Else
-        I = InvHeader.InvoiceNumber
+        i = InvHeader.InvoiceNumber
     End If
-    FindInvoice I
+    FindInvoice i
 End Sub
 
 Private Sub cmdSave_Click()
@@ -3280,16 +3283,16 @@ Private Sub cmdSave_Click()
         InvHeader.PO2 = .tdbtxtPO2.text
         
         ' trans info
-        I = 0
+        i = 0
         rsTrans.MoveFirst
         Do
-            I = I + 1
+            i = i + 1
             If rsTrans!TruckID <> 0 Then
-                If I = 1 Then
+                If i = 1 Then
                     InvHeader.TruckID1 = rsTrans!TruckID
                     InvHeader.TrailerID1 = rsTrans!TrailerID
                     InvHeader.DriverID1 = rsTrans!DriverID
-                ElseIf I = 2 Then
+                ElseIf i = 2 Then
                     InvHeader.TruckID2 = rsTrans!TruckID
                     InvHeader.TrailerID2 = rsTrans!TrailerID
                     InvHeader.DriverID2 = rsTrans!DriverID
@@ -3299,11 +3302,11 @@ Private Sub cmdSave_Click()
                     InvHeader.DriverID3 = rsTrans!DriverID
                 End If
             Else
-                If I = 1 Then
+                If i = 1 Then
                     InvHeader.TruckID1 = 0
                     InvHeader.TrailerID1 = 0
                     InvHeader.DriverID1 = 0
-                ElseIf I = 2 Then
+                ElseIf i = 2 Then
                     InvHeader.TruckID2 = 0
                     InvHeader.TrailerID2 = 0
                     InvHeader.DriverID2 = 0
@@ -3351,39 +3354,39 @@ Private Sub cmdSave_Click()
     With fg
         
         ' find the last row used
-        For I = .Rows - 1 To 0 Step -1
+        For i = .Rows - 1 To 0 Step -1
             Flg = False
-            For J = 0 To .Cols - 1
-                If .TextMatrix(I, J) <> "" Then
+            For j = 0 To .Cols - 1
+                If .TextMatrix(i, j) <> "" Then
                     Flg = True
                     Exit For
                 End If
-            Next J
+            Next j
             If Flg Then
-                LastRow = I
+                LastRow = i
                 Exit For
             End If
-        Next I
+        Next i
         If Flg = True Then
-            For I = 1 To LastRow
+            For i = 1 To LastRow
                 SQLString = "SELECT * FROM InvBody WHERE HeaderID = " & InvHeader.HeaderID & _
-                            " AND LineNum = " & I
+                            " AND LineNum = " & i
                 If InvBody.GetBySQL(SQLString) = False Then
                     InvBody.Clear
                     InvBody.HeaderID = InvHeader.HeaderID
-                    InvBody.LineNum = I
+                    InvBody.LineNum = i
                     InvBody.rsAdd
                 End If
                 
-                InvBody.QtyOrdered = NumValue(.TextMatrix(I, GetCol("QtyOrdered")))
-                InvBody.QtyShipped = NumValue(.TextMatrix(I, GetCol("QtyShipped")))
-                InvBody.Description = .Cell(flexcpTextDisplay, I, GetCol("Description"))
-                InvBody.StockID = NumValue(.TextMatrix(I, GetCol("StockID")))
-                InvBody.Price = NumValue(.TextMatrix(I, GetCol("Price")))
-                InvBody.Amount = NumValue(.TextMatrix(I, GetCol("Amount")))
+                InvBody.QtyOrdered = NumValue(.TextMatrix(i, GetCol("QtyOrdered")))
+                InvBody.QtyShipped = NumValue(.TextMatrix(i, GetCol("QtyShipped")))
+                InvBody.Description = .Cell(flexcpTextDisplay, i, GetCol("Description"))
+                InvBody.StockID = NumValue(.TextMatrix(i, GetCol("StockID")))
+                InvBody.Price = NumValue(.TextMatrix(i, GetCol("Price")))
+                InvBody.Amount = NumValue(.TextMatrix(i, GetCol("Amount")))
                 InvBody.rsPut
             
-            Next I
+            Next i
         
         End If
     
@@ -3410,24 +3413,24 @@ Private Sub cmdPriceLookup_Click()
         .Show vbModal
         If .OK = False Then Exit Sub
         
-        I = Me.fg.Row
-        If I = 0 Then I = 1
+        i = Me.fg.Row
+        If i = 0 Then i = 1
         With .rs
             .MoveFirst
             Do
                 If !StockID1 <> 0 And !Quantity1 > 0 Then
-                    X = " " & vbTab & !StockID1 & vbTab & !Quantity1 & vbTab & !Quantity1 & vbTab & _
+                    x = " " & vbTab & !StockID1 & vbTab & !Quantity1 & vbTab & !Quantity1 & vbTab & _
                         !Description1 & vbTab & !Price1
-                    fg.AddItem X, I
-                    fg.TextMatrix(I, GetCol("Amount")) = Round(!Quantity1 * !Price1, 2)
-                    I = I + 1
+                    fg.AddItem x, i
+                    fg.TextMatrix(i, GetCol("Amount")) = Round(!Quantity1 * !Price1, 2)
+                    i = i + 1
                 End If
                 If !StockID2 <> 0 And !Quantity2 > 0 Then
-                    X = " " & vbTab & !StockID2 & vbTab & !Quantity2 & vbTab & !Quantity2 & vbTab & _
+                    x = " " & vbTab & !StockID2 & vbTab & !Quantity2 & vbTab & !Quantity2 & vbTab & _
                         !Description2 & vbTab & !Price2
-                    fg.AddItem X, I
-                    fg.TextMatrix(I, GetCol("Amount")) = Round(!Quantity2 * !Price2, 2)
-                    I = I + 1
+                    fg.AddItem x, i
+                    fg.TextMatrix(i, GetCol("Amount")) = Round(!Quantity2 * !Price2, 2)
+                    i = i + 1
                 End If
                 .MoveNext
             Loop Until .EOF
@@ -3455,16 +3458,16 @@ Private Sub fg_AfterRowColChange(ByVal OldRow As Long, ByVal OldCol As Long, ByV
         
         ' *** add a new comment ***
         If OldCol = GetCol("Description") And .TextMatrix(OldRow, OldCol) = "999999" Then
-            X = InputBox("Enter New Invoice Comment")
-            If X = "" Then
+            x = InputBox("Enter New Invoice Comment")
+            If x = "" Then
                 .TextMatrix(OldRow, OldCol) = ""
                 Exit Sub
             End If
             InvGlobal.Clear
             InvGlobal.TypeCode = InvEquate.GlobalTypeComment
-            InvGlobal.Description = X
+            InvGlobal.Description = x
             InvGlobal.rsAdd
-            CommDrop = CommDrop & "|#" & InvGlobal.GlobalID & ";" & X
+            CommDrop = CommDrop & "|#" & InvGlobal.GlobalID & ";" & x
             .TextMatrix(OldRow, OldCol) = InvGlobal.GlobalID
             .ColComboList(GetCol("Description")) = CommDrop
         End If
@@ -3510,11 +3513,11 @@ Private Sub InitSoldTo()
     xdbJob.Value(0, 1) = "<Select a Customer:Job>"
     xdbJob.Value(0, 2) = 0
     
-    I = 1
+    i = 1
     Do
-        xdbJob.Value(I, 1) = JCJob.FullName
-        xdbJob.Value(I, 2) = JCJob.JobID
-        I = I + 1
+        xdbJob.Value(i, 1) = JCJob.FullName
+        xdbJob.Value(i, 2) = JCJob.JobID
+        i = i + 1
         If JCJob.GetNext = False Then Exit Do
     Loop
     
@@ -3678,19 +3681,19 @@ Private Sub Init()
         .AllowBigSelection = False
         .Editable = flexEDKbdMouse
     
-        I = 0
+        i = 0
         rsCol.MoveFirst
         Do
-            .TextMatrix(0, I) = rsCol!Title
-            .ColWidth(I) = rsCol!Width
-            .ColData(I) = rsCol!Abbrev
+            .TextMatrix(0, i) = rsCol!Title
+            .ColWidth(i) = rsCol!Width
+            .ColData(i) = rsCol!Abbrev
             If rsCol!dataType <> 0 Then
-                .ColDataType(I) = rsCol!dataType
+                .ColDataType(i) = rsCol!dataType
             End If
             If rsCol!Format <> 0 Then
-                .ColFormat(I) = rsCol!Format
+                .ColFormat(i) = rsCol!Format
             End If
-            I = I + 1
+            i = i + 1
             rsCol.MoveNext
         Loop Until rsCol.EOF
     
@@ -3711,33 +3714,33 @@ Private Sub Init()
     rsTrans.Open , , adOpenDynamic, adLockOptimistic
     
     ' three entries available
-    For I = 1 To 3
+    For i = 1 To 3
         rsTrans.AddNew
-        rsTrans!Count = I
+        rsTrans!Count = i
         rsTrans!TruckID = 0
         rsTrans!TrailerID = 0
         rsTrans!DriverID = 0
         rsTrans.Update
-    Next I
+    Next i
     
     SetGrid rsTrans, fgTrans
     fgTrans.BackColorAlternate = 0
     
     With fgTrans
         
-        For I = 0 To .Cols - 1
-            .ColKey(I) = .TextMatrix(0, I)
-        Next I
+        For i = 0 To .Cols - 1
+            .ColKey(i) = .TextMatrix(0, i)
+        Next i
     
         .TextMatrix(0, .ColIndex("TruckID")) = "No - Truck - Lic"
         .TextMatrix(0, .ColIndex("TrailerID")) = "No - Trailer - Lic"
         .TextMatrix(0, .ColIndex("DriverID")) = "Driver"
     
         .ColWidth(.ColIndex("Count")) = 700
-        J = 3360
-        .ColWidth(.ColIndex("TruckID")) = J
-        .ColWidth(.ColIndex("TrailerID")) = J
-        .ColWidth(.ColIndex("DriverID")) = J
+        j = 3360
+        .ColWidth(.ColIndex("TruckID")) = j
+        .ColWidth(.ColIndex("TrailerID")) = j
+        .ColWidth(.ColIndex("DriverID")) = j
     
         .ColComboList(.ColIndex("TruckID")) = TransDropInit(InvEquate.GlobalTypeTruck)
         .ColComboList(.ColIndex("TrailerID")) = TransDropInit(InvEquate.GlobalTypeTrailer)
@@ -3748,14 +3751,14 @@ Private Sub Init()
     End With
     
     ' *** add test records ***
-    For I = 1 To 15
-        X = ""
-        For J = 1 To rsCol.RecordCount
-            X = X & ""
-            If J <> rsCol.RecordCount Then X = X & vbTab
-        Next J
-        fg.AddItem X
-    Next I
+    For i = 1 To 15
+        x = ""
+        For j = 1 To rsCol.RecordCount
+            x = x & ""
+            If j <> rsCol.RecordCount Then x = x & vbTab
+        Next j
+        fg.AddItem x
+    Next i
     ' *************************
 
     LoadFlag = False
@@ -3882,6 +3885,12 @@ Private Sub LoadStock()
     ' prices per CUSTOMER not JOB
     SQLString = "SELECT * FROM InvStock WHERE JobID = " & JCJob.ParentID & _
                 " ORDER BY Description"
+
+    ' >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    ' 2023-06-24 ?????????????????????
+    SQLString = "SELECT * FROM InvStock WHERE JobID = " & InvHeader.SoldJobID & _
+                " ORDER BY Description"
+    ' >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
     If InvStock.GetBySQL(SQLString) = True Then
         Do
@@ -3926,13 +3935,13 @@ End Sub
 Private Sub cmdAddLine_Click()
     With fg
         If .Row = 0 Then Exit Sub
-        K = .Row
-        X = ""
-        For J = 1 To rsCol.RecordCount
-            X = X & ""
-            If J <> rsCol.RecordCount Then X = X & vbTab
-        Next J
-        fg.AddItem X, K
+        k = .Row
+        x = ""
+        For j = 1 To rsCol.RecordCount
+            x = x & ""
+            If j <> rsCol.RecordCount Then x = x & vbTab
+        Next j
+        fg.AddItem x, k
     End With
 End Sub
 Private Sub cmdDelLine_Click()
@@ -4000,10 +4009,10 @@ Private Sub cmdClear_Click()
             fg.Row = fg.Rows - 1
             fg.RemoveItem
         Loop
-        X = ""
-        For I = 1 To 10
-            fg.AddItem X, I
-        Next I
+        x = ""
+        For i = 1 To 10
+            fg.AddItem x, i
+        Next i
     
         .lblCustMsg1.Caption = ""
         .lblCustMsg2.Caption = ""
@@ -4039,27 +4048,27 @@ Private Function SetText(ByVal CompName As String, _
                          ByVal State As String, _
                          ByVal Zip As String) As String
 
-    J = 0
-    For I = 1 To 6
-        If I = 1 Then X = CompName
-        If I = 2 Then X = Addr1
-        If I = 3 Then X = Addr2
-        If I = 4 Then X = Addr3
-        If I = 5 Then X = Addr4
-        If I = 6 Then
-            X = City
-            If X <> "" Then X = X & ", "
-            X = X & State & "  " & Zip
+    j = 0
+    For i = 1 To 6
+        If i = 1 Then x = CompName
+        If i = 2 Then x = Addr1
+        If i = 3 Then x = Addr2
+        If i = 4 Then x = Addr3
+        If i = 5 Then x = Addr4
+        If i = 6 Then
+            x = City
+            If x <> "" Then x = x & ", "
+            x = x & State & "  " & Zip
         End If
-        If X <> "" Then
-            J = J + 1
-            If J = 1 Then
-                SetText = X
+        If x <> "" Then
+            j = j + 1
+            If j = 1 Then
+                SetText = x
             Else
-                SetText = SetText & vbCrLf & X
+                SetText = SetText & vbCrLf & x
             End If
         End If
-    Next I
+    Next i
 
 End Function
 
@@ -4122,7 +4131,12 @@ Private Sub cmdPrint_Click()
         Exit Sub
     End If
     
-    KP_PrintInvoice Me.tdbnumInvNum, InvGlobal.Var2
+    Dim PrtAsPckg As Integer
+    If InvHeader.InvoiceDate <> 0 Then
+        PrtAsPckg = MsgBox("Print as Packing Slip", vbYesNo + vbQuestion, "Print Inv/Pckg Slip")
+    End If
+    
+    KP_PrintInvoice Me.tdbnumInvNum, InvGlobal.Var2, PrtAsPckg
 
 End Sub
 
@@ -4188,20 +4202,20 @@ Private Sub LoadScreenVals()
         ScreenVals(29) = .tdbPalletCount.text
         
         With .fgTrans
-            For I = 1 To .Rows - 1
-                For J = 0 To .Cols - 1
-                    fgTransVals(I, J) = .TextMatrix(I, J)
-                Next J
-            Next I
+            For i = 1 To .Rows - 1
+                For j = 0 To .Cols - 1
+                    fgTransVals(i, j) = .TextMatrix(i, j)
+                Next j
+            Next i
         End With
     
         With .fg
             .Rows = 25
-            For I = 1 To .Rows - 1
-                For J = 0 To .Cols - 1
-                    fgVals(I, J) = .TextMatrix(I, J)
-                Next J
-            Next I
+            For i = 1 To .Rows - 1
+                For j = 0 To .Cols - 1
+                    fgVals(i, j) = .TextMatrix(i, j)
+                Next j
+            Next i
         End With
     
     End With
@@ -4222,66 +4236,66 @@ Dim ChangeFlag As Boolean
     
     With Me
             
-        For I = 1 To 29
+        For i = 1 To 29
 
-            If I = 1 Then X = .tdbcmbSoldTo.SelectedItem
+            If i = 1 Then x = .tdbcmbSoldTo.SelectedItem
             
-            If I = 2 Then X = .tdbnumInvNum.text
-            If I = 3 Then X = .tdbOrderDate.text
-            If I = 4 Then X = .tdbOrderDate.text
-            If I = 5 Then X = .lblInvDate.Caption
-            If I = 6 Then X = .tdbItemTotal.text
-            If I = 7 Then X = .tdbFreight.text
-            If I = 8 Then X = .tdbSalesTax.text
-            If I = 9 Then X = .tdbInvTotal.text
+            If i = 2 Then x = .tdbnumInvNum.text
+            If i = 3 Then x = .tdbOrderDate.text
+            If i = 4 Then x = .tdbOrderDate.text
+            If i = 5 Then x = .lblInvDate.Caption
+            If i = 6 Then x = .tdbItemTotal.text
+            If i = 7 Then x = .tdbFreight.text
+            If i = 8 Then x = .tdbSalesTax.text
+            If i = 9 Then x = .tdbInvTotal.text
             
-            If I = 10 Then X = .tdbSoldAddr1.text
-            If I = 11 Then X = .tdbSoldAddr2.text
-            If I = 12 Then X = .tdbSoldAddr3.text
-            If I = 13 Then X = .tdbSoldAddr4.text
+            If i = 10 Then x = .tdbSoldAddr1.text
+            If i = 11 Then x = .tdbSoldAddr2.text
+            If i = 12 Then x = .tdbSoldAddr3.text
+            If i = 13 Then x = .tdbSoldAddr4.text
                 
-            If I = 14 Then X = .tdbSoldCity.text
-            If I = 15 Then X = .tdbSoldState.text
-            If I = 16 Then X = .tdbSoldZip.text
+            If i = 14 Then x = .tdbSoldCity.text
+            If i = 15 Then x = .tdbSoldState.text
+            If i = 16 Then x = .tdbSoldZip.text
             
-            If I = 17 Then X = .tdbShipAddr1.text
-            If I = 18 Then X = .tdbShipAddr2.text
-            If I = 19 Then X = .tdbShipAddr3.text
-            If I = 20 Then X = .tdbShipAddr4.text
+            If i = 17 Then x = .tdbShipAddr1.text
+            If i = 18 Then x = .tdbShipAddr2.text
+            If i = 19 Then x = .tdbShipAddr3.text
+            If i = 20 Then x = .tdbShipAddr4.text
                 
-            If I = 21 Then X = .tdbShipCity.text
-            If I = 22 Then X = .tdbShipState.text
-            If I = 23 Then X = .tdbShipZip.text
+            If i = 21 Then x = .tdbShipCity.text
+            If i = 22 Then x = .tdbShipState.text
+            If i = 23 Then x = .tdbShipZip.text
                 
-            If I = 24 Then X = .tdbtxtPO1.text
-            If I = 25 Then X = .tdbtxtPO2.text
+            If i = 24 Then x = .tdbtxtPO1.text
+            If i = 25 Then x = .tdbtxtPO2.text
                 
-            If I = 26 Then X = .tdbApptDate.text
-            If I = 27 Then X = .txtApptTime.text
-            If I = 28 Then X = .tdbPkgCount.text
-            If I = 29 Then X = .tdbPalletCount.text
+            If i = 26 Then x = .tdbApptDate.text
+            If i = 27 Then x = .txtApptTime.text
+            If i = 28 Then x = .tdbPkgCount.text
+            If i = 29 Then x = .tdbPalletCount.text
             
-            If X <> ScreenVals(I) Then
+            If x <> ScreenVals(i) Then
                 'MsgBox I & vbCr & X & vbCr & ScreenVals(I)
                 ChangeFlag = True
             End If
             
-        Next I
+        Next i
 
         With .fgTrans
-            For I = 1 To .Rows - 1
-                For J = 0 To .Cols - 1
-                    If fgTransVals(I, J) <> .TextMatrix(I, J) Then ChangeFlag = True
-                Next J
-            Next I
+            For i = 1 To .Rows - 1
+                For j = 0 To .Cols - 1
+                    If fgTransVals(i, j) <> .TextMatrix(i, j) Then ChangeFlag = True
+                Next j
+            Next i
         End With
 
         With .fg
-            For I = 1 To .Rows - 1
-                For J = 0 To .Cols - 1
-                    If fgVals(I, J) <> .TextMatrix(I, J) Then ChangeFlag = True
-                Next J
-            Next I
+            For i = 1 To .Rows - 1
+                For j = 0 To .Cols - 1
+                    If fgVals(i, j) <> .TextMatrix(i, j) Then ChangeFlag = True
+                Next j
+            Next i
         End With
     
     End With
@@ -4291,8 +4305,8 @@ Dim ChangeFlag As Boolean
         CheckForChange = True
     Else
         ' ask if OK to discard changes
-        X = "OK to discard changes to this invoice?"
-        If MsgBox(X, vbYesNo + vbQuestion) = vbNo Then
+        x = "OK to discard changes to this invoice?"
+        If MsgBox(x, vbYesNo + vbQuestion) = vbNo Then
             CheckForChange = False      ' not ok to go ahead
         Else
             CheckForChange = True       ' OK to go ahead
@@ -4346,8 +4360,8 @@ Dim preferencesRet As IPreferencesRet
     ' read the response
     Set ResponseList = responseMsgSet.ResponseList
     If Not (ResponseList Is Nothing) Then
-        For I = 0 To ResponseList.Count - 1
-            Set Response = ResponseList.GetAt(I)
+        For i = 0 To ResponseList.Count - 1
+            Set Response = ResponseList.GetAt(i)
             If (Response.StatusCode = 0) Then
                 If (Not Response.Detail Is Nothing) Then
                     ResponseType = Response.Type.GetValue
@@ -4364,7 +4378,7 @@ Dim preferencesRet As IPreferencesRet
                     End If
                 End If
             End If
-        Next I
+        Next i
     End If
     
     ' *************************************************************************************
@@ -4374,13 +4388,13 @@ Dim preferencesRet As IPreferencesRet
     
     ' point to the job again
     If JobID <> 0 Then
-        I = xdbJob.Find(0, 2, JobID, XORDER_ASCEND, XCOMP_EQ, XTYPE_LONG)
-        If I < 0 Then
+        i = xdbJob.Find(0, 2, JobID, XORDER_ASCEND, XCOMP_EQ, XTYPE_LONG)
+        If i < 0 Then
             MsgBox "Customer Job not found: " & InvHeader.SoldJobID, vbExclamation
             GoBack
         End If
         boo = JCJob.GetByID(InvHeader.SoldJobID)
-        Me.tdbcmbSoldTo.SelectedItem = I
+        Me.tdbcmbSoldTo.SelectedItem = i
     End If
 
 End Sub

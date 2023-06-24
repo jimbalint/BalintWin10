@@ -5,7 +5,7 @@ Begin VB.Form frmInvStockMaint
    ClientHeight    =   10500
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   14565
+   ClientWidth     =   14505
    BeginProperty Font 
       Name            =   "Arial"
       Size            =   9.75
@@ -18,7 +18,7 @@ Begin VB.Form frmInvStockMaint
    Icon            =   "frmInvStockMaint.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   10500
-   ScaleWidth      =   14565
+   ScaleWidth      =   14505
    StartUpPosition =   2  'CenterScreen
    Begin VB.CommandButton cmdUnCheckAll 
       Caption         =   "UNCHECK ALL"
@@ -270,8 +270,8 @@ Dim salesTaxCodeQuery As ISalesTaxCodeQuery
 Dim salesTaxCodeRetList As ISalesTaxCodeRetList
 Dim salesTaxCodeRet As ISalesTaxCodeRet
 
-Dim I, J, K As Long
-Dim X, Y, Z As String
+Dim i, j, k As Long
+Dim x, y, z As String
 
 Dim Cost, Price As Currency
 Dim QBName, Description As String
@@ -319,7 +319,7 @@ End Sub
 Private Sub CheckSweep(ByVal boo As Boolean)
     If rs.RecordCount = 0 Then Exit Sub
     If ShowJobID = 0 Then Exit Sub
-    I = fg.Row
+    i = fg.Row
     rs.MoveFirst
     Do
         rs!StockSelect = boo
@@ -327,7 +327,7 @@ Private Sub CheckSweep(ByVal boo As Boolean)
         rs.MoveNext
     Loop Until rs.EOF
     On Error Resume Next
-    fg.Row = I
+    fg.Row = i
     On Error GoTo 0
 End Sub
 
@@ -335,8 +335,8 @@ End Sub
 Private Sub ReCreate()
     
     If User.Logon <> "jim" Then Exit Sub
-    X = "OK to delete and re-create ALL invoicing database tables ?"
-    If MsgBox(X, vbQuestion + vbYesNo) = vbNo Then Exit Sub
+    x = "OK to delete and re-create ALL invoicing database tables ?"
+    If MsgBox(x, vbQuestion + vbYesNo) = vbNo Then Exit Sub
     
     ' close the current stock records set
     rs.Close
@@ -453,14 +453,14 @@ Private Sub PrintInit()
     PrvwReturn = True
     PrtInit ("Port")
     SetFont 10, Equate.Portrait
-    Y = "Stock File Price Listing"
+    y = "Stock File Price Listing"
 
 End Sub
 Private Sub PrintHeader()
 
     Prvw.FontBold = True
     Ln = 0
-    PageHeader Y, Z
+    PageHeader y, z
     Ln = Ln + 1
     PrintValue(1) = "Name":             FormatString(1) = "a30"
     PrintValue(2) = "Description":      FormatString(2) = "a30"
@@ -475,10 +475,10 @@ End Sub
 Private Sub PrintPrices(ByVal lngJobID As Long)
     
     If lngJobID = 0 Then
-        Z = "Master List"
+        z = "Master List"
     Else
         boo = JCJob.GetByID(lngJobID)
-        Z = JCJob.FullName
+        z = JCJob.FullName
     End If
     
     SQLString = "SELECT * FROM InvStock WHERE JobID = " & lngJobID & _
@@ -488,10 +488,10 @@ Private Sub PrintPrices(ByVal lngJobID As Long)
     Do
         PrintValue(1) = InvStock.QBName:        FormatString(1) = "a30"
         PrintValue(2) = InvStock.Description:   FormatString(2) = "a30"
-        X = Format(InvStock.MasterPrice, "###,##0.0000")
-        PrintValue(3) = X:                      FormatString(3) = "r15"
-        X = Format(InvStock.CustomerPrice, "###,##0.0000")
-        PrintValue(4) = X:                      FormatString(4) = "r15"
+        x = Format(InvStock.MasterPrice, "###,##0.0000")
+        PrintValue(3) = x:                      FormatString(3) = "r15"
+        x = Format(InvStock.CustomerPrice, "###,##0.0000")
+        PrintValue(4) = x:                      FormatString(4) = "r15"
         PrintValue(5) = " ":                    FormatString(5) = "~"
         FormatPrint
         Ln = Ln + 1
@@ -506,8 +506,8 @@ End Sub
 
 Private Sub cmdApplyMaster_Click()
     If rs.RecordCount = 0 Then Exit Sub
-    X = "OK to repleace all customer prices for: " & Me.cmbSelect & vbCr & "from the master list?"
-    If MsgBox(X, vbYesNo + vbQuestion) = vbNo Then Exit Sub
+    x = "OK to repleace all customer prices for: " & Me.cmbSelect & vbCr & "from the master list?"
+    If MsgBox(x, vbYesNo + vbQuestion) = vbNo Then Exit Sub
     rs.MoveFirst
     Do
         rs!CustomerPrice = rs!MasterPrice
@@ -518,12 +518,12 @@ Private Sub cmdApplyMaster_Click()
 End Sub
 Private Sub cmdApplyMasterAll_Click()
     If rs.RecordCount = 0 Then Exit Sub
-    X = "OK to replace ALL customer prices with the master list entries?"
-    If MsgBox(X, vbYesNo + vbQuestion) = vbNo Then Exit Sub
-    X = "*** WARNING ***" & vbCr & _
+    x = "OK to replace ALL customer prices with the master list entries?"
+    If MsgBox(x, vbYesNo + vbQuestion) = vbNo Then Exit Sub
+    x = "*** WARNING ***" & vbCr & _
         "ALL customer prices will be replaced with the master list entries" & vbCr & _
         "OK to continue?"
-    If MsgBox(X, vbYesNo + vbExclamation) = vbNo Then Exit Sub
+    If MsgBox(x, vbYesNo + vbExclamation) = vbNo Then Exit Sub
     SQLString = "SELECT * FROM InvStock WHERE JobID <> 0"
     If InvStock.GetBySQL(SQLString) = False Then Exit Sub
     Do
@@ -581,17 +581,17 @@ Private Sub SalesTaxCodeUpdate()
         Me.Refresh
         
         Set ResponseList = responseMsgSet.ResponseList
-        For I = 0 To ResponseList.Count - 1
-            Set Response = ResponseList.GetAt(I)
+        For i = 0 To ResponseList.Count - 1
+            Set Response = ResponseList.GetAt(i)
             If (Response.StatusCode = 0) Then
                 If (Not Response.Detail Is Nothing) Then
                     ResponseType = Response.Type.GetValue
                     If (ResponseType = rtSalesTaxCodeQueryRs) Then
                         Set salesTaxCodeRetList = Response.Detail
-                        For J = 0 To salesTaxCodeRetList.Count - 1
-                            Set salesTaxCodeRet = salesTaxCodeRetList.GetAt(J)
+                        For j = 0 To salesTaxCodeRetList.Count - 1
+                            Set salesTaxCodeRet = salesTaxCodeRetList.GetAt(j)
                             
-                            Y = salesTaxCodeRet.ListID.GetValue
+                            y = salesTaxCodeRet.ListID.GetValue
                             
                             If salesTaxCodeRet.Name.IsSet = True Then
                                 QBName = salesTaxCodeRet.Name.GetValue
@@ -599,25 +599,25 @@ Private Sub SalesTaxCodeUpdate()
                                 QBName = ""
                             End If
                             
-                            X = salesTaxCodeRet.IsTaxable.GetValue
+                            x = salesTaxCodeRet.IsTaxable.GetValue
                                                         
                             SQLString = "SELECT * FROM QBAccount WHERE AccountType = 'SALESTAXCODE' AND " & _
-                                        "QBID = '" & Y & "'"
+                                        "QBID = '" & y & "'"
                             If QBAccount.GetBySQL(SQLString) = False Then
                                 QBAccount.Clear
                                 QBAccount.AccountType = "SALESTAXCODE"
-                                QBAccount.QBID = Y
+                                QBAccount.QBID = y
                                 QBAccount.Save (Equate.RecAdd)
                             End If
                             
                             QBAccount.Name = QBName
-                            QBAccount.Description = X
+                            QBAccount.Description = x
                             QBAccount.Save (Equate.RecPut)
-                        Next J
+                        Next j
                     End If
                 End If
             End If
-        Next I
+        Next i
     End If
 
     Me.lblMsg1 = ""
@@ -644,15 +644,15 @@ Private Sub TermsUpdate()
         Me.Refresh
     
         Set ResponseList = responseMsgSet.ResponseList
-        For I = 0 To ResponseList.Count - 1
-            Set Response = ResponseList.GetAt(I)
+        For i = 0 To ResponseList.Count - 1
+            Set Response = ResponseList.GetAt(i)
             If (Response.StatusCode = 0) Then
                 If (Not Response.Detail Is Nothing) Then
                     ResponseType = Response.Type.GetValue
                     If (ResponseType = rtTermsQueryRs) Then
                         Set orTermsRetList = Response.Detail
-                        For J = 0 To orTermsRetList.Count - 1
-                            Set orTermsRet = orTermsRetList.GetAt(J)
+                        For j = 0 To orTermsRetList.Count - 1
+                            Set orTermsRet = orTermsRetList.GetAt(j)
                             If orTermsRet.StandardTermsRet.Name.IsSet Then
                                 SQLString = "SELECT * FROM InvGlobal WHERE TypeCode = " & InvEquate.GlobalTypeTerms & _
                                             " AND Var1 = '" & orTermsRet.StandardTermsRet.ListID.GetValue & "'" & _
@@ -669,11 +669,11 @@ Private Sub TermsUpdate()
                                     InvGlobal.rsPut
                                 End If
                             End If
-                        Next J
+                        Next j
                     End If
                 End If
             End If
-        Next I
+        Next i
                         
     End If
     
@@ -719,36 +719,36 @@ Private Sub ItemUpdate()
         Me.Refresh
     
         Set ResponseList = responseMsgSet.ResponseList
-        For I = 0 To ResponseList.Count - 1
+        For i = 0 To ResponseList.Count - 1
         
-            Set Response = ResponseList.GetAt(I)
+            Set Response = ResponseList.GetAt(i)
             If Response.StatusCode <> 0 Then GoTo itemNxtI
             If Response.Detail Is Nothing Then GoTo itemNxtI
             ResponseType = Response.Type.GetValue
             If ResponseType <> rtItemQueryRs Then GoTo itemNxtI
             
             Set orItemRetList = Response.Detail
-            K = orItemRetList.Count - 1
-            For J = 0 To K
+            k = orItemRetList.Count - 1
+            For j = 0 To k
                 
-                Me.lblMsg1 = "Item: " & J & " of: " & K
+                Me.lblMsg1 = "Item: " & j & " of: " & k
                 Me.Refresh
                 
-                Set orItemRet = orItemRetList.GetAt(J)
+                Set orItemRet = orItemRetList.GetAt(j)
                             
                 ' *** inventory items ***
                 If (Not orItemRet.ItemInventoryRet Is Nothing) Then
-                    X = orItemRet.ItemInventoryRet.ListID.GetValue
+                    x = orItemRet.ItemInventoryRet.ListID.GetValue
                     
                     QBName = Trim(orItemRet.ItemInventoryRet.Name.GetValue)
                     Description = QBName
                     
                     ' IsSet / IsEmpty not working for this field ?
-                    Y = ""
+                    y = ""
                     On Error Resume Next
-                    Y = orItemRet.ItemInventoryRet.SalesDesc.GetValue
+                    y = orItemRet.ItemInventoryRet.SalesDesc.GetValue
                     On Error GoTo 0
-                    If Y <> "" Then Description = Y
+                    If y <> "" Then Description = y
                     
 '                    If orItemRet.ItemInventoryRet.SalesDesc.IsEmpty = False Then
 '                    'If orItemRet.ItemInventoryRet.SalesDesc.IsSet = True Then
@@ -772,7 +772,7 @@ Private Sub ItemUpdate()
                         Active = False
                     End If
                     
-                    MasterItemUpd X, 0, QBName, Description, Cost, Price, Active, True
+                    MasterItemUpd x, 0, QBName, Description, Cost, Price, Active, True
                     
                     ' add to temp rs
                     rsQBID.AddNew
@@ -783,15 +783,15 @@ Private Sub ItemUpdate()
                 
                 ' *** non-inventory items ***
                 If (Not orItemRet.ItemNonInventoryRet Is Nothing) Then
-                    X = orItemRet.ItemNonInventoryRet.ListID.GetValue
+                    x = orItemRet.ItemNonInventoryRet.ListID.GetValue
                     QBName = Trim(orItemRet.ItemNonInventoryRet.Name.GetValue)
                     
                     Description = QBName
-                    Y = ""
+                    y = ""
                     On Error Resume Next
-                    Y = orItemRet.ItemNonInventoryRet.ORSalesPurchase.SalesOrPurchase.Desc.GetValue
+                    y = orItemRet.ItemNonInventoryRet.ORSalesPurchase.SalesOrPurchase.Desc.GetValue
                     On Error GoTo 0
-                    If Y <> "" Then Description = Y
+                    If y <> "" Then Description = y
                                         
 '                    If orItemRet.ItemNonInventoryRet.ORSalesPurchase.SalesOrPurchase.Desc.IsSet Then
 '                        Description = Trim(orItemRet.ItemNonInventoryRet.ORSalesPurchase.SalesOrPurchase.Desc.GetValue)
@@ -811,7 +811,7 @@ Private Sub ItemUpdate()
                     Else
                         Active = False
                     End If
-                    MasterItemUpd X, 0, QBName, Description, Cost, Price, Active, False
+                    MasterItemUpd x, 0, QBName, Description, Cost, Price, Active, False
                     
                     ' add to temp rs
                     rsQBID.AddNew
@@ -823,7 +823,7 @@ Private Sub ItemUpdate()
                 ' *** sales tax percentage ***
                 If (Not orItemRet.ItemSalesTaxRet Is Nothing) Then
                     
-                    X = orItemRet.ItemSalesTaxRet.ListID.GetValue
+                    x = orItemRet.ItemSalesTaxRet.ListID.GetValue
                     QBName = Trim(orItemRet.ItemSalesTaxRet.Name.GetValue)
                     
                     If orItemRet.ItemSalesTaxRet.ItemDesc.IsSet Then
@@ -839,11 +839,11 @@ Private Sub ItemUpdate()
                     End If
                                    
                     SQLString = "SELECT * FROM QBAccount WHERE AccountType = 'SALESTAX' AND " & _
-                                "QBID = '" & X & "'"
+                                "QBID = '" & x & "'"
                     If QBAccount.GetBySQL(SQLString) = False Then
                         QBAccount.Clear
                         QBAccount.AccountType = "SALESTAX"
-                        QBAccount.QBID = X
+                        QBAccount.QBID = x
                         QBAccount.Save (Equate.RecAdd)
                     End If
                     
@@ -854,10 +854,10 @@ Private Sub ItemUpdate()
                 
                 End If
                 
-            Next J
+            Next j
                     
 itemNxtI:
-        Next I
+        Next i
     
     End If
 
@@ -1004,7 +1004,7 @@ Dim Time1, Time2 As Double
     ' update the stock items from the master stock items
     ' for this job id
     ItemUpd ShowJobID
-    
+
     SQLString = "SELECT " & _
                 "StockSelect, " & _
                 "QBName, " & _
@@ -1029,9 +1029,9 @@ Dim Time1, Time2 As Double
     
     With fg
         
-        For I = 0 To .Cols - 1
-            .ColKey(I) = .TextMatrix(0, I)
-        Next I
+        For i = 0 To .Cols - 1
+            .ColKey(i) = .TextMatrix(0, i)
+        Next i
         .TextMatrix(0, 0) = "Display"
         .TextMatrix(0, 1) = "QB Name"
         .TextMatrix(0, 2) = "Description"
@@ -1151,9 +1151,9 @@ Dim CCount As Long
   
   Recs = ResponseList.Count
   
-  For I = 0 To ResponseList.Count - 1
+  For i = 0 To ResponseList.Count - 1
     
-    Set Response = ResponseList.GetAt(I)
+    Set Response = ResponseList.GetAt(i)
   
     ' Check the status returned for the response.
     If (Response.StatusCode = 0) Then
@@ -1165,18 +1165,18 @@ Dim CCount As Long
         If (ResponseType = rtCustomerQueryRs) Then
           Dim customerRetList As ICustomerRetList
           Set customerRetList = Response.Detail
-          For J = 0 To customerRetList.Count - 1
+          For j = 0 To customerRetList.Count - 1
           CCount = customerRetList.Count
-            If J Mod 10 = 1 Then
-                Me.lblMsg1 = "Getting Job Info: " & Format(J, "#,###,##0") & " of: " & Format(CCount, "#,###,##0")
+            If j Mod 10 = 1 Then
+                Me.lblMsg1 = "Getting Job Info: " & Format(j, "#,###,##0") & " of: " & Format(CCount, "#,###,##0")
                 Me.Refresh
             End If
-            ParseCustomerRet customerRetList.GetAt(J), country
-          Next J
+            ParseCustomerRet customerRetList.GetAt(j), country
+          Next j
         End If
       End If
     End If
-  Next I
+  Next i
 End Sub
   
 Private Sub ParseCustomerRet(customerRet As ICustomerRet, country As String)
@@ -1725,9 +1725,9 @@ Dim listID74 As String
   End If
   ' Get the value of the ICustomerRet.DataExtRetList element.
   If (Not customerRet.DataExtRetList Is Nothing) Then
-    For J = 0 To customerRet.DataExtRetList.Count - 1
+    For j = 0 To customerRet.DataExtRetList.Count - 1
       Dim dataExtRet75 As IDataExtRet
-      Set dataExtRet75 = customerRet.DataExtRetList.GetAt(J)
+      Set dataExtRet75 = customerRet.DataExtRetList.GetAt(j)
       ' Get the value of the IDataExtRet.OwnerID element.
       If (Not dataExtRet75.OwnerID Is Nothing) Then
         Dim ownerID76 As String
@@ -1746,7 +1746,7 @@ Dim listID74 As String
       Dim dataExtValue79 As String
       dataExtValue79 = dataExtRet75.DataExtValue.GetValue
   
-    Next J
+    Next j
   
   End If
   

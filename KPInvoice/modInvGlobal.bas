@@ -55,6 +55,8 @@ Dim lDoc As Long
 Dim sWrittenData As String
 Dim MyDocInfo As DOCINFO
 
+Dim PrintAsPacking As Integer
+
 ' ------------------------------------------------------------------------------
 
 ' ******************************************************************************
@@ -68,8 +70,8 @@ Dim Dbl1, Dbl2, Dbl3 As Double
 
 ' ******************************************************************************
 
-Dim I, J, K, l As Long
-Dim X, Y, Z As String
+Dim i, j, k, l As Long
+Dim x, y, z As String
 
 Public Sub InvSetEquates()
 
@@ -110,13 +112,15 @@ Public Function NumValue(ByVal Str As String) As Double
 
 End Function
 
-Public Function KP_PrintInvoice(ByVal InvNum As Long, ByVal PrinterName As String) As Boolean
+Public Function KP_PrintInvoice(ByVal InvNum As Long, ByVal PrinterName As String, ByVal PrtAsPckg As Integer) As Boolean
 
 Dim LastRow As Long
 Dim TotalQO, TotalQS As Long
 Dim InvTotal As Currency
 Dim SubFlag As Boolean
 Dim LPP As Byte
+
+    PrintAsPacking = PrtAsPckg
 
     If DP_Init(PrinterName) = False Then Exit Function
     
@@ -150,18 +154,18 @@ Dim LPP As Byte
     
         ' qty ordered
         If InvBody.QtyOrdered <> 0 Then
-            X = StringPad(CStr(InvBody.QtyOrdered), 6, True)
+            x = StringPad(CStr(InvBody.QtyOrdered), 6, True)
         Else
-            X = String(6, " ")
+            x = String(6, " ")
         End If
         
-        X = X & String(2, " ")
+        x = x & String(2, " ")
         
         ' qty Shipped
         If InvBody.QtyShipped <> 0 Then
-            X = X & StringPad(CStr(InvBody.QtyShipped), 6, True)
+            x = x & StringPad(CStr(InvBody.QtyShipped), 6, True)
         Else
-            X = X & String(6, " ")
+            x = x & String(6, " ")
         End If
         
         ' update the totals
@@ -171,38 +175,38 @@ Dim LPP As Byte
         
         ' description
         ' 2012-09-01 - strip control characters
-        X = X & String(3, " ") & _
+        x = x & String(3, " ") & _
             StringPad(StripCtrlChar(InvBody.Description), 40)
         
         ' prices not on delivery slip
-        If InvHeader.InvoiceDate <> 0 Then
+        If InvHeader.InvoiceDate <> 0 And PrintAsPacking = vbNo Then
         
-            J = InvBody.QtyOrdered + InvBody.QtyShipped + InvBody.Price + InvBody.Amount
-            If J <> 0 Then
+            j = InvBody.QtyOrdered + InvBody.QtyShipped + InvBody.Price + InvBody.Amount
+            If j <> 0 Then
             
                 ' unit price
-                X = X & String(3, " ")
+                x = x & String(3, " ")
                 
                 ' >>>> plain cents or hundreths of a cent
                 Dbl1 = InvBody.Price
                 If Dbl1 * 10 ^ 4 Mod 100 = 0 Then
-                    Y = Format(Dbl1, "###0.00")
-                    X = X & StringPad(Y, 9, True)
+                    y = Format(Dbl1, "###0.00")
+                    x = x & StringPad(y, 9, True)
                 Else
-                    Y = Format(Dbl1, "###0.0000")
-                    X = X & StringPad(Y, 9, True)
+                    y = Format(Dbl1, "###0.0000")
+                    x = x & StringPad(y, 9, True)
                 End If
                 
                 ' amount
                 Dbl1 = InvBody.Amount
-                Y = Format(Dbl1, "####,##0.00")
-                X = X & StringPad(Y, 11, True)
+                y = Format(Dbl1, "####,##0.00")
+                x = x & StringPad(y, 11, True)
                         
             End If
         
         End If
         
-        DP_PrintLine X
+        DP_PrintLine x
     
         Ln = Ln + 1
         If Ln > LPP - 1 Then KP_NextPage
@@ -219,15 +223,15 @@ Dim LPP As Byte
         DP_LF
         Ln = Ln + 1
         
-        X = String(17, " ") & "APPOINTMENT SCHEDULED FOR:"
-        DP_PrintLine X
+        x = String(17, " ") & "APPOINTMENT SCHEDULED FOR:"
+        DP_PrintLine x
         
         ' X = String(17, " ") & Format(InvHeader.ApptDateTime, "h:mm AM/PM dddd mm/dd/yyyy")
         ' DP_PrintLine X
         
-        X = String(17, " ") & InvHeader.ApptTime & " "
-        X = X & Format(InvHeader.ApptDate, "dddd mm/dd/yyyy")
-        DP_PrintLine X
+        x = String(17, " ") & InvHeader.ApptTime & " "
+        x = x & Format(InvHeader.ApptDate, "dddd mm/dd/yyyy")
+        DP_PrintLine x
     
         Ln = Ln + 2
     
@@ -238,71 +242,71 @@ Dim LPP As Byte
                 " AND CompanyID = " & PRCompany.CompanyID & _
                 " AND UserID = " & InvHeader.SoldJobID
     If InvGlobal.GetBySQL(SQLString) = True Then
-        J = 0
-        For I = 1 To 5
-            If I = 1 Then X = InvGlobal.Var1
-            If I = 2 Then X = InvGlobal.Var2
-            If I = 3 Then X = InvGlobal.Var3
-            If I = 4 Then X = InvGlobal.Var4
-            If I = 5 Then X = InvGlobal.Var5
-            If X <> "" Then
-                J = J + 1
-                If J = 1 Then
+        j = 0
+        For i = 1 To 5
+            If i = 1 Then x = InvGlobal.Var1
+            If i = 2 Then x = InvGlobal.Var2
+            If i = 3 Then x = InvGlobal.Var3
+            If i = 4 Then x = InvGlobal.Var4
+            If i = 5 Then x = InvGlobal.Var5
+            If x <> "" Then
+                j = j + 1
+                If j = 1 Then
                     DP_LF
                     Ln = Ln + 1
                 End If
-                Y = String(17, " ") & X
-                DP_PrintLine Y
+                y = String(17, " ") & x
+                DP_PrintLine y
                 Ln = Ln + 1
                 If Ln > LPP - 1 Then KP_NextPage
             End If
-        Next I
+        Next i
     End If
     
-    If InvHeader.InvoiceDate <> 0 And InvHeader.SalesTax <> 0 Then
+    If (InvHeader.InvoiceDate <> 0 And PrintAsPacking = vbNo) And InvHeader.SalesTax <> 0 Then
     
         If Ln > LPP - 3 Then KP_NextPage
         
-        X = String(70, " ") & "----------"
-        DP_PrintLine X
+        x = String(70, " ") & "----------"
+        DP_PrintLine x
         Ln = Ln + 1
         
-        X = String(58, " ") & " SUBTOTAL:" & String(1, " ")
-        Y = Format(InvTotal, "####,##0.00")
-        X = X & StringPad(Y, 11, True)
-        DP_PrintLine X
+        x = String(58, " ") & " SUBTOTAL:" & String(1, " ")
+        y = Format(InvTotal, "####,##0.00")
+        x = x & StringPad(y, 11, True)
+        DP_PrintLine x
         Ln = Ln + 1
         
-        X = String(58, " ") & "SALES TAX:" & String(1, " ")
-        Y = Format(InvHeader.SalesTax, "####,##0.00")
-        X = X & StringPad(Y, 11, True)
-        DP_PrintLine X
+        x = String(58, " ") & "SALES TAX:" & String(1, " ")
+        y = Format(InvHeader.SalesTax, "####,##0.00")
+        x = x & StringPad(y, 11, True)
+        DP_PrintLine x
         Ln = Ln + 1
         
         InvTotal = InvTotal + InvHeader.SalesTax
     
     End If
     
-    If InvHeader.InvoiceDate <> 0 And InvHeader.Freight <> 0 Then
+    If (InvHeader.InvoiceDate <> 0 And PrintAsPacking = vbNo) And InvHeader.Freight <> 0 Then
         
         If Ln > LPP - 3 Then KP_NextPage
         
         If InvHeader.SalesTax = 0 Then
-            X = String(70, " ") & "----------"
-            DP_PrintLine X
+            x = String(70, " ") & "----------"
+            DP_PrintLine x
             Ln = Ln + 1
             
-            X = String(58, " ") & " SUBTOTAL:" & String(1, " ")
-            Y = Format(InvTotal, "####,##0.00")
-            X = X & StringPad(Y, 11, True)
-            DP_PrintLine X
+            x = String(58, " ") & " SUBTOTAL:" & String(1, " ")
+            y = Format(InvTotal, "####,##0.00")
+            x = x & StringPad(y, 11, True)
+            DP_PrintLine x
             Ln = Ln + 1
         End If
     
-        X = String(58, " ") & " FREIGHT :" & String(1, " ")
-        Y = Format(InvHeader.Freight, "####,##0.00")
-        X = X & StringPad(Y, 11, True)
-        DP_PrintLine X
+        x = String(58, " ") & " FREIGHT :" & String(1, " ")
+        y = Format(InvHeader.Freight, "####,##0.00")
+        x = x & StringPad(y, 11, True)
+        DP_PrintLine x
         Ln = Ln + 1
         
         InvTotal = InvTotal + InvHeader.Freight
@@ -310,38 +314,38 @@ Dim LPP As Byte
     End If
     
     If Ln > LPP - 1 Then KP_NextPage
-    X = "------  ------"
-    If InvHeader.InvoiceDate <> 0 Then
-        X = X & String(56, " ") & "----------"
+    x = "------  ------"
+    If (InvHeader.InvoiceDate <> 0 And PrintAsPacking = vbNo) Then
+        x = x & String(56, " ") & "----------"
     End If
-    DP_PrintLine X
+    DP_PrintLine x
     Ln = Ln + 1
     
     If TotalQO <> 0 Then
-        X = StringPad(CStr(TotalQO), 6, True)
+        x = StringPad(CStr(TotalQO), 6, True)
     Else
-        X = String(6, " ")
+        x = String(6, " ")
     End If
     
-    X = X & String(2, " ")
+    x = x & String(2, " ")
     
     ' qty Shipped
     If TotalQS <> 0 Then
-        X = X & StringPad(CStr(TotalQS), 6, True)
+        x = x & StringPad(CStr(TotalQS), 6, True)
     Else
-        X = X & String(6, " ")
+        x = x & String(6, " ")
     End If
    
-    X = X & String(3, " ") & "<====== TOTAL QUANTITY"
+    x = x & String(3, " ") & "<====== TOTAL QUANTITY"
     
-    If InvHeader.InvoiceDate <> 0 Then
-        X = X & String(5, " ") & "INVOICE TOTAL ======>    "
-        Y = Format(InvTotal, "####,##0.00")
-        X = X & StringPad(Y, 11, True)
+    If (InvHeader.InvoiceDate <> 0 And PrintAsPacking = vbNo) Then
+        x = x & String(5, " ") & "INVOICE TOTAL ======>    "
+        y = Format(InvTotal, "####,##0.00")
+        x = x & StringPad(y, 11, True)
     End If
     
     If Ln > LPP - 1 Then KP_NextPage
-    DP_PrintLine X
+    DP_PrintLine x
     
     DP_LF 2
     
@@ -349,8 +353,8 @@ Dim LPP As Byte
     
     If Ln > LPP - 2 Then KP_NextPage
     
-    X = String(17, " ") & "RECEIVED BY: ___________________________"
-    DP_PrintLine X
+    x = String(17, " ") & "RECEIVED BY: ___________________________"
+    DP_PrintLine x
     Ln = Ln + 1
     
     DP_LF
@@ -358,15 +362,15 @@ Dim LPP As Byte
     
     If Ln > LPP - 3 Then KP_NextPage
     
-    X = String(17, " ") & "TOTAL NUMBER OF PACKAGES: " & InvHeader.PackageCount
-    DP_PrintLine X
+    x = String(17, " ") & "TOTAL NUMBER OF PACKAGES: " & InvHeader.PackageCount
+    DP_PrintLine x
     Ln = Ln + 1
     
     DP_LF 1
     Ln = Ln + 1
     
-    X = String(17, " ") & "TOTAL NUMBER OF PALLETS:  " & InvHeader.PalletCount
-    DP_PrintLine X
+    x = String(17, " ") & "TOTAL NUMBER OF PALLETS:  " & InvHeader.PalletCount
+    DP_PrintLine x
     
     DP_PrintLine vbFormFeed
     DP_EndDoc
@@ -389,13 +393,13 @@ End Function
 
 Private Sub KP_NextPage()
             
-    X = String(17, " ")
-    If InvHeader.InvoiceDate = 0 Then
-        X = X & "***** DELIVERY SLIP CONTINUED ON NEXT PAGE *****"
+    x = String(17, " ")
+    If InvHeader.InvoiceDate = 0 Or PrintAsPacking = vbYes Then
+        x = x & "***** DELIVERY SLIP CONTINUED ON NEXT PAGE *****"
     Else
-        X = X & "***** INVOICE CONTINUED ON NEXT PAGE *****"
+        x = x & "***** INVOICE CONTINUED ON NEXT PAGE *****"
     End If
-    DP_PrintLine X
+    DP_PrintLine x
     KP_PrintHeader
             
 End Sub
@@ -420,92 +424,92 @@ Dim VertAdjust As Integer
         DP_LF       ' printer adjustment not entered
     Else
         
-        X = Chr(27) & Chr(65) & "6" & Chr(27) & Chr(50)   ' set 6/72" = 1/12"
-        DP_PrintLine X, True        ' print w/ no CR
+        x = Chr(27) & Chr(65) & "6" & Chr(27) & Chr(50)   ' set 6/72" = 1/12"
+        DP_PrintLine x, True        ' print w/ no CR
         
-        X = ""
-        For I = 1 To VertAdj
-            DP_PrintLine X
-        Next I
+        x = ""
+        For i = 1 To VertAdj
+            DP_PrintLine x
+        Next i
         
-        X = Chr(27) & Chr(65) & "12" & Chr(27) & Chr(50)   ' set 12/72" = 1/6"
-        DP_PrintLine X, True
+        x = Chr(27) & Chr(65) & "12" & Chr(27) & Chr(50)   ' set 12/72" = 1/6"
+        DP_PrintLine x, True
     
     End If
     
-    X = InvEquate.IBMCPI10 & String(67, " ") & "PAGE: " & PageNum
-    DP_PrintLine X
+    x = InvEquate.IBMCPI10 & String(67, " ") & "PAGE: " & PageNum
+    DP_PrintLine x
     
     DP_LF
     
     ' dbl wide - single line
-    X = InvEquate.IBMDblWide & String(24, " ")
-    If InvHeader.InvoiceDate = 0 Then
-        X = X & "DELIVERY SLIP"
+    x = InvEquate.IBMDblWide & String(24, " ")
+    If InvHeader.InvoiceDate = 0 Or PrintAsPacking = vbYes Then
+        x = x & "DELIVERY SLIP"
     Else
-        X = X & "      INVOICE"
+        x = x & "      INVOICE"
     End If
-    DP_PrintLine X
+    DP_PrintLine x
     
     DP_LF 2
     
     ' Inv Number
-    X = InvEquate.IBMDblWide & String(31, " ") & InvHeader.InvoiceNumber
-    DP_PrintLine X
+    x = InvEquate.IBMDblWide & String(31, " ") & InvHeader.InvoiceNumber
+    DP_PrintLine x
     
     ' Date
-    X = InvEquate.IBMDblWide & String(28, " ")
-    If InvHeader.InvoiceDate = 0 Then
-        X = X & Format(InvHeader.OrderDate, "mm/dd/yyyy")
+    x = InvEquate.IBMDblWide & String(28, " ")
+    If InvHeader.InvoiceDate = 0 Or PrintAsPacking = vbYes Then
+        x = x & Format(InvHeader.OrderDate, "mm/dd/yyyy")
     Else
-        X = X & Format(InvHeader.InvoiceDate, "mm/dd/yyyy")
+        x = x & Format(InvHeader.InvoiceDate, "mm/dd/yyyy")
     End If
-    DP_PrintLine X
+    DP_PrintLine x
     
     DP_LF 3
     
     ' Sold / Ship To
     SoldCount = 0
     ShipCount = 0
-    For I = 1 To 5
+    For i = 1 To 5
     
         ' sold to
-        Select Case I
-            Case 1:   X = InvHeader.SoldAddr1: Y = InvHeader.ShipAddr1
-            Case 2:   X = InvHeader.SoldAddr2: Y = InvHeader.ShipAddr2
-            Case 3:   X = InvHeader.SoldAddr3: Y = InvHeader.ShipAddr3
-            Case 4:   X = InvHeader.SoldAddr4: Y = InvHeader.ShipAddr4
+        Select Case i
+            Case 1:   x = InvHeader.SoldAddr1: y = InvHeader.ShipAddr1
+            Case 2:   x = InvHeader.SoldAddr2: y = InvHeader.ShipAddr2
+            Case 3:   x = InvHeader.SoldAddr3: y = InvHeader.ShipAddr3
+            Case 4:   x = InvHeader.SoldAddr4: y = InvHeader.ShipAddr4
             Case 5
                 
-                X = InvHeader.SoldCity & InvHeader.SoldState & InvHeader.SoldZip
-                If X <> "" Then
-                    X = Trim(InvHeader.SoldCity) & ", " & Trim(InvHeader.SoldState) & "  " & InvHeader.SoldZip
+                x = InvHeader.SoldCity & InvHeader.SoldState & InvHeader.SoldZip
+                If x <> "" Then
+                    x = Trim(InvHeader.SoldCity) & ", " & Trim(InvHeader.SoldState) & "  " & InvHeader.SoldZip
                 End If
                 
-                Y = InvHeader.ShipCity & InvHeader.ShipState & InvHeader.ShipZip
-                If Y <> "" Then
-                    Y = Trim(InvHeader.ShipCity) & ", " & Trim(InvHeader.ShipState) & "  " & InvHeader.ShipZip
+                y = InvHeader.ShipCity & InvHeader.ShipState & InvHeader.ShipZip
+                If y <> "" Then
+                    y = Trim(InvHeader.ShipCity) & ", " & Trim(InvHeader.ShipState) & "  " & InvHeader.ShipZip
                 End If
                         
         End Select
         
-        If Trim(X) <> "" Then
+        If Trim(x) <> "" Then
             SoldCount = SoldCount + 1
-            SoldString(SoldCount) = X
+            SoldString(SoldCount) = x
         End If
         
-        If Trim(Y) <> "" Then
+        If Trim(y) <> "" Then
             ShipCount = ShipCount + 1
-            ShipString(ShipCount) = Y
+            ShipString(ShipCount) = y
         End If
         
-    Next I
+    Next i
     
-    For I = 1 To 5
-        X = String(9, " ") & StringPad(SoldString(I), 30) & _
-            String(9, " ") & StringPad(ShipString(I), 30)
-        DP_PrintLine X
-    Next I
+    For i = 1 To 5
+        x = String(9, " ") & StringPad(SoldString(i), 30) & _
+            String(9, " ") & StringPad(ShipString(i), 30)
+        DP_PrintLine x
+    Next i
     
     DP_LF 2
     
@@ -513,25 +517,25 @@ Dim VertAdjust As Integer
                 " AND TypeCode = " & InvEquate.GlobalTypeTerms & _
                 " AND Var1 = '" & InvHeader.Terms & "'"
     If InvGlobal.GetBySQL(SQLString) = True Then
-        Y = InvGlobal.Description
+        y = InvGlobal.Description
     Else
-        Y = ""
+        y = ""
     End If
     
-    X = String(5, " ") & _
+    x = String(5, " ") & _
         StringPad(InvHeader.PO1, 20) & _
         String(5, " ") & _
         StringPad(InvHeader.PO2, 20) & _
         String(10, " ") & _
-        Y
-    DP_PrintLine X
+        y
+    DP_PrintLine x
     
     DP_LF 3
     
     ' transportation box
-    For I = 1 To 3
-        DP_PrintLine KP_Transpo(I)
-    Next I
+    For i = 1 To 3
+        DP_PrintLine KP_Transpo(i)
+    Next i
         
     DP_LF 3
     
@@ -543,32 +547,32 @@ Private Function KP_Transpo(ByVal num As Byte) As String
         
     KP_Transpo = ""
     
-    If I = 1 Then
-        J = InvHeader.TruckID1
-        K = InvHeader.TrailerID1
+    If i = 1 Then
+        j = InvHeader.TruckID1
+        k = InvHeader.TrailerID1
         l = InvHeader.DriverID1
     End If
     
-    If I = 2 Then
-        J = InvHeader.TruckID2
-        K = InvHeader.TrailerID2
+    If i = 2 Then
+        j = InvHeader.TruckID2
+        k = InvHeader.TrailerID2
         l = InvHeader.DriverID2
     End If
     
-    If I = 3 Then
-        J = InvHeader.TruckID3
-        K = InvHeader.TrailerID3
+    If i = 3 Then
+        j = InvHeader.TruckID3
+        k = InvHeader.TrailerID3
         l = InvHeader.DriverID3
     End If
     
-    If InvGlobal.GetByID(J) = False Then
+    If InvGlobal.GetByID(j) = False Then
         KP_Transpo = Space(27)
     Else
         KP_Transpo = StringPad(InvGlobal.Description, 23)
         KP_Transpo = KP_Transpo & String(4, " ")
     End If
     
-    If InvGlobal.GetByID(K) = False Then
+    If InvGlobal.GetByID(k) = False Then
         KP_Transpo = KP_Transpo & Space(24)
     Else
         KP_Transpo = KP_Transpo & StringPad(InvGlobal.Description, 20)
@@ -656,25 +660,25 @@ Dim Row, Col As Byte
     Next Row
     
     Row = 1
-    X = ""
+    x = ""
     For Col = 1 To Len(txt)
-        Y = Mid(txt, Col, 1)
-        If Y = vbCr Then
-            SoldShip(SS, Row) = X
+        y = Mid(txt, Col, 1)
+        If y = vbCr Then
+            SoldShip(SS, Row) = x
             Row = Row + 1
             If Row = 6 Then
-                X = ""
+                x = ""
                 Exit For
             End If
             Col = Col + 1
             If Col = Len(txt) Then Exit For
-            X = ""
+            x = ""
         Else
-            X = X & Y
+            x = x & y
         End If
     Next Col
-    If X <> "" Then
-        SoldShip(SS, Row) = X
+    If x <> "" Then
+        SoldShip(SS, Row) = x
     End If
 
 End Sub
