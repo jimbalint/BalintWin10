@@ -51,24 +51,24 @@ Begin VB.Form frmOHW2
       TabCaption(0)   =   "Submitter Information"
       TabPicture(0)   =   "frmOhioW2Upload.frx":0000
       Tab(0).ControlEnabled=   0   'False
-      Tab(0).Control(0)=   "cmdSaveSubm"
-      Tab(0).Control(1)=   "cmbPreparerCode"
-      Tab(0).Control(2)=   "txtContactFax"
-      Tab(0).Control(3)=   "txtContactEmail"
-      Tab(0).Control(4)=   "txtContactPhnExt"
-      Tab(0).Control(5)=   "txtEIN"
-      Tab(0).Control(6)=   "txtCompanyName"
-      Tab(0).Control(7)=   "txtLocationAddress"
-      Tab(0).Control(8)=   "txtDeliveryAddress"
-      Tab(0).Control(9)=   "txtCity"
-      Tab(0).Control(10)=   "txtState"
-      Tab(0).Control(11)=   "txtZipCode"
-      Tab(0).Control(12)=   "txtZipCodeExt"
-      Tab(0).Control(13)=   "txtContactName"
-      Tab(0).Control(14)=   "txtContactPhn"
-      Tab(0).Control(15)=   "txtUserID"
-      Tab(0).Control(16)=   "Label3"
-      Tab(0).Control(17)=   "Label2"
+      Tab(0).Control(0)=   "Label2"
+      Tab(0).Control(1)=   "Label3"
+      Tab(0).Control(2)=   "txtUserID"
+      Tab(0).Control(3)=   "txtContactPhn"
+      Tab(0).Control(4)=   "txtContactName"
+      Tab(0).Control(5)=   "txtZipCodeExt"
+      Tab(0).Control(6)=   "txtZipCode"
+      Tab(0).Control(7)=   "txtState"
+      Tab(0).Control(8)=   "txtCity"
+      Tab(0).Control(9)=   "txtDeliveryAddress"
+      Tab(0).Control(10)=   "txtLocationAddress"
+      Tab(0).Control(11)=   "txtCompanyName"
+      Tab(0).Control(12)=   "txtEIN"
+      Tab(0).Control(13)=   "txtContactPhnExt"
+      Tab(0).Control(14)=   "txtContactEmail"
+      Tab(0).Control(15)=   "txtContactFax"
+      Tab(0).Control(16)=   "cmbPreparerCode"
+      Tab(0).Control(17)=   "cmdSaveSubm"
       Tab(0).ControlCount=   18
       TabCaption(1)   =   "Submit OH W2 File"
       TabPicture(1)   =   "frmOhioW2Upload.frx":001C
@@ -160,7 +160,7 @@ Begin VB.Form frmOHW2
       End
       Begin VB.CommandButton cmdCreateFile 
          BackColor       =   &H00FFFF00&
-         Caption         =   "Create OH W2 Upload File"
+         Caption         =   "Create Fed/OH W2 Upload File"
          BeginProperty Font 
             Name            =   "Arial"
             Size            =   12
@@ -1182,7 +1182,7 @@ Begin VB.Form frmOHW2
       End
    End
    Begin VB.Label Label1 
-      Caption         =   "Ohio W2 Upload"
+      Caption         =   "Federal / Ohio W2 Upload"
       BeginProperty Font 
          Name            =   "Arial"
          Size            =   15.75
@@ -1197,7 +1197,7 @@ Begin VB.Form frmOHW2
       Left            =   480
       TabIndex        =   0
       Top             =   360
-      Width           =   2895
+      Width           =   4095
    End
 End
 Attribute VB_Name = "frmOHW2"
@@ -1458,6 +1458,44 @@ Function PreCheck() As Boolean
         If .txtTaxYear = "" Then msg = msg & "Tax Year must be entered" & vbCrLf
         If Not (IsNumeric(.txtTaxYear.text)) Then msg = msg & "Tax Year must be entered" & vbCrLf
     End With
+        
+    ' 2023-11-18 SD tax numeric test - MUST be numeric for Ohio
+    strSQL = "select * from PRCompany where OHeW2 = True"
+    If Me.chkCurrentClient Then
+        strSQL = strSQL & " and CompanyID = " & User.LastPRCompany
+    End If
+    strSQL = strSQL & " order by Name"
+    If Not PRCompany.GetBySQL(strSQL) Then
+        msg = msg & "No Payroll Clients are set for eW2 filing" & vbCrLf
+    Else
+        Do
+            ' todo - validate eer ein / state id
+            ' prcompany zip+4
+            cn.Close
+            
+            ' open the company database
+            If BalintFolder = "" Then
+                X = Mid(App.Path, 1, 2) & Mid(PRCompany.FileName, 3, Len(PRCompany.FileName) - 2)
+                ' 2016-04-23
+                X = "\Balint\Data\" & FNameOnly(PRCompany.FileName)
+            Else
+                X = Replace(BalintFolder, "^", " ") & "\Data\" & mdbName(PRCompany.FileName)
+            End If
+            If FileExt = ".accdb" Then X = Replace(LCase(X), ".mdb", ".accdb")
+            CNOpen X, ""
+            
+            strSQL = "select * from PRW2City" & _
+                    " where TaxYear = " & Me.txtTaxYear.text & _
+                    " and SDTax = 1" & _
+                    " and not isnumeric(CityName)"
+            If PRW2City.GetBySQL(strSQL) Then
+                msg = msg & "Non-Numeric School District Tax found for: " & PRCompany.Name & vbCrLf
+            End If
+            
+            If Not PRCompany.GetNext Then Exit Do
+        Loop
+    End If
+    
     If msg <> "" Then
         MsgBox msg, vbExclamation
         PreCheck = False
@@ -1779,7 +1817,8 @@ Sub WriteRS()
     W2TL.Box19_LocalTax = W2TL.Box19_LocalTax + LocalTax
     
     ' right justory
-    SDNumber = Trim(SDNumber)
+    ' 2023-11-18 - left 7 / numeric check added at beginning
+    SDNumber = Left(Trim(SDNumber), 7)
     If SDNumber <> "" Then
         sOut = sOut & Wrt(Space(7 - Len(SDNumber)) & SDNumber, 7)
     Else

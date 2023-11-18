@@ -36,7 +36,7 @@ Dim rs As ADODB.Recordset
 Dim cmd As ADODB.Command
 Dim param As ADODB.Parameter
 
-Dim x As String
+Dim X As String
 
 Public Sub OpenRS()
    SQLString = "GLHistory"
@@ -167,14 +167,14 @@ End Sub
 
 Public Sub DeleteAll()
 
-    x = "DELETE * FROM GLHistory"
-    rsInit x, cn, rs
+    X = "DELETE * FROM GLHistory"
+    rsInit X, cn, rs
     
 End Sub
 Public Sub DeleteBatch(ByVal BtchNum As Integer)
 
-    x = "DELETE * FROM GLHistory WHERE BatchNum = " & BtchNum
-    cn.Execute x
+    X = "DELETE * FROM GLHistory WHERE BatchNum = " & BtchNum
+    cn.Execute X
     
 End Sub
 

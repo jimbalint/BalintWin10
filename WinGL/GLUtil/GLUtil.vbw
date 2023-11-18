@@ -1,7 +1,7 @@
 frmaMain = 110, 110, 617, 458, C, 88, 88, 595, 436, C
 modGLConnect = 88, 88, 595, 436, C
 frmProgress = 0, 0, 495, 348, C, 132, 132, 639, 480, C
-modGLUtil = 66, 66, 573, 414, Z
+modGLUtil = 66, 66, 573, 414, 
 cGLAccount = 154, 154, 649, 502, C
 cGLAmount = 154, 154, 649, 502, C
 cGLHistory = 0, 0, 495, 348, C
@@ -27,7 +27,7 @@ modImport = 176, 176, 998, 656,
 frmUpdBatch = 110, 110, 932, 590, C, 88, 88, 910, 568, C
 frmAcctLookup = 220, 220, 1060, 700, C, 88, 88, 928, 568, C
 glType = 242, 242, 954, 772, C
-frmSweep = 22, 22, 802, 472, C, 0, 0, 847, 450, C
+frmSweep = 22, 22, 802, 472, Z, 0, 0, 847, 450, C
 modDBCreate = 132, 132, 844, 706, C
 cPRCompany = 88, 88, 914, 494, C
 frmEnterDBPassword = 0, 0, 0, 0, C, 0, 0, 716, 539, C

@@ -5548,7 +5548,7 @@ Dim MarSng As String
     
     End If
     
-    If PREmployee.FWTMarried = 1 Then
+    If PREmployee.SWTMarried = 1 Then
         MarSng = "M"
     Else
         MarSng = "S"

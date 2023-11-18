@@ -220,7 +220,7 @@ Dim rsTitle As New ADODB.Recordset
 Dim rsOEDED As New ADODB.Recordset
 Dim rsDept As New ADODB.Recordset
 Dim BOYDate, BOQDate, EOQDate As Date
-Dim i, j, k, JB As Long
+Dim I, J, K, JB As Long
 Dim X, Y, Z As String
 Dim PRTL As Byte
 Dim QY, PRTL1, PRTL2 As String
@@ -285,7 +285,10 @@ Private Sub Form_Load()
     Me.cmbQuarter.AddItem "2"
     Me.cmbQuarter.AddItem "3"
     Me.cmbQuarter.AddItem "4"
-    cmbQuarter.ListIndex = 0
+    
+    If cmbYrQtrSet(Me.cmbYear, Me.cmbQuarter) = False Then GoBack
+    
+    ' cmbQuarter.ListIndex = 0
 
     Me.optSortNumber = True
 
@@ -567,15 +570,15 @@ Dim LastID As Long
             End If
             PrintValue(5) = X:                  FormatString(5) = "a13"
 
-            i = 6
+            I = 6
             If PREmployee.DefaultCityID <> 0 Then
                 boo = PRCity.GetByID(PREmployee.DefaultCityID)
-                i = 7
+                I = 7
                 X = "CWT%: " & Format(PRCity.CityRate, "##0.00 ") & PRCity.ShortName
                 PrintValue(6) = X:              FormatString(6) = "a25"
             End If
 
-            PrintValue(i) = " ":                FormatString(i) = "~"
+            PrintValue(I) = " ":                FormatString(I) = "~"
             FormatPrint
             Ln = Ln + 1
 
@@ -652,47 +655,47 @@ Dim LastID As Long
             PrintValue(1) = PRTL1:                  FormatString(1) = "a6"
             PrintValue(2) = PRTL2:                  FormatString(2) = "a20"
             
-            k = 2
-            For i = 1 To 6
+            K = 2
+            For I = 1 To 6
                 
                 BlankFlag = False
                 
                 If PRTL = 1 Then
-                    If i = 1 Then p1 = PRTotal.RegAmount
-                    If i = 2 Then p1 = PRTotal.OTAmount
-                    If i = 3 Then p1 = PRTotal.OEAmount
-                    If i = 4 Then p1 = PRTotal.Gross
-                    If i = 5 Then
+                    If I = 1 Then p1 = PRTotal.RegAmount
+                    If I = 2 Then p1 = PRTotal.OTAmount
+                    If I = 3 Then p1 = PRTotal.OEAmount
+                    If I = 4 Then p1 = PRTotal.Gross
+                    If I = 5 Then
                         p1 = PRTotal.SSTax + PRTotal.MedTax + PRTotal.FWTTax + PRTotal.StateTax + PRTotal.CityTax
                     End If
-                    If i = 6 Then p1 = PRTotal.Net
+                    If I = 6 Then p1 = PRTotal.Net
                 ElseIf PRTL = 2 Then
-                    If i = 1 Then p1 = PRTotal.SSTax
-                    If i = 2 Then p1 = PRTotal.MedTax
-                    If i = 3 Then p1 = PRTotal.FWTTax
-                    If i = 4 Then p1 = PRTotal.StateTax
-                    If i = 5 Then p1 = PRTotal.CityTax
-                    If i = 6 Then
+                    If I = 1 Then p1 = PRTotal.SSTax
+                    If I = 2 Then p1 = PRTotal.MedTax
+                    If I = 3 Then p1 = PRTotal.FWTTax
+                    If I = 4 Then p1 = PRTotal.StateTax
+                    If I = 5 Then p1 = PRTotal.CityTax
+                    If I = 6 Then
                         p1 = PRTotal.SSTax + PRTotal.MedTax + PRTotal.FWTTax + PRTotal.StateTax + PRTotal.CityTax
                     End If
                 Else
-                    If i = 1 Then p1 = PRTotal.RegHours
-                    If i = 2 Then p1 = PRTotal.OTHours
-                    If i = 3 Then p1 = PRTotal.OEHours
-                    If i = 4 Then BlankFlag = True
-                    If i = 5 Then BlankFlag = True
-                    If i = 6 Then
+                    If I = 1 Then p1 = PRTotal.RegHours
+                    If I = 2 Then p1 = PRTotal.OTHours
+                    If I = 3 Then p1 = PRTotal.OEHours
+                    If I = 4 Then BlankFlag = True
+                    If I = 5 Then BlankFlag = True
+                    If I = 6 Then
                         p1 = PRTotal.RegHours + PRTotal.OTHours + PRTotal.OEHours
                     End If
                 End If
                 
                 If BlankFlag = False Then
-                    PrintValue(i + k) = p1:             FormatString(i + k) = "d14"
+                    PrintValue(I + K) = p1:             FormatString(I + K) = "d14"
                 Else
-                    PrintValue(i + k) = " ":            FormatString(i + k) = "a14"
+                    PrintValue(I + K) = " ":            FormatString(I + K) = "a14"
                 End If
             
-            Next i
+            Next I
     
             PrintValue(9) = " ":        FormatString(9) = "~"
             FormatPrint
@@ -735,8 +738,8 @@ Dim HeadCount, HeadLine As Byte
     
     PrintValue(1) = Space(3) & "a) ":           FormatString(1) = "a6"
     PrintValue(2) = "Pay":                      FormatString(2) = "a20"
-    For i = 1 To 6
-        Select Case i
+    For I = 1 To 6
+        Select Case I
             Case 1:           X = "REGULAR PAY "
             Case 2:           X = "OVERTIME PAY "
             Case 3:           X = "TOTAL OE "
@@ -744,16 +747,16 @@ Dim HeadCount, HeadLine As Byte
             Case 5:           X = "TOTAL TAXES "
             Case 6:           X = "NET PAY "
         End Select
-        PrintValue(i + 2) = X:          FormatString(i + 2) = "r14"
-    Next i
+        PrintValue(I + 2) = X:          FormatString(I + 2) = "r14"
+    Next I
     PrintValue(9) = " ":        FormatString(9) = "~"
     FormatPrint
     Ln = Ln + 1
     
     PrintValue(1) = Space(3) & "b) ":           FormatString(1) = "a6"
     PrintValue(2) = "Reg Taxes":                FormatString(2) = "a20"
-    For i = 1 To 6
-        Select Case i
+    For I = 1 To 6
+        Select Case I
             Case 1:           X = "SS TAX "
             Case 2:           X = "MED TAX "
             Case 3:           X = "FWT TAX "
@@ -761,8 +764,8 @@ Dim HeadCount, HeadLine As Byte
             Case 5:           X = "CWT TAX "
             Case 6:           X = "TOT REG TAX "
         End Select
-        PrintValue(i + 2) = X:          FormatString(i + 2) = "r14"
-    Next i
+        PrintValue(I + 2) = X:          FormatString(I + 2) = "r14"
+    Next I
     PrintValue(9) = " ":        FormatString(9) = "~"
     FormatPrint
     Ln = Ln + 1
@@ -773,8 +776,8 @@ Dim HeadCount, HeadLine As Byte
     If Me.chkHours Then
         PrintValue(1) = Space(3) & "c) ":           FormatString(1) = "a6"
         PrintValue(2) = "Hours":                    FormatString(2) = "a20"
-        For i = 1 To 6
-            Select Case i
+        For I = 1 To 6
+            Select Case I
                 Case 1:           X = "REG HOURS "
                 Case 2:           X = "OT HOURS "
                 Case 3:           X = "OE HOURS "
@@ -782,8 +785,8 @@ Dim HeadCount, HeadLine As Byte
                 Case 5:           X = " "
                 Case 6:           X = "TOT HOURS "
             End Select
-            PrintValue(i + 2) = X:          FormatString(i + 2) = "r14"
-        Next i
+            PrintValue(I + 2) = X:          FormatString(I + 2) = "r14"
+        Next I
         PrintValue(9) = " ":        FormatString(9) = "~"
         FormatPrint
         Ln = Ln + 1
@@ -797,21 +800,21 @@ Dim HeadCount, HeadLine As Byte
         Exit Sub
     End If
     
-    For i = 1 To 3      ' 1=Hours / 2=OE / 3=DED
+    For I = 1 To 3      ' 1=Hours / 2=OE / 3=DED
 
-        If i = 1 Then j = HRCount
-        If i = 2 Then j = OECount
-        If i = 3 Then j = DEDCount
-        If j = 0 Then GoTo NxtI
+        If I = 1 Then J = HRCount
+        If I = 2 Then J = OECount
+        If I = 3 Then J = DEDCount
+        If J = 0 Then GoTo NxtI
         
         HeadCount = 0
         HeadLine = HeadLine + 1
         rsTitle.MoveFirst
         Do
             
-            If i = 1 Then boo = rsTitle!ItemType = PREquate.ItemTypeOE And rsTitle!Hours = True
-            If i = 2 Then boo = rsTitle!ItemType = PREquate.ItemTypeOE And rsTitle!Hours = False
-            If i = 3 Then boo = rsTitle!ItemType = PREquate.ItemTypeDED
+            If I = 1 Then boo = rsTitle!ItemType = PREquate.ItemTypeOE And rsTitle!Hours = True
+            If I = 2 Then boo = rsTitle!ItemType = PREquate.ItemTypeOE And rsTitle!Hours = False
+            If I = 3 Then boo = rsTitle!ItemType = PREquate.ItemTypeDED
             If boo = True Then
             
                 HeadCount = HeadCount + 1
@@ -825,9 +828,9 @@ Dim HeadCount, HeadLine As Byte
                 If HeadCount = 1 Then
                     X = AlphaNum(HeadLine) & " "
                     PrintValue(1) = X:                  FormatString(1) = "r6"
-                    If i = 1 Then X = "OTHER HOURS"
-                    If i = 2 Then X = "OTHER EARN"
-                    If i = 3 Then X = "DEDUCTIONS"
+                    If I = 1 Then X = "OTHER HOURS"
+                    If I = 2 Then X = "OTHER EARN"
+                    If I = 3 Then X = "DEDUCTIONS"
                     PrintValue(2) = X:                  FormatString(2) = "a20"
                 End If
                 PrintValue(HeadCount + 2) = rsTitle!Title & " ":  FormatString(HeadCount + 2) = "r14"
@@ -844,7 +847,7 @@ Dim HeadCount, HeadLine As Byte
         End If
         
 NxtI:
-    Next i
+    Next I
 
     Ln = Ln + 1
     
@@ -978,9 +981,9 @@ Private Sub ProcessData()
 
     ' set up the dates
     BOYDate = DateSerial(Me.cmbYear, 1, 1)
-    i = (Me.cmbQuarter.ListIndex + 1) * 3 - 2
-    BOQDate = DateSerial(Me.cmbYear, i, 1)
-    EOQDate = DateSerial(Me.cmbYear, i + 3, 1) - 1
+    I = (Me.cmbQuarter.ListIndex + 1) * 3 - 2
+    BOQDate = DateSerial(Me.cmbYear, I, 1)
+    EOQDate = DateSerial(Me.cmbYear, I + 3, 1) - 1
 
     PRTotal.CreateRS
     
@@ -1054,13 +1057,13 @@ Private Sub ProcessData()
             SQLString = "SELECT * FROM PRHist WHERE CheckDate >= " & CLng(BOYDate) & _
                         " AND CheckDate <= " & CLng(EOQDate) & " AND ("
             
-            i = 0
+            I = 0
             .rsEmp.Filter = "Select = true"
             .rsEmp.MoveFirst
             Do
                 SQLString = SQLString & " EmployeeID = " & .rsEmp!EmployeeID
-                i = i + 1
-                If i = .rsEmp.RecordCount Then
+                I = I + 1
+                If I = .rsEmp.RecordCount Then
                     SQLString = SQLString & ") "
                 Else
                     SQLString = SQLString & " OR "
