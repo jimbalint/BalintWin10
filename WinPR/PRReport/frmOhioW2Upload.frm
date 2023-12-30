@@ -89,11 +89,11 @@ Begin VB.Form frmOHW2
       Tab(1).Control(6).Enabled=   0   'False
       Tab(1).Control(7)=   "txtTaxYear"
       Tab(1).Control(7).Enabled=   0   'False
-      Tab(1).Control(8)=   "chkCurrentClient"
+      Tab(1).Control(8)=   "chkAllClients"
       Tab(1).Control(8).Enabled=   0   'False
       Tab(1).ControlCount=   9
-      Begin VB.CheckBox chkCurrentClient 
-         Caption         =   "Create the file for only the current client"
+      Begin VB.CheckBox chkAllClients 
+         Caption         =   "Create the file ALL clients"
          Height          =   375
          Left            =   480
          TabIndex        =   28
@@ -1340,10 +1340,11 @@ Private Sub cmdCreateFile_Click()
     WriteRA
     
     strSQL = "select * from PRCompany where OHeW2 = True"
-    If Me.chkCurrentClient Then
+    If Me.chkAllClients.Value <> vbChecked Then
         strSQL = strSQL & " and CompanyID = " & User.LastPRCompany
     End If
     strSQL = strSQL & " order by Name"
+    
     If Not PRCompany.GetBySQL(strSQL) Then End
     Do
 
@@ -1461,10 +1462,11 @@ Function PreCheck() As Boolean
         
     ' 2023-11-18 SD tax numeric test - MUST be numeric for Ohio
     strSQL = "select * from PRCompany where OHeW2 = True"
-    If Me.chkCurrentClient Then
+    If Me.chkAllClients.Value <> vbChecked Then
         strSQL = strSQL & " and CompanyID = " & User.LastPRCompany
     End If
     strSQL = strSQL & " order by Name"
+    
     If Not PRCompany.GetBySQL(strSQL) Then
         msg = msg & "No Payroll Clients are set for eW2 filing" & vbCrLf
     Else
@@ -1619,10 +1621,11 @@ Sub InitReport()
     
     PrintInfo "Companies Reported", "", 1
     strSQL = "select * from PRCompany where OHeW2 = True"
-    If Me.chkCurrentClient Then
+    If Me.chkAllClients.Value <> vbChecked Then
         strSQL = strSQL & " and CompanyID = " & User.LastPRCompany
     End If
     strSQL = strSQL & " order by Name"
+    
     If Not PRCompany.GetBySQL(strSQL) Then End
     Do
         PrintInfo PRCompany.Name, "", 1

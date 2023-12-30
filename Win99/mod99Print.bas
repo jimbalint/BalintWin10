@@ -187,7 +187,12 @@ Dim Form1096 As Boolean
             X = "~"
             Select Case Field99.BoxName
                 Case "TaxYear"
-                    X = TaxYear Mod 100
+                    ' 2023-12-30 4 digit year
+                    If TaxYear <= 2022 Then
+                        X = TaxYear Mod 100
+                    Else
+                        X = TaxYear
+                    End If
                 Case "Payer1"
                     X = PayerDemo(1)
                 Case "Payer2"

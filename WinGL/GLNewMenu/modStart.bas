@@ -8,7 +8,7 @@ rc4Key = "B@lint19742101!@#$%^&*"
 
 Dim x As String
 Dim b As Long
-Dim I, J, K As Long
+Dim i, j, k As Long
 
 Dim FileExt As String
 
@@ -157,17 +157,17 @@ If Response = False Then End
                 
                 ' get the .mdb file name
                 ' from the right until the first "\" in found
-                K = Len(GLCompany.FileName)
-                For I = K To 1 Step -1
-                    If Mid(GLCompany.FileName, I, 1) = "\" Then
+                k = Len(GLCompany.FileName)
+                For i = k To 1 Step -1
+                    If Mid(GLCompany.FileName, i, 1) = "\" Then
                         Exit For
                     End If
-                Next I
-                If I = 0 Then
+                Next i
+                If i = 0 Then
                     MsgBox "Error in company database name: " & GLCompany.FileName, vbExclamation
                     End
                 End If
-                x = Replace(BalintFolder, "^", " ") & "\Data\" & Mid(GLCompany.FileName, I + 1, K)
+                x = Replace(BalintFolder, "^", " ") & "\Data\" & Mid(GLCompany.FileName, i + 1, k)
                 dbName = x
             
             End If

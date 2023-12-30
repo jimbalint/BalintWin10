@@ -285,7 +285,9 @@ Dim rsYM, YM As Long
             
             ' 2021-08-28 - Month also / handle if no multiplier for the tax year
             ' lookee here .... needs fix - see emails from 8-15-22
-            If TaxYear >= 2019 Then
+            ' 2023-12-30 no more multiplier - use tax tables again
+            '            was eff Nov'23 - updated in the software for 2024+
+            If TaxYear >= 2019 And TaxYear <= 2023 Then
                 Dim OHMultiplier As Double
                 OHMultiplier = 1
                 If TaxYear <= 2022 Then
@@ -361,7 +363,8 @@ Public Function GetFWTW4(ByVal W4Type As String, _
                                               
 Dim rsYM, YM As Long
                                               
-    If FWTWage = 0 Or TaxYear = 0 Then
+    ' 2023-12-30 - don't validate if neg wage
+    If FWTWage <= 0 Or TaxYear = 0 Then
         GetFWTW4 = 0
         Exit Function
     End If
