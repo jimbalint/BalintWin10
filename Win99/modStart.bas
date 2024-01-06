@@ -195,8 +195,8 @@ Dim FileExt As String
 If CmdLine = "" Then
     HorzNudge = 4
     VertNudge = 4
-    Create2022Forms "DIV"
-    PrintForm99 "DIV", 2022, True
+    Create2023Forms "1096"
+    PrintForm99 "1096", 2023, True
     End
 End If
 

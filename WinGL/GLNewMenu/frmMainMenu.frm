@@ -49,12 +49,11 @@ Begin VB.Form frmMainMenu
       _ExtentY        =   15901
       _Version        =   393216
       Tabs            =   6
-      Tab             =   2
       TabsPerRow      =   6
       TabHeight       =   520
       TabCaption(0)   =   "FILE"
       TabPicture(0)   =   "frmMainMenu.frx":1028
-      Tab(0).ControlEnabled=   0   'False
+      Tab(0).ControlEnabled=   -1  'True
       Tab(0).Control(0)=   "Label5"
       Tab(0).Control(0).Enabled=   0   'False
       Tab(0).Control(1)=   "Label4"
@@ -116,7 +115,7 @@ Begin VB.Form frmMainMenu
       Tab(1).ControlCount=   6
       TabCaption(2)   =   "PAYROLL"
       TabPicture(2)   =   "frmMainMenu.frx":135E
-      Tab(2).ControlEnabled=   -1  'True
+      Tab(2).ControlEnabled=   0   'False
       Tab(2).Control(0)=   "Frame3"
       Tab(2).Control(0).Enabled=   0   'False
       Tab(2).Control(1)=   "Frame2"
@@ -161,7 +160,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdBackUp 
          Caption         =   "BACKUP"
          Height          =   615
-         Left            =   -74040
+         Left            =   960
          TabIndex        =   128
          Top             =   6600
          Width           =   2535
@@ -169,7 +168,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdJimBo 
          Caption         =   "SQL"
          Height          =   495
-         Left            =   -63720
+         Left            =   11280
          TabIndex        =   127
          Top             =   6960
          Width           =   1215
@@ -177,7 +176,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdNewADO 
          Caption         =   "DATABASE CONVERT"
          Height          =   615
-         Left            =   -66960
+         Left            =   8040
          TabIndex        =   126
          Top             =   6840
          Width           =   2535
@@ -241,7 +240,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdPR1099 
          Caption         =   "1099 PROCESSING"
          Height          =   615
-         Left            =   5400
+         Left            =   -69600
          TabIndex        =   115
          Top             =   4680
          Width           =   2175
@@ -291,7 +290,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdSDGLFFImport 
          Caption         =   "GL FREE FORMAT IMPORT"
          Height          =   615
-         Left            =   -66960
+         Left            =   8040
          TabIndex        =   102
          Top             =   3240
          Width           =   2535
@@ -315,7 +314,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdSDPRHImport 
          Caption         =   "PR HISTORY IMPORT"
          Height          =   615
-         Left            =   -66960
+         Left            =   8040
          TabIndex        =   97
          Top             =   5880
          Width           =   2535
@@ -347,7 +346,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CheckBox chkHideJC 
          Caption         =   "Hide JC Menu"
          Height          =   255
-         Left            =   -69720
+         Left            =   5280
          TabIndex        =   91
          Top             =   8520
          Width           =   1815
@@ -371,7 +370,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdDelete 
          Caption         =   "DELETE"
          Height          =   615
-         Left            =   -74040
+         Left            =   960
          TabIndex        =   82
          Top             =   4080
          Width           =   2535
@@ -379,7 +378,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CheckBox chkHidePR 
          Caption         =   "Hide PR Menu"
          Height          =   255
-         Left            =   -71880
+         Left            =   3120
          TabIndex        =   79
          Top             =   8520
          Width           =   1815
@@ -387,7 +386,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CheckBox chkHideGL 
          Caption         =   "Hide GL Menu"
          Height          =   255
-         Left            =   -74160
+         Left            =   840
          TabIndex        =   78
          Top             =   8520
          Width           =   1815
@@ -395,7 +394,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdSDPRImport 
          Caption         =   "PR CLIENT IMPORT"
          Height          =   615
-         Left            =   -66960
+         Left            =   8040
          TabIndex        =   75
          Top             =   5160
          Width           =   2535
@@ -403,7 +402,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdSDGLHImport 
          Caption         =   "GL HISTORY IMPORT"
          Height          =   615
-         Left            =   -66960
+         Left            =   8040
          TabIndex        =   74
          Top             =   2520
          Width           =   2535
@@ -411,7 +410,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdSDGLImport 
          Caption         =   "GL CLIENT IMPORT"
          Height          =   615
-         Left            =   -66960
+         Left            =   8040
          TabIndex        =   73
          Top             =   1800
          Width           =   2535
@@ -419,7 +418,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdPREntry 
          Caption         =   "D A T A   E N T R Y"
          Height          =   975
-         Left            =   840
+         Left            =   -74160
          Picture         =   "frmMainMenu.frx":16D8
          Style           =   1  'Graphical
          TabIndex        =   71
@@ -679,7 +678,7 @@ Begin VB.Form frmMainMenu
          Caption         =   "&OPEN"
          DragIcon        =   "frmMainMenu.frx":19E2
          Height          =   615
-         Left            =   -74040
+         Left            =   960
          TabIndex        =   35
          Top             =   1200
          Width           =   2535
@@ -687,7 +686,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdFiNew 
          Caption         =   "&NEW"
          Height          =   615
-         Left            =   -74040
+         Left            =   960
          TabIndex        =   34
          Top             =   1920
          Width           =   2535
@@ -695,7 +694,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdFICopy 
          Caption         =   "&COPY"
          Height          =   615
-         Left            =   -74040
+         Left            =   960
          TabIndex        =   33
          Top             =   2640
          Width           =   2535
@@ -703,7 +702,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdFiPSSWD 
          Caption         =   "&PASSWORD"
          Height          =   615
-         Left            =   -74040
+         Left            =   960
          TabIndex        =   32
          Top             =   3360
          Width           =   2535
@@ -711,7 +710,7 @@ Begin VB.Form frmMainMenu
       Begin VB.CommandButton cmdFIUserMt 
          Caption         =   "&USER MAINTENANCE"
          Height          =   615
-         Left            =   -74040
+         Left            =   960
          TabIndex        =   31
          Top             =   5520
          Width           =   2535
@@ -738,7 +737,7 @@ Begin VB.Form frmMainMenu
       End
       Begin VB.Frame Frame1 
          Height          =   6855
-         Left            =   240
+         Left            =   -74760
          TabIndex        =   10
          Top             =   2040
          Width           =   7575
@@ -990,7 +989,7 @@ Begin VB.Form frmMainMenu
       End
       Begin VB.Frame Frame2 
          Height          =   6135
-         Left            =   11040
+         Left            =   -63960
          TabIndex        =   9
          Top             =   720
          Width           =   2655
@@ -1070,7 +1069,7 @@ Begin VB.Form frmMainMenu
       End
       Begin VB.Frame Frame3 
          Height          =   6975
-         Left            =   8040
+         Left            =   -66960
          TabIndex        =   3
          Top             =   720
          Width           =   2655
@@ -1176,7 +1175,7 @@ Begin VB.Form frmMainMenu
       Begin VB.Label Label18 
          Caption         =   "DELETE the currently opened client"
          Height          =   495
-         Left            =   -71160
+         Left            =   3840
          TabIndex        =   83
          Top             =   4200
          Width           =   2295
@@ -1194,7 +1193,7 @@ Begin VB.Form frmMainMenu
             Strikethrough   =   0   'False
          EndProperty
          Height          =   615
-         Left            =   -66960
+         Left            =   8040
          TabIndex        =   81
          Top             =   4440
          Width           =   2535
@@ -1212,7 +1211,7 @@ Begin VB.Form frmMainMenu
             Strikethrough   =   0   'False
          EndProperty
          Height          =   615
-         Left            =   -67080
+         Left            =   7920
          TabIndex        =   72
          Top             =   1080
          Width           =   2895
@@ -1220,7 +1219,7 @@ Begin VB.Form frmMainMenu
       Begin VB.Label Label2 
          Caption         =   "Open Existing Client"
          Height          =   375
-         Left            =   -71160
+         Left            =   3840
          TabIndex        =   39
          Top             =   1380
          Width           =   3015
@@ -1228,7 +1227,7 @@ Begin VB.Form frmMainMenu
       Begin VB.Label Label3 
          Caption         =   "Create a New BLANK File"
          Height          =   375
-         Left            =   -71160
+         Left            =   3840
          TabIndex        =   38
          Top             =   2100
          Width           =   2655
@@ -1236,7 +1235,7 @@ Begin VB.Form frmMainMenu
       Begin VB.Label Label4 
          Caption         =   "Make a Copy of the Current File"
          Height          =   495
-         Left            =   -71160
+         Left            =   3840
          TabIndex        =   37
          Top             =   2700
          Width           =   2775
@@ -1244,7 +1243,7 @@ Begin VB.Form frmMainMenu
       Begin VB.Label Label5 
          Caption         =   "Set or Change Database Password of the Current File"
          Height          =   495
-         Left            =   -71160
+         Left            =   3840
          TabIndex        =   36
          Top             =   3400
          Width           =   2895
@@ -1269,7 +1268,7 @@ Begin VB.Form frmMainMenu
       Width           =   4335
    End
    Begin VB.Label lblVersion 
-      Caption         =   "12/30/2023"
+      Caption         =   "01/06/2024"
       BeginProperty Font 
          Name            =   "Arial"
          Size            =   9
@@ -2031,7 +2030,7 @@ Public Function TableExists(ByVal TableName As String, _
 Dim cm As ADODB.Command
 Dim frs As ADODB.Recordset
 Dim FldFlag As Boolean
-Dim FString As String
+Dim fString As String
                          
     ' see if the field is already in the Table
     Set frs = New ADODB.Recordset

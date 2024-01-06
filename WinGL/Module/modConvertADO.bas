@@ -299,7 +299,8 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByRef cnFrom As ADODB.Conne
             ' If TblName = "Detail99" And fld.Name = "PayeeID" Then eFlag = True
             If TblName = "Payee99" And fld.Name = "FederalID" Then eFlag = True
             If eFlag Then
-                y = RC4Encrypt(rs.Fields(fld.Name), rc4Key)
+                ' 2024-01-06 add trim
+                y = RC4Encrypt(Trim(rs.Fields(fld.Name)), rc4Key)
             Else
                 y = rs.Fields(fld.Name)
             End If
@@ -320,6 +321,8 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByRef cnFrom As ADODB.Conne
             MsgBox x
             Print #log, x
             Print #log, "----"
+            ' 2024-01-16
+            rsNew.CancelUpdate
             GoTo NxtRec
         End If
             
@@ -327,8 +330,9 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByRef cnFrom As ADODB.Conne
         rsNew.Update
         If Err.Number <> 0 Then
             ' x = "Error adding: " & TblName & " " & fld.Name & " " & Y & " " & Ct2
-            x = "Error adding: " & TblName & " " & y & " " & Ct2 & " >>>" & ffield & "<<<"
+            x = "Error adding: " & TblName & " " & y & " " & Ct2 + 1 & " >>>" & ffield & "<<<"
             x = x & vbCr & ">>> " & Err.Description
+            ' 2024-01-06
             MsgBox x
             Print #log, x
             Print #log, "----"
@@ -350,7 +354,8 @@ Private Sub CopyDataProcess(ByVal TblName As String, ByRef cnFrom As ADODB.Conne
                 Set frm = Nothing
                 End
             Else
-                rsNew.Cancel
+                ' 2024-01-06 was .Cancel
+                rsNew.CancelUpdate
             End If
         End If
         On Error GoTo 0
@@ -505,7 +510,7 @@ Private Sub CreateTables(ByRef cnFrom As ADODB.Connection, ByRef cnTo As ADODB.C
 End Sub
 
 Private Sub CreateFields(ByRef cn As ADODB.Connection)
-    Dim FString As String
+    Dim fString As String
     Dim LastTblName As String
     Dim eFlag As Boolean
     rsNewSchema.Sort = "TableName ASC, FieldNum ASC"
@@ -514,7 +519,7 @@ Private Sub CreateFields(ByRef cn As ADODB.Connection)
     LastTable = ""
     Do While Not rsNewSchema.EOF
         If LastTable = "" Or LastTable <> rsNewSchema!TableName Then
-            FString = "ALTER TABLE " & rsNewSchema!TableName & _
+            fString = "ALTER TABLE " & rsNewSchema!TableName & _
                       " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
                       " COUNTER PRIMARY KEY"
         Else
@@ -523,17 +528,17 @@ Private Sub CreateFields(ByRef cn As ADODB.Connection)
             If rsNewSchema!TableName = "Payee99" And rsNewSchema!FieldName = "FederalID" Then eFlag = True
             ' If rsNewSchema!TableName = "Detail99" And rsNewSchema!FieldName = "PayeeID" Then eFlag = True
             If eFlag Then
-                FString = "ALTER TABLE " & rsNewSchema!TableName & _
+                fString = "ALTER TABLE " & rsNewSchema!TableName & _
                           " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
                           " String"
             Else
-                FString = "ALTER TABLE " & rsNewSchema!TableName & _
+                fString = "ALTER TABLE " & rsNewSchema!TableName & _
                           " ADD COLUMN [" & rsNewSchema!FieldName & "]" & _
                           " " & rsNewSchema!FieldType2
             End If
         End If
         LastTable = rsNewSchema!TableName
-        cn.Execute FString
+        cn.Execute fString
         rsNewSchema.MoveNext
     Loop
 End Sub

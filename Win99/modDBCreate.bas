@@ -139,6 +139,86 @@ Public Sub ClearFormRecs(ByVal FormType As String, ByVal TaxYear As Long)
     cn99.Execute SQLString
 
 End Sub
+Public Sub Create2023Forms(ByVal jFormType As String)
+
+Dim TaxYear As Long
+Dim HorzPosn1, HorzPosn2, HorzPosn3, Tab1, Tab2 As Integer
+Dim VertSpacing, VertPosn As Integer
+Dim FormID As Long
+Dim FormType As String
+Dim vp As Integer
+Dim hp As Integer
+
+    TaxYear = 2023
+
+    Form99.OpenRS
+    Form99.Clear
+
+    If jFormType = "1096" Then
+    
+         ClearFormRecs "1096", TaxYear
+         
+         Form99.FormType = "1096"
+         Form99.TaxYear = TaxYear
+         Form99.FormsPerPg = 1
+         Form99.FormVert1 = 1000
+         Form99.FormVert2 = 8950
+         Form99.Save (Equate.RecAdd)
+         FormID = Form99.FormID
+         
+         ' TaxYear, FormType,  BoxName, FieldTitle, FieldFormat, HorzPosn, VertPosn, QuickEntry
+         Tab1 = 920
+         Tab2 = 500
+         FieldOrderNum = 0
+         FormType = "1096"
+         
+         VertPosn = 850
+         Field99Add TaxYear, FormType, "Payer1", "Payer1", Equate.fmtString, Tab1, VertPosn, 0
+         
+         VertPosn = 1450
+         Field99Add TaxYear, FormType, "Payer2", "Payer2", Equate.fmtString, Tab1, VertPosn, 0
+         
+         VertPosn = 1700
+         Field99Add TaxYear, FormType, "Payer3", "Payer3", Equate.fmtString, Tab1, VertPosn, 0
+         
+         VertPosn = 2150
+         Field99Add TaxYear, FormType, "Payer4", "Payer4", Equate.fmtString, Tab1, VertPosn, 0
+         
+         VertPosn = 2595
+         Field99Add TaxYear, FormType, "Contact", "Contact", Equate.fmtString, Tab2, VertPosn, 0
+         Field99Add TaxYear, FormType, "Phone", "Phone", Equate.fmtString, Tab2 + 4750, VertPosn, 0
+             
+         VertPosn = 3110
+         Field99Add TaxYear, FormType, "Email", "Email", Equate.fmtString, Tab2, VertPosn, 0
+         Field99Add TaxYear, FormType, "Fax", "Fax", Equate.fmtString, Tab2 + 4750, VertPosn, 0
+        
+         VertPosn = 3580
+         Field99Add TaxYear, FormType, "PayerFederalID", "FpayerFederalID", Equate.fmtString, Tab2, VertPosn, 0
+         Field99Add TaxYear, FormType, "SSN", "SSN", Equate.fmtString, 2500, VertPosn, 0
+         Field99Add TaxYear, FormType, "NumForms", "NumForms", Equate.fmtString, 5110, VertPosn, 0
+         Field99Add TaxYear, FormType, "FWT", "FWT", Equate.fmtAmount, 6450, VertPosn, 0
+         Field99Add TaxYear, FormType, "TotalAmt", "TotalAmt", Equate.fmtAmount, 8800, VertPosn, 0
+         
+         ' VertPosn = 3880
+         ' Field99Add TaxYear, FormType, "Final", "Final", Equate.fmtString, 10400, VertPosn, 0
+         
+         VertPosn = 7810
+         Field99Add TaxYear, FormType, "Title", "Title", Equate.fmtString, 6880, VertPosn, 0
+         Field99Add TaxYear, FormType, "Date", "Date", Equate.fmtString, 9680, VertPosn, 0
+         
+         ' 2023-01-06
+         VertPosn = 4590
+         Field99Add TaxYear, FormType, "DivX", "DivX", Equate.fmtString, 8610, VertPosn, 0
+         Field99Add TaxYear, FormType, "IntX", "IntX", Equate.fmtString, 9270, VertPosn, 0
+         
+         VertPosn = 5460
+         Field99Add TaxYear, FormType, "MiscX", "MiscX", Equate.fmtString, 1820, VertPosn, 0
+         Field99Add TaxYear, FormType, "NECX", "NECX", Equate.fmtString, 2480, VertPosn, 0
+         Field99Add TaxYear, FormType, "RX", "RX", Equate.fmtString, 5540, VertPosn, 0
+    
+    End If
+
+End Sub
 
 Public Sub Create2022Forms(ByVal jFormType As String)
 

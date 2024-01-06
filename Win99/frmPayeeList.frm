@@ -316,6 +316,10 @@ Private Sub cmdNewYear_Click()
         Create2022Forms ("DIV")
     End If
 
+    If txyr = "2023" Then
+        Create2023Forms ("1096")
+    End If
+
 End Sub
 
 Private Sub Form_Load()

@@ -299,7 +299,7 @@ Begin VB.Form frmPrint99
       MinValueVT      =   5
    End
    Begin VB.Label Label3 
-      Caption         =   "01/07/2023 b"
+      Caption         =   "01/06/2024"
       Height          =   255
       Left            =   11040
       TabIndex        =   14
