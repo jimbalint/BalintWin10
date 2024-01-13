@@ -51,7 +51,7 @@ Dim FileExt As String
        PRBatchID = 0
        BatchNum = PRBatchID
        BatchNumber = PRBatchID
-       ProgName = UCase("OHW2")
+       ProgName = UCase("QTRRPTS")
        SysFile = "s:\Balint\Data\GLSystem.mdb"
        UserID = 2
        BackName = ""

@@ -192,13 +192,13 @@ Dim FileExt As String
 
 ' **********************************************************
 ' *** use for test runs ***
-If CmdLine = "" Then
-    HorzNudge = 4
-    VertNudge = 4
-    Create2023Forms "1096"
-    PrintForm99 "1096", 2023, True
-    End
-End If
+'If CmdLine = "" Then
+'    HorzNudge = 4
+'    VertNudge = 4
+'    Create2023Forms "1096"
+'    PrintForm99 "1096", 2023, True
+'    End
+'End If
 
 ' **********************************************************
     Select Case ProgName

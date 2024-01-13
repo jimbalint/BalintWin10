@@ -21,6 +21,14 @@ Begin VB.Form frmPrint99
    ScaleHeight     =   10410
    ScaleWidth      =   13710
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdExcelTest 
+      Caption         =   "Excel"
+      Height          =   375
+      Left            =   12840
+      TabIndex        =   15
+      Top             =   9960
+      Width           =   735
+   End
    Begin VB.CommandButton cmdTotals 
       Caption         =   "&TOTALS"
       Height          =   615
@@ -355,6 +363,77 @@ Dim boo As Boolean
 Dim FormID, RowCount, Rw As Long
 Dim PRGlobalID As Long
 
+Private Sub cmdExcelTest_Click()
+    Dim TextChannel As Integer
+    TextFileName = "c:\Balint\1099-A.csv"
+    TextChannel = FreeFile
+    Do
+        On Error Resume Next
+        Open TextFileName For Output As #TextChannel
+        If Err.Number <> 0 Then
+            ErrMsg = "Error Opening: " & TextFileName & vbCr & vbCr & _
+                " " & Err.Number & " " & Err.Description
+            MsgResponse = MsgBox(ErrMsg, vbRetryCancel + vbExclamation, "File Open Error")
+            If MsgResponse <> vbRetry Then
+                TextChannel = 0
+                TextFileName = ""
+                Exit Do
+            End If
+        Else
+            Exit Do
+        End If
+    Loop
+
+    Dim qcq As String
+    qcq = Chr(34) & Chr(44) & Chr(34)
+    Dim sOut As String
+    Dim FormType As String
+    
+    SQLString = " SELECT * FROM Payee99 ORDER BY PayeeName"
+    If Payee99.GetBySQL(SQLString) = False Then
+        MsgBox "No Payee info found!", vbInformation
+        GoBack
+    End If
+    
+    ' header line
+    sOut = "Payee Name" & qcq & "Payee Number" & qcq & "Box1" & Chr(34)
+    Print #TextChannel, sOut
+    
+    Do
+        
+FormType = "MISC"
+        
+        SQLString = " SELECT * FROM Detail99 WHERE PayeeID = " & Payee99.PayeeID & _
+                    " AND FormType = '" & FormType & "' " & _
+                    " AND TaxYear = " & Me.cmbTaxYear.text & _
+                    " AND BoxName = '1'"
+        If Detail99.GetBySQL(SQLString) Then
+        
+            sOut = ""
+            sOut = sOut & Chr(34) & PrepCSV(Payee99.PayeeName) & qcq
+            sOut = sOut & Payee99.PayeeNumber & qcq
+            sOut = sOut & Trim(Detail99.FieldValue) & Chr(34)
+        
+            Print #TextChannel, sOut
+            If Not Payee99.GetNext Then Exit Do
+    
+        End If
+    
+    Loop
+
+End
+
+    Close #TextChannel
+    TaskID = Shell("cmd /c " & TextFileName, vbNormalFocus)
+    
+End Sub
+
+Private Function PrepCSV(ByVal InString As String) As String
+    InString = Replace(InString, ",", " ")
+    InString = Replace(InString, """", " ")
+    PrepCSV = InString
+End Function
+
 Private Sub cmdTotals_Click()
     cmdSave_Click
     frmTotals.TaxYear = Me.cmbTaxYear
@@ -380,6 +459,8 @@ Private Sub Form_Load()
         PopTaxYear .cmbTaxYear
     
     End With
+
+    If LCase(User.Logon) <> "jim" Then Me.cmdExcelTest.Visible = False
     
 End Sub
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
