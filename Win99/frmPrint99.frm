@@ -21,29 +21,29 @@ Begin VB.Form frmPrint99
    ScaleHeight     =   10410
    ScaleWidth      =   13710
    StartUpPosition =   2  'CenterScreen
-   Begin VB.CommandButton cmdExcelTest 
-      Caption         =   "Excel"
-      Height          =   375
-      Left            =   12840
+   Begin VB.CommandButton cmdCSV 
+      Caption         =   "CSV Export"
+      Height          =   495
+      Left            =   6960
       TabIndex        =   15
-      Top             =   9960
-      Width           =   735
+      Top             =   9360
+      Width           =   1335
    End
    Begin VB.CommandButton cmdTotals 
       Caption         =   "&TOTALS"
-      Height          =   615
-      Left            =   7200
+      Height          =   495
+      Left            =   8520
       TabIndex        =   13
       Top             =   9360
       Width           =   1575
    End
    Begin VB.CommandButton cmdPrint 
       Caption         =   "&PRINT"
-      Height          =   615
+      Height          =   495
       Left            =   5280
       TabIndex        =   12
       Top             =   9360
-      Width           =   1575
+      Width           =   1455
    End
    Begin TDBNumber6Ctl.TDBNumber tdbHorz 
       Height          =   375
@@ -105,11 +105,11 @@ Begin VB.Form frmPrint99
    End
    Begin VB.CommandButton cmdSave 
       Caption         =   "&SAVE"
-      Height          =   615
-      Left            =   9120
+      Height          =   495
+      Left            =   10320
       TabIndex        =   8
       Top             =   9360
-      Width           =   1575
+      Width           =   1095
    End
    Begin VSFlex8Ctl.VSFlexGrid fg 
       Height          =   6855
@@ -242,11 +242,11 @@ Begin VB.Form frmPrint99
    End
    Begin VB.CommandButton cmdExit 
       Caption         =   "E&XIT"
-      Height          =   615
-      Left            =   11040
+      Height          =   495
+      Left            =   11760
       TabIndex        =   0
       Top             =   9360
-      Width           =   1575
+      Width           =   1335
    End
    Begin TDBNumber6Ctl.TDBNumber tdbVertical 
       Height          =   375
@@ -362,10 +362,39 @@ Dim X, Y, Z As String
 Dim boo As Boolean
 Dim FormID, RowCount, Rw As Long
 Dim PRGlobalID As Long
+Dim sOut As String
+Dim CommonColumns As String
 
-Private Sub cmdExcelTest_Click()
+Private Sub cmdCSV_Click()
+    
+    ' get payer settings
+    SQLString = "select *" & _
+                " from PRGlobal " & _
+                " where UserID = " & User.ID & _
+                " and TypeCode = 30"
+    If Not PRGlobal.GetBySQL(SQLString) Then
+        MsgBox "Payer data not found!!!", vbExclamation
+        GoBack
+    End If
+    
+    Const WindowsFolder = 0
+    Const SystemFolder = 1
+    Const TemporaryFolder = 2
+    Dim fso: Set fso = CreateObject("Scripting.FileSystemObject")
+    Dim tempFolder: tempFolder = fso.GetSpecialFolder(TemporaryFolder)
+
+    J = 0
+    If Me.cmbForm.text = "1099-NEC" Then J = 1
+    If J = 0 Then
+        MsgBox "Form " & Me.cmbForm.text & " not supported for export yet"
+        Exit Sub
+    End If
+
     Dim TextChannel As Integer
-    TextFileName = "c:\Balint\1099-A.csv"
+    
+' tempFolder = "\\VBOXSVR\VM-Share\Balint_NewADO_EXE"
+    TextFileName = tempFolder & "\" & Me.cmbForm.text & ".csv"
+    
     TextChannel = FreeFile
     Do
         On Error Resume Next
@@ -384,55 +413,275 @@ Private Sub cmdExcelTest_Click()
         End If
     Loop
 
-    Dim qcq As String
-    qcq = Chr(34) & Chr(44) & Chr(34)
-    Dim sOut As String
-    Dim FormType As String
+    ' header line
+    sOut = CommonHeader()
+    Select Case Me.cmbForm.text
+        Case "1099-NEC": sOut = sOut & NECHeader()
+    End Select
+    Print #TextChannel, sOut
+    
+    CommonColumns = SetCommonColumns()
     
     SQLString = " SELECT * FROM Payee99 ORDER BY PayeeName"
     If Payee99.GetBySQL(SQLString) = False Then
         MsgBox "No Payee info found!", vbInformation
         GoBack
     End If
-    
-    ' header line
-    sOut = "Payee Name" & qcq & "Payee Number" & qcq & "Box1" & Chr(34)
-    Print #TextChannel, sOut
-    
     Do
-        
-FormType = "MISC"
-        
-        SQLString = " SELECT * FROM Detail99 WHERE PayeeID = " & Payee99.PayeeID & _
-                    " AND FormType = '" & FormType & "' " & _
-                    " AND TaxYear = " & Me.cmbTaxYear.text & _
-                    " AND BoxName = '1'"
-        If Detail99.GetBySQL(SQLString) Then
-        
-            sOut = ""
-            sOut = sOut & Chr(34) & PrepCSV(Payee99.PayeeName) & qcq
-            sOut = sOut & Payee99.PayeeNumber & qcq
-            sOut = sOut & Trim(Detail99.FieldValue) & Chr(34)
-        
-            Print #TextChannel, sOut
-            If Not Payee99.GetNext Then Exit Do
-    
-        End If
-    
+        sOut = CommonColumns & PayeeColumns()
+        Select Case Me.cmbForm.text
+            Case "1099-NEC": sOut = sOut & NEC_Columns(Payee99.PayeeID)
+        End Select
+        Print #TextChannel, sOut
+        If Payee99.GetNext = False Then Exit Do
     Loop
-
-End
-
+    
     Close #TextChannel
     TaskID = Shell("cmd /c " & TextFileName, vbNormalFocus)
     
 End Sub
+Private Function SetCommonColumns()
+    Dim aa As Integer
+    Dim ary(20) As String
+    ary(1) = Me.cmbForm.text
+    ary(2) = Me.cmbTaxYear.text
+    ary(3) = "FedID"      ' Payer TIN Type
+    ary(4) = PrepCSV(GLCompany.FederalID)
+    ary(5) = "B"         ' PayerNameType
+    ary(6) = PrepCSV(GLCompany.Name)
+    ary(7) = ""       ' payer name line 2
+    ary(8) = ""       ' payer first name
+    ary(9) = ""       ' payer MI
+    ary(10) = ""      ' payer last name
+    ary(11) = ""      ' payer suffix
+    ary(12) = "US"      ' payer country
+    ary(13) = PrepCSV(GLCompany.Address1)
+    ary(14) = PrepCSV(GLCompany.Address2)
+    ary(15) = PrepCSV(GLCompany.City)
+    ary(16) = PrepCSV(GLCompany.State)
+    ary(17) = GLCompany.ZipCode
+    ary(18) = "D"      ' phone type
+    ary(19) = PrepCSV(PRGlobal.Var3)       ' phone
+    ary(20) = PrepCSV(PRGlobal.Var2)      ' email
+    SetCommonColumns = Ary2String(ary, False)
+End Function
+Private Function Get_TIN_Type(ByVal IDString As String) As String
+    IDString = Trim(IDString)
+    If Len(IDString) - Len(Replace(IDString, "-", "")) = 1 Then
+        Get_TIN_Type = "EIN"
+    Else
+        Get_TIN_Type = "SSN"
+    End If
+End Function
+Private Function ParseCSZ(ByVal CSZString) As String()
+    
+    Dim CommaPos As Integer
+    Dim LastSpacePos As Integer
+    
+    ' city, state zip
+    CSZString = Trim(CSZString)
+    Dim arrcsz(3) As String
+    
+    CommaPos = InStr(1, CSZString, ",", vbTextCompare)
+    LastSpacePos = InStrRev(CSZString, " ")
+    If CSZString = "" Then
+        arrcsz(1) = ""
+        arrcsz(2) = ""
+        arrcsz(3) = ""
+    ElseIf CommaPos = 0 Or LastSpacePos = 0 Or LastSpacePos < CommaPos Then
+        arrcsz(1) = CSZString
+        arrcsz(2) = ""
+        arrcsz(3) = ""
+    Else
+        arrcsz(1) = Trim(Mid(CSZString, 1, CommaPos - 1))
+        arrcsz(2) = Trim(Mid(CSZString, CommaPos + 1, LastSpacePos - CommaPos))
+        arrcsz(3) = Trim(Mid(CSZString, LastSpacePos + 1))
+    End If
+    
+    ParseCSZ = arrcsz
+End Function
+Private Function PayeeColumns() As String
+    Dim aa As Integer
+    Dim ary(17) As String
+    Dim CSZ As Variant
+    CSZ = ParseCSZ(Payee99.CSZ)
+    ary(1) = Get_TIN_Type(Payee99.FederalID)     ' TIN Type
+    ary(2) = PrepCSV(Payee99.FederalID)
+    ary(3) = "B"              ' name type
+    ary(4) = PrepCSV(Payee99.PayeeName)
+    ary(5) = ""       ' biz name 2
+    ary(6) = ""       ' firstname
+    ary(7) = ""       ' mnm
+    ary(8) = ""       ' last name
+    ary(9) = ""       ' suffix
+    ary(10) = "US"      ' country
+    ary(11) = PrepCSV(Payee99.Address)
+    ary(12) = ""      ' addr2
+    ary(13) = CSZ(1)
+    ary(14) = CSZ(2)      ' state
+    ary(15) = CSZ(3)      ' zip
+    ary(16) = ""      ' office code
+    ary(17) = Payee99.AccountNumber
+    PayeeColumns = Ary2String(ary, False)
+End Function
+
+Private Function NEC_Columns(ByVal PayeeID As Integer) As String
+    Dim aa As Integer
+    Dim ary(17) As String
+    ary(1) = ""       ' 2nd TIN notice
+    
+    Dim box1 As String
+    Dim box2 As String
+    box1 = GetDetailData(PayeeID, "1")
+    box2 = GetDetailData(PayeeID, "2")
+    If box2 = "" Then
+        ary(2) = GetDetailData(PayeeID, "1")
+        ary(3) = "N"
+    Else
+        ary(2) = ""
+        ary(3) = "Y"
+    End If
+    
+    ary(4) = AmtString(GetDetailData(PayeeID, "4"))
+    ary(4) = GetDetailData(PayeeID, "4")
+    
+    ary(5) = ""   ' combined federal/state filing
+    ary(6) = ""   ' state 1
+    ary(7) = GetDetailData(PayeeID, "5a")   ' state WH
+    ary(8) = GetDetailData(PayeeID, "6a")   ' state #
+    ary(9) = GetDetailData(PayeeID, "7a")   ' state income
+    ary(10) = ""                          ' local inc tax
+    ary(11) = ""                          ' special data entries
+    ary(12) = ""   ' state 2
+    ary(13) = GetDetailData(PayeeID, "5b")   ' state WH
+    ary(14) = GetDetailData(PayeeID, "6b")   ' state #
+    ary(15) = GetDetailData(PayeeID, "7b")   ' state income
+    ary(16) = ""                          ' local inc tax
+    ary(17) = ""                          ' special data entries
+    NEC_Columns = Ary2String(ary, True)
+End Function
+Private Function Ary2String(ByVal ary As Variant, ByVal LastFlag As Boolean) As String
+    Ary2String = ""
+    For I = 1 To UBound(ary)
+        Ary2String = Ary2String & Chr(34) & PrepCSV(ary(I)) & Chr(34)
+        If I <> UBound(ary) Or (I = UBound(ary) And LastFlag = False) Then
+            Ary2String = Ary2String & Chr(44)
+        End If
+    Next I
+End Function
+Private Function AmtString(ByVal strAmt) As String
+    If IsNumeric(strAmt) Then
+        AmtString = strAmt
+    Else
+        AmtString = "0.00"
+    End If
+End Function
+
+Private Function GetDetailData(ByVal PayeeID As Integer, ByVal BoxName As String) As String
+    
+    SQLString = "select *" & _
+                " from Field99" & _
+                " where TaxYear = " & Me.cmbTaxYear.text & _
+                " and FormType = '" & GetFormType & "'" & _
+                " and BoxName = '" & BoxName & "'"
+    If Field99.GetBySQL(SQLString) = False Then
+        MsgBox "Field99 Not Found!! " & Me.cmbTaxYear.text & vbCrLf & Me.cmbForm.text & vbCrLf & BoxName
+        GoBack
+    End If
+    
+    SQLString = " SELECT * FROM Detail99 WHERE PayeeID = " & PayeeID & _
+                " AND FormType = '" & Replace(Me.cmbForm.text, "1099-", "") & "' " & _
+                " AND TaxYear = " & Me.cmbTaxYear.text & _
+                " AND BoxName = '" & BoxName & "'"
+    If Detail99.GetBySQL(SQLString) = False Then
+        If Field99.FieldFormat = Equate.fmtAmount Then
+            GetDetailData = FormatAmt("")
+        Else
+            GetDetailData = ""
+        End If
+    Else
+        If Field99.FieldFormat = Equate.fmtAmount Then
+            GetDetailData = FormatAmt(Detail99.FieldValue)
+        Else
+            GetDetailData = Detail99.FieldValue
+        End If
+    End If
+    
+End Function
+
+Private Function NECHeader() As String
+    Dim aa As Integer
+    Dim ary(17) As String
+    ary(1) = "2nd TIN Notice"
+    ary(2) = "Box 1 - Nonemployee Compensation"
+    ary(3) = "Box 2 - Payer made direct sales totaling $5000 or more of consumer products to a recipient for resale"
+    ary(4) = "Box 4 - Federal income tax withheld"
+    ary(5) = "Combined Federal/State Filing"
+    ary(6) = "State 1"
+    ary(7) = "State 1 - State Tax Withheld"
+    ary(8) = "State 1 - State/Payer state number"
+    ary(9) = "State 1 - State income"
+    ary(10) = "State 1 - Local income tax withheld"
+    ary(11) = "State 1 - Special Data Entries"
+    ary(12) = "State 2"
+    ary(13) = "State 2 - State Tax Withheld"
+    ary(14) = "State 2 - State/Payer state number"
+    ary(15) = "State 2 - State income"
+    ary(16) = "State 2 - Local income tax withheld"
+    ary(17) = "State 2 - Special Data Entries#"
+    NECHeader = Ary2String(ary, True)
+End Function
+
+Private Function CommonHeader() As String
+    Dim aa As Integer
+    Dim ary(37) As String
+    ary(1) = "Form Type"
+    ary(2) = "Tax Year"
+    ary(3) = "Payer TIN Type"
+    ary(4) = "Payer Taxpayer ID Number"
+    ary(5) = "Payer Name Type"
+    ary(6) = "Payer Business or Entity Name Line 1"
+    ary(7) = "Payer Business or Entity Name Line 2"
+    ary(8) = "Payer First Name"
+    ary(9) = "Payer Middle Name"
+    ary(10) = "Payer Last Name (Surname)"
+    ary(11) = "Payer Suffix"
+    ary(12) = "Payer Country"
+    ary(13) = "Payer Address Line 1"
+    ary(14) = "Payer Address Line 2"
+    ary(15) = "Payer City/Town"
+    ary(16) = "Payer State/Province/Territory"
+    ary(17) = "Payer ZIP/Postal Code"
+    ary(18) = "Payer Phone Type"
+    ary(19) = "Payer Phone"
+    ary(20) = "Payer Email Address"
+    ary(21) = "Recipient TIN Type"
+    ary(22) = "Recipient Taxpayer ID Number"
+    ary(23) = "Recipient Name Type"
+    ary(24) = "Recipient Business or Entity Name Line 1"
+    ary(25) = "Recipient Business or Entity Name Line 2"
+    ary(26) = "Recipient First Name"
+    ary(27) = "Recipient Middle Name"
+    ary(28) = "Recipient Last Name (Surname)"
+    ary(29) = "Recipient Suffix"
+    ary(30) = "Recipient Country"
+    ary(31) = "Recipient Address Line 1"
+    ary(32) = "Recipient Address Line 2"
+    ary(33) = "Recipient City/Town"
+    ary(34) = "Recipient State/Province/Territory"
+    ary(35) = "Recipient ZIP/Postal Code"
+    ary(36) = "Office Code"
+    ary(37) = "Form Account Number"
+    CommonHeader = Ary2String(ary, False)
+End Function
 
 Private Function PrepCSV(ByVal InString As String) As String
+    InString = Trim(InString)
     InString = Replace(InString, ",", " ")
     InString = Replace(InString, """", " ")
     PrepCSV = InString
 End Function
+
 
 Private Sub cmdTotals_Click()
     cmdSave_Click
@@ -460,7 +709,7 @@ Private Sub Form_Load()
     
     End With
 
-    If LCase(User.Logon) <> "jim" Then Me.cmdExcelTest.Visible = False
+    ' If LCase(User.Logon) <> "jim" Then Me.cmdExcelTest.Visible = False
     
 End Sub
 Private Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)

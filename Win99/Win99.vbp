@@ -8,6 +8,7 @@ Object={49CBFCC0-1337-11D2-9BBF-00A024695830}#1.0#0; tinumb8.ocx
 Object={BEEECC20-4D5F-4F8B-BFDC-5D9B6FBDE09D}#1.0#0; vsflex8.ocx
 Object={E2D000D0-2DA1-11D2-B358-00104B59D73D}#1.0#0; titext8.ocx
 Object={A49CE0E0-C0F9-11D2-B0EA-00A024695830}#1.0#0; tidate8.ocx
+Reference=*\G{BEE4BFEC-6683-3E67-9167-3C0CBC68F40A}#2.4#0#C:\Windows\Microsoft.NET\Framework\v4.0.30319\System.tlb#System
 Object={F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0; comdlg32.ocx
 Form=Form1.frm
 Module=modStart; modStart.bas

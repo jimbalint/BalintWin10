@@ -7,7 +7,7 @@ Begin VB.Form frmPayer
    ClientHeight    =   9210
    ClientLeft      =   60
    ClientTop       =   450
-   ClientWidth     =   14535
+   ClientWidth     =   14505
    BeginProperty Font 
       Name            =   "Arial"
       Size            =   9.75
@@ -20,7 +20,7 @@ Begin VB.Form frmPayer
    Icon            =   "frmPayer.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   9210
-   ScaleWidth      =   14535
+   ScaleWidth      =   14505
    StartUpPosition =   2  'CenterScreen
    Begin TDBNumber6Ctl.TDBNumber tdbHorz 
       Height          =   375
@@ -1478,7 +1478,11 @@ Private Sub SaveData()
             
         If GlobalID = 0 Then
             PRGlobal.Clear
-            PRGlobal.UserID = GLCompany.ID
+            
+            ' ??? 2024-01-23
+            ' PRGlobal.UserID = GLCompany.ID
+            PRGlobal.UserID = User.ID
+            
             PRGlobal.TypeCode = 30
             PRGlobal.Save (Equate.RecAdd)
         Else
