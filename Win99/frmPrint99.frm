@@ -385,6 +385,7 @@ Private Sub cmdCSV_Click()
 
     J = 0
     If Me.cmbForm.text = "1099-NEC" Then J = 1
+    If Me.cmbForm.text = "1099-MISC" Then J = 1
     If J = 0 Then
         MsgBox "Form " & Me.cmbForm.text & " not supported for export yet"
         Exit Sub
@@ -417,6 +418,7 @@ Private Sub cmdCSV_Click()
     sOut = CommonHeader()
     Select Case Me.cmbForm.text
         Case "1099-NEC": sOut = sOut & NECHeader()
+        Case "1099-MISC": sOut = sOut & MiscHeader()
     End Select
     Print #TextChannel, sOut
     
@@ -431,6 +433,7 @@ Private Sub cmdCSV_Click()
         sOut = CommonColumns & PayeeColumns()
         Select Case Me.cmbForm.text
             Case "1099-NEC": sOut = sOut & NEC_Columns(Payee99.PayeeID)
+            Case "1099-MISC": sOut = sOut & MiscColumns(Payee99.PayeeID)
         End Select
         Print #TextChannel, sOut
         If Payee99.GetNext = False Then Exit Do
@@ -546,20 +549,113 @@ Private Function NEC_Columns(ByVal PayeeID As Integer) As String
     ary(4) = GetDetailData(PayeeID, "4")
     
     ary(5) = ""   ' combined federal/state filing
-    ary(6) = ""   ' state 1
-    ary(7) = GetDetailData(PayeeID, "5a")   ' state WH
-    ary(8) = GetDetailData(PayeeID, "6a")   ' state #
-    ary(9) = GetDetailData(PayeeID, "7a")   ' state income
-    ary(10) = ""                          ' local inc tax
-    ary(11) = ""                          ' special data entries
-    ary(12) = ""   ' state 2
-    ary(13) = GetDetailData(PayeeID, "5b")   ' state WH
-    ary(14) = GetDetailData(PayeeID, "6b")   ' state #
-    ary(15) = GetDetailData(PayeeID, "7b")   ' state income
-    ary(16) = ""                          ' local inc tax
-    ary(17) = ""                          ' special data entries
+    
+    If CDec(GetDetailData(PayeeID, "7a")) <> 0 Then
+        ary(6) = ""   ' state 1
+        ary(7) = GetDetailData(PayeeID, "5a")   ' state WH
+        ary(8) = GetDetailData(PayeeID, "6a")   ' state #
+        ary(9) = GetDetailData(PayeeID, "7a")   ' state income
+        ary(10) = ""                          ' local inc tax
+        ary(11) = ""                          ' special data entries
+    Else
+        ary(6) = ""   ' state 1
+        ary(7) = ""   ' state WH
+        ary(8) = ""   ' state #
+        ary(9) = ""   ' state income
+        ary(10) = ""                          ' local inc tax
+        ary(11) = ""                          ' special data entries
+    End If
+    
+    If CDec(GetDetailData(PayeeID, "7b")) <> 0 Then
+        ary(12) = ""   ' state 2
+        ary(13) = GetDetailData(PayeeID, "5b")   ' state WH
+        ary(14) = GetDetailData(PayeeID, "6b")   ' state #
+        ary(15) = GetDetailData(PayeeID, "7b")   ' state income
+        ary(16) = ""                          ' local inc tax
+        ary(17) = ""                          ' special data entries
+    Else
+        ary(12) = ""   ' state 2
+        ary(13) = ""   ' state WH
+        ary(14) = ""   ' state #
+        ary(15) = ""   ' state income
+        ary(16) = ""                          ' local inc tax
+        ary(17) = ""                          ' special data entries
+    End If
+    
     NEC_Columns = Ary2String(ary, True)
 End Function
+Private Function MiscColumns(ByVal PayeeID As Integer) As String
+    Dim aa As Integer
+    Dim ary(29) As String
+    
+    ary(1) = ""     ' FACTA filing req
+    ary(2) = ""     ' 2nd TIN notice
+    
+    ary(3) = GetDetailData(PayeeID, 1)
+    ary(4) = GetDetailData(PayeeID, 2)
+    ary(5) = GetDetailData(PayeeID, 3)
+    ary(6) = GetDetailData(PayeeID, 4)
+    ary(7) = GetDetailData(PayeeID, 5)
+    ary(8) = GetDetailData(PayeeID, 6)
+    ary(9) = GetDetailData(PayeeID, 7)
+    ary(10) = GetDetailData(PayeeID, 8)
+    ary(11) = GetDetailData(PayeeID, 9)
+    ary(12) = GetDetailData(PayeeID, 10)
+    ary(13) = ""    ' fish ...
+    ary(14) = GetDetailData(PayeeID, 12)
+    ary(15) = GetDetailData(PayeeID, 14)
+    ary(16) = ""    ' nq def comp
+    ary(17) = ""    ' combined fed/state filing
+    
+    ' state income boxes not defined??
+    ary(18) = ""   ' state 1
+    ary(19) = ""   ' state WH
+    ary(20) = ""   ' state #
+    ary(21) = ""   ' state income
+    ary(22) = ""                          ' local inc tax
+    ary(23) = ""                          ' special data entries
+    ary(24) = ""   ' state 1
+    ary(25) = ""   ' state WH
+    ary(26) = ""   ' state #
+    ary(27) = ""   ' state income
+    ary(28) = ""                          ' local inc tax
+    ary(29) = ""                          ' special data entries
+    
+'    If CDec(GetDetailData(PayeeID, "18a")) <> 0 Then
+'        ary(18) = ""   ' state 1
+'        ary(19) = GetDetailData(PayeeID, "16a")   ' state WH
+'        ary(20) = GetDetailData(PayeeID, "17a")   ' state #
+'        ary(21) = GetDetailData(PayeeID, "18a")   ' state income
+'        ary(22) = ""                          ' local inc tax
+'        ary(23) = ""                          ' special data entries
+'    Else
+'        ary(18) = ""   ' state 1
+'        ary(19) = ""   ' state WH
+'        ary(20) = ""   ' state #
+'        ary(21) = ""   ' state income
+'        ary(22) = ""                          ' local inc tax
+'        ary(23) = ""                          ' special data entries
+'    End If
+'
+'    If CDec(GetDetailData(PayeeID, "18b")) <> 0 Then
+'        ary(24) = ""   ' state 1
+'        ary(25) = GetDetailData(PayeeID, "16b")   ' state WH
+'        ary(26) = GetDetailData(PayeeID, "17b")   ' state #
+'        ary(27) = GetDetailData(PayeeID, "18b")   ' state income
+'        ary(28) = ""                          ' local inc tax
+'        ary(29) = ""                          ' special data entries
+'    Else
+'        ary(24) = ""   ' state 1
+'        ary(25) = ""   ' state WH
+'        ary(26) = ""   ' state #
+'        ary(27) = ""   ' state income
+'        ary(28) = ""                          ' local inc tax
+'        ary(29) = ""                          ' special data entries
+'    End If
+    
+    MiscColumns = Ary2String(ary, True)
+End Function
+
 Private Function Ary2String(ByVal ary As Variant, ByVal LastFlag As Boolean) As String
     Ary2String = ""
     For I = 1 To UBound(ary)
@@ -628,8 +724,43 @@ Private Function NECHeader() As String
     ary(14) = "State 2 - State/Payer state number"
     ary(15) = "State 2 - State income"
     ary(16) = "State 2 - Local income tax withheld"
-    ary(17) = "State 2 - Special Data Entries#"
+    ary(17) = "State 2 - Special Data Entries"
     NECHeader = Ary2String(ary, True)
+End Function
+
+Private Function MiscHeader() As String
+    Dim aa As Integer
+    Dim ary(29) As String
+    ary(1) = "FATCA Filing Requirements"
+    ary(2) = "2nd TIN Notice"
+    ary(3) = "Box 1 - Rents"
+    ary(4) = "Box 2 - Royalties"
+    ary(5) = "Box 3 - Other Income"
+    ary(6) = "Box 4 - Federal income tax withheld"
+    ary(7) = "Box 5 - Fishing boat proceeds"
+    ary(8) = "Box 6 - Medical and health care payments"
+    ary(9) = "Box 7 - Direct sales of $5000 or more of consumer products to a recipient for resale"
+    ary(10) = "Box 8 - Subtitute payments in lieu of dividends or interest"
+    ary(11) = "Box 9 - Crop insurance proceeds"
+    ary(12) = "Box 10 - Gross proceeds paid to an attorney"
+    ary(13) = "Box 11 - Fish purchased for resale"
+    ary(14) = "Box 12 - Section 409A deferrals"
+    ary(15) = "Box 14 - Excess golden parachute payments"
+    ary(16) = "Box 15 - Nonqualified deferred compensation"
+    ary(17) = "Combined Federal/State Filing"
+    ary(18) = "State 1"
+    ary(19) = "State 1 - State Tax Withheld"
+    ary(20) = "State 1 - State/Payer state number"
+    ary(21) = "State 1 - State income"
+    ary(22) = "State 1 - Local income tax withheld"
+    ary(23) = "State 1 - Special Data Entries"
+    ary(24) = "State 2"
+    ary(25) = "State 2 - State Tax Withheld"
+    ary(26) = "State 2 - State/Payer state number"
+    ary(27) = "State 2 - State income"
+    ary(28) = "State 2 - Local income tax withheld"
+    ary(29) = "State 2 - Special Data Entries"
+    MiscHeader = Ary2String(ary, True)
 End Function
 
 Private Function CommonHeader() As String
