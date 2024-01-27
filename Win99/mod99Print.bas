@@ -285,6 +285,7 @@ Dim Form1096 As Boolean
     
 End Sub
 
+
 Public Function FormatAmt(ByVal AmtString) As String
 
 Dim Amt99 As Currency

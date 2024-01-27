@@ -568,6 +568,8 @@ Private Sub Form_Load()
     ' set field parameters
     With Me
         tdbTextSet .tdbPayeeName, 50
+        .tdbPayeeName.Format = "Aa9#@"
+        
         tdbTextSet .tdbAddress, 50
         tdbTextSet .tdbCSZ, 50
         tdbTextSet .tdbFederalID, 15

@@ -386,6 +386,8 @@ Private Sub cmdCSV_Click()
     J = 0
     If Me.cmbForm.text = "1099-NEC" Then J = 1
     If Me.cmbForm.text = "1099-MISC" Then J = 1
+    If Me.cmbForm.text = "1099-INT" Then J = 1
+    If Me.cmbForm.text = "1099-DIV" Then J = 1
     If J = 0 Then
         MsgBox "Form " & Me.cmbForm.text & " not supported for export yet"
         Exit Sub
@@ -419,6 +421,8 @@ Private Sub cmdCSV_Click()
     Select Case Me.cmbForm.text
         Case "1099-NEC": sOut = sOut & NECHeader()
         Case "1099-MISC": sOut = sOut & MiscHeader()
+        Case "1099-INT": sOut = sOut & IntHeader()
+        Case "1099-DIV": sOut = sOut & DivHeader()
     End Select
     Print #TextChannel, sOut
     
@@ -434,6 +438,8 @@ Private Sub cmdCSV_Click()
         Select Case Me.cmbForm.text
             Case "1099-NEC": sOut = sOut & NEC_Columns(Payee99.PayeeID)
             Case "1099-MISC": sOut = sOut & MiscColumns(Payee99.PayeeID)
+            Case "1099-INT": sOut = sOut & Int_Columns(Payee99.PayeeID)
+            Case "1099-DIV": sOut = sOut & Div_Columns(Payee99.PayeeID)
         End Select
         Print #TextChannel, sOut
         If Payee99.GetNext = False Then Exit Do
@@ -531,30 +537,30 @@ End Function
 Private Function NEC_Columns(ByVal PayeeID As Integer) As String
     Dim aa As Integer
     Dim ary(17) As String
-    ary(1) = ""       ' 2nd TIN notice
+    ary(1) = "N"       ' 2nd TIN notice
     
     Dim box1 As String
     Dim box2 As String
-    box1 = GetDetailData(PayeeID, "1")
-    box2 = GetDetailData(PayeeID, "2")
+    box1 = GetDetailData99(PayeeID, "1")
+    box2 = GetDetailData99(PayeeID, "2")
     If box2 = "" Then
-        ary(2) = GetDetailData(PayeeID, "1")
+        ary(2) = GetDetailData99(PayeeID, "1")
         ary(3) = "N"
     Else
         ary(2) = ""
         ary(3) = "Y"
     End If
     
-    ary(4) = AmtString(GetDetailData(PayeeID, "4"))
-    ary(4) = GetDetailData(PayeeID, "4")
+    ary(4) = AmtString(GetDetailData99(PayeeID, "4"))
+    ary(4) = GetDetailData99(PayeeID, "4")
     
     ary(5) = ""   ' combined federal/state filing
     
-    If CDec(GetDetailData(PayeeID, "7a")) <> 0 Then
+    If CDec(GetDetailData99(PayeeID, "7a")) <> 0 Then
         ary(6) = ""   ' state 1
-        ary(7) = GetDetailData(PayeeID, "5a")   ' state WH
-        ary(8) = GetDetailData(PayeeID, "6a")   ' state #
-        ary(9) = GetDetailData(PayeeID, "7a")   ' state income
+        ary(7) = GetDetailData99(PayeeID, "5a")   ' state WH
+        ary(8) = GetDetailData99(PayeeID, "6a")   ' state #
+        ary(9) = GetDetailData99(PayeeID, "7a")   ' state income
         ary(10) = ""                          ' local inc tax
         ary(11) = ""                          ' special data entries
     Else
@@ -566,11 +572,11 @@ Private Function NEC_Columns(ByVal PayeeID As Integer) As String
         ary(11) = ""                          ' special data entries
     End If
     
-    If CDec(GetDetailData(PayeeID, "7b")) <> 0 Then
+    If CDec(GetDetailData99(PayeeID, "7b")) <> 0 Then
         ary(12) = ""   ' state 2
-        ary(13) = GetDetailData(PayeeID, "5b")   ' state WH
-        ary(14) = GetDetailData(PayeeID, "6b")   ' state #
-        ary(15) = GetDetailData(PayeeID, "7b")   ' state income
+        ary(13) = GetDetailData99(PayeeID, "5b")   ' state WH
+        ary(14) = GetDetailData99(PayeeID, "6b")   ' state #
+        ary(15) = GetDetailData99(PayeeID, "7b")   ' state income
         ary(16) = ""                          ' local inc tax
         ary(17) = ""                          ' special data entries
     Else
@@ -589,21 +595,21 @@ Private Function MiscColumns(ByVal PayeeID As Integer) As String
     Dim ary(29) As String
     
     ary(1) = ""     ' FACTA filing req
-    ary(2) = ""     ' 2nd TIN notice
+    ary(2) = "N"     ' 2nd TIN notice
     
-    ary(3) = GetDetailData(PayeeID, 1)
-    ary(4) = GetDetailData(PayeeID, 2)
-    ary(5) = GetDetailData(PayeeID, 3)
-    ary(6) = GetDetailData(PayeeID, 4)
-    ary(7) = GetDetailData(PayeeID, 5)
-    ary(8) = GetDetailData(PayeeID, 6)
-    ary(9) = GetDetailData(PayeeID, 7)
-    ary(10) = GetDetailData(PayeeID, 8)
-    ary(11) = GetDetailData(PayeeID, 9)
-    ary(12) = GetDetailData(PayeeID, 10)
+    ary(3) = GetDetailData99(PayeeID, 1)
+    ary(4) = GetDetailData99(PayeeID, 2)
+    ary(5) = GetDetailData99(PayeeID, 3)
+    ary(6) = GetDetailData99(PayeeID, 4)
+    ary(7) = GetDetailData99(PayeeID, 5)
+    ary(8) = GetDetailData99(PayeeID, 6)
+    ary(9) = GetDetailData99(PayeeID, 7)
+    ary(10) = GetDetailData99(PayeeID, 8)
+    ary(11) = GetDetailData99(PayeeID, 9)
+    ary(12) = GetDetailData99(PayeeID, 10)
     ary(13) = ""    ' fish ...
-    ary(14) = GetDetailData(PayeeID, 12)
-    ary(15) = GetDetailData(PayeeID, 14)
+    ary(14) = GetDetailData99(PayeeID, 12)
+    ary(15) = GetDetailData99(PayeeID, 14)
     ary(16) = ""    ' nq def comp
     ary(17) = ""    ' combined fed/state filing
     
@@ -621,11 +627,11 @@ Private Function MiscColumns(ByVal PayeeID As Integer) As String
     ary(28) = ""                          ' local inc tax
     ary(29) = ""                          ' special data entries
     
-'    If CDec(GetDetailData(PayeeID, "18a")) <> 0 Then
+'    If CDec(GetDetailData99(PayeeID, "18a")) <> 0 Then
 '        ary(18) = ""   ' state 1
-'        ary(19) = GetDetailData(PayeeID, "16a")   ' state WH
-'        ary(20) = GetDetailData(PayeeID, "17a")   ' state #
-'        ary(21) = GetDetailData(PayeeID, "18a")   ' state income
+'        ary(19) = GetDetailData99(PayeeID, "16a")   ' state WH
+'        ary(20) = GetDetailData99(PayeeID, "17a")   ' state #
+'        ary(21) = GetDetailData99(PayeeID, "18a")   ' state income
 '        ary(22) = ""                          ' local inc tax
 '        ary(23) = ""                          ' special data entries
 '    Else
@@ -637,11 +643,11 @@ Private Function MiscColumns(ByVal PayeeID As Integer) As String
 '        ary(23) = ""                          ' special data entries
 '    End If
 '
-'    If CDec(GetDetailData(PayeeID, "18b")) <> 0 Then
+'    If CDec(GetDetailData99(PayeeID, "18b")) <> 0 Then
 '        ary(24) = ""   ' state 1
-'        ary(25) = GetDetailData(PayeeID, "16b")   ' state WH
-'        ary(26) = GetDetailData(PayeeID, "17b")   ' state #
-'        ary(27) = GetDetailData(PayeeID, "18b")   ' state income
+'        ary(25) = GetDetailData99(PayeeID, "16b")   ' state WH
+'        ary(26) = GetDetailData99(PayeeID, "17b")   ' state #
+'        ary(27) = GetDetailData99(PayeeID, "18b")   ' state income
 '        ary(28) = ""                          ' local inc tax
 '        ary(29) = ""                          ' special data entries
 '    Else
@@ -654,6 +660,120 @@ Private Function MiscColumns(ByVal PayeeID As Integer) As String
 '    End If
     
     MiscColumns = Ary2String(ary, True)
+End Function
+Private Function Int_Columns(ByVal PayeeID As Integer) As String
+    Dim aa As Integer
+    Dim ary(30) As String
+    
+    ary(1) = ""         ' FACTA
+    ary(2) = "N"       ' 2nd TIN notice
+    ary(3) = GetDetailData99(PayeeID, "RTN")
+    For I = 1 To 14
+        If I <> 14 Then
+            ary(I + 3) = GetDetailData99(PayeeID, I)
+        Else
+            ary(I + 3) = ""
+        End If
+    Next I
+    ary(18) = ""   ' combined federal/state filing
+    
+    If CDec(GetDetailData99(PayeeID, "17a")) <> 0 Then
+        ary(19) = GetDetailData99(PayeeID, "15a")   ' state 1
+        ary(20) = GetDetailData99(PayeeID, "17a")   ' state WH
+        ary(21) = GetDetailData99(PayeeID, "16a")   ' state #
+        ary(22) = "" ' state income not on the form???
+        ary(23) = "" ' local inc tax not on the form???
+        ary(24) = "" ' special data entries
+    Else
+        ary(19) = ""   ' state 1
+        ary(20) = ""   ' state WH
+        ary(21) = ""   ' state #
+        ary(22) = "" ' state income not on the form???
+        ary(23) = "" ' local inc tax not on the form???
+        ary(24) = "" ' special data entries
+    End If
+    
+    If CDec(GetDetailData99(PayeeID, "17b")) <> 0 Then
+        ary(25) = GetDetailData99(PayeeID, "15b")   ' state 1
+        ary(26) = GetDetailData99(PayeeID, "17b")   ' state WH
+        ary(27) = GetDetailData99(PayeeID, "16b")   ' state #
+        ary(28) = "" ' state income not on the form???
+        ary(29) = "" ' local inc tax not on the form???
+        ary(30) = "" ' special data entries
+    Else
+        ary(25) = ""   ' state 1
+        ary(26) = ""   ' state WH
+        ary(27) = ""   ' state #
+        ary(28) = "" ' state income not on the form???
+        ary(29) = "" ' local inc tax not on the form???
+        ary(30) = "" ' special data entries
+    End If
+    Int_Columns = Ary2String(ary, True)
+End Function
+
+Private Function Div_Columns(ByVal PayeeID As Integer) As String
+    Dim aa As Integer
+    Dim ary(33) As String
+    
+    ary(1) = ""         ' FACTA
+    ary(2) = "N"       ' 2nd TIN notice
+    ary(3) = GetDetailData99(PayeeID, "1a")
+    
+    ary(4) = GetDetailData99(PayeeID, "1b")
+    ary(5) = GetDetailData99(PayeeID, "2a")
+    ary(6) = GetDetailData99(PayeeID, "2b")
+    ary(7) = GetDetailData99(PayeeID, "2c")
+    ary(8) = GetDetailData99(PayeeID, "2d")
+    ary(9) = GetDetailData99(PayeeID, "2e")
+    ary(10) = GetDetailData99(PayeeID, "2f")
+    
+    ary(11) = GetDetailData99(PayeeID, "3")
+    ary(12) = GetDetailData99(PayeeID, "4")
+    ary(13) = GetDetailData99(PayeeID, "5")
+    ary(14) = GetDetailData99(PayeeID, "6")
+    ary(15) = GetDetailData99(PayeeID, "7")
+    ary(16) = GetDetailData99(PayeeID, "8")
+    ary(17) = GetDetailData99(PayeeID, "9")
+    ary(18) = GetDetailData99(PayeeID, "10")
+    ary(19) = GetDetailData99(PayeeID, "12")
+    ary(20) = GetDetailData99(PayeeID, "13")
+    
+    ary(21) = ""   ' combined federal/state filing
+    
+    If CDec(GetDetailData99(PayeeID, "14a")) <> 0 Then
+        ary(22) = GetDetailData99(PayeeID, "12a")   ' state 1
+        
+        ary(23) = GetDetailData99(PayeeID, "14a")   ' state WH
+        ary(24) = GetDetailData99(PayeeID, "13a")   ' state #
+        ary(25) = "" ' state income not on the form???
+        ary(26) = "" ' local inc tax not on the form???
+        ary(27) = "" ' special data entries
+    Else
+        ary(22) = ""   ' state 1
+        ary(23) = ""   ' state WH
+        ary(24) = ""   ' state #
+        ary(25) = "" ' state income not on the form???
+        ary(26) = "" ' local inc tax not on the form???
+        ary(27) = "" ' special data entries
+    End If
+    
+    If CDec(GetDetailData99(PayeeID, "14b")) <> 0 Then
+        ary(28) = GetDetailData99(PayeeID, "12b")   ' state 1
+        ary(29) = GetDetailData99(PayeeID, "14b")   ' state WH
+        ary(30) = GetDetailData99(PayeeID, "13b")   ' state #
+        ary(31) = "" ' state income not on the form???
+        ary(32) = "" ' local inc tax not on the form???
+        ary(33) = "" ' special data entries
+    Else
+        ary(28) = ""   ' state 1
+        ary(29) = ""   ' state WH
+        ary(30) = ""   ' state #
+        ary(31) = "" ' state income not on the form???
+        ary(32) = "" ' local inc tax not on the form???
+        ary(33) = "" ' special data entries
+    End If
+    
+    Div_Columns = Ary2String(ary, True)
 End Function
 
 Private Function Ary2String(ByVal ary As Variant, ByVal LastFlag As Boolean) As String
@@ -671,38 +791,6 @@ Private Function AmtString(ByVal strAmt) As String
     Else
         AmtString = "0.00"
     End If
-End Function
-
-Private Function GetDetailData(ByVal PayeeID As Integer, ByVal BoxName As String) As String
-    
-    SQLString = "select *" & _
-                " from Field99" & _
-                " where TaxYear = " & Me.cmbTaxYear.text & _
-                " and FormType = '" & GetFormType & "'" & _
-                " and BoxName = '" & BoxName & "'"
-    If Field99.GetBySQL(SQLString) = False Then
-        MsgBox "Field99 Not Found!! " & Me.cmbTaxYear.text & vbCrLf & Me.cmbForm.text & vbCrLf & BoxName
-        GoBack
-    End If
-    
-    SQLString = " SELECT * FROM Detail99 WHERE PayeeID = " & PayeeID & _
-                " AND FormType = '" & Replace(Me.cmbForm.text, "1099-", "") & "' " & _
-                " AND TaxYear = " & Me.cmbTaxYear.text & _
-                " AND BoxName = '" & BoxName & "'"
-    If Detail99.GetBySQL(SQLString) = False Then
-        If Field99.FieldFormat = Equate.fmtAmount Then
-            GetDetailData = FormatAmt("")
-        Else
-            GetDetailData = ""
-        End If
-    Else
-        If Field99.FieldFormat = Equate.fmtAmount Then
-            GetDetailData = FormatAmt(Detail99.FieldValue)
-        Else
-            GetDetailData = Detail99.FieldValue
-        End If
-    End If
-    
 End Function
 
 Private Function NECHeader() As String
@@ -761,6 +849,80 @@ Private Function MiscHeader() As String
     ary(28) = "State 2 - Local income tax withheld"
     ary(29) = "State 2 - Special Data Entries"
     MiscHeader = Ary2String(ary, True)
+End Function
+
+Private Function IntHeader() As String
+    Dim aa As Integer
+    Dim ary(30) As String
+    ary(1) = "FATCA Filing Requirements"
+    ary(2) = "2nd TIN Notice"
+    ary(3) = "Payer's RTN"
+    ary(4) = "Box 1 - Interest Income"
+    ary(5) = "Box 2 - Early withdrawal penalty"
+    ary(6) = "Box 3 - Interest on U.S. Savings Bonds and Treasury obligations"
+    ary(7) = "Box 4 - Federal income tax withheld"
+    ary(8) = "Box 5 - Investment expenses"
+    ary(9) = "Box 6 - Foreign tax paid"
+    ary(10) = "Box 7 - Foreign country or U.S. possession"
+    ary(11) = "Box 8 - Tax-exempt interest"
+    ary(12) = "Box 9 - Specified private activity bond interest"
+    ary(13) = "Box 10 - Market discount"
+    ary(14) = "Box 11 - Bond premium"
+    ary(15) = "Box 12 - Bond premium on Treasury obligations"
+    ary(16) = "Box 13 - Bond premium on tax-exempt bond"
+    ary(17) = "Box 14 - Tax-exempt and tax credit bond CUSIP no."
+    ary(18) = "Combined Federal/State Filing"
+    ary(19) = "State 1"
+    ary(20) = "State 1 - State Tax Withheld"
+    ary(21) = "State 1 - State/Payer state number"
+    ary(22) = "State 1 - State income"
+    ary(23) = "State 1 - Local income tax withheld"
+    ary(24) = "State 1 - Special Data Entries"
+    ary(25) = "State 2"
+    ary(26) = "State 2 - State Tax Withheld"
+    ary(27) = "State 2 - State/Payer state number"
+    ary(28) = "State 2 - State income"
+    ary(29) = "State 2 - Local income tax withheld"
+    ary(30) = "State 2 - Special Data Entries"
+    IntHeader = Ary2String(ary, True)
+End Function
+Private Function DivHeader() As String
+    Dim aa As Integer
+    Dim ary(33) As String
+    ary(1) = "FATCA Filing Requirements"
+    ary(2) = "2nd TIN Notice"
+    ary(3) = "Box 1a - Total ordinary dividends"
+    ary(4) = "Box 1b - Qualified dividends"
+    ary(5) = "Box 2a - Total capital gain distribution"
+    ary(6) = "Box 2b - Unrecap. Sec. 1250 gain"
+    ary(7) = "Box 2c - Section 1202 gain"
+    ary(8) = "Box 2d - Collectibles (28%) gain"
+    ary(9) = "Box 2e - Section 897 ordinary dividends"
+    ary(10) = "Box 2f - Section 897 capital gain"
+    ary(11) = "Box 3 - Nondividend distributions"
+    ary(12) = "Box 4 - Federal income tax withheld"
+    ary(13) = "Box 5 - Section 199A dividends"
+    ary(14) = "Box 6 - Investment expenses"
+    ary(15) = "Box 7 - Foreign tax paid"
+    ary(16) = "Box 8 - Foreign country or U.S. possession"
+    ary(17) = "Box 9 - Cash liquidation distributions"
+    ary(18) = "Box 10 - Noncash liquidation distributions"
+    ary(19) = "Box 12 - Exempt-interest dividends"
+    ary(10) = "Box 13 - Specified private activity bond interest dividends"
+    ary(21) = "Combined Federal/State Filing"
+    ary(22) = "State 1"
+    ary(23) = "State 1 - State Tax Withheld"
+    ary(24) = "State 1 - State/Payer state number"
+    ary(25) = "State 1 - State income"
+    ary(26) = "State 1 - Local income tax withheld"
+    ary(27) = "State 1 - Special Data Entries"
+    ary(28) = "State 2"
+    ary(29) = "State 2 - State Tax Withheld"
+    ary(30) = "State 2 - State/Payer state number"
+    ary(31) = "State 2 - State income"
+    ary(32) = "State 2 - Local income tax withheld"
+    ary(33) = "State 2 - Special Data Entries"
+    DivHeader = Ary2String(ary, True)
 End Function
 
 Private Function CommonHeader() As String
@@ -1166,4 +1328,40 @@ Dim ii As Integer
     If ii = 4 Then GetFormType = "DIV"
 
 End Function
+
+Private Function GetDetailData99(ByVal PayeeID As Integer, ByVal BoxName As String) As String
+    
+    SQLString = "select *" & _
+                " from Field99" & _
+                " where TaxYear = " & Me.cmbTaxYear.text & _
+                " and FormType = '" & GetFormType & "'" & _
+                " and BoxName = '" & BoxName & "'"
+    If Field99.GetBySQL(SQLString) = False Then
+        MsgBox "Field99 Not Found!! " & Me.cmbTaxYear.text & vbCrLf & Me.cmbForm.text & vbCrLf & BoxName
+        GoBack
+    End If
+    
+    SQLString = " SELECT * FROM Detail99 WHERE PayeeID = " & PayeeID & _
+                " AND FormType = '" & Replace(Me.cmbForm.text, "1099-", "") & "' " & _
+                " AND TaxYear = " & Me.cmbTaxYear.text & _
+                " AND BoxName = '" & BoxName & "'"
+    If Detail99.GetBySQL(SQLString) = False Then
+        If Field99.FieldFormat = Equate.fmtAmount Then
+            GetDetailData99 = FormatAmt("")
+        Else
+            GetDetailData99 = ""
+        End If
+    Else
+        If Field99.FieldFormat = Equate.fmtAmount Then
+            GetDetailData99 = Detail99.FieldValue
+            GetDetailData99 = Replace(GetDetailData99, ",", "")
+            GetDetailData99 = Replace(GetDetailData99, "$", "")
+        Else
+            GetDetailData99 = Detail99.FieldValue
+        End If
+        
+    End If
+    
+End Function
+
 

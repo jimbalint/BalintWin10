@@ -4033,8 +4033,8 @@ Private Sub SaveData()
                 PRW2City.StateID = 36
             End If
             
-            PRW2City.CityWage = rsC!CityWage
-            PRW2City.CityTax = rsC!CityTax
+            PRW2City.CityWage = nNull(rsC!CityWage)
+            PRW2City.CityTax = nNull(rsC!CityTax)
             PRW2City.Save (Equate.RecPut)
             
             rsC.MoveNext
