@@ -454,7 +454,7 @@ Private Function SetCommonColumns()
     Dim ary(20) As String
     ary(1) = Me.cmbForm.text
     ary(2) = Me.cmbTaxYear.text
-    ary(3) = "FedID"      ' Payer TIN Type
+    ary(3) = "EIN"      ' Payer TIN Type
     ary(4) = PrepCSV(GLCompany.FederalID)
     ary(5) = "B"         ' PayerNameType
     ary(6) = PrepCSV(GLCompany.Name)
@@ -603,7 +603,10 @@ Private Function MiscColumns(ByVal PayeeID As Integer) As String
     ary(6) = GetDetailData99(PayeeID, 4)
     ary(7) = GetDetailData99(PayeeID, 5)
     ary(8) = GetDetailData99(PayeeID, 6)
+    
     ary(9) = GetDetailData99(PayeeID, 7)
+    ary(9) = "N"    ' Box 7 Direct Sales
+    
     ary(10) = GetDetailData99(PayeeID, 8)
     ary(11) = GetDetailData99(PayeeID, 9)
     ary(12) = GetDetailData99(PayeeID, 10)
