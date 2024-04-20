@@ -18,6 +18,14 @@ Begin VB.Form frm941_Select
    ScaleHeight     =   9555
    ScaleWidth      =   8415
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdMar24 
+      Caption         =   "March 2024"
+      Height          =   615
+      Left            =   2280
+      TabIndex        =   8
+      Top             =   5400
+      Width           =   3735
+   End
    Begin VB.CommandButton cmdApr23 
       Caption         =   "April 2023"
       Height          =   615
@@ -62,7 +70,7 @@ Begin VB.Form frm941_Select
       Width           =   3735
    End
    Begin VB.Label Label2 
-      Caption         =   "04/22/2023"
+      Caption         =   "04/18/2024"
       Height          =   495
       Left            =   6720
       TabIndex        =   5
@@ -99,6 +107,7 @@ Option Explicit
 Public Form941 As Byte
 
 
+
 Private Sub Form_Load()
     Me.KeyPreview = True
 End Sub
@@ -132,6 +141,11 @@ End Sub
 
 Private Sub cmdApr23_Click()
     Form941 = 12
+    Me.Hide
+End Sub
+
+Private Sub cmdMar24_Click()
+    Form941 = 13
     Me.Hide
 End Sub
 

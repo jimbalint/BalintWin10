@@ -1085,9 +1085,9 @@ Dim YTDFlag As Boolean
         ' title "hard coded" for right side - use employer item id for right side
         If IsNumeric(Title) Then
             If Not PRItem.GetByID(CLng(Title)) Then
-                rsYTD!Title = "Other " & Title
+                rsYTD!Title = Left("Other " & Title, 30)
             Else
-                rsYTD!Title = PRItem.Title
+                rsYTD!Title = Left(PRItem.Title, 30)
             End If
         Else
             rsYTD!Title = Mid(Title, 1, 30)
