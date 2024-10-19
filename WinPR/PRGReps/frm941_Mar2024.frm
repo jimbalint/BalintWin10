@@ -175,56 +175,56 @@ Begin VB.Form frm941_2024_March
       TabCaption(0)   =   "Form 941"
       TabPicture(0)   =   "frm941_Mar2024.frx":0000
       Tab(0).ControlEnabled=   0   'False
-      Tab(0).Control(0)=   "Label33"
-      Tab(0).Control(1)=   "Label38"
-      Tab(0).Control(2)=   "Label5"
-      Tab(0).Control(3)=   "Line15Check2"
-      Tab(0).Control(4)=   "Line15Check1"
-      Tab(0).Control(5)=   "Timer1"
-      Tab(0).Control(6)=   "fg"
-      Tab(0).Control(7)=   "chkManualFractions"
-      Tab(0).Control(8)=   "cmdPmt"
-      Tab(0).Control(9)=   "chkNotSubjTo"
+      Tab(0).Control(0)=   "chkNotSubjTo"
+      Tab(0).Control(1)=   "cmdPmt"
+      Tab(0).Control(2)=   "chkManualFractions"
+      Tab(0).Control(3)=   "fg"
+      Tab(0).Control(4)=   "Timer1"
+      Tab(0).Control(5)=   "Line15Check1"
+      Tab(0).Control(6)=   "Line15Check2"
+      Tab(0).Control(7)=   "Label5"
+      Tab(0).Control(8)=   "Label38"
+      Tab(0).Control(9)=   "Label33"
       Tab(0).ControlCount=   10
       TabCaption(1)   =   "Form 941   Page 2"
       TabPicture(1)   =   "frm941_Mar2024.frx":001C
       Tab(1).ControlEnabled=   0   'False
-      Tab(1).Control(0)=   "Label48"
-      Tab(1).Control(1)=   "Label6"
-      Tab(1).Control(2)=   "Label17"
-      Tab(1).Control(3)=   "Label43"
-      Tab(1).Control(4)=   "Label44"
-      Tab(1).Control(5)=   "Label39"
-      Tab(1).Control(6)=   "Label40"
-      Tab(1).Control(7)=   "Label45"
-      Tab(1).Control(8)=   "Label46"
-      Tab(1).Control(9)=   "Label47"
-      Tab(1).Control(10)=   "Label49"
-      Tab(1).Control(11)=   "Label51"
-      Tab(1).Control(12)=   "Label52"
-      Tab(1).Control(13)=   "Label53"
-      Tab(1).Control(14)=   "Label54"
-      Tab(1).Control(15)=   "Label1"
-      Tab(1).Control(16)=   "Line16Mo1"
-      Tab(1).Control(17)=   "Line16Total"
-      Tab(1).Control(18)=   "Line16Mo3"
-      Tab(1).Control(19)=   "Line16Mo2"
-      Tab(1).Control(20)=   "txtEIN"
-      Tab(1).Control(21)=   "Line16Check1"
-      Tab(1).Control(22)=   "Line16Check2"
-      Tab(1).Control(23)=   "Line16Check3"
-      Tab(1).Control(24)=   "Part4CheckNo"
-      Tab(1).Control(25)=   "Line17Check"
-      Tab(1).Control(26)=   "Line17Date"
-      Tab(1).Control(27)=   "Line18"
-      Tab(1).Control(28)=   "txtName"
-      Tab(1).Control(29)=   "Line10Show"
-      Tab(1).Control(30)=   "Line16Diff"
-      Tab(1).Control(31)=   "Part4CheckYes"
-      Tab(1).Control(32)=   "Part4Name"
-      Tab(1).Control(33)=   "Part4Pin"
-      Tab(1).Control(34)=   "Part4Phone"
-      Tab(1).Control(35)=   "txtTradeName"
+      Tab(1).Control(0)=   "txtTradeName"
+      Tab(1).Control(1)=   "Part4Phone"
+      Tab(1).Control(2)=   "Part4Pin"
+      Tab(1).Control(3)=   "Part4Name"
+      Tab(1).Control(4)=   "Part4CheckYes"
+      Tab(1).Control(5)=   "Line16Diff"
+      Tab(1).Control(6)=   "Line10Show"
+      Tab(1).Control(7)=   "txtName"
+      Tab(1).Control(8)=   "Line18"
+      Tab(1).Control(9)=   "Line17Date"
+      Tab(1).Control(10)=   "Line17Check"
+      Tab(1).Control(11)=   "Part4CheckNo"
+      Tab(1).Control(12)=   "Line16Check3"
+      Tab(1).Control(13)=   "Line16Check2"
+      Tab(1).Control(14)=   "Line16Check1"
+      Tab(1).Control(15)=   "txtEIN"
+      Tab(1).Control(16)=   "Line16Mo2"
+      Tab(1).Control(17)=   "Line16Mo3"
+      Tab(1).Control(18)=   "Line16Total"
+      Tab(1).Control(19)=   "Line16Mo1"
+      Tab(1).Control(20)=   "Label1"
+      Tab(1).Control(21)=   "Label54"
+      Tab(1).Control(22)=   "Label53"
+      Tab(1).Control(23)=   "Label52"
+      Tab(1).Control(24)=   "Label51"
+      Tab(1).Control(25)=   "Label49"
+      Tab(1).Control(26)=   "Label47"
+      Tab(1).Control(27)=   "Label46"
+      Tab(1).Control(28)=   "Label45"
+      Tab(1).Control(29)=   "Label40"
+      Tab(1).Control(30)=   "Label39"
+      Tab(1).Control(31)=   "Label44"
+      Tab(1).Control(32)=   "Label43"
+      Tab(1).Control(33)=   "Label17"
+      Tab(1).Control(34)=   "Label6"
+      Tab(1).Control(35)=   "Label48"
       Tab(1).ControlCount=   36
       TabCaption(2)   =   "Form 941   Pg 2  (Cont'd)"
       TabPicture(2)   =   "frm941_Mar2024.frx":0038
@@ -265,24 +265,24 @@ Begin VB.Form frm941_2024_March
       TabCaption(3)   =   "Schedule B (Form 941)"
       TabPicture(3)   =   "frm941_Mar2024.frx":0054
       Tab(3).ControlEnabled=   0   'False
-      Tab(3).Control(0)=   "Label58"
-      Tab(3).Control(1)=   "Label59"
-      Tab(3).Control(2)=   "Label60"
-      Tab(3).Control(3)=   "Label61"
-      Tab(3).Control(4)=   "lblBMonth1"
-      Tab(3).Control(5)=   "lblBMonth2"
-      Tab(3).Control(6)=   "lblBMonth3"
-      Tab(3).Control(7)=   "BDifference"
-      Tab(3).Control(8)=   "BLine10Show"
-      Tab(3).Control(9)=   "tdbNumVertNudge"
-      Tab(3).Control(10)=   "fgMo3"
-      Tab(3).Control(11)=   "fgMo2"
-      Tab(3).Control(12)=   "BTotalTax"
-      Tab(3).Control(13)=   "BMo3Tax"
-      Tab(3).Control(14)=   "BMo2Tax"
-      Tab(3).Control(15)=   "BMo1Tax"
-      Tab(3).Control(16)=   "fgMo1"
-      Tab(3).Control(17)=   "tdbNumHorzNudge"
+      Tab(3).Control(0)=   "tdbNumHorzNudge"
+      Tab(3).Control(1)=   "fgMo1"
+      Tab(3).Control(2)=   "BMo1Tax"
+      Tab(3).Control(3)=   "BMo2Tax"
+      Tab(3).Control(4)=   "BMo3Tax"
+      Tab(3).Control(5)=   "BTotalTax"
+      Tab(3).Control(6)=   "fgMo2"
+      Tab(3).Control(7)=   "fgMo3"
+      Tab(3).Control(8)=   "tdbNumVertNudge"
+      Tab(3).Control(9)=   "BLine10Show"
+      Tab(3).Control(10)=   "BDifference"
+      Tab(3).Control(11)=   "lblBMonth3"
+      Tab(3).Control(12)=   "lblBMonth2"
+      Tab(3).Control(13)=   "lblBMonth1"
+      Tab(3).Control(14)=   "Label61"
+      Tab(3).Control(15)=   "Label60"
+      Tab(3).Control(16)=   "Label59"
+      Tab(3).Control(17)=   "Label58"
       Tab(3).ControlCount=   18
       Begin VB.CheckBox chkNotSubjTo 
          Caption         =   "4) Wages, Tips not subj to ..."
@@ -3136,7 +3136,7 @@ Private Sub Form_Load()
     frmProgress.lblMsg1 = PRCompany.Name
     frmProgress.lblMsg2 = "Gathering Employee Info ..."
     frmProgress.Refresh
-    
+
     rsTips.CursorLocation = adUseClient
     rsTips.Fields.Append "EmployeeID", adDouble
     rsTips.Fields.Append "ItemID", adDouble
@@ -3239,7 +3239,7 @@ Private Sub Form_Load()
         Case Else
             cmbQtr.ListIndex = 2    ' Q3
     End Select
-    
+
     ' *** stuff 1st qtr
     ' Me.cmbQtr.ListIndex = 0                                     ''''''''''''  TAKE OUT  '''''''''''''
     
@@ -4349,7 +4349,7 @@ Dim FmtString, TelFmtString, ReportTitle As String
 Dim ff, FedID As String
 Dim Xincr, XXpos As Long
  
-bTest = False
+    bTest = LCase(User.Logon) = "jim"
  
     CurrYear = Year(Now())
     Ln = 0
@@ -4403,13 +4403,13 @@ bTest = False
         Dim qNum As Integer
         qNum = .cmbQtr
         ' qNum = 2
-        VertPosn = 1570 + (qNum - 1) * 370
-        PosPrint 8263, VertPosn, "X"
+        VertPosn = 1650 + (qNum - 1) * 350
+        PosPrint 8320, VertPosn, "X"
         
 If bTest Then
     For I = 1 To 4
-        VertPosn = 1580 + (I - 1) * 350
-        PosPrint 8263, VertPosn, "B"
+        VertPosn = 1650 + (I - 1) * 350
+        PosPrint 8320, VertPosn, "B"
     Next I
 End If
         
@@ -4478,7 +4478,7 @@ End If
         VertPosn = VertPosn + VertSpace + 90
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("13 )", 3)), 15)
         
-        VertPosn = VertPosn + VertSpace
+        VertPosn = VertPosn + VertSpace + 20
         PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(Get941Val("14 )", 3)), 15)
         
         VertPosn = VertPosn + VertSpace
@@ -4519,15 +4519,15 @@ End If
 
         ' ***************************************
 If bTest Then
-    PosPrint 2010, 1980, "B"
-    PosPrint 2010, 2900, "B"
-    PosPrint 2100, 5140, "B"
+    PosPrint 2000, 1980, "B"
+    PosPrint 2000, 2900, "B"
+    PosPrint 2000, 5140, "B"
 End If
         ' ***************************************
 
-        PosPrint 2010, 2000, AlphaCheckLine16a
+        PosPrint 2000, 2000, AlphaCheckLine16a
 
-        PosPrint 2010, 2910, AlphaCheckLine16b
+        PosPrint 2000, 2910, AlphaCheckLine16b
 
         If .Line16Check2 = 1 Or bTest Then
             HorzPosn = 5090
@@ -4542,7 +4542,7 @@ End If
             PosPrint HorzPosn, VertPosn, PadRight(DollarAndCents(IIf(bTest, 999.99, .Line16Total)), 15)
         End If
 
-        PosPrint 2100, 5120, AlphaCheckLine16c
+        PosPrint 2000, 5120, AlphaCheckLine16c
 
         ' Part 3
         VertPosn = 6010
@@ -4645,10 +4645,10 @@ Dim HorzPosn1, HorzPosn2, Xincr As Long
     PRGlobal.Save (Equate.RecPut)
 
     ' part 5 - name and title - split the string on the slash
-    PosPrint 7900, 9905, SlashSplit(PRGlobal.Var1, 1)
-    PosPrint 7900, 10450, SlashSplit(PRGlobal.Var1, 2)
-    PosPrint 2100, 11000, DateSplit(frm.Part5Date)
-    PosPrint 9000, 11000, frm.Part5Phone
+    PosPrint 7900, 9925, SlashSplit(PRGlobal.Var1, 1)
+    PosPrint 7900, 10470, SlashSplit(PRGlobal.Var1, 2)
+    PosPrint 2070, 11020, DateSplit(frm.Part5Date)
+    PosPrint 9000, 11020, frm.Part5Phone
         
     'Paid Preparer - Per User
     If frm.PaidPrepID <> 0 Then
@@ -4712,19 +4712,26 @@ Dim FmtString As String
 Dim HP As Integer
 Dim yy1, yy2, FedID, ff As String
 Dim HorzPosn, Xincr, XXpos As Integer
+Dim VPos As Integer
+Dim VSpace As Integer
 
     With frm
 
-        HP = 8220
+        HP = 8270
         CurrYear = Year(Now())
+        VPos = 1925
+        VSpace = 255
         If .cmbQtr = 1 Then
-            PosPrint HP, 2030, "X"
+            PosPrint HP, VPos, "X"
         ElseIf .cmbQtr = 2 Then
-            PosPrint HP, 2280, "X"
+            VPos = VPos + VSpace
+            PosPrint HP, VPos, "X"
         ElseIf .cmbQtr = 3 Then
-            PosPrint HP, 2560, "X"
+            VPos = VPos + VSpace * 2
+            PosPrint HP, VPos, "X"
         ElseIf .cmbQtr = 4 Then
-            PosPrint HP, 2790, "X"
+            VPos = VPos + VSpace * 3
+            PosPrint HP, VPos, "X"
         End If
     
         ' PosPrint 3380, 900, PRCompany.FederalID
