@@ -360,6 +360,19 @@ Dim Ct1, Ct2, Recs As Long
     
     If GLSys = True Then
         
+        ' --- 2025 ---------------------------------------------------------------
+        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
+                    "AND Year = 2025"
+        If PRGlobal.GetBySQL(SQLString) = False Then
+            PRGlobal.Clear
+            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
+            PRGlobal.Year = 2025
+            PRGlobal.Description = "SS MAX"
+            PRGlobal.Amount = 176100#
+            PRGlobal.Save (Equate.RecAdd)
+            MsgBox "SS Max for 2025 updated to: $176,100", vbInformation
+        End If
+        
         ' --- 2024 ---------------------------------------------------------------
         SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
                     "AND Year = 2024"
@@ -384,19 +397,6 @@ Dim Ct1, Ct2, Recs As Long
             PRGlobal.Amount = 160200#
             PRGlobal.Save (Equate.RecAdd)
             MsgBox "SS Max for 2023 updated to: $160,200", vbInformation
-        End If
-        
-        ' --- 2022 ---------------------------------------------------------------
-        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
-                    "AND Year = 2022"
-        If PRGlobal.GetBySQL(SQLString) = False Then
-            PRGlobal.Clear
-            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
-            PRGlobal.Year = 2022
-            PRGlobal.Description = "SS MAX"
-            PRGlobal.Amount = 147000#
-            PRGlobal.Save (Equate.RecAdd)
-            MsgBox "SS Max for 2022 updated to: $147,000", vbInformation
         End If
         
         ' --- 2023/11 and 2024 ***
@@ -430,19 +430,6 @@ Dim Ct1, Ct2, Recs As Long
             PRGlobal.Amount = 1.001
             PRGlobal.Save (Equate.RecAdd)
             MsgBox "OH Multiplier for Sept 2021 updated to: 1.001", vbInformation
-        End If
-        
-        ' --- 2021 ---------------------------------------------------------------
-        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
-                    "AND Year = 2021"
-        If PRGlobal.GetBySQL(SQLString) = False Then
-            PRGlobal.Clear
-            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
-            PRGlobal.Year = 2021
-            PRGlobal.Description = "SS MAX"
-            PRGlobal.Amount = 142800#
-            PRGlobal.Save (Equate.RecAdd)
-            MsgBox "SS Max for 2021 updated to: $142,800", vbInformation
         End If
         
         ' --- 2020 ---------------------------------------------------------------
@@ -520,253 +507,6 @@ Dim Ct1, Ct2, Recs As Long
             PRGlobal.Save (Equate.RecAdd)
             MsgBox "SS Max for 2020 updated to: $137,700", vbInformation
         End If
-        
-        ' --- 2019 ---------------------------------------------------------------
-        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeFWTAllow & " " & _
-                    "AND Year = 2019"
-        If PRGlobal.GetBySQL(SQLString) = False Then
-            PRGlobal.Clear
-            PRGlobal.TypeCode = PREquate.GlobalTypeFWTAllow
-            PRGlobal.Year = 2019
-            PRGlobal.Description = "FWT ALLOW"
-            PRGlobal.Amount = 4200
-            PRGlobal.Save (Equate.RecAdd)
-            MsgBox "FWT Allowance for 2019 updated to: $4,200", vbInformation
-        End If
-        
-        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
-                    "AND Year = 2019"
-        If PRGlobal.GetBySQL(SQLString) = False Then
-            PRGlobal.Clear
-            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
-            PRGlobal.Year = 2019
-            PRGlobal.Description = "SS MAX"
-            PRGlobal.Amount = 132900#
-            PRGlobal.Save (Equate.RecAdd)
-            MsgBox "SS Max for 2019 updated to: $132,900", vbInformation
-        End If
-
-        ' --- 2018 ---------------------------------------------------------------
-        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeFWTAllow & " " & _
-                    "AND Year = 2018"
-        If PRGlobal.GetBySQL(SQLString) = False Then
-            PRGlobal.Clear
-            PRGlobal.TypeCode = PREquate.GlobalTypeFWTAllow
-            PRGlobal.Year = 2018
-            PRGlobal.Description = "FWT ALLOW"
-            PRGlobal.Amount = 4150
-            PRGlobal.Save (Equate.RecAdd)
-            MsgBox "FWT Allowance for 2018 updated to: $4,150", vbInformation
-        End If
-        
-        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
-                    "AND Year = 2018"
-        If PRGlobal.GetBySQL(SQLString) = False Then
-            PRGlobal.Clear
-            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
-            PRGlobal.Year = 2018
-            PRGlobal.Description = "SS MAX"
-            PRGlobal.Amount = 128400#
-            PRGlobal.Save (Equate.RecAdd)
-            MsgBox "SS Max for 2018 updated to: $128,400", vbInformation
-        End If
-
-'        ' --- 2017 ---------------------------------------------------------------
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeFWTAllow & " " & _
-'                    "AND Year = 2017"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeFWTAllow
-'            PRGlobal.Year = 2017
-'            PRGlobal.Description = "FWT ALLOW"
-'            PRGlobal.Amount = 4050
-'            PRGlobal.Save (Equate.RecAdd)
-'            MsgBox "FWT Allowance for 2017 updated to: $4,050", vbInformation
-'        End If
-'
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
-'                    "AND Year = 2017"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
-'            PRGlobal.Year = 2017
-'            PRGlobal.Description = "SS MAX"
-'            PRGlobal.Amount = 127200#
-'            PRGlobal.Save (Equate.RecAdd)
-'            MsgBox "SS Max for 2017 updated to: $127,200", vbInformation
-'        End If
-'
-'        ' --- 2016 ---------------------------------------------------------------
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeFWTAllow & " " & _
-'                    "AND Year = 2016"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeFWTAllow
-'            PRGlobal.Year = 2016
-'            PRGlobal.Description = "FWT ALLOW"
-'            PRGlobal.Amount = 4050
-'            PRGlobal.Save (Equate.RecAdd)
-'            MsgBox "FWT Allowance for 2016 updated to: $4,050", vbInformation
-'        End If
-'
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
-'                    "AND Year = 2016"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
-'            PRGlobal.Year = 2016
-'            PRGlobal.Description = "SS MAX"
-'            PRGlobal.Amount = 118500#
-'            PRGlobal.Save (Equate.RecAdd)
-'            MsgBox "SS Max for 2016 updated to: $118,500", vbInformation
-'        End If
-
-'        ' --- 2015 ---------------------------------------------------------------
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeFWTAllow & " " & _
-'                    "AND Year = 2015"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeFWTAllow
-'            PRGlobal.Year = 2015
-'            PRGlobal.Description = "FWT ALLOW"
-'            PRGlobal.Amount = 4000
-'            PRGlobal.Save (Equate.RecAdd)
-'        End If
-'
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
-'                    "AND Year = 2015"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
-'            PRGlobal.Year = 2015
-'            PRGlobal.Description = "SS MAX"
-'            PRGlobal.Amount = 118500#
-'            PRGlobal.Save (Equate.RecAdd)
-'        End If
-
-        ' --- 2015 ---------------------------------------------------------------
-
-
-'        ' --- 2014 ---------------------------------------------------------------
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeFWTAllow & " " & _
-'                    "AND Year = 2014"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeFWTAllow
-'            PRGlobal.Year = 2014
-'            PRGlobal.Description = "FWT ALLOW"
-'            PRGlobal.Amount = 3950
-'            PRGlobal.Save (Equate.RecAdd)
-'        End If
-'
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
-'                    "AND Year = 2014"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
-'            PRGlobal.Year = 2014
-'            PRGlobal.Description = "SS MAX"
-'            PRGlobal.Amount = 117000#
-'            PRGlobal.Save (Equate.RecAdd)
-'        End If
-'
-'        ' --- 2014 ---------------------------------------------------------------
-'
-'
-'        ' --- 2013 ---------------------------------------------------------------
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeFWTAllow & " " & _
-'                    "AND Year = 2013"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeFWTAllow
-'            PRGlobal.Year = 2013
-'            PRGlobal.Description = "FWT ALLOW"
-'            PRGlobal.Amount = 3900
-'            PRGlobal.Save (Equate.RecAdd)
-'        End If
-'
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
-'                    "AND Year = 2013"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
-'            PRGlobal.Year = 2013
-'            PRGlobal.Description = "SS MAX"
-'            PRGlobal.Amount = 113700#
-'            PRGlobal.Save (Equate.RecAdd)
-'        End If
-'
-'        ' --- 2013 ---------------------------------------------------------------
-
-
-'        ' --- 2012 ---------------------------------------------------------------
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeFWTAllow & " " & _
-'                    "AND Year = 2012"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeFWTAllow
-'            PRGlobal.Year = 2012
-'            PRGlobal.Description = "FWT ALLOW"
-'            PRGlobal.Amount = 3800
-'            PRGlobal.Save (Equate.RecAdd)
-'        End If
-'
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
-'                    "AND Year = 2012"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
-'            PRGlobal.Year = 2012
-'            PRGlobal.Description = "SS MAX"
-'            PRGlobal.Amount = 110100#
-'            PRGlobal.Save (Equate.RecAdd)
-'        End If
-'
-'        ' --- 2012 ---------------------------------------------------------------
-'
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeFWTAllow & " " & _
-'                    "AND Year = 2011"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeFWTAllow
-'            PRGlobal.Year = 2011
-'            PRGlobal.Description = "FWT ALLOW"
-'            PRGlobal.Amount = 3700
-'            PRGlobal.Save (Equate.RecAdd)
-'        End If
-'
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
-'                    "AND Year = 2011"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
-'            PRGlobal.Year = 2011
-'            PRGlobal.Description = "SS MAX"
-'            PRGlobal.Amount = 106800#
-'            PRGlobal.Save (Equate.RecAdd)
-'        End If
-'
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeFWTAllow & " " & _
-'                    "AND Year = 2010"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeFWTAllow
-'            PRGlobal.Year = 2010
-'            PRGlobal.Description = "FWT ALLOW"
-'            PRGlobal.Amount = 3650
-'            PRGlobal.Save (Equate.RecAdd)
-'        End If
-'
-'        SQLString = "SELECT * FROM PRGlobal WHERE TypeCode = " & PREquate.GlobalTypeSSMax & " " & _
-'                    "AND Year = 2010"
-'        If PRGlobal.GetBySQL(SQLString) = False Then
-'            PRGlobal.Clear
-'            PRGlobal.TypeCode = PREquate.GlobalTypeSSMax
-'            PRGlobal.Year = 2010
-'            PRGlobal.Description = "SS MAX"
-'            PRGlobal.Amount = 106800#
-'            PRGlobal.Save (Equate.RecAdd)
-'        End If
 
         ' 2013-01-13
         ' med add pct & amt
@@ -798,6 +538,9 @@ Dim Ct1, Ct2, Recs As Long
 'SQLString = "delete * from PRFWTTable where W4Type <> '' and not isnull(W4Type) and TaxYear = 2022 and StateID = 0"
 'cnDes.Execute SQLString
     
+        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2025 AND StateID = 0 and W4Type <> '' AND NOT ISNULL(W4Type)"
+        If PRFWTTable.GetBySQL(SQLString) = False Then FWT2025Update_W4
+        
         SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2024 AND StateID = 0 and W4Type <> '' AND NOT ISNULL(W4Type)"
         If PRFWTTable.GetBySQL(SQLString) = False Then FWT2024Update_W4
         
@@ -806,6 +549,9 @@ Dim Ct1, Ct2, Recs As Long
     
         SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2022 AND StateID = 0 and W4Type <> '' AND NOT ISNULL(W4Type)"
         If PRFWTTable.GetBySQL(SQLString) = False Then FWT2022Update_W4
+        
+        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2025 AND StateID = 0 and (W4Type = '' or ISNULL(W4Type))"
+        If PRFWTTable.GetBySQL(SQLString) = False Then FWT2025Update
         
         SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2024 AND StateID = 0 and (W4Type = '' or ISNULL(W4Type))"
         If PRFWTTable.GetBySQL(SQLString) = False Then FWT2024Update
@@ -874,6 +620,10 @@ Dim Ct1, Ct2, Recs As Long
         ' 2023-11 eff - start in 2024
         SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2024 AND StateID = 36 AND TaxMonth = 1"
         If PRFWTTable.GetBySQL(SQLString) = False Then SWTOH2024Update
+    
+        ' 2024-12-29 eff - start in 2024 July
+        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2024 AND StateID = 36 AND TaxMonth = 7"
+        If PRFWTTable.GetBySQL(SQLString) = False Then SWTOH2024JulyUpdate
     
     End If
 
@@ -1225,6 +975,122 @@ Private Sub FWT2014Update()
     Next SnglMarr
 
 End Sub
+Private Sub FWT2025Update_W4()
+    
+    ' pub 15t MONTHLY tables
+    Dim msh As Integer
+    Dim twojob As Integer
+    Dim tbltype As String
+    Dim ftype
+    ftype = Array("", "M", "S", "H")
+    For msh = 1 To 3   ' 1 = Married / 2 = Single / 3 = "Head of Household"
+        For twojob = 1 To 2
+            If msh = 1 Then
+                If twojob = 1 Then
+                    ' FWT Married - 1 job
+                    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+                    FWTRange(2) = 2500: FWTAmount(2) = 0: FWTPct(2) = 10
+                    FWTRange(3) = 4488: FWTAmount(3) = 198.8: FWTPct(3) = 12
+                    FWTRange(4) = 10579: FWTAmount(4) = 929.72: FWTPct(4) = 22
+                    FWTRange(5) = 19725: FWTAmount(5) = 2941.84: FWTPct(5) = 24
+                    FWTRange(6) = 35383: FWTAmount(6) = 6699.76: FWTPct(6) = 32
+                    FWTRange(7) = 44254: FWTAmount(7) = 9538.48: FWTPct(7) = 35
+                    FWTRange(8) = 65133: FWTAmount(8) = 16846.13: FWTPct(8) = 37
+                Else
+                    ' FWT Married - 2 job
+                    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+                    FWTRange(2) = 1250: FWTAmount(2) = 0: FWTPct(2) = 10
+                    FWTRange(3) = 2244: FWTAmount(3) = 99.4: FWTPct(3) = 12
+                    FWTRange(4) = 5290: FWTAmount(4) = 464.92: FWTPct(4) = 22
+                    FWTRange(5) = 9863: FWTAmount(5) = 1470.98: FWTPct(5) = 24
+                    FWTRange(6) = 17692: FWTAmount(6) = 3349.94: FWTPct(6) = 32
+                    FWTRange(7) = 22127: FWTAmount(7) = 4769.14: FWTPct(7) = 35
+                    FWTRange(8) = 32567: FWTAmount(8) = 8423.14: FWTPct(8) = 37
+                End If
+            ElseIf msh = 2 Then
+                If twojob = 1 Then
+                    ' FWT Single - 1 job
+                    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+                    FWTRange(2) = 1250: FWTAmount(2) = 0: FWTPct(2) = 10
+                    FWTRange(3) = 2244: FWTAmount(3) = 99.4: FWTPct(3) = 12
+                    FWTRange(4) = 5290: FWTAmount(4) = 464.92: FWTPct(4) = 22
+                    FWTRange(5) = 9863: FWTAmount(5) = 1470.98: FWTPct(5) = 24
+                    FWTRange(6) = 17692: FWTAmount(6) = 3349.94: FWTPct(6) = 32
+                    FWTRange(7) = 22127: FWTAmount(7) = 4769.14: FWTPct(7) = 35
+                    FWTRange(8) = 53446: FWTAmount(8) = 15730.79: FWTPct(8) = 37
+                Else
+                    ' FWT Single - 2 job
+                    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+                    FWTRange(2) = 625: FWTAmount(2) = 0: FWTPct(2) = 10
+                    FWTRange(3) = 1122: FWTAmount(3) = 49.7: FWTPct(3) = 12
+                    FWTRange(4) = 2645: FWTAmount(4) = 232.46: FWTPct(4) = 22
+                    FWTRange(5) = 4931: FWTAmount(5) = 735.38: FWTPct(5) = 24
+                    FWTRange(6) = 8846: FWTAmount(6) = 1674.98: FWTPct(6) = 32
+                    FWTRange(7) = 11064: FWTAmount(7) = 2384.74: FWTPct(7) = 35
+                    FWTRange(8) = 26723: FWTAmount(8) = 7865.39: FWTPct(8) = 37
+                End If
+            Else
+                If twojob = 1 Then
+                    ' FWT HOH - 1 job
+                    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+                    FWTRange(2) = 1875: FWTAmount(2) = 0: FWTPct(2) = 10
+                    FWTRange(3) = 3292: FWTAmount(3) = 141.7: FWTPct(3) = 12
+                    FWTRange(4) = 7279: FWTAmount(4) = 620.14: FWTPct(4) = 22
+                    FWTRange(5) = 10488: FWTAmount(5) = 1326.12: FWTPct(5) = 24
+                    FWTRange(6) = 18317: FWTAmount(6) = 3205.08: FWTPct(6) = 32
+                    FWTRange(7) = 22750: FWTAmount(7) = 4623.64: FWTPct(7) = 35
+                    FWTRange(8) = 54071: FWTAmount(8) = 15585.99: FWTPct(8) = 37
+                Else
+                    ' FWT HOH - 2 job
+                    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+                    FWTRange(2) = 938: FWTAmount(2) = 0: FWTPct(2) = 10
+                    FWTRange(3) = 1646: FWTAmount(3) = 70.8: FWTPct(3) = 12
+                    FWTRange(4) = 3640: FWTAmount(4) = 310.08: FWTPct(4) = 22
+                    FWTRange(5) = 5244: FWTAmount(5) = 662.96: FWTPct(5) = 24
+                    FWTRange(6) = 9158: FWTAmount(6) = 1602.32: FWTPct(6) = 32
+                    FWTRange(7) = 11375: FWTAmount(7) = 2311.76: FWTPct(7) = 35
+                    FWTRange(8) = 27035: FWTAmount(8) = 7792.76: FWTPct(8) = 37
+                End If
+            End If
+            
+            tbltype = ftype(msh) & IIf(twojob = 2, "2", "")
+        
+            For Lvl = 1 To 8
+    
+                PRFWTTable.Clear
+                PRFWTTable.TaxYear = 2025
+                PRFWTTable.TaxMonth = 1
+                PRFWTTable.StateID = 0
+                PRFWTTable.W4Type = tbltype
+    
+                If Lvl = 1 Then
+                    PRFWTTable.LowAmount = 0
+                    PRFWTTable.ExcessBase = 0
+                Else
+                    PRFWTTable.LowAmount = FWTRange(Lvl) + 0.01
+                    PRFWTTable.ExcessBase = FWTRange(Lvl)
+                End If
+    
+                If Lvl = 8 Then
+                    PRFWTTable.HiAmount = 99999999.99
+                Else
+                    PRFWTTable.HiAmount = FWTRange(Lvl + 1)
+                End If
+    
+                PRFWTTable.Amount = FWTAmount(Lvl)
+                PRFWTTable.Percent = FWTPct(Lvl)
+                PRFWTTable.Save (Equate.RecAdd)
+    
+            Next Lvl
+        
+        Next twojob
+    Next msh
+
+    MsgBox "Federal tax tables ** Revised W4 ** updated for 2025!", vbOKOnly + vbInformation
+
+End Sub
+
+
 Private Sub FWT2024Update_W4()
     
     ' pub 15t MONTHLY tables
@@ -1636,6 +1502,74 @@ Private Sub FWT2023Update()
     MsgBox "Federal tax tables updated for 2023!", vbOKOnly + vbInformation
 
 End Sub
+Private Sub FWT2025Update()
+
+    For SnglMarr = 1 To 2     ' 1 = single / 2 = married
+
+        If SnglMarr = 1 Then
+            ' FWT SINGLE
+            FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+            FWTRange(2) = 6400: FWTAmount(2) = 0: FWTPct(2) = 10
+            FWTRange(3) = 18325: FWTAmount(3) = 1192.5: FWTPct(3) = 12
+            FWTRange(4) = 54875: FWTAmount(4) = 5578.5: FWTPct(4) = 22
+            FWTRange(5) = 109750: FWTAmount(5) = 17651: FWTPct(5) = 24
+            FWTRange(6) = 203700: FWTAmount(6) = 40199#: FWTPct(6) = 32
+            FWTRange(7) = 256925: FWTAmount(7) = 57231#: FWTPct(7) = 35
+            FWTRange(8) = 632750: FWTAmount(8) = 188769.75: FWTPct(8) = 37
+        Else
+            ' FWT MARRIED
+            FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0
+            FWTRange(2) = 17100: FWTAmount(2) = 0: FWTPct(2) = 10
+            FWTRange(3) = 40960: FWTAmount(3) = 2385: FWTPct(3) = 12
+            FWTRange(4) = 114050: FWTAmount(4) = 11157: FWTPct(4) = 22
+            FWTRange(5) = 223800: FWTAmount(5) = 35302: FWTPct(5) = 24
+            FWTRange(6) = 411700: FWTAmount(6) = 80398: FWTPct(6) = 32
+            FWTRange(7) = 518150: FWTAmount(7) = 114462: FWTPct(7) = 35
+            FWTRange(8) = 768700: FWTAmount(8) = 202154.5: FWTPct(8) = 37
+        End If
+
+        For Lvl = 1 To 8
+
+            PRFWTTable.Clear
+            PRFWTTable.TaxYear = 2025
+            PRFWTTable.TaxMonth = 1
+            PRFWTTable.StateID = 0
+
+            If SnglMarr = 1 Then
+                PRFWTTable.msSingle = 1
+                PRFWTTable.msMarried = 0
+            Else
+                PRFWTTable.msSingle = 0
+                PRFWTTable.msMarried = 1
+            End If
+
+            If Lvl = 1 Then
+                PRFWTTable.LowAmount = 0
+                PRFWTTable.ExcessBase = 0
+            Else
+                PRFWTTable.LowAmount = FWTRange(Lvl) + 0.01
+                PRFWTTable.ExcessBase = FWTRange(Lvl)
+            End If
+
+            If Lvl = 8 Then
+                PRFWTTable.HiAmount = 99999999.99
+            Else
+                PRFWTTable.HiAmount = FWTRange(Lvl + 1)
+            End If
+
+            PRFWTTable.Amount = FWTAmount(Lvl)
+            PRFWTTable.Percent = FWTPct(Lvl)
+            PRFWTTable.Save (Equate.RecAdd)
+
+        Next Lvl
+
+    Next SnglMarr
+
+    MsgBox "Federal tax tables updated for 2025!", vbOKOnly + vbInformation
+
+End Sub
+
+
 Private Sub FWT2024Update()
 
     For SnglMarr = 1 To 2     ' 1 = single / 2 = married
@@ -2621,6 +2555,46 @@ Private Sub SWTOH2014UpdateJul1()
     MsgBox "Ohio SWT tables updated for July 2014!", vbOKOnly + vbInformation
 
 End Sub
+Private Sub SWTOH2024JulyUpdate()
+
+    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0.501
+    FWTRange(2) = 5000.99: FWTAmount(2) = 25.05: FWTPct(2) = 1.001
+    FWTRange(3) = 10000.99: FWTAmount(3) = 75.1: FWTPct(3) = 2.005
+    FWTRange(4) = 15000.99: FWTAmount(4) = 175.35: FWTPct(4) = 2.505
+    FWTRange(5) = 20000.99: FWTAmount(5) = 300.6: FWTPct(5) = 2.99
+    FWTRange(6) = 100000.99: FWTAmount(6) = 2692.6: FWTPct(6) = 3.8
+
+    For Lvl = 1 To 6
+
+        PRFWTTable.Clear
+        PRFWTTable.TaxYear = 2024
+        PRFWTTable.TaxMonth = 7
+        PRFWTTable.StateID = 36
+
+        If Lvl = 1 Then
+            PRFWTTable.LowAmount = 0
+            PRFWTTable.ExcessBase = 0
+        Else
+            PRFWTTable.LowAmount = FWTRange(Lvl) + 0.01
+            PRFWTTable.ExcessBase = Int(FWTRange(Lvl))
+        End If
+
+        If Lvl = 8 Then
+            PRFWTTable.HiAmount = 99999999.99
+        Else
+            PRFWTTable.HiAmount = FWTRange(Lvl + 1)
+        End If
+
+        PRFWTTable.Amount = FWTAmount(Lvl)
+        PRFWTTable.Percent = FWTPct(Lvl)
+        PRFWTTable.Save (Equate.RecAdd)
+
+    Next Lvl
+
+    MsgBox "Ohio SWT tables updated for July 2024!", vbOKOnly + vbInformation
+
+End Sub
+
 Private Sub SWTOH2024Update()
 
     FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0.501
