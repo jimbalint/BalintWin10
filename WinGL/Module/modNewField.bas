@@ -18,6 +18,12 @@ Dim ucmd As ADODB.Command
 
 Dim Ct1, Ct2, Recs As Long
 
+    ' 2025-01-15
+    If GLSys = True Then
+        If AddField("PRCity", "MuniCode", "String", adoConn) Then
+        End If
+    End If
+
     ' 2022-11-19
     If GLSys = True Then
         If AddField("PRFWTTable", "W4Type", "String", adoConn) Then

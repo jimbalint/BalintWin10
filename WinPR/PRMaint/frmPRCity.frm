@@ -165,14 +165,14 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private rs As ADODB.Recordset
-Dim X As String
+Dim x As String
 Dim rw As Long
 Dim SString As String
 Dim SortCol As Byte
 Dim SortType As Byte     ' 0=ascending 1=descending
 
 Dim dbFileName As String
-Dim dbFields(6) As String
+Dim dbFields(7) As String
 Dim dbSortDesc As Boolean
 Dim dbSortCol As Byte
 
@@ -208,6 +208,7 @@ Private Sub Form_Load()
     dbFields(4) = "StateID"
     dbFields(5) = "CityRate"
     dbFields(6) = "CountyID"
+    dbFields(7) = "MuniCode"
     dbSortCol = 1
     dbSortDesc = False
     
@@ -223,6 +224,7 @@ Private Sub Form_Load()
     fg.ColWidth(4) = 1000
     fg.ColWidth(5) = 1000
     fg.ColWidth(6) = 2000
+    fg.ColWidth(6) = 1000
     
     fg.ColFormat(5) = "##0.00"
     
@@ -440,7 +442,7 @@ Dim DelConfirm As Integer
 
 End Sub
 
-Private Sub fg_BeforeMouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single, Cancel As Boolean)
+Private Sub fg_BeforeMouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal x As Single, ByVal y As Single, Cancel As Boolean)
 
     ' clicking on a column header sorts based on that column
     If Button = 1 And Shift = 0 And fg.MouseRow = 0 Then
