@@ -4713,25 +4713,39 @@ Dim HP As Integer
 Dim yy1, yy2, FedID, ff As String
 Dim HorzPosn, Xincr, XXpos As Integer
 Dim VPos As Integer
+Dim VStart As Integer
 Dim VSpace As Integer
 
     With frm
 
-        HP = 8270
+        HP = 8170
         CurrYear = Year(Now())
-        VPos = 1925
-        VSpace = 255
-        If .cmbQtr = 1 Then
+        VStart = 1800
+        VPos = VStart
+        VSpace = 355
+
+        If .cmbQtr = "1" Then
             PosPrint HP, VPos, "X"
-        ElseIf .cmbQtr = 2 Then
+        ElseIf .cmbQtr = "2" Then
             VPos = VPos + VSpace
             PosPrint HP, VPos, "X"
-        ElseIf .cmbQtr = 3 Then
+        ElseIf .cmbQtr = "3" Then
             VPos = VPos + VSpace * 2
             PosPrint HP, VPos, "X"
-        ElseIf .cmbQtr = 4 Then
+        ElseIf .cmbQtr = "4" Then
             VPos = VPos + VSpace * 3
             PosPrint HP, VPos, "X"
+        End If
+    
+        If LCase(User.Logon) = "jim" Then
+            VPos = VStart
+            PosPrint HP, VPos, "1"
+            VPos = VPos + VSpace
+            PosPrint HP, VPos, "2"
+            VPos = VPos + VSpace
+            PosPrint HP, VPos, "3"
+            VPos = VPos + VSpace
+            PosPrint HP, VPos, "4"
         End If
     
         ' PosPrint 3380, 900, PRCompany.FederalID

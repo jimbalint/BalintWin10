@@ -172,7 +172,7 @@ Dim SortCol As Byte
 Dim SortType As Byte     ' 0=ascending 1=descending
 
 Dim dbFileName As String
-Dim dbFields(7) As String
+Dim dbFields(8) As String
 Dim dbSortDesc As Boolean
 Dim dbSortCol As Byte
 
@@ -208,7 +208,8 @@ Private Sub Form_Load()
     dbFields(4) = "StateID"
     dbFields(5) = "CityRate"
     dbFields(6) = "CountyID"
-    dbFields(7) = "MuniCode"
+    dbFields(7) = "RITA_Code"
+    dbFields(8) = "CCA_Code"
     dbSortCol = 1
     dbSortDesc = False
     
@@ -219,9 +220,9 @@ Private Sub Form_Load()
     ' customize the grid
     fg.ColWidth(0) = 0
     fg.ColWidth(1) = 1300
-    fg.ColWidth(2) = 3500
+    fg.ColWidth(2) = 3100
     fg.ColWidth(3) = 2000
-    fg.ColWidth(4) = 1000
+    fg.ColWidth(4) = 900
     fg.ColWidth(5) = 1000
     fg.ColWidth(6) = 2000
     fg.ColWidth(6) = 1000

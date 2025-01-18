@@ -20,7 +20,12 @@ Public CityName As String
 Public ShortName As String
 Public CityRecipRate As Currency
 Public StateID As Long
+
+' not used
 Public MuniCode As String
+
+Public RITA_Code As String
+Public CCA_Code As String
 
 Dim rs As New ADODB.Recordset
 
@@ -140,6 +145,8 @@ Public Function Save(ByVal booAddPut As Boolean) As String
     rs.Fields("CityRecipRate") = CityRecipRate
     rs.Fields("StateID") = StateID
     rs.Fields("MuniCode") = MuniCode
+    rs.Fields("RITA_Code") = RITA_Code
+    rs.Fields("CCA_Code") = CCA_Code
     
     rs.Update
     
@@ -157,6 +164,8 @@ Public Sub Clear()
     CityRecipRate = 0
     StateID = 0
     MuniCode = ""
+    RITA_Code = ""
+    CCA_Code = ""
     
 End Sub
 
@@ -175,6 +184,8 @@ Public Sub AssignFields()
     ShortName = Trim(UCase(rs!ShortName)) & ""
     CityRate = nNull(rs!CityRate)
     MuniCode = Trim(rs!MuniCode) & ""
+    RITA_Code = Trim(rs!RITA_Code) & ""
+    CCA_Code = Trim(rs!CCA_Code) & ""
     
     If ShortName = "" Then ShortName = CityName
     
