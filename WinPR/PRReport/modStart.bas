@@ -45,13 +45,13 @@ Dim FileExt As String
     X = Command()
     
     If X = "" Then         ' set for testing
-       BalintFolder = "c:\Balint"
        BalintFolder = "\\vboxsrv\vm-share\Balint"
+       BalintFolder = "c:\Balint"
        dbPwd = ""
        PRBatchID = 0
        BatchNum = PRBatchID
        BatchNumber = PRBatchID
-       ProgName = UCase("QTRRPTS")
+       ProgName = UCase("OHW2")
        SysFile = "s:\Balint\Data\GLSystem.mdb"
        UserID = 2
        BackName = ""

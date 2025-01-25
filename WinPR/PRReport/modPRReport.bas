@@ -266,7 +266,9 @@ Public Sub Print1099MISC(ByVal jTaxYear As String)
     Next I
     
     ' tax year
-    PosPrint 8250, yPos - 250, Right(jTaxYear, 2)
+    ' PosPrint 8250, yPos - 250, Right(jTaxYear, 2)
+    ' 2025-01-25
+    PosPrint 8250, yPos - 250, jTaxYear
     
     ' print the ID numbers & Box 1 NEC
     yPos = yPos + 200

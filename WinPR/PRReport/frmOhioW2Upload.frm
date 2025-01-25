@@ -52,41 +52,23 @@ Begin VB.Form frmOHW2
       TabPicture(0)   =   "frmOhioW2Upload.frx":0000
       Tab(0).ControlEnabled=   0   'False
       Tab(0).Control(0)=   "Label2"
-      Tab(0).Control(0).Enabled=   0   'False
       Tab(0).Control(1)=   "Label3"
-      Tab(0).Control(1).Enabled=   0   'False
       Tab(0).Control(2)=   "txtUserID"
-      Tab(0).Control(2).Enabled=   0   'False
       Tab(0).Control(3)=   "txtContactPhn"
-      Tab(0).Control(3).Enabled=   0   'False
       Tab(0).Control(4)=   "txtContactName"
-      Tab(0).Control(4).Enabled=   0   'False
       Tab(0).Control(5)=   "txtZipCodeExt"
-      Tab(0).Control(5).Enabled=   0   'False
       Tab(0).Control(6)=   "txtZipCode"
-      Tab(0).Control(6).Enabled=   0   'False
       Tab(0).Control(7)=   "txtState"
-      Tab(0).Control(7).Enabled=   0   'False
       Tab(0).Control(8)=   "txtCity"
-      Tab(0).Control(8).Enabled=   0   'False
       Tab(0).Control(9)=   "txtDeliveryAddress"
-      Tab(0).Control(9).Enabled=   0   'False
       Tab(0).Control(10)=   "txtLocationAddress"
-      Tab(0).Control(10).Enabled=   0   'False
       Tab(0).Control(11)=   "txtCompanyName"
-      Tab(0).Control(11).Enabled=   0   'False
       Tab(0).Control(12)=   "txtEIN"
-      Tab(0).Control(12).Enabled=   0   'False
       Tab(0).Control(13)=   "txtContactPhnExt"
-      Tab(0).Control(13).Enabled=   0   'False
       Tab(0).Control(14)=   "txtContactEmail"
-      Tab(0).Control(14).Enabled=   0   'False
       Tab(0).Control(15)=   "txtContactFax"
-      Tab(0).Control(15).Enabled=   0   'False
       Tab(0).Control(16)=   "cmbPreparerCode"
-      Tab(0).Control(16).Enabled=   0   'False
       Tab(0).Control(17)=   "cmdSaveSubm"
-      Tab(0).Control(17).Enabled=   0   'False
       Tab(0).ControlCount=   18
       TabCaption(1)   =   "Submit OH W2 File"
       TabPicture(1)   =   "frmOhioW2Upload.frx":001C
@@ -109,13 +91,33 @@ Begin VB.Form frmOHW2
       Tab(1).Control(7).Enabled=   0   'False
       Tab(1).Control(8)=   "chkAllClients"
       Tab(1).Control(8).Enabled=   0   'False
-      Tab(1).ControlCount=   9
-      Begin VB.CheckBox chkAllClients 
-         Caption         =   "Create the file ALL clients"
+      Tab(1).Control(9)=   "chkRITA"
+      Tab(1).Control(9).Enabled=   0   'False
+      Tab(1).Control(10)=   "chkCCA"
+      Tab(1).Control(10).Enabled=   0   'False
+      Tab(1).ControlCount=   11
+      Begin VB.CheckBox chkCCA 
+         Caption         =   "Include CCA CWT"
          Height          =   375
          Left            =   480
+         TabIndex        =   31
+         Top             =   3120
+         Width           =   2895
+      End
+      Begin VB.CheckBox chkRITA 
+         Caption         =   "Include RITA CWT"
+         Height          =   375
+         Left            =   480
+         TabIndex        =   30
+         Top             =   2760
+         Width           =   2895
+      End
+      Begin VB.CheckBox chkAllClients 
+         Caption         =   "Create the file ALL clients"
+         Height          =   720
+         Left            =   480
          TabIndex        =   28
-         Top             =   2280
+         Top             =   3600
          Width           =   4935
       End
       Begin TDBText6Ctl.TDBText txtTaxYear 
@@ -178,7 +180,7 @@ Begin VB.Form frmOHW2
       End
       Begin VB.CommandButton cmdCreateFile 
          BackColor       =   &H00FFFF00&
-         Caption         =   "Create Fed/OH W2 Upload File"
+         Caption         =   "Create Fed/OH/Local W2 Upload File"
          BeginProperty Font 
             Name            =   "Arial"
             Size            =   12
@@ -189,13 +191,13 @@ Begin VB.Form frmOHW2
             Strikethrough   =   0   'False
          EndProperty
          Height          =   855
-         Left            =   11640
+         Left            =   11280
          MaskColor       =   &H00FFFF00&
          Style           =   1  'Graphical
          TabIndex        =   25
          Top             =   600
          UseMaskColor    =   -1  'True
-         Width           =   2055
+         Width           =   2775
       End
       Begin VB.CommandButton cmdFileName 
          Caption         =   ". . ."
@@ -1171,7 +1173,7 @@ Begin VB.Form frmOHW2
          Height          =   255
          Left            =   480
          TabIndex        =   29
-         Top             =   2760
+         Top             =   2160
          Width           =   5535
       End
       Begin VB.Label lblMsg 
@@ -1266,7 +1268,7 @@ Private Sub Form_Load()
         tmsg = tmsg & "times until you are sure it is correct." & vbCrLf
         tmsg = tmsg & "" & vbCrLf
         tmsg = tmsg & "Once that is done upload " & vbCrLf
-        tmsg = tmsg & "the file to the state website." & vbCrLf
+        tmsg = tmsg & "the file to the Fedederal, State or Local website." & vbCrLf
         .Caption = tmsg
     End With
     
@@ -1356,16 +1358,6 @@ Private Sub cmdCreateFile_Click()
     frmp.lblMsg1 = "Now Running OH W2 Upload"
     frmp.Show
     
-    rsCity.CursorLocation = adUseClient
-    rsCity.Fields.Append "Bureau", adVarChar, 20, adFldIsNullable
-    rsCity.Fields.Append "StateID", adDouble
-    rsCity.Fields.Append "CityID", adDouble
-    rsCity.Fields.Append "Gross", adDouble
-    rsCity.Fields.Append "CityWage", adDouble
-    rsCity.Fields.Append "CWT", adDouble
-    rsCity.Fields.Append "Courtesy", adInteger
-    rsCity.Open , , adOpenDynamic, adLockOptimistic
-    
     InitReport
     WriteRA
     
@@ -1374,20 +1366,23 @@ Private Sub cmdCreateFile_Click()
         strSQL = strSQL & " and CompanyID = " & User.LastPRCompany
     End If
     strSQL = strSQL & " order by Name"
-    
+   
     If Not PRCompany.GetBySQL(strSQL) Then End
     Do
-
+        
+        On Error Resume Next
+        rsCity.Close
+        On Error GoTo 0
         rsCity.CursorLocation = adUseClient
         rsCity.Fields.Append "Bureau", adVarChar, 20, adFldIsNullable
-        rsCity.Fields.Append "StateID", adDouble
         rsCity.Fields.Append "CityID", adDouble
+        rsCity.Fields.Append "CityName", adVarChar, 50, adFldIsNullable
         rsCity.Fields.Append "Gross", adDouble
         rsCity.Fields.Append "CityWage", adDouble
         rsCity.Fields.Append "CWT", adDouble
         rsCity.Fields.Append "Courtesy", adInteger
         rsCity.Open , , adOpenDynamic, adLockOptimistic
-        
+                
         frmp.lblMsg2 = PRCompany.Name
         frmp.Refresh
 
@@ -1401,7 +1396,9 @@ Private Sub cmdCreateFile_Click()
                 WriteRW
                 WriteRO
                 WriteRS
-                ' WriteRS_City
+                If Me.chkRITA.Value = 1 Or Me.chkCCA.Value = 1 Then
+                    WriteRS_City
+                End If
                 If Not PRW2.GetNext Then Exit Do
             Loop
         End If
@@ -1547,6 +1544,31 @@ Function PreCheck() As Boolean
         Loop
     End If
     
+    ' check RITA & CCA codes
+    strSQL = "SELECT * FROM PRCity"
+    If PRCity.GetBySQL(strSQL) Then
+        Do
+            If PRCity.RITA_Code <> "" And PRCity.CCA_Code <> "" Then
+                msg = msg & "RITA and CCA code assigned to: " & PRCity.CityNumber & " " & PRCity.CityName & vbCrLf
+            End If
+            If PRCity.RITA_Code <> "" Then
+                If Len(PRCity.RITA_Code) <> 3 Or Not IsNumeric(PRCity.RITA_Code) Then
+                    msg = msg & "Invalide RITA code: " & PRCity.RITA_Code & " for: " & PRCity.CityNumber & " " & PRCity.CityName & vbCrLf
+                End If
+            End If
+            If PRCity.CCA_Code <> "" Then
+                If Len(PRCity.CCA_Code) <> 3 Or Not IsNumeric(PRCity.CCA_Code) Then
+                    msg = msg & "Invalide CCA code: " & PRCity.CCA_Code & " for: " & PRCity.CityNumber & " " & PRCity.CityName & vbCrLf
+                End If
+            End If
+            If Not PRCity.GetNext Then Exit Do
+        Loop
+    End If
+    
+    If Me.chkRITA.Value = 1 And Me.chkCCA.Value = 1 Then
+        msg = msg & "Pick only RITA or CCA!!" & vbCrLf
+    End If
+    
     If msg <> "" Then
         MsgBox msg, vbExclamation
         PreCheck = False
@@ -1590,6 +1612,7 @@ Sub CompanyReport()
     Ln = Ln + 1
     PrintInfo "Submitter", Me.txtCompanyName, 2
     PrintInfo PRCompany.Name, "", 1
+    PrintInfo "File Name:", Me.txtOutputFile, 1
     PrintInfo "W2 Count", W2TL.RWCount, 1
     PrintInfo "Box 1 Wages", AmtPrt(W2TL.Box1_Wages), 1
     PrintInfo "Box 2 Fed Tax", AmtPrt(W2TL.Box2_FedTax), 1
@@ -1637,8 +1660,50 @@ Sub CompanyReport()
         PrintInfo "Employee(s) skipped - No OH W2", "", 1
         PrintInfo OutOfStateEmp, "", 1
     End If
+    
+    If Me.chkRITA.Value = 1 Or Me.chkCCA.Value = 1 Then
+        If rsCity.RecordCount > 6 Then
+            FormFeed
+            PageHeader ReportTitle, "Tax Year", Me.txtTaxYear.text, "", 1, False, True
+            Ln = Ln + 1
+            PrintInfo "Submitter", Me.txtCompanyName, 2
+            PrintInfo PRCompany.Name, "", 1
+            PrintInfo "File Name:", Me.txtOutputFile, 1
+        End If
+    End If
+    
+    If Me.chkRITA.Value = 1 Then PrintLocalTotals ("RITA")
+    If Me.chkCCA.Value = 1 Then PrintLocalTotals ("CCA")
+    
     OutOfStateEmp = ""
     
+End Sub
+
+Sub PrintLocalTotals(ByVal Bureau As String)
+    Dim fflg As Boolean
+    Dim TlWage As Currency
+    Dim TlTax As Currency
+    TlWage = 0
+    TlTax = 0
+    fflg = True
+    rsCity.Sort = "CityName"
+    rsCity.MoveFirst
+    Do While Not rsCity.EOF
+        If rsCity!Bureau = Bureau Then
+            If PRCity.GetByID(rsCity!CityID) Then
+            End If
+            If fflg Then
+                PrintInfo "", "", 1
+                PrintInfo "City Totals for: " & Bureau, "", 1
+            End If
+            PrintInfo PRCity.CityName & " " & IIf(Bureau = "RITA", PRCity.RITA_Code, PRCity.CCA_Code), "Wage: " & AmtPrt(rsCity!CityWage) & " Tax: " & AmtPrt(rsCity!CWT), 1
+            TlWage = TlWage + rsCity!CityWage
+            TlTax = TlTax + rsCity!CWT
+            fflg = False
+        End If
+        rsCity.MoveNext
+    Loop
+    PrintInfo "TOTALS", "Wage: " & AmtPrt(TlWage) & " Tax: " & AmtPrt(TlTax), 1
 End Sub
 
 Sub InitReport()
@@ -1770,12 +1835,13 @@ End Sub
 
 Sub WriteRS_City()
     
+    Dim bMuni As Boolean
+    
     strSQL = "select *" & _
-            " from PRW2State " & _
+            " from PRW2City " & _
             " where W2ID = " & PRW2.W2ID & _
-            " and TaxYear = " & Me.txtTaxYear & _
-            " and StateID = " & OHStateID
-    If Not PRW2State.GetBySQL(strSQL) Then Exit Sub ' ???
+            " and TaxYear = " & Me.txtTaxYear
+    If Not PRW2City.GetBySQL(strSQL) Then Exit Sub '
     
     Dim NameLast As String
     Dim NameSuffix As String
@@ -1795,94 +1861,145 @@ Sub WriteRS_City()
         ZipExt = ""
     End If
     
-    sOut = "RS39"
-    sOut = sOut & Wrt("", 5)
-    sOut = sOut & Wrt(Right("000000000" & PRW2.BoxA_SSNumber, 9), 9)
-    sOut = sOut & Wrt(PRW2.BoxE_EEFirstName, 15)
-    sOut = sOut & Wrt(Replace(PRW2.BoxE_EEMidInit, ".", ""), 15)
-    sOut = sOut & Wrt(NameLast, 20)
-    sOut = sOut & Wrt(NameSuffix, 4)
-    sOut = sOut & Wrt(PRW2.BoxE_EEAddr2, 22)
-    sOut = sOut & Wrt(PRW2.BoxE_EEAddr1, 22)
-    sOut = sOut & Wrt(PRW2.BoxE_EECity, 22)
-    sOut = sOut & Wrt(PRW2.BoxE_EEState, 2)
-    sOut = sOut & Wrt(Left(PRW2.BoxE_EEZip, 5), 5)
-    sOut = sOut & Wrt(ZipExt, 4)
-    sOut = sOut & Wrt("", 5)
-    sOut = sOut & Wrt("", 23)       ' foreign state
-    sOut = sOut & Wrt("", 15)       ' foreign postal code
-    sOut = sOut & Wrt("", 2)        ' country code
+    Do
     
-    ' unemployment reporting
-    sOut = sOut & Wrt("", 2)
-    sOut = sOut & Wrt("", 6)
-    sOut = sOut & Wrt("", 11)
-    sOut = sOut & Wrt("", 11)
-    sOut = sOut & Wrt("", 2)
-    sOut = sOut & Wrt("", 8)
-    sOut = sOut & Wrt("", 8)
-    sOut = sOut & Wrt("", 5)
-    
-    ' 2025-01-13
-    sOut = sOut & Wrt(Replace(PRW2State.ERStateID, "-", ""), 20)
-    
-    sOut = sOut & Wrt("", 6)
-    sOut = sOut & Wrt("39", 2)
-    sOut = sOut & AmtFmt(PRW2State.StateWage)
-    sOut = sOut & AmtFmt(PRW2State.StateTax)
-    sOut = sOut & Right(AmtFmt(PRW2.Box1_Wages), 10)
-    
-    W2TL.Box16_StateWages = W2TL.Box16_StateWages + PRW2State.StateWage
-    W2TL.Box17_StateTax = W2TL.Box17_StateTax + PRW2State.StateTax
-    
-    ' SD Tax?
-    Dim LocalWages As Currency
-    Dim LocalTax As Currency
-    Dim TaxTypeCode As String
-    Dim SDNumber As String
-    TaxTypeCode = ""
-    LocalWages = 0
-    LocalTax = 0
-    SDNumber = ""
-    strSQL = "select *" & _
-            " from PRW2City" & _
-            " where W2ID = " & PRW2.W2ID & _
-            " and TaxYear = " & Me.txtTaxYear & _
-            " and SDTax = 1"
-    If PRW2City.GetBySQL(strSQL) Then
-        TaxTypeCode = "E"
-        LocalWages = PRW2City.CityWage
-        LocalTax = PRW2City.CityTax
-        If PRItem.GetByID(PRW2City.CityID) Then
-            SDNumber = PRItem.Abbreviation
-        Else
-            MsgBox "Item ID not found for SD Tax: " & PRW2City.CityID
+        If Not PRCity.GetByID(PRW2City.CityID) Then
+            MsgBox "Error - City ID not found?? " & PRW2City.CityID
             End
         End If
-    End If
     
-    sOut = sOut & Wrt(TaxTypeCode, 1)
-    sOut = sOut & AmtFmt(LocalWages)
-    sOut = sOut & AmtFmt(LocalTax)
+        sOut = "RS39"
+        
+        bMuni = False
+        If Me.chkRITA.Value = 1 Then
+            If PRCity.RITA_Code <> "" Then
+                bMuni = True
+                sOut = sOut & "R0" & PRCity.RITA_Code
+            Else
+                sOut = sOut & "00000"
+            End If
+        Else
+            If PRCity.CCA_Code <> "" Then
+                bMuni = True
+                sOut = sOut & "CC" & PRCity.CCA_Code
+            Else
+                sOut = sOut & "CC887"
+            End If
+        End If
+        
+        sOut = sOut & Wrt(Right("000000000" & PRW2.BoxA_SSNumber, 9), 9)
+        
+        sOut = sOut & Wrt(PRW2.BoxE_EEFirstName, 15)
+        sOut = sOut & Wrt(Replace(PRW2.BoxE_EEMidInit, ".", ""), 15)
+        sOut = sOut & Wrt(NameLast, 20)
+        sOut = sOut & Wrt(NameSuffix, 4)
+        sOut = sOut & Wrt(PRW2.BoxE_EEAddr2, 22)
+        sOut = sOut & Wrt(PRW2.BoxE_EEAddr1, 22)
+        sOut = sOut & Wrt(PRW2.BoxE_EECity, 22)
+        sOut = sOut & Wrt(PRW2.BoxE_EEState, 2)
+        sOut = sOut & Wrt(Left(PRW2.BoxE_EEZip, 5), 5)
+        sOut = sOut & Wrt(ZipExt, 4)
+        sOut = sOut & Wrt("", 5)
+        sOut = sOut & Wrt("", 23)       ' foreign state
+        sOut = sOut & Wrt("", 15)       ' foreign postal code
+        sOut = sOut & Wrt("", 2)        ' country code
+        
+        ' unemployment reporting
+        sOut = sOut & Wrt("", 2)
+        sOut = sOut & Wrt("", 6)
+        sOut = sOut & Wrt("", 11)
+        sOut = sOut & Wrt("", 11)
+        sOut = sOut & Wrt("", 2)
+        sOut = sOut & Wrt("", 8)
+        sOut = sOut & Wrt("", 8)
+        sOut = sOut & Wrt("", 5)
+        
+        ' 2025-01-13 - state ID - blank
+        sOut = sOut & Wrt("", 20)
+       
+        sOut = sOut & Wrt("", 6)
+        sOut = sOut & Wrt("", 2)
+                
+        sOut = sOut & AmtFmt(PRW2State.StateWage)
+        sOut = sOut & AmtFmt(PRW2State.StateTax)
+        sOut = sOut & Wrt("", 10)
+        
+        ' 308
+        If PRW2City.Courtesy = 1 Then
+            sOut = sOut & "R"
+        Else
+            sOut = sOut & "C"
+        End If
+        
+        If PRW2City.Courtesy = 0 Then
+            sOut = sOut & AmtFmt(PRW2City.CityWage)
+        Else
+            sOut = sOut & AmtFmt(0)
+        End If
+        sOut = sOut & AmtFmt(PRW2City.CityTax)
+        
+        sOut = sOut & Wrt("", 7)        ' state control number
+        
+        sOut = sOut & Wrt(PRCity.CityName, 75)
+        sOut = sOut & Wrt("OHIO", 75)
+
+        sOut = sOut & Wrt("", 25)
+        
+        Print #TextChannel2, sOut
     
-    ' this is SD tax only ...
-    W2TL.Box18_LocalWages = W2TL.Box18_LocalWages + LocalWages
-    W2TL.Box19_LocalTax = W2TL.Box19_LocalTax + LocalTax
-    
-    ' right justory
-    ' 2023-11-18 - left 7 / numeric check added at beginning
-    SDNumber = Left(Trim(SDNumber), 7)
-    If SDNumber <> "" Then
-        sOut = sOut & Wrt(Space(7 - Len(SDNumber)) & SDNumber, 7)
-    Else
-        sOut = sOut & Wrt("", 7)
-    End If
-    
-    sOut = sOut & Wrt("", 75)
-    sOut = sOut & Wrt("", 75)
-    sOut = sOut & Wrt("", 25)
-    
-    Print #TextChannel2, sOut
+'rsCity.CursorLocation = adUseClient
+'rsCity.Fields.Append "Bureau", adVarChar, 20, adFldIsNullable
+'rsCity.Fields.Append "CityID", adDouble
+'rsCity.Fields.Append "Gross", adDouble
+'rsCity.Fields.Append "CityWage", adDouble
+'rsCity.Fields.Append "CWT", adDouble
+'rsCity.Fields.Append "Courtesy", adInteger
+        
+        Dim bFound As Boolean
+        If bMuni Then
+            ' add to totals
+            bFound = False
+            If Not rsCity.BOF And Not rsCity.EOF Then
+                rsCity.MoveFirst
+                Do While Not rsCity.EOF
+                    If PRCity.RITA_Code <> "" Then
+                        If rsCity!Bureau = "RITA" And rsCity!CityID = PRCity.CityID Then
+                            bFound = True
+                            Exit Do
+                        End If
+                    End If
+                    If PRCity.CCA_Code <> "" Then
+                        If rsCity!Bureau = "CCA" And rsCity!CityID = PRCity.CityID Then
+                            bFound = True
+                            Exit Do
+                        End If
+                    End If
+                    rsCity.MoveNext
+                Loop
+            End If
+            If Not bFound Then
+                rsCity.AddNew
+                If PRCity.RITA_Code <> "" Then
+                    rsCity!Bureau = "RITA"
+                Else
+                    rsCity!Bureau = "CCA"
+                End If
+                rsCity!CityID = PRCity.CityID
+                rsCity!CityName = PRCity.CityName
+                rsCity!Gross = 0
+                rsCity!CityWage = 0
+                rsCity!CWT = 0
+                rsCity!Courtesy = 0
+                rsCity.Update
+            End If
+            rsCity!Gross = rsCity!Gross + PRW2City.CityWage
+            rsCity!CityWage = rsCity!CityWage + PRW2City.CityWage
+            rsCity!CWT = rsCity!CWT + PRW2City.CityTax
+            rsCity.Update
+        End If
+        
+        If Not PRW2City.GetNext Then Exit Do
+    Loop
 
 End Sub
 
