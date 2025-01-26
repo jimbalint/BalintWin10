@@ -3,7 +3,7 @@ Object = "{E2D000D0-2DA1-11D2-B358-00104B59D73D}#1.0#0"; "titext8.ocx"
 Object = "{F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0"; "comdlg32.ocx"
 Object = "{BDC217C8-ED16-11CD-956C-0000C04E4C0A}#1.1#0"; "tabctl32.ocx"
 Begin VB.Form frmOHW2 
-   Caption         =   "Ohio W2 Upload"
+   Caption         =   "Federal\Ohio\Local W2 Upload"
    ClientHeight    =   10290
    ClientLeft      =   165
    ClientTop       =   510
@@ -51,24 +51,24 @@ Begin VB.Form frmOHW2
       TabCaption(0)   =   "Submitter Information"
       TabPicture(0)   =   "frmOhioW2Upload.frx":0000
       Tab(0).ControlEnabled=   0   'False
-      Tab(0).Control(0)=   "Label2"
-      Tab(0).Control(1)=   "Label3"
-      Tab(0).Control(2)=   "txtUserID"
-      Tab(0).Control(3)=   "txtContactPhn"
-      Tab(0).Control(4)=   "txtContactName"
-      Tab(0).Control(5)=   "txtZipCodeExt"
-      Tab(0).Control(6)=   "txtZipCode"
-      Tab(0).Control(7)=   "txtState"
-      Tab(0).Control(8)=   "txtCity"
-      Tab(0).Control(9)=   "txtDeliveryAddress"
-      Tab(0).Control(10)=   "txtLocationAddress"
-      Tab(0).Control(11)=   "txtCompanyName"
-      Tab(0).Control(12)=   "txtEIN"
-      Tab(0).Control(13)=   "txtContactPhnExt"
-      Tab(0).Control(14)=   "txtContactEmail"
-      Tab(0).Control(15)=   "txtContactFax"
-      Tab(0).Control(16)=   "cmbPreparerCode"
-      Tab(0).Control(17)=   "cmdSaveSubm"
+      Tab(0).Control(0)=   "cmdSaveSubm"
+      Tab(0).Control(1)=   "cmbPreparerCode"
+      Tab(0).Control(2)=   "txtContactFax"
+      Tab(0).Control(3)=   "txtContactEmail"
+      Tab(0).Control(4)=   "txtContactPhnExt"
+      Tab(0).Control(5)=   "txtEIN"
+      Tab(0).Control(6)=   "txtCompanyName"
+      Tab(0).Control(7)=   "txtLocationAddress"
+      Tab(0).Control(8)=   "txtDeliveryAddress"
+      Tab(0).Control(9)=   "txtCity"
+      Tab(0).Control(10)=   "txtState"
+      Tab(0).Control(11)=   "txtZipCode"
+      Tab(0).Control(12)=   "txtZipCodeExt"
+      Tab(0).Control(13)=   "txtContactName"
+      Tab(0).Control(14)=   "txtContactPhn"
+      Tab(0).Control(15)=   "txtUserID"
+      Tab(0).Control(16)=   "Label3"
+      Tab(0).Control(17)=   "Label2"
       Tab(0).ControlCount=   18
       TabCaption(1)   =   "Submit OH W2 File"
       TabPicture(1)   =   "frmOhioW2Upload.frx":001C
@@ -91,26 +91,40 @@ Begin VB.Form frmOHW2
       Tab(1).Control(7).Enabled=   0   'False
       Tab(1).Control(8)=   "chkAllClients"
       Tab(1).Control(8).Enabled=   0   'False
-      Tab(1).Control(9)=   "chkRITA"
+      Tab(1).Control(9)=   "Frame1"
       Tab(1).Control(9).Enabled=   0   'False
-      Tab(1).Control(10)=   "chkCCA"
-      Tab(1).Control(10).Enabled=   0   'False
-      Tab(1).ControlCount=   11
-      Begin VB.CheckBox chkCCA 
-         Caption         =   "Include CCA CWT"
-         Height          =   375
-         Left            =   480
-         TabIndex        =   31
-         Top             =   3120
-         Width           =   2895
-      End
-      Begin VB.CheckBox chkRITA 
-         Caption         =   "Include RITA CWT"
-         Height          =   375
-         Left            =   480
+      Tab(1).ControlCount=   10
+      Begin VB.Frame Frame1 
+         Caption         =   "W2 File Type"
+         Height          =   855
+         Left            =   3240
          TabIndex        =   30
-         Top             =   2760
-         Width           =   2895
+         Top             =   2640
+         Width           =   7095
+         Begin VB.OptionButton optCCA 
+            Caption         =   "CCA  - City"
+            Height          =   375
+            Left            =   4800
+            TabIndex        =   33
+            Top             =   360
+            Width           =   2055
+         End
+         Begin VB.OptionButton optRITA 
+            Caption         =   "RITA -City"
+            Height          =   375
+            Left            =   2640
+            TabIndex        =   32
+            Top             =   360
+            Width           =   1935
+         End
+         Begin VB.OptionButton optFedState 
+            Caption         =   "Federal\Ohio"
+            Height          =   375
+            Left            =   240
+            TabIndex        =   31
+            Top             =   360
+            Width           =   1815
+         End
       End
       Begin VB.CheckBox chkAllClients 
          Caption         =   "Create the file ALL clients"
@@ -1178,7 +1192,7 @@ Begin VB.Form frmOHW2
       End
       Begin VB.Label lblMsg 
          Caption         =   "Label4"
-         Height          =   2055
+         Height          =   2655
          Left            =   2040
          TabIndex        =   27
          Top             =   4440
@@ -1202,7 +1216,7 @@ Begin VB.Form frmOHW2
       End
    End
    Begin VB.Label Label1 
-      Caption         =   "Federal / Ohio W2 Upload"
+      Caption         =   "Federal / Ohio / Local W2 Upload"
       BeginProperty Font 
          Name            =   "Arial"
          Size            =   15.75
@@ -1217,7 +1231,7 @@ Begin VB.Form frmOHW2
       Left            =   480
       TabIndex        =   0
       Top             =   360
-      Width           =   4095
+      Width           =   5895
    End
 End
 Attribute VB_Name = "frmOHW2"
@@ -1248,6 +1262,8 @@ Dim rsCity As New ADODB.Recordset
 Dim frmp As New frmProgress
 
 Private Sub Form_Load()
+
+    Me.optFedState.Value = True
 
     strSQL = "select *" & _
             " from PRState " & _
@@ -1395,8 +1411,9 @@ Private Sub cmdCreateFile_Click()
             Do
                 WriteRW
                 WriteRO
-                WriteRS
-                If Me.chkRITA.Value = 1 Or Me.chkCCA.Value = 1 Then
+                If Me.optFedState.Value Then
+                    WriteRS
+                Else
                     WriteRS_City
                 End If
                 If Not PRW2.GetNext Then Exit Do
@@ -1565,10 +1582,6 @@ Function PreCheck() As Boolean
         Loop
     End If
     
-    If Me.chkRITA.Value = 1 And Me.chkCCA.Value = 1 Then
-        msg = msg & "Pick only RITA or CCA!!" & vbCrLf
-    End If
-    
     If msg <> "" Then
         MsgBox msg, vbExclamation
         PreCheck = False
@@ -1613,6 +1626,17 @@ Sub CompanyReport()
     PrintInfo "Submitter", Me.txtCompanyName, 2
     PrintInfo PRCompany.Name, "", 1
     PrintInfo "File Name:", Me.txtOutputFile, 1
+    
+    Dim otype As String
+    If Me.optFedState.Value Then
+        otype = "Federal\State"
+    ElseIf Me.optRITA.Value Then
+        otype = "RITA - Local"
+    Else
+        otype = "CCA - Local"
+    End If
+    PrintInfo "Output Type: " & otype, "", 1
+    
     PrintInfo "W2 Count", W2TL.RWCount, 1
     PrintInfo "Box 1 Wages", AmtPrt(W2TL.Box1_Wages), 1
     PrintInfo "Box 2 Fed Tax", AmtPrt(W2TL.Box2_FedTax), 1
@@ -1661,7 +1685,7 @@ Sub CompanyReport()
         PrintInfo OutOfStateEmp, "", 1
     End If
     
-    If Me.chkRITA.Value = 1 Or Me.chkCCA.Value = 1 Then
+    If Me.optRITA.Value Or Me.optCCA.Value Then
         If rsCity.RecordCount > 6 Then
             FormFeed
             PageHeader ReportTitle, "Tax Year", Me.txtTaxYear.text, "", 1, False, True
@@ -1672,8 +1696,8 @@ Sub CompanyReport()
         End If
     End If
     
-    If Me.chkRITA.Value = 1 Then PrintLocalTotals ("RITA")
-    If Me.chkCCA.Value = 1 Then PrintLocalTotals ("CCA")
+    If Me.optRITA.Value Then PrintLocalTotals ("RITA")
+    If Me.optCCA.Value Then PrintLocalTotals ("CCA")
     
     OutOfStateEmp = ""
     
@@ -1843,6 +1867,14 @@ Sub WriteRS_City()
             " and TaxYear = " & Me.txtTaxYear
     If Not PRW2City.GetBySQL(strSQL) Then Exit Sub '
     
+    strSQL = "select *" & _
+            " from PRW2State " & _
+            " where W2ID = " & PRW2.W2ID & _
+            " and TaxYear = " & Me.txtTaxYear
+    If Not PRW2State.GetBySQL(strSQL) Then Exit Sub '
+    W2TL.Box16_StateWages = W2TL.Box16_StateWages + PRW2State.StateWage
+    W2TL.Box17_StateTax = W2TL.Box17_StateTax + PRW2State.StateTax
+    
     Dim NameLast As String
     Dim NameSuffix As String
     ii = InStr(PRW2.BoxE_EELastName, ",")
@@ -1871,7 +1903,7 @@ Sub WriteRS_City()
         sOut = "RS39"
         
         bMuni = False
-        If Me.chkRITA.Value = 1 Then
+        If Me.optRITA.Value Then
             If PRCity.RITA_Code <> "" Then
                 bMuni = True
                 sOut = sOut & "R0" & PRCity.RITA_Code
