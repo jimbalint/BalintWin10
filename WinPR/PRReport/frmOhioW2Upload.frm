@@ -51,24 +51,24 @@ Begin VB.Form frmOHW2
       TabCaption(0)   =   "Submitter Information"
       TabPicture(0)   =   "frmOhioW2Upload.frx":0000
       Tab(0).ControlEnabled=   0   'False
-      Tab(0).Control(0)=   "cmdSaveSubm"
-      Tab(0).Control(1)=   "cmbPreparerCode"
-      Tab(0).Control(2)=   "txtContactFax"
-      Tab(0).Control(3)=   "txtContactEmail"
-      Tab(0).Control(4)=   "txtContactPhnExt"
-      Tab(0).Control(5)=   "txtEIN"
-      Tab(0).Control(6)=   "txtCompanyName"
-      Tab(0).Control(7)=   "txtLocationAddress"
-      Tab(0).Control(8)=   "txtDeliveryAddress"
-      Tab(0).Control(9)=   "txtCity"
-      Tab(0).Control(10)=   "txtState"
-      Tab(0).Control(11)=   "txtZipCode"
-      Tab(0).Control(12)=   "txtZipCodeExt"
-      Tab(0).Control(13)=   "txtContactName"
-      Tab(0).Control(14)=   "txtContactPhn"
-      Tab(0).Control(15)=   "txtUserID"
-      Tab(0).Control(16)=   "Label3"
-      Tab(0).Control(17)=   "Label2"
+      Tab(0).Control(0)=   "Label2"
+      Tab(0).Control(1)=   "Label3"
+      Tab(0).Control(2)=   "txtUserID"
+      Tab(0).Control(3)=   "txtContactPhn"
+      Tab(0).Control(4)=   "txtContactName"
+      Tab(0).Control(5)=   "txtZipCodeExt"
+      Tab(0).Control(6)=   "txtZipCode"
+      Tab(0).Control(7)=   "txtState"
+      Tab(0).Control(8)=   "txtCity"
+      Tab(0).Control(9)=   "txtDeliveryAddress"
+      Tab(0).Control(10)=   "txtLocationAddress"
+      Tab(0).Control(11)=   "txtCompanyName"
+      Tab(0).Control(12)=   "txtEIN"
+      Tab(0).Control(13)=   "txtContactPhnExt"
+      Tab(0).Control(14)=   "txtContactEmail"
+      Tab(0).Control(15)=   "txtContactFax"
+      Tab(0).Control(16)=   "cmbPreparerCode"
+      Tab(0).Control(17)=   "cmdSaveSubm"
       Tab(0).ControlCount=   18
       TabCaption(1)   =   "Submit OH W2 File"
       TabPicture(1)   =   "frmOhioW2Upload.frx":001C
@@ -1864,6 +1864,7 @@ Sub WriteRS_City()
     strSQL = "select *" & _
             " from PRW2City " & _
             " where W2ID = " & PRW2.W2ID & _
+            " and SDTax = 0" & _
             " and TaxYear = " & Me.txtTaxYear
     If Not PRW2City.GetBySQL(strSQL) Then Exit Sub '
     

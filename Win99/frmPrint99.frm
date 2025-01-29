@@ -397,7 +397,7 @@ Private Sub cmdCSV_Click()
     
 ' tempFolder = "\\VBOXSVR\VM-Share\Balint_NewADO_EXE"
     TextFileName = tempFolder & "\" & Me.cmbForm.text & ".csv"
-    
+
     TextChannel = FreeFile
     Do
         On Error Resume Next
@@ -801,7 +801,10 @@ Private Function NECHeader() As String
     Dim ary(17) As String
     ary(1) = "2nd TIN Notice"
     ary(2) = "Box 1 - Nonemployee Compensation"
-    ary(3) = "Box 2 - Payer made direct sales totaling $5000 or more of consumer products to a recipient for resale"
+    
+    ' 2025-01-13 add comma in dollar amt as ^
+    ary(3) = """Box 2 - Payer made direct sales totaling $5^000 or more of consumer products to a recipient for resale"""
+    
     ary(4) = "Box 4 - Federal income tax withheld"
     ary(5) = "Combined Federal/State Filing"
     ary(6) = "State 1"
@@ -830,7 +833,10 @@ Private Function MiscHeader() As String
     ary(6) = "Box 4 - Federal income tax withheld"
     ary(7) = "Box 5 - Fishing boat proceeds"
     ary(8) = "Box 6 - Medical and health care payments"
-    ary(9) = "Box 7 - Direct sales of $5000 or more of consumer products to a recipient for resale"
+    
+    ' 2025-01-13 add comma to amount
+    ary(9) = """Box 7 - Direct sales of $5^000 or more of consumer products to a recipient for resale"""
+    
     ary(10) = "Box 8 - Subtitute payments in lieu of dividends or interest"
     ary(11) = "Box 9 - Crop insurance proceeds"
     ary(12) = "Box 10 - Gross proceeds paid to an attorney"
@@ -975,6 +981,10 @@ Private Function PrepCSV(ByVal InString As String) As String
     InString = Trim(InString)
     InString = Replace(InString, ",", " ")
     InString = Replace(InString, """", " ")
+    
+    ' embedded comma for 1099 headers
+    InString = Replace(InString, "^", ",")
+    
     PrepCSV = InString
 End Function
 

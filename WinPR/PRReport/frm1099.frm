@@ -21,6 +21,14 @@ Begin VB.Form frm1099
    ScaleHeight     =   10530
    ScaleWidth      =   9480
    StartUpPosition =   2  'CenterScreen
+   Begin VB.CommandButton cmdExport 
+      Caption         =   "Export 1099s"
+      Height          =   615
+      Left            =   1320
+      TabIndex        =   16
+      Top             =   9600
+      Width           =   1455
+   End
    Begin VSFlex8Ctl.VSFlexGrid fg 
       Height          =   5295
       Left            =   360
@@ -121,10 +129,10 @@ Begin VB.Form frm1099
    Begin VB.CommandButton cmdPrint 
       Caption         =   "&PRINT"
       Height          =   615
-      Left            =   1680
+      Left            =   3240
       TabIndex        =   12
       Top             =   9600
-      Width           =   1575
+      Width           =   1455
    End
    Begin TDBNumber6Ctl.TDBNumber tdbHorzNudge 
       Height          =   375
@@ -285,10 +293,10 @@ Begin VB.Form frm1099
    Begin VB.CommandButton cmdExit 
       Caption         =   "E&XIT"
       Height          =   615
-      Left            =   3960
+      Left            =   4920
       TabIndex        =   0
       Top             =   9600
-      Width           =   1575
+      Width           =   1335
    End
    Begin TDBNumber6Ctl.TDBNumber tdbVertNudge 
       Height          =   375
@@ -343,7 +351,7 @@ Begin VB.Form frm1099
       ReadOnly        =   0
       Separator       =   ","
       ShowContextMenu =   -1
-      ValueVT         =   2088828933
+      ValueVT         =   5
       Value           =   0
       MaxValueVT      =   6356997
       MinValueVT      =   5242885
@@ -414,8 +422,11 @@ Dim Flg As Boolean
 Dim TaxYear As Long
 Dim GlobalID As Long
 Public rs As New ADODB.Recordset
+Dim rs99 As New ADODB.Recordset
+Dim rs99d As New ADODB.Recordset
 Dim TlCount As Long
 Dim TlAmount As Currency
+Dim strSQL As String
 
 Private Sub Form_Load()
 
@@ -517,6 +528,70 @@ Private Sub Form_Load()
     ' !!!!!!!!!!!!!!!!
 
 End Sub
+Private Sub cmdExport_Click()
+    
+    Dim ect As Integer
+    
+    With frm1099.rs
+    
+        If .RecordCount = 0 Then
+            MsgBox "No records to export!", vbExclamation
+            Exit Sub
+        End If
+        If MsgBox("Are you sure you want to export PR 1099 information to Win 1099?", vbQuestion + vbYesNo, "Export to Win 1099") = vbNo Then
+            Exit Sub
+        End If
+
+        ect = 0
+        .MoveFirst
+        Do
+            If !Select = True Then
+
+                ect = ect + 1
+
+                If PREmployee.GetByID(!EmployeeID) = False Then
+                    MsgBox "Employee ID not found! " & !EmployeeID, vbExclamation
+                    GoBack
+                End If
+
+                strSQL = "SELECT * FROM Payee99 WHERE EmployeeID = " & PREmployee.EmployeeID
+                rsInit strSQL, cn, rs99
+                If rs99.BOF And rs99.EOF Then
+                    rs99.AddNew
+                    rs99!EmployeeID = PREmployee.EmployeeID
+                End If
+                
+                rs99!PayeeName = PREmployee.FLName
+                rs99!Address = PREmployee.Address1
+                ' cPayee99.PayeeAddr2 = PREmployee.Address2
+                rs99!CSZ = PREmployee.CSZ
+                rs99!PayeeNumber = PREmployee.EmployeeNumber
+                rs99!FederalID = RC4Encrypt(PREmployee.SSString, rc4Key)
+                rs99.Update
+                                
+                strSQL = "SELECT * FROM Detail99 WHERE PayeeID = " & rs99!PayeeID & " AND TaxYear = " & Me.cmbTaxYear.text & " AND FormType = 'NEC'"
+                rsInit strSQL, cn, rs99d
+                If rs99d.BOF And rs99d.EOF Then
+                    rs99d.AddNew
+                    rs99d!PayeeID = rs99!PayeeID
+                    rs99d!TaxYear = Me.cmbTaxYear.text
+                    rs99d!FormType = "NEC"
+                End If
+                rs99d!BoxName = "1"
+                rs99d!FieldValue = !Amount
+                rs99d.Update
+                
+            End If
+
+            .MoveNext
+        Loop Until .EOF
+    
+    End With
+
+    MsgBox "Win 1099 Payee records added: " & ect, vbInformation
+
+End Sub
+
 Private Sub cmdCalc_Click()
 
     On Error Resume Next

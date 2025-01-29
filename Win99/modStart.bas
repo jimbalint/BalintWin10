@@ -28,6 +28,7 @@ Dim FileExt As String
     
     If CmdLine = "" Then         ' set for testing
        BalintFolder = "c:\Balint"
+       BalintFolder = "\\vboxsrv\vm-share\Balint"
         ' BalintFolder = ""
        dbPwd = ""
        ProgName = UCase("print")

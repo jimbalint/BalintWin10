@@ -22,6 +22,7 @@ Public FederalID As String
 Public AccountNumber As String
 Public Comment As String
 Public Inactive As Byte
+Public EmployeeID As Long
 
 Public Records As Long
 
@@ -129,6 +130,7 @@ Public Function Save(ByVal booAddPut As Boolean) As String
     rs.Fields("AccountNumber") = Trim(AccountNumber)
     rs.Fields("Comment") = Trim(Comment)
     rs.Fields("Inactive") = nNull(Inactive)
+    rs.Fields("EmployeeID") = nNull(EmployeeID)
     rs.Update
     PayeeID = rs!PayeeID
     
@@ -145,6 +147,7 @@ Public Sub Clear()
     AccountNumber = ""
     Comment = ""
     Inactive = 0
+    EmployeeID = 0
       
 End Sub
 
@@ -177,6 +180,7 @@ Public Sub AssignFields()
     AccountNumber = Trim(rs!AccountNumber & "")
     Comment = Trim(rs!Comment & "")
     Inactive = nNull(rs!Inactive)
+    EmployeeID = nNull(rs!EmployeeID)
     
 End Sub
 

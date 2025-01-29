@@ -47,7 +47,7 @@ Public Notes As cNotes
 
 Public User As cGLUser
 
-Public dbName As String
+Public DBName As String
 
 Public PRCity As cPRCity
 Public PRState As cPRState
@@ -1529,19 +1529,19 @@ Public Function StripOhio(ByVal X As String) As String
 
     ' take "OHIO" out of a string
 
-Dim pos As Long
+Dim Pos As Long
 
     If IsNull(X) Then
         StripOhio = ""
         Exit Function
     End If
 
-    pos = InStr(1, X, "OHIO", vbTextCompare)
+    Pos = InStr(1, X, "OHIO", vbTextCompare)
     
-    If pos = 0 Then
+    If Pos = 0 Then
         StripOhio = X
     Else
-        StripOhio = Mid(X, 1, pos - 1) & Mid(X, pos + 4, 99)
+        StripOhio = Mid(X, 1, Pos - 1) & Mid(X, Pos + 4, 99)
     End If
 
 End Function
@@ -1928,7 +1928,7 @@ Public Function TableExists(ByVal TableName As String, _
 Dim cm As ADODB.Command
 Dim frs As ADODB.Recordset
 Dim FldFlag As Boolean
-Dim fString As String
+Dim FString As String
                          
     ' see if the field is already in the Table
     Set frs = New ADODB.Recordset
@@ -2270,12 +2270,12 @@ End Function
 
 Public Function FNameOnly(ByVal fnm As String) As String
 
-    Dim pos As Integer
-    pos = InStrRev(fnm, "\")
-    If pos = -1 Then
+    Dim Pos As Integer
+    Pos = InStrRev(fnm, "\")
+    If Pos = -1 Then
         FNameOnly = fnm
     Else
-        FNameOnly = Right(fnm, Len(fnm) - pos)
+        FNameOnly = Right(fnm, Len(fnm) - Pos)
     End If
 
 End Function
