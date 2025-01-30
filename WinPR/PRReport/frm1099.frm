@@ -542,14 +542,17 @@ Private Sub cmdExport_Click()
             Exit Sub
         End If
 
+        strSQL = "DELETE * FROM Detail99 WHERE TaxYear = " & Me.cmbTaxYear.text & " AND FormType = 'NEC'"
+        cn.Execute strSQL
+
         ect = 0
         .MoveFirst
         Do
             If !Select = True Then
 
                 ect = ect + 1
-
                 If PREmployee.GetByID(!EmployeeID) = False Then
+
                     MsgBox "Employee ID not found! " & !EmployeeID, vbExclamation
                     GoBack
                 End If

@@ -18,6 +18,20 @@ Dim ucmd As ADODB.Command
 
 Dim Ct1, Ct2, Recs As Long
 
+    ' 2025-01-28 - PR99 update to Win99
+    If GLSys = False Then
+        If AddField("Payee99", "EmployeeID", "Long", adoConn) Then
+        End If
+    End If
+    
+    ' 2025-01-16 - MuniCode will be unused
+    If GLSys = True Then
+        If AddField("PRCity", "RITA_Code", "String", adoConn) Then
+        End If
+        If AddField("PRCity", "CCA_Code", "String", adoConn) Then
+        End If
+    End If
+    
     ' 2025-01-15
     If GLSys = True Then
         If AddField("PRCity", "MuniCode", "String", adoConn) Then
