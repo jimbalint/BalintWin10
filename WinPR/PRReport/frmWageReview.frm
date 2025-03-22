@@ -387,7 +387,7 @@ Begin VB.Form frmOHBUC
    Begin VB.Frame fraReport 
       Caption         =   "Select Report"
       Height          =   675
-      Left            =   1223
+      Left            =   600
       TabIndex        =   25
       Top             =   900
       Width           =   3855
@@ -753,23 +753,31 @@ Begin VB.Form frmOHBUC
    Begin VB.Frame fraSort 
       Caption         =   "Sort By:"
       Height          =   675
-      Left            =   5543
+      Left            =   4560
       TabIndex        =   26
       Top             =   900
-      Width           =   3975
-      Begin VB.OptionButton optEmployee 
-         Caption         =   "&Employee Number"
+      Width           =   5895
+      Begin VB.OptionButton optEmpName 
+         Caption         =   "Emp N&ame"
          Height          =   255
          Left            =   240
-         TabIndex        =   2
-         Top             =   270
+         TabIndex        =   37
+         Top             =   240
          Value           =   -1  'True
-         Width           =   2175
+         Width           =   1695
+      End
+      Begin VB.OptionButton optEmpNum 
+         Caption         =   "&Emp Number"
+         Height          =   255
+         Left            =   2160
+         TabIndex        =   2
+         Top             =   240
+         Width           =   1695
       End
       Begin VB.OptionButton optSSN 
          Caption         =   "SS &Number"
          Height          =   240
-         Left            =   2400
+         Left            =   4200
          TabIndex        =   3
          Top             =   270
          Width           =   1455
@@ -1103,6 +1111,14 @@ Private Sub optEmployee_Click()
 End Sub
 
 
+Private Sub optEmpName_Click()
+    rs.Sort = "EmpName"
+End Sub
+
+Private Sub optEmpNum_Click()
+    rs.Sort = "EmpNo"
+End Sub
+
 Private Sub optFormOrig_Click()
     If Me.optFormSep2010 = True Then
         Me.fraOutput.Visible = False
@@ -1146,6 +1162,12 @@ Private Sub cmdOK_Click()
 
     qYear = cmbYear
     qQuarter = cmbQtr
+
+    With frmOHBUC
+        If .optEmpNum Then .rs.Sort = "EmpID"
+        If .optEmpName Then .rs.Sort = "EmpName"
+        If .optSSN Then .rs.Sort = "SSN"
+    End With
 
     If Me.optSupplement Then
         
@@ -1329,11 +1351,9 @@ Dim GrossAmt As Currency
         rs.MoveNext
     Loop Until rs.EOF
     
-    If Me.optEmployee Then
-        rs.Sort = "EmpID"
-    Else
-        rs.Sort = "SSN"
-    End If
+    If Me.optEmpNum Then rs.Sort = "EmpID"
+    If Me.optEmpName Then rs.Sort = "EmpName"
+    If Me.optSSN Then rs.Sort = "SSN"
     
     SetGrid rs, fg
     

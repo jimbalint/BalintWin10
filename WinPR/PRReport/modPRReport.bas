@@ -6700,18 +6700,13 @@ Public Sub OHBUCJournal()
     End If
     
     Msg1 = QtrEnding
+    SetFont 10, Equate.Portrait
     
     frmOHBUC.rs.MoveFirst
-    If frmOHBUC.optEmployee Then
-        frmOHBUC.rs.Sort = "EmpID"
-    Else
-        frmOHBUC.rs.Sort = "SSN"
-    End If
     Do
         If Ln = 0 Or Ln > MaxLines Then
             If Ln Then FormFeed
             PageHeader ReportTitle, Msg1, "", ""
-            SetFont 10, Equate.Portrait
             
             ' data header
             Ln = Ln + 2                ' Changed from Ln +1 to Ln + 2
@@ -6726,7 +6721,7 @@ Public Sub OHBUCJournal()
             PrintValue(8) = "WKS":                          FormatString(8) = "a3"
             PrintValue(9) = " ":                            FormatString(9) = "~"
             FormatPrint
-'            Ln = Ln + 1
+            Ln = Ln + 1
             PrintValue(1) = " ":                            FormatString(1) = "3"
             PrintValue(1) = String(99, "="):                FormatString(1) = "a99"
             PrintValue(2) = " ":                            FormatString(2) = "~"
@@ -6738,6 +6733,10 @@ Public Sub OHBUCJournal()
             frmProgress.Show
         
 '            If PREmployee.SSN = 0 Then GoTo cycle3
+            
+            X = "SELECT * FROM PREmployee WHERE EmployeeID = " & frmOHBUC.rs!EmpID
+            If PREmployee.GetBySQL(X) Then
+            End If
             
             PrintValue(1) = " ":                            FormatString(1) = "a3"
             PrintValue(2) = PREmployee.SSString:            FormatString(2) = "a11"
