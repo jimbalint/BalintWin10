@@ -645,6 +645,10 @@ Dim Ct1, Ct2, Recs As Long
         SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2024 AND StateID = 36 AND TaxMonth = 7"
         If PRFWTTable.GetBySQL(SQLString) = False Then SWTOH2024JulyUpdate
     
+        ' 2025-10-02 eff - start in 2025 Oct
+        SQLString = "SELECT * FROM PRFWTTable WHERE TaxYear = 2025 AND StateID = 36 AND TaxMonth = 10"
+        If PRFWTTable.GetBySQL(SQLString) = False Then SWTOH2025OctUpdate
+    
     End If
 
     ' 12/12/2009 - comment fields / item memo
@@ -2575,6 +2579,45 @@ Private Sub SWTOH2014UpdateJul1()
     MsgBox "Ohio SWT tables updated for July 2014!", vbOKOnly + vbInformation
 
 End Sub
+Private Sub SWTOH2025OctUpdate()
+
+    FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 1.775
+    FWTRange(2) = 26050.99: FWTAmount(2) = 462.39: FWTPct(2) = 2.99
+    FWTRange(3) = 100000.99: FWTAmount(3) = 2673.5: FWTPct(3) = 3.64
+
+    For Lvl = 1 To 3
+
+        PRFWTTable.Clear
+        PRFWTTable.TaxYear = 2025
+        PRFWTTable.TaxMonth = 10
+        PRFWTTable.StateID = 36
+
+        If Lvl = 1 Then
+            PRFWTTable.LowAmount = 0
+            PRFWTTable.ExcessBase = 0
+        Else
+            PRFWTTable.LowAmount = FWTRange(Lvl) + 0.01
+            PRFWTTable.ExcessBase = Int(FWTRange(Lvl))
+        End If
+
+        ' >>>>>>>>>>><<<<<<<<<<<<<<<<<<
+        If Lvl = 3 Then
+            PRFWTTable.HiAmount = 99999999.99
+        Else
+            PRFWTTable.HiAmount = FWTRange(Lvl + 1)
+        End If
+        
+        PRFWTTable.Amount = FWTAmount(Lvl)
+        PRFWTTable.Percent = FWTPct(Lvl)
+        PRFWTTable.Save (Equate.RecAdd)
+
+    Next Lvl
+
+    MsgBox "Ohio SWT tables updated for October 2025!", vbOKOnly + vbInformation
+
+End Sub
+
+
 Private Sub SWTOH2024JulyUpdate()
 
     FWTRange(1) = 0: FWTAmount(1) = 0: FWTPct(1) = 0.501
