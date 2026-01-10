@@ -608,10 +608,17 @@ Dim ActInact As String
                     FormatPrint
                     Ln = Ln + 1
                     
+                    ' 2025-12-08
                     PrintValue(1) = "EMPL #":                       FormatString(1) = "a9"
-                    PrintValue(2) = "EMPLOYEE NAME":                FormatString(2) = "a37"
+                    
+                    ' PrintValue(2) = "EMPLOYEE NAME":                FormatString(2) = "a37"
+                    PrintValue(2) = "EMPLOYEE NAME":                FormatString(2) = "a29"
+                    
                     PrintValue(3) = "DEPT":                         FormatString(3) = "a7"
-                    PrintValue(4) = "DEPT NAME":                    FormatString(4) = "a17"
+                    
+                    ' PrintValue(4) = "DEPT NAME":                    FormatString(4) = "a17"
+                    PrintValue(4) = "DEPT NAME":                    FormatString(4) = "a25"
+                    
                     PrintValue(5) = "RATE":                         FormatString(5) = "a10"
                     PrintValue(6) = "SALARY":                       FormatString(6) = "a6"
                     PrintValue(7) = " ":                            FormatString(7) = "~"
@@ -1128,11 +1135,18 @@ Dim ActInact As String
              
              Case "EmployeeRateList"
                     
+                ' 2025-12-08
                  PrintValue(1) = PREmployee.EmployeeNumber:             FormatString(1) = "a9"
-                 PrintValue(2) = PREmployee.LFName:                     FormatString(2) = "a37"
+                 
+                 ' PrintValue(2) = PREmployee.LFName:                     FormatString(2) = "a37"
+                 PrintValue(2) = PREmployee.LFName:                     FormatString(2) = "a29"
+                 
                  PrintValue(3) = RTrim(PRDepartment.DepartmentNumber):  FormatString(3) = "n4"
                  PrintValue(4) = " - ":                                 FormatString(4) = "a3"
-                 PrintValue(5) = Trim(PRDepartment.Name):               FormatString(5) = "a8"
+                 
+                 ' PrintValue(5) = Trim(PRDepartment.Name):               FormatString(5) = "a8"
+                 PrintValue(5) = Trim(PRDepartment.Name):               FormatString(5) = "a16"
+                 
                  If PREmployee.Salaried = 1 Then
                      PrintValue(6) = PREmployee.SalaryAmount:           FormatString(6) = "d14"
                  Else
