@@ -269,7 +269,7 @@ Next99:
         Amt(2, I) = 0
     Next I
     
-    SQLString = " SELECT * FROM Payee99 ORDER BY PayeeName "
+    SQLString = " SELECT * FROM Payee99 ORDER BY PayeeDisplayName "
     If Payee99.GetBySQL(SQLString) = False Then GoBack      ' ????
     
     Do
@@ -309,7 +309,7 @@ Next99:
             Loop
             
             ' print the line
-            PrintValue(1) = Payee99.PayeeName:          FormatString(1) = "a25"
+            PrintValue(1) = Payee99.PayeeDisplayName:          FormatString(1) = "a25"
             PrintValue(2) = Payee99.PayeeNumber:        FormatString(2) = "n10"
             PrintValue(3) = " " & Payee99.FederalID:    FormatString(3) = "a16"
             

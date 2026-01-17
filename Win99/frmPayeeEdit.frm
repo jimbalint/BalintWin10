@@ -3,7 +3,7 @@ Object = "{49CBFCC0-1337-11D2-9BBF-00A024695830}#1.0#0"; "tinumb8.ocx"
 Object = "{E2D000D0-2DA1-11D2-B358-00104B59D73D}#1.0#0"; "titext8.ocx"
 Begin VB.Form frmPayeeEdit 
    Caption         =   "1099 Payee Edit"
-   ClientHeight    =   7290
+   ClientHeight    =   8265
    ClientLeft      =   60
    ClientTop       =   450
    ClientWidth     =   14055
@@ -18,7 +18,7 @@ Begin VB.Form frmPayeeEdit
    EndProperty
    Icon            =   "frmPayeeEdit.frx":0000
    LinkTopic       =   "Form1"
-   ScaleHeight     =   7290
+   ScaleHeight     =   8265
    ScaleWidth      =   14055
    StartUpPosition =   2  'CenterScreen
    Begin VB.CheckBox chkInactive 
@@ -34,7 +34,7 @@ Begin VB.Form frmPayeeEdit
       Height          =   615
       Left            =   4560
       TabIndex        =   9
-      Top             =   6000
+      Top             =   6840
       Width           =   2415
    End
    Begin VB.CommandButton cmdSaveAdd 
@@ -42,7 +42,7 @@ Begin VB.Form frmPayeeEdit
       Height          =   615
       Left            =   1440
       TabIndex        =   8
-      Top             =   6000
+      Top             =   6840
       Width           =   2415
    End
    Begin TDBText6Ctl.TDBText tdbPayeeName 
@@ -166,14 +166,14 @@ Begin VB.Form frmPayeeEdit
       Height          =   615
       Left            =   7560
       TabIndex        =   10
-      Top             =   6000
+      Top             =   6840
       Width           =   2415
    End
    Begin TDBText6Ctl.TDBText tdbAddress 
       Height          =   375
       Left            =   360
       TabIndex        =   3
-      Top             =   2640
+      Top             =   3600
       Width           =   10935
       _Version        =   65536
       _ExtentX        =   19288
@@ -231,7 +231,7 @@ Begin VB.Form frmPayeeEdit
       Height          =   375
       Left            =   360
       TabIndex        =   4
-      Top             =   3240
+      Top             =   4200
       Width           =   10935
       _Version        =   65536
       _ExtentX        =   19288
@@ -289,7 +289,7 @@ Begin VB.Form frmPayeeEdit
       Height          =   375
       Left            =   360
       TabIndex        =   5
-      Top             =   3840
+      Top             =   4800
       Width           =   5775
       _Version        =   65536
       _ExtentX        =   10186
@@ -347,7 +347,7 @@ Begin VB.Form frmPayeeEdit
       Height          =   375
       Left            =   360
       TabIndex        =   6
-      Top             =   4440
+      Top             =   5400
       Width           =   5775
       _Version        =   65536
       _ExtentX        =   10186
@@ -405,7 +405,7 @@ Begin VB.Form frmPayeeEdit
       Height          =   375
       Left            =   360
       TabIndex        =   7
-      Top             =   5040
+      Top             =   6000
       Width           =   10935
       _Version        =   65536
       _ExtentX        =   19288
@@ -459,6 +459,238 @@ Begin VB.Form frmPayeeEdit
       OLEDragMode     =   0
       OLEDropMode     =   0
    End
+   Begin TDBText6Ctl.TDBText tdbPayeeFName 
+      Height          =   375
+      Left            =   360
+      TabIndex        =   15
+      Top             =   2640
+      Width           =   4575
+      _Version        =   65536
+      _ExtentX        =   8070
+      _ExtentY        =   661
+      Caption         =   "frmPayeeEdit.frx":08EE
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      DropDown        =   "frmPayeeEdit.frx":0956
+      Key             =   "frmPayeeEdit.frx":0974
+      BackColor       =   -2147483643
+      EditMode        =   0
+      ForeColor       =   -2147483640
+      ReadOnly        =   0
+      ShowContextMenu =   -1
+      MarginLeft      =   1
+      MarginRight     =   1
+      MarginTop       =   1
+      MarginBottom    =   1
+      Enabled         =   -1
+      MousePointer    =   0
+      Appearance      =   1
+      BorderStyle     =   1
+      AlignHorizontal =   0
+      AlignVertical   =   0
+      MultiLine       =   0
+      ScrollBars      =   0
+      PasswordChar    =   ""
+      AllowSpace      =   -1
+      Format          =   "Aa"
+      FormatMode      =   1
+      AutoConvert     =   -1
+      ErrorBeep       =   0
+      MaxLength       =   0
+      LengthAsByte    =   0
+      Text            =   "1"
+      Furigana        =   0
+      HighlightText   =   0
+      IMEMode         =   0
+      IMEStatus       =   0
+      DropWndWidth    =   0
+      DropWndHeight   =   0
+      ScrollBarMode   =   0
+      MoveOnLRKey     =   0
+      OLEDragMode     =   0
+      OLEDropMode     =   0
+   End
+   Begin TDBText6Ctl.TDBText tdbPayeeMI 
+      Height          =   375
+      Left            =   5040
+      TabIndex        =   16
+      Top             =   2640
+      Width           =   1575
+      _Version        =   65536
+      _ExtentX        =   2778
+      _ExtentY        =   661
+      Caption         =   "frmPayeeEdit.frx":09B8
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      DropDown        =   "frmPayeeEdit.frx":0A14
+      Key             =   "frmPayeeEdit.frx":0A32
+      BackColor       =   -2147483643
+      EditMode        =   0
+      ForeColor       =   -2147483640
+      ReadOnly        =   0
+      ShowContextMenu =   -1
+      MarginLeft      =   1
+      MarginRight     =   1
+      MarginTop       =   1
+      MarginBottom    =   1
+      Enabled         =   -1
+      MousePointer    =   0
+      Appearance      =   1
+      BorderStyle     =   1
+      AlignHorizontal =   0
+      AlignVertical   =   0
+      MultiLine       =   0
+      ScrollBars      =   0
+      PasswordChar    =   ""
+      AllowSpace      =   -1
+      Format          =   ""
+      FormatMode      =   1
+      AutoConvert     =   -1
+      ErrorBeep       =   0
+      MaxLength       =   0
+      LengthAsByte    =   0
+      Text            =   "TDBText1"
+      Furigana        =   0
+      HighlightText   =   0
+      IMEMode         =   0
+      IMEStatus       =   0
+      DropWndWidth    =   0
+      DropWndHeight   =   0
+      ScrollBarMode   =   0
+      MoveOnLRKey     =   0
+      OLEDragMode     =   0
+      OLEDropMode     =   0
+   End
+   Begin TDBText6Ctl.TDBText tdbPayeeLName 
+      Height          =   375
+      Left            =   6840
+      TabIndex        =   17
+      Top             =   2640
+      Width           =   4575
+      _Version        =   65536
+      _ExtentX        =   8070
+      _ExtentY        =   661
+      Caption         =   "frmPayeeEdit.frx":0A76
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      DropDown        =   "frmPayeeEdit.frx":0ADC
+      Key             =   "frmPayeeEdit.frx":0AFA
+      BackColor       =   -2147483643
+      EditMode        =   0
+      ForeColor       =   -2147483640
+      ReadOnly        =   0
+      ShowContextMenu =   -1
+      MarginLeft      =   1
+      MarginRight     =   1
+      MarginTop       =   1
+      MarginBottom    =   1
+      Enabled         =   -1
+      MousePointer    =   0
+      Appearance      =   1
+      BorderStyle     =   1
+      AlignHorizontal =   0
+      AlignVertical   =   0
+      MultiLine       =   0
+      ScrollBars      =   0
+      PasswordChar    =   ""
+      AllowSpace      =   -1
+      Format          =   ""
+      FormatMode      =   1
+      AutoConvert     =   -1
+      ErrorBeep       =   0
+      MaxLength       =   0
+      LengthAsByte    =   0
+      Text            =   "TDBText1"
+      Furigana        =   0
+      HighlightText   =   0
+      IMEMode         =   0
+      IMEStatus       =   0
+      DropWndWidth    =   0
+      DropWndHeight   =   0
+      ScrollBarMode   =   0
+      MoveOnLRKey     =   0
+      OLEDragMode     =   0
+      OLEDropMode     =   0
+   End
+   Begin TDBText6Ctl.TDBText tdbPayeeSuffix 
+      Height          =   375
+      Left            =   11640
+      TabIndex        =   18
+      Top             =   2640
+      Width           =   1935
+      _Version        =   65536
+      _ExtentX        =   3413
+      _ExtentY        =   661
+      Caption         =   "frmPayeeEdit.frx":0B3E
+      BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
+         Name            =   "Arial"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      DropDown        =   "frmPayeeEdit.frx":0B9E
+      Key             =   "frmPayeeEdit.frx":0BBC
+      BackColor       =   -2147483643
+      EditMode        =   0
+      ForeColor       =   -2147483640
+      ReadOnly        =   0
+      ShowContextMenu =   -1
+      MarginLeft      =   1
+      MarginRight     =   1
+      MarginTop       =   1
+      MarginBottom    =   1
+      Enabled         =   -1
+      MousePointer    =   0
+      Appearance      =   1
+      BorderStyle     =   1
+      AlignHorizontal =   0
+      AlignVertical   =   0
+      MultiLine       =   0
+      ScrollBars      =   0
+      PasswordChar    =   ""
+      AllowSpace      =   -1
+      Format          =   ""
+      FormatMode      =   1
+      AutoConvert     =   -1
+      ErrorBeep       =   0
+      MaxLength       =   0
+      LengthAsByte    =   0
+      Text            =   "TDBText1"
+      Furigana        =   0
+      HighlightText   =   0
+      IMEMode         =   0
+      IMEStatus       =   0
+      DropWndWidth    =   0
+      DropWndHeight   =   0
+      ScrollBarMode   =   0
+      MoveOnLRKey     =   0
+      OLEDragMode     =   0
+      OLEDropMode     =   0
+   End
    Begin VB.Label Label3 
       Caption         =   "ESC"
       BeginProperty Font 
@@ -474,7 +706,7 @@ Begin VB.Form frmPayeeEdit
       Height          =   255
       Left            =   8520
       TabIndex        =   14
-      Top             =   6720
+      Top             =   7560
       Width           =   375
    End
    Begin VB.Label Label2 
@@ -492,7 +724,7 @@ Begin VB.Form frmPayeeEdit
       Height          =   255
       Left            =   5640
       TabIndex        =   13
-      Top             =   6720
+      Top             =   7560
       Width           =   375
    End
    Begin VB.Label Label1 
@@ -510,7 +742,7 @@ Begin VB.Form frmPayeeEdit
       Height          =   255
       Left            =   2640
       TabIndex        =   12
-      Top             =   6720
+      Top             =   7560
       Width           =   375
    End
    Begin VB.Label lblCompanyName 
@@ -574,6 +806,16 @@ Private Sub Form_Load()
         tdbTextSet .tdbCSZ, 50
         tdbTextSet .tdbFederalID, 15
         tdbTextSet .tdbAccountNumber, 50
+        
+        tdbTextSet .tdbPayeeFName, 50
+        tdbTextSet .tdbPayeeMI, 5
+        tdbTextSet .tdbPayeeLName, 50
+        tdbTextSet .tdbPayeeSuffix, 5
+        .tdbPayeeFName.Format = "Aa9#@"
+        .tdbPayeeLName.Format = "Aa9#@"
+        .tdbPayeeMI.Format = "Aa9#@"
+        .tdbPayeeSuffix.Format = "Aa9#@"
+        
         .tdbComment.text = ""
     End With
 
@@ -676,6 +918,12 @@ Private Sub SaveForm()
         Else
             Payee99.Inactive = 0
         End If
+        
+        Payee99.PayeeFName = Trim(.tdbPayeeFName)
+        Payee99.PayeeMI = Trim(.tdbPayeeMI)
+        Payee99.PayeeLName = Trim(.tdbPayeeLName)
+        Payee99.PayeeSuffix = Trim(.tdbPayeeSuffix)
+        
         Payee99.Save (Equate.RecPut)
     End With
 
@@ -693,6 +941,12 @@ Private Sub DisplayForm()
         .tdbFederalID = Payee99.FederalID
         .chkInactive = Payee99.Inactive
         .tdbComment = Payee99.Comment
+    
+        .tdbPayeeFName = Payee99.PayeeFName
+        .tdbPayeeMI = Payee99.PayeeMI
+        .tdbPayeeLName = Payee99.PayeeLName
+        .tdbPayeeSuffix = Payee99.PayeeSuffix
+    
     End With
 
     Me.Refresh

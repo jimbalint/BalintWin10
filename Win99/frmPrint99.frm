@@ -428,7 +428,7 @@ Private Sub cmdCSV_Click()
     
     CommonColumns = SetCommonColumns()
     
-    SQLString = " SELECT * FROM Payee99 ORDER BY PayeeName"
+    SQLString = " SELECT * FROM Payee99 ORDER BY PayeeDisplayName"
     If Payee99.GetBySQL(SQLString) = False Then
         MsgBox "No Payee info found!", vbInformation
         GoBack
@@ -519,10 +519,10 @@ Private Function PayeeColumns() As String
     ary(3) = "B"              ' name type
     ary(4) = PrepCSV(Payee99.PayeeName)
     ary(5) = ""       ' biz name 2
-    ary(6) = ""       ' firstname
-    ary(7) = ""       ' mnm
-    ary(8) = ""       ' last name
-    ary(9) = ""       ' suffix
+    ary(6) = PrepCSV(Payee99.PayeeFName)       ' firstname
+    ary(7) = PrepCSV(Payee99.PayeeMI)       ' mnm
+    ary(8) = PrepCSV(Payee99.PayeeLName)      ' last name
+    ary(9) = PrepCSV(Payee99.PayeeSuffix)       ' suffix
     ary(10) = "US"      ' country
     ary(11) = PrepCSV(Payee99.Address)
     ary(12) = ""      ' addr2
@@ -985,6 +985,11 @@ Private Function PrepCSV(ByVal InString As String) As String
     ' embedded comma for 1099 headers
     InString = Replace(InString, "^", ",")
     
+    InString = Replace(InString, "&", " ")
+    InString = Replace(InString, "%", " ")
+    InString = Replace(InString, "#", " ")
+    InString = Replace(InString, "@", " ")
+    
     PrepCSV = InString
 End Function
 
@@ -1109,7 +1114,7 @@ Dim ColCt As Integer
         .ColWidth(2) = 1000
         
         .TextMatrix(0, 3) = "Payee Name"
-        .ColData(3) = "PayeeName"
+        .ColData(3) = "PayeeDisplayName"
         .ColDataType(3) = flexDTString
         .ColWidth(3) = 2000
         
@@ -1182,7 +1187,7 @@ Dim ColCt As Integer
                 .TextMatrix(Rw, 0) = Payee99.PayeeID
                 .TextMatrix(Rw, 1) = False
                 .TextMatrix(Rw, 2) = Payee99.PayeeNumber
-                .TextMatrix(Rw, 3) = Payee99.PayeeName
+                .TextMatrix(Rw, 3) = Payee99.PayeeDisplayName
                 .TextMatrix(Rw, 4) = Payee99.FederalID
                 
                 ' load the detail data

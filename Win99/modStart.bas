@@ -4,6 +4,7 @@ Private Sub Main()
 Dim X As String
 Dim NewFlag As Boolean
 Dim FileExt As String
+Dim strSQL As String
 
     frmSplash.Show
 
@@ -27,8 +28,8 @@ Dim FileExt As String
     CmdLine = X
     
     If CmdLine = "" Then         ' set for testing
-       BalintFolder = "c:\Balint"
        BalintFolder = "\\vboxsrv\vm-share\Balint"
+       BalintFolder = "c:\Balint"
         ' BalintFolder = ""
        dbPwd = ""
        ProgName = UCase("print")
@@ -142,6 +143,23 @@ Dim FileExt As String
     If TableExists("Payee99", cn) = False Then Payee99Create
     If TableExists("Detail99", cn) = False Then Detail99Create
     ' *******************
+    
+    ' 2026-01-17 New Payee Fields
+    AddField "Payee99", "PayeeFName", "char (50)", cn
+    AddField "Payee99", "PayeeLName", "char (50)", cn
+    AddField "Payee99", "PayeeMI", "char (5)", cn
+    AddField "Payee99", "PayeeSuffix", "char (5)", cn
+    AddField "Payee99", "PayeeDisplayName", "char (255)", cn
+    
+    ' initialize displayname
+    strSQL = "select * from Payee99"
+    If Payee99.GetBySQL(strSQL) Then
+        Do
+            Payee99.Save (Equate.RecPut)
+            If Not Payee99.GetNext Then Exit Do
+        Loop
+    End If
+    
     
     ' =========
     ' create forms for the new year

@@ -106,7 +106,7 @@ Public Sub PrintForm99(ByVal FormType As String, ByVal TaxYear As Long, ByVal Te
         End If
     Else
         If TestMode = False Then
-            SQLString = " SELECT * FROM Payee99 ORDER BY PayeeName"
+            SQLString = " SELECT * FROM Payee99 ORDER BY PayeeDisplayName"
             If Payee99.GetBySQL(SQLString) = False Then
                 MsgBox "No Payee info found!", vbInformation
                 GoBack
@@ -206,7 +206,7 @@ Dim Form1096 As Boolean
                 Case "PayerFederalID"
                     X = GLCompany.FederalID
                 Case "PayeeName"
-                    X = Payee99.PayeeName
+                    X = Payee99.PayeeDisplayName
                 Case "PayeeAddress"
                     X = Payee99.Address
                 Case "PayeeCSZ"

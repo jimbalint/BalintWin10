@@ -24,6 +24,13 @@ Public Comment As String
 Public Inactive As Byte
 Public EmployeeID As Long
 
+' 2026-01-17
+Public PayeeFName As String
+Public PayeeLName As String
+Public PayeeMI As String
+Public PayeeSuffix As String
+Public PayeeDisplayName As String
+
 Public Records As Long
 
 Dim rs As New ADODB.Recordset
@@ -131,6 +138,14 @@ Public Function Save(ByVal booAddPut As Boolean) As String
     rs.Fields("Comment") = Trim(Comment)
     rs.Fields("Inactive") = nNull(Inactive)
     rs.Fields("EmployeeID") = nNull(EmployeeID)
+    
+    ' 2026-01-17
+    rs.Fields("PayeeFName") = Trim(PayeeFName)
+    rs.Fields("PayeeLName") = Trim(PayeeLName)
+    rs.Fields("PayeeMI") = Trim(PayeeMI)
+    rs.Fields("PayeeSuffix") = Trim(PayeeSuffix)
+    rs.Fields("PayeeDisplayName") = Trim(GetDisplayName)
+
     rs.Update
     PayeeID = rs!PayeeID
     
@@ -149,6 +164,11 @@ Public Sub Clear()
     Inactive = 0
     EmployeeID = 0
       
+    PayeeFName = ""
+    PayeeLName = ""
+    PayeeMI = ""
+    PayeeSuffix = ""
+    PayeeDisplayName = ""
 End Sub
 
 Public Sub DeleteAll()
@@ -182,7 +202,28 @@ Public Sub AssignFields()
     Inactive = nNull(rs!Inactive)
     EmployeeID = nNull(rs!EmployeeID)
     
+    PayeeFName = Trim(rs!PayeeFName & "")
+    PayeeLName = Trim(rs!PayeeLName & "")
+    PayeeMI = Trim(rs!PayeeMI & "")
+    PayeeSuffix = Trim(rs!PayeeSuffix & "")
+    PayeeDisplayName = GetDisplayName
+    
 End Sub
+
+Private Function GetDisplayName()
+    If Trim(PayeeName) <> "" Then
+        GetDisplayName = PayeeName
+    Else
+        GetDisplayName = Trim(PayeeFName)
+        If Trim(PayeeMI) <> "" Then
+            GetDisplayName = GetDisplayName & " " & Trim(PayeeMI)
+        End If
+        GetDisplayName = GetDisplayName & " " & Trim(PayeeLName)
+        If Trim(PayeeSuffix) <> "" Then
+            GetDisplayName = GetDisplayName & " " & Trim(PayeeSuffix)
+        End If
+    End If
+End Function
 
 Public Function GetBySQL(ByVal SString As String) As Boolean
                              
@@ -226,6 +267,5 @@ End Function
 Public Function Count() As Long
     Count = rs.RecordCount
 End Function
-
 
 

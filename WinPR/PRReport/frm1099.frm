@@ -564,7 +564,13 @@ Private Sub cmdExport_Click()
                     rs99!EmployeeID = PREmployee.EmployeeID
                 End If
                 
-                rs99!PayeeName = PREmployee.FLName
+                ' 2026-01-17
+                rs99!PayeeFName = PREmployee.FirstName
+                rs99!PayeeLName = PREmployee.LastName
+                rs99!PayeeMI = PREmployee.MidInit
+                rs99!PayeeSuffix = ""
+                rs99!PayeeName = ""
+                
                 rs99!Address = PREmployee.Address1
                 ' cPayee99.PayeeAddr2 = PREmployee.Address2
                 rs99!CSZ = PREmployee.CSZ

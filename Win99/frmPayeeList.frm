@@ -358,7 +358,7 @@ Private Sub GetPayeeData()
     dbFileName = "Payee99"
     dbFields(0) = "PayeeID"
     dbFields(1) = "PayeeNumber"
-    dbFields(2) = "PayeeName"
+    dbFields(2) = "PayeeDisplayName"
     dbFields(3) = "Inactive"
     dbSortCol = 1
 

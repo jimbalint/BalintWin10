@@ -56,6 +56,12 @@ Public Sub Payee99Create()
     AddField "Payee99", "Comment", "char (50)", cn
     AddField "Payee99", "Inactive", "Byte", cn
     
+    ' 2026-01-17
+    AddField "Payee99", "PayeeFName", "char (50)", cn
+    AddField "Payee99", "PayeeLName", "char (50)", cn
+    AddField "Payee99", "PayeeMI", "char (5)", cn
+    AddField "Payee99", "PayeeSuffix", "char (5)", cn
+    
 End Sub
 
 Public Sub Detail99Create()

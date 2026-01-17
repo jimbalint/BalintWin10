@@ -18,6 +18,15 @@ Dim ucmd As ADODB.Command
 
 Dim Ct1, Ct2, Recs As Long
 
+    ' 2025-01-17 New 1099 fields
+    If GLSys = False Then
+        AddField "Payee99", "PayeeFName", "char (50)", adoConn
+        AddField "Payee99", "PayeeLName", "char (50)", adoConn
+        AddField "Payee99", "PayeeMI", "char (5)", adoConn
+        AddField "Payee99", "PayeeSuffix", "char (5)", adoConn
+        AddField "Payee99", "PayeeDisplayName", "char (255)", adoConn
+    End If
+
     ' 2025-01-28 - PR99 update to Win99
     If GLSys = False Then
         If AddField("Payee99", "EmployeeID", "Long", adoConn) Then
