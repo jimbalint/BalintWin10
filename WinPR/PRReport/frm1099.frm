@@ -564,12 +564,20 @@ Private Sub cmdExport_Click()
                     rs99!EmployeeID = PREmployee.EmployeeID
                 End If
                 
-                ' 2026-01-17
-                rs99!PayeeFName = PREmployee.FirstName
-                rs99!PayeeLName = PREmployee.LastName
-                rs99!PayeeMI = PREmployee.MidInit
-                rs99!PayeeSuffix = ""
-                rs99!PayeeName = ""
+                ' 2026-01-17 - drop down selection from EE maint main tab
+                If PREmployee.x1099Employee = PREquate.x1099Inc Then
+                    rs99!PayeeFName = ""
+                    rs99!PayeeLName = ""
+                    rs99!PayeeMI = ""
+                    rs99!PayeeSuffix = ""
+                    rs99!PayeeName = PREmployee.FLName
+                Else
+                    rs99!PayeeFName = PREmployee.FirstName
+                    rs99!PayeeLName = PREmployee.LastName
+                    rs99!PayeeMI = PREmployee.MidInit
+                    rs99!PayeeSuffix = ""
+                    rs99!PayeeName = ""
+                End If
                 
                 rs99!Address = PREmployee.Address1
                 ' cPayee99.PayeeAddr2 = PREmployee.Address2

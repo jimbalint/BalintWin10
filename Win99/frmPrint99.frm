@@ -434,14 +434,21 @@ Private Sub cmdCSV_Click()
         GoBack
     End If
     Do
-        sOut = CommonColumns & PayeeColumns()
-        Select Case Me.cmbForm.text
-            Case "1099-NEC": sOut = sOut & NEC_Columns(Payee99.PayeeID)
-            Case "1099-MISC": sOut = sOut & MiscColumns(Payee99.PayeeID)
-            Case "1099-INT": sOut = sOut & Int_Columns(Payee99.PayeeID)
-            Case "1099-DIV": sOut = sOut & Div_Columns(Payee99.PayeeID)
-        End Select
-        Print #TextChannel, sOut
+        
+        ' dont' print if no detail
+        SQLString = " SELECT * FROM Detail99 WHERE PayeeID = " & Payee99.PayeeID & _
+                    " AND FormType = '" & Mid(Me.cmbForm.text, 6) & "' " & _
+                    " AND TaxYear = " & Me.cmbTaxYear.text
+        If Detail99.GetBySQL(SQLString) Then
+            sOut = CommonColumns & PayeeColumns()
+            Select Case Me.cmbForm.text
+                Case "1099-NEC": sOut = sOut & NEC_Columns(Payee99.PayeeID)
+                Case "1099-MISC": sOut = sOut & MiscColumns(Payee99.PayeeID)
+                Case "1099-INT": sOut = sOut & Int_Columns(Payee99.PayeeID)
+                Case "1099-DIV": sOut = sOut & Div_Columns(Payee99.PayeeID)
+            End Select
+            Print #TextChannel, sOut
+        End If
         If Payee99.GetNext = False Then Exit Do
     Loop
     
@@ -451,7 +458,7 @@ Private Sub cmdCSV_Click()
 End Sub
 Private Function SetCommonColumns()
     Dim aa As Integer
-    Dim ary(20) As String
+    Dim ary(19) As String
     ary(1) = Me.cmbForm.text
     ary(2) = Me.cmbTaxYear.text
     ary(3) = "EIN"      ' Payer TIN Type
@@ -471,7 +478,10 @@ Private Function SetCommonColumns()
     ary(17) = GLCompany.ZipCode
     ary(18) = "D"      ' phone type
     ary(19) = PrepCSV(PRGlobal.Var3)       ' phone
-    ary(20) = PrepCSV(PRGlobal.Var2)      ' email
+    
+    ' 2026-01-26 field not used ...??
+    ' ary(20) = PrepCSV(PRGlobal.Var2)      ' email
+    
     SetCommonColumns = Ary2String(ary, False)
 End Function
 Private Function Get_TIN_Type(ByVal IDString As String) As String
@@ -516,7 +526,17 @@ Private Function PayeeColumns() As String
     CSZ = ParseCSZ(Payee99.CSZ)
     ary(1) = Get_TIN_Type(Payee99.FederalID)     ' TIN Type
     ary(2) = PrepCSV(Payee99.FederalID)
-    ary(3) = "B"              ' name type
+    
+    If Trim(Payee99.PayeeName) <> "" Then
+'MsgBox Payee99.PayeeName
+'MsgBox "B"
+        ary(3) = "B"              ' name type
+    Else
+'MsgBox Payee99.PayeeDisplayName
+'MsgBox "I"
+        ary(3) = "I"
+    End If
+    
     ary(4) = PrepCSV(Payee99.PayeeName)
     ary(5) = ""       ' biz name 2
     ary(6) = PrepCSV(Payee99.PayeeFName)       ' firstname
@@ -537,19 +557,24 @@ End Function
 Private Function NEC_Columns(ByVal PayeeID As Integer) As String
     Dim aa As Integer
     Dim ary(17) As String
+    
     ary(1) = "N"       ' 2nd TIN notice
     
     Dim box1 As String
     Dim box2 As String
     box1 = GetDetailData99(PayeeID, "1")
     box2 = GetDetailData99(PayeeID, "2")
-    If box2 = "" Then
+    
+    ' 2026-01-26
+    If box1 <> "" Then
         ary(2) = GetDetailData99(PayeeID, "1")
         ary(3) = "N"
     Else
         ary(2) = ""
         ary(3) = "Y"
     End If
+    
+    ary(3) = ""     ' Box 3 golden parachute payments - not a field in form NEC defn
     
     ary(4) = AmtString(GetDetailData99(PayeeID, "4"))
     ary(4) = GetDetailData99(PayeeID, "4")
@@ -798,33 +823,36 @@ End Function
 
 Private Function NECHeader() As String
     Dim aa As Integer
-    Dim ary(17) As String
+    Dim ary(18) As String
     ary(1) = "2nd TIN Notice"
     ary(2) = "Box 1 - Nonemployee Compensation"
     
     ' 2025-01-13 add comma in dollar amt as ^
     ary(3) = """Box 2 - Payer made direct sales totaling $5^000 or more of consumer products to a recipient for resale"""
     
-    ary(4) = "Box 4 - Federal income tax withheld"
-    ary(5) = "Combined Federal/State Filing"
-    ary(6) = "State 1"
-    ary(7) = "State 1 - State Tax Withheld"
-    ary(8) = "State 1 - State/Payer state number"
-    ary(9) = "State 1 - State income"
-    ary(10) = "State 1 - Local income tax withheld"
-    ary(11) = "State 1 - Special Data Entries"
-    ary(12) = "State 2"
-    ary(13) = "State 2 - State Tax Withheld"
-    ary(14) = "State 2 - State/Payer state number"
-    ary(15) = "State 2 - State income"
-    ary(16) = "State 2 - Local income tax withheld"
-    ary(17) = "State 2 - Special Data Entries"
+    ' 2026-01-26 Box 3 was missing
+    ary(4) = "Box 3 - Excess golden parachute payments"
+    
+    ary(5) = "Box 4 - Federal income tax withheld"
+    ary(6) = "Combined Federal/State Filing"
+    ary(7) = "State 1"
+    ary(8) = "State 1 - State Tax Withheld"
+    ary(9) = "State 1 - State/Payer state number"
+    ary(10) = "State 1 - State income"
+    ary(11) = "State 1 - Local income tax withheld"
+    ary(12) = "State 1 - Special Data Entries"
+    ary(13) = "State 2"
+    ary(14) = "State 2 - State Tax Withheld"
+    ary(15) = "State 2 - State/Payer state number"
+    ary(16) = "State 2 - State income"
+    ary(17) = "State 2 - Local income tax withheld"
+    ary(18) = "State 2 - Special Data Entries"
     NECHeader = Ary2String(ary, True)
 End Function
 
 Private Function MiscHeader() As String
     Dim aa As Integer
-    Dim ary(29) As String
+    Dim ary(28) As String
     ary(1) = "FATCA Filing Requirements"
     ary(2) = "2nd TIN Notice"
     ary(3) = "Box 1 - Rents"
@@ -835,28 +863,31 @@ Private Function MiscHeader() As String
     ary(8) = "Box 6 - Medical and health care payments"
     
     ' 2025-01-13 add comma to amount
-    ary(9) = """Box 7 - Direct sales of $5^000 or more of consumer products to a recipient for resale"""
+    ary(9) = "Box 7 - Direct sales of $5^000 or more of consumer products to a recipient for resale"
     
-    ary(10) = "Box 8 - Subtitute payments in lieu of dividends or interest"
+    ary(10) = "Box 8 - Substitute payments in lieu of dividends or interest"
     ary(11) = "Box 9 - Crop insurance proceeds"
     ary(12) = "Box 10 - Gross proceeds paid to an attorney"
     ary(13) = "Box 11 - Fish purchased for resale"
     ary(14) = "Box 12 - Section 409A deferrals"
-    ary(15) = "Box 14 - Excess golden parachute payments"
-    ary(16) = "Box 15 - Nonqualified deferred compensation"
-    ary(17) = "Combined Federal/State Filing"
-    ary(18) = "State 1"
-    ary(19) = "State 1 - State Tax Withheld"
-    ary(20) = "State 1 - State/Payer state number"
-    ary(21) = "State 1 - State income"
-    ary(22) = "State 1 - Local income tax withheld"
-    ary(23) = "State 1 - Special Data Entries"
-    ary(24) = "State 2"
-    ary(25) = "State 2 - State Tax Withheld"
-    ary(26) = "State 2 - State/Payer state number"
-    ary(27) = "State 2 - State income"
-    ary(28) = "State 2 - Local income tax withheld"
-    ary(29) = "State 2 - Special Data Entries"
+    
+    ' 2026-01-26 not needed ...??
+    ' ary(15) = "Box 14 - Excess golden parachute payments"
+    
+    ary(15) = "Box 15 - Nonqualified deferred compensation"
+    ary(16) = "Combined Federal/State Filing"
+    ary(17) = "State 1"
+    ary(18) = "State 1 - State Tax Withheld"
+    ary(19) = "State 1 - State/Payer state number"
+    ary(20) = "State 1 - State income"
+    ary(21) = "State 1 - Local income tax withheld"
+    ary(22) = "State 1 - Special Data Entries"
+    ary(23) = "State 2"
+    ary(24) = "State 2 - State Tax Withheld"
+    ary(25) = "State 2 - State/Payer state number"
+    ary(26) = "State 2 - State income"
+    ary(27) = "State 2 - Local income tax withheld"
+    ary(28) = "State 2 - Special Data Entries"
     MiscHeader = Ary2String(ary, True)
 End Function
 
@@ -935,6 +966,52 @@ Private Function DivHeader() As String
 End Function
 
 Private Function CommonHeader() As String
+    ' 2026-01-16 - payer email addr not used
+    Dim aa As Integer
+    Dim ary(36) As String
+    ary(1) = "Form Type"
+    ary(2) = "Tax Year"
+    ary(3) = "Payer TIN Type"
+    ary(4) = "Payer Taxpayer ID Number"
+    ary(5) = "Payer Name Type"
+    ary(6) = "Payer Business or Entity Name Line 1"
+    ary(7) = "Payer Business or Entity Name Line 2"
+    ary(8) = "Payer First Name"
+    ary(9) = "Payer Middle Name"
+    ary(10) = "Payer Last Name (Surname)"
+    ary(11) = "Payer Suffix"
+    ary(12) = "Payer Country"
+    ary(13) = "Payer Address Line 1"
+    ary(14) = "Payer Address Line 2"
+    ary(15) = "Payer City/Town"
+    ary(16) = "Payer State/Province/Territory"
+    ary(17) = "Payer ZIP/Postal Code"
+    ary(18) = "Payer Phone Type"
+    ary(19) = "Payer Phone"
+    
+    ' ary(20) = "Payer Email Address"
+    
+    ary(20) = "Recipient TIN Type"
+    ary(21) = "Recipient Taxpayer ID Number"
+    ary(22) = "Recipient Name Type"
+    ary(23) = "Recipient Business or Entity Name Line 1"
+    ary(24) = "Recipient Business or Entity Name Line 2"
+    ary(25) = "Recipient First Name"
+    ary(26) = "Recipient Middle Name"
+    ary(27) = "Recipient Last Name (Surname)"
+    ary(28) = "Recipient Suffix"
+    ary(29) = "Recipient Country"
+    ary(30) = "Recipient Address Line 1"
+    ary(31) = "Recipient Address Line 2"
+    ary(32) = "Recipient City/Town"
+    ary(33) = "Recipient State/Province/Territory"
+    ary(34) = "Recipient ZIP/Postal Code"
+    ary(35) = "Office Code"
+    ary(36) = "Form Account Number"
+    CommonHeader = Ary2String(ary, False)
+End Function
+
+Private Function CommonHeaderOLD() As String
     Dim aa As Integer
     Dim ary(37) As String
     ary(1) = "Form Type"
@@ -974,7 +1051,7 @@ Private Function CommonHeader() As String
     ary(35) = "Recipient ZIP/Postal Code"
     ary(36) = "Office Code"
     ary(37) = "Form Account Number"
-    CommonHeader = Ary2String(ary, False)
+    CommonHeaderOLD = Ary2String(ary, False)
 End Function
 
 Private Function PrepCSV(ByVal InString As String) As String
