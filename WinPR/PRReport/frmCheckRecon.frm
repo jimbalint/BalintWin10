@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin VB.Form frmCheckRecon 
    Caption         =   "Check Reconciliation Report"
-   ClientHeight    =   4200
+   ClientHeight    =   6465
    ClientLeft      =   60
    ClientTop       =   345
-   ClientWidth     =   8640
+   ClientWidth     =   10215
    BeginProperty Font 
       Name            =   "Arial"
       Size            =   12
@@ -15,23 +15,47 @@ Begin VB.Form frmCheckRecon
       Strikethrough   =   0   'False
    EndProperty
    LinkTopic       =   "Form1"
-   ScaleHeight     =   4200
-   ScaleWidth      =   8640
+   ScaleHeight     =   6465
+   ScaleWidth      =   10215
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Frame Frame1 
+      Caption         =   " Report Option "
+      Height          =   1935
+      Left            =   1440
+      TabIndex        =   5
+      Top             =   2640
+      Width           =   7335
+      Begin VB.OptionButton optNoName 
+         Caption         =   "No Names Export"
+         Height          =   375
+         Left            =   240
+         TabIndex        =   7
+         Top             =   960
+         Width           =   3255
+      End
+      Begin VB.OptionButton optCheckRecon 
+         Caption         =   "Check Reconciliation"
+         Height          =   375
+         Left            =   240
+         TabIndex        =   6
+         Top             =   480
+         Width           =   3495
+      End
+   End
    Begin VB.CommandButton cmdExit 
       Caption         =   "E&XIT"
       Height          =   615
-      Left            =   6326
+      Left            =   4920
       TabIndex        =   3
-      Top             =   3240
+      Top             =   5640
       Width           =   1455
    End
    Begin VB.CommandButton cmdOK 
       Caption         =   "&OK"
       Height          =   615
-      Left            =   859
+      Left            =   2880
       TabIndex        =   2
-      Top             =   3240
+      Top             =   5640
       Width           =   1455
    End
    Begin VB.TextBox TxtDisplay 
@@ -89,7 +113,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
-
+Dim x, y, z As String
 
 Private Sub Form_Load()
     
@@ -99,13 +123,14 @@ Private Sub Form_Load()
             MsgBox "Batch NF: " & PRBatchID, vbCritical
             End
         End If
-        Me.txtDisplay.Text = "Batch #: " & PRBatch.BatchID & _
+        Me.txtDisplay.text = "Batch #: " & PRBatch.BatchID & _
                              " PE Date: " & Format(PRBatch.PEDate, "mm/dd/yy") & _
                              " Check Date: " & Format(PRBatch.CheckDate, "mm/dd/yy")
         RangeType = PREquate.RangeTypeBatch
         BatchNumbr = PRBatchID
     End If
     Me.lblCompanyName = PRCompany.Name
+    Me.optCheckRecon = True
     Me.KeyPreview = True
 End Sub
 Public Sub Form_KeyDown(KeyCode As Integer, Shift As Integer)
@@ -155,8 +180,75 @@ Private Sub cmdOK_Click()
     Else
         InitFlag = True
         txtDisplay = ""
-        CheckRecon RangeType, BatchNumbr, CLng(Int(PEDate)), CLng(Int(StartDate)), CLng(Int(EndDate)), OptDate
+        If Me.optCheckRecon Then
+            CheckRecon RangeType, BatchNumbr, CLng(Int(PEDate)), CLng(Int(StartDate)), CLng(Int(EndDate)), OptDate
+        Else
+            NoNameExport
+        End If
     End If
 End Sub
 
+Private Sub NoNameExport()
+    SQLString = "SELECT * FROM PRHist"
+ 
+    If RangeType = PREquate.RangeTypeBatch Then
+        SQLString = Trim(SQLString) & " WHERE PRHist.BatchID = " & BatchNumbr
+        Msg1 = "Batch: " & BatchNumbr
+    Else
+        If OptDate = "CHECK DATE" Then
+            SQLString = Trim(SQLString) & " WHERE PRHist.CheckDate >= " & CLng(StartDate) & " AND " & _
+                                    " PRHist.CheckDate <= " & CLng(EndDate)
+            Msg1 = "CHECK DATE RANGE: " & CDate(StartDate) & " TO: " & CDate(EndDate)
+        ElseIf OptDate = "P/E DATE" Then
+             SQLString = Trim(SQLString) & " WHERE PRHist.PEDate >= " & CLng(StartDate) & " AND " & _
+                                    " PRHist.PEDate <= " & CLng(EndDate)
+            Msg1 = "P/E DATE RANGE: " & CDate(StartDate) & " TO: " & CDate(EndDate)
+        End If
+    End If
 
+    SQLString = Trim(SQLString) & " ORDER BY PRHist.CheckNumber"
+
+    If Not PRHist.GetBySQL(SQLString) Then
+        MsgBox "No History Found !!!", vbExclamation, "Payroll Check Reconciliation"
+        GoBack
+    End If
+
+    Const WindowsFolder = 0
+    Const SystemFolder = 1
+    Const TemporaryFolder = 2
+    Dim fso: Set fso = CreateObject("Scripting.FileSystemObject")
+    Dim tempFolder: tempFolder = fso.GetSpecialFolder(TemporaryFolder)
+    Dim TextChannel As Integer
+    
+    x = "CheckExport" & Right(Year(Date), 2) & Right("0" & Month(Date), 2) & Right("0" & Day(Date), 2)
+    TextFileName = tempFolder & "\" & x & ".csv"
+
+    TextChannel = FreeFile
+    Do
+        On Error Resume Next
+        Open TextFileName For Output As #TextChannel
+        If Err.Number <> 0 Then
+            ErrMsg = "Error Opening: " & TextFileName & vbCr & vbCr & _
+                " " & Err.Number & " " & Err.Description
+            MsgResponse = MsgBox(ErrMsg, vbRetryCancel + vbExclamation, "File Open Error")
+            If MsgResponse <> vbRetry Then
+                TextChannel = 0
+                TextFileName = ""
+                Exit Do
+            End If
+        Else
+            Exit Do
+        End If
+    Loop
+
+    Print #TextChannel, "Check Number, Check Date, Check Amount"
+    
+    Do
+        Print #TextChannel, PRHist.CheckNumber & ", " & PRHist.CheckDate & ", " & PRHist.Net
+        If Not PRHist.GetNext Then Exit Do
+    Loop
+
+    Close #TextChannel
+    TaskID = Shell("cmd /c " & TextFileName, vbNormalFocus)
+    GoBack
+End Sub
