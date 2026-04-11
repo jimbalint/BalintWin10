@@ -6105,12 +6105,15 @@ Dim FedID As String
             FedID5 = "9" & Format(PRCompany.DirDepAltID, "000000000")
             FedID8 = "9" & Format(PRCompany.DirDepAltID, "000000000")
         End If
-        If PRCompany.CompanyID = 24 And InStr(LCase(PRCompany.Name), "conti") Then
-            ' westfield
-            FedID1 = " " & Format(PRCompany.DirDepAltID, "000000000")
-            FedID5 = " " & Left(PRCompany.FederalID, 2) & Mid(PRCompany.FederalID, 4, 7)
-            FedID8 = " " & Left(PRCompany.FederalID, 2) & Mid(PRCompany.FederalID, 4, 7)
-        End If
+        
+' switched to First Financial
+'        If PRCompany.CompanyID = 24 And InStr(LCase(PRCompany.Name), "conti") Then
+'            ' westfield
+'            FedID1 = " " & Format(PRCompany.DirDepAltID, "000000000")
+'            FedID5 = " " & Left(PRCompany.FederalID, 2) & Mid(PRCompany.FederalID, 4, 7)
+'            FedID8 = " " & Left(PRCompany.FederalID, 2) & Mid(PRCompany.FederalID, 4, 7)
+'        End If
+        
         If PRCompany.CompanyID = 25 And InStr(LCase(PRCompany.Name), "central") Then
             ' westfield
             FedID1 = " " & Format(PRCompany.DirDepAltID, "000000000")
